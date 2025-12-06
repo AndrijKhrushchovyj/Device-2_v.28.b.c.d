@@ -1,0 +1,145 @@
+possible calls Usb_routines_irq : VCP_DataTx;
+possible calls USBD_Init : USBD_USR_Init;
+//possible calls DCD_SessionRequest_ISR : USBD_DevConnected;
+//possible calls USBD_DevConnected : USBD_USR_DeviceConnected;
+//possible calls DCD_OTG_ISR : USBD_DevDisconnected;
+//possible calls USBD_DevDisconnected : USBD_USR_DeviceDisconnected;
+possible calls DCD_HandleResume_ISR : USBD_Resume;
+possible calls USBD_Resume : USBD_USR_DeviceResumed;
+possible calls DCD_HandleUSBSuspend_ISR : USBD_Suspend;
+possible calls USBD_Suspend : USBD_USR_DeviceSuspended;
+possible calls DCD_HandleInEP_ISR : USBD_DataInStage;
+possible calls USBD_DataInStage : usbd_cdc_DataIn;
+possible calls DCD_HandleOutEP_ISR : USBD_DataOutStage, USBD_SetupStage;
+possible calls USBD_DataOutStage : usbd_cdc_EP0_RxReady, usbd_cdc_DataOut;
+possible calls usbd_cdc_EP0_RxReady : VCP_Ctrl;
+possible calls usbd_cdc_DataOut : VCP_DataRx;
+possible calls USBD_GetDescriptor : USBD_USR_DeviceDescriptor, USBD_cdc_GetCfgDesc, USBD_USR_LangIDStrDescriptor, USBD_USR_ManufacturerStrDescriptor, USBD_USR_ProductStrDescriptor, USBD_USR_SerialStrDescriptor, USBD_USR_ConfigStrDescriptor, USBD_USR_InterfaceStrDescriptor;
+possible calls USBD_ClrCfg : usbd_cdc_DeInit;
+possible calls usbd_cdc_DeInit : VCP_DeInit;
+possible calls USBD_SetCfg : usbd_cdc_Init, USBD_USR_DeviceConfigured;
+possible calls usbd_cdc_Init : VCP_Init;
+possible calls USBD_SetFeature : usbd_cdc_Setup;
+possible calls usbd_cdc_Setup : VCP_Ctrl;
+possible calls USBD_ClrFeature : usbd_cdc_Setup;
+possible calls USBD_StdEPReq : usbd_cdc_Setup;
+possible calls USBD_StdItfReq : usbd_cdc_Setup;
+possible calls DCD_HandleSof_ISR : USBD_SOF;
+possible calls USBD_SOF : usbd_cdc_SOF;
+possible calls DCD_HandleUsbReset_ISR : USBD_Reset;
+possible calls USBD_Reset : USBD_USR_DeviceReset;
+possible calls DCD_IsoINIncomplete_ISR : USBD_IsoINIncomplete;
+possible calls USBD_IsoINIncomplete : ;
+possible calls DCD_IsoOUTIncomplete_ISR : USBD_IsoOUTIncomplete;
+possible calls USBD_IsoOUTIncomplete : ;
+
+max recursion depth main_manu_function : 1;
+
+call graph root [Interrupt]: NMI_Handler, HardFault_Handler, MemManage_Handler, BusFault_Handler, UsageFault_Handler, SVC_Handler, DebugMon_Handler, PendSV_Handler, SysTick_Handler, TIM2_IRQHandler, TIM4_IRQHandler, TIM5_IRQHandler, I2C1_EV_IRQHandler, I2C1_ER_IRQHandler, DMA1_Stream7_IRQHandler, DMA1_Stream0_IRQHandler, SPI2_IRQHandler, DMA2_Stream0_IRQHandler, SPI1_IRQHandler, USART2_IRQHandler, DMA1_Stream6_IRQHandler, EXTI0_IRQHandler, OTG_FS_IRQHandler;
+call graph root [System]: SystemInit;
+
+possible calls disk_write : USER_write;
+possible calls disk_read : USER_read;
+possible calls disk_initialize : USER_initialize;
+possible calls disk_status : USER_status;
+possible calls disk_ioctl : USER_ioctl;
+
+exclude USBD_USR_DeviceConnected, USBD_USR_DeviceDisconnected;
+
+exclude _LocaleC_isupper;
+
+//²ãîðÿ ôóíêö³¿
+possible calls superPostWriteAction :
+postACMDSmallWriteAction,
+                                     postAISmallWriteAction, postANDBigWriteAction,
+                                     postDOUTBigWriteAction, postDOUTSmallWriteAction, postDTRBigWriteAction,
+                                     postDVOUTBigWriteAction,
+                                     postDVBigWriteAction,   postDVSmallWriteAction,   postGCMDSmallWriteAction,
+                                     postIUSmallWriteAction, postKEYBigWriteAction,    
+                                     postMFTBigWriteAction,  postNOTBigWriteAction,    postORBigWriteAction,
+                                     postPFBigWriteAction,   postDFRESBigWriteAction,
+                                     postPKVBigWriteAction,  postQAISmallWriteAction,  postRAISmallWriteAction,
+                                     postREGBigWriteAction,  postPREGBigWriteAction,
+                                     postRDSBigWriteAction,
+                                     postRPRBigWriteAction,   postRPRSmallWriteAction,  postSDIBigWriteAction,
+                                     postSDISmallWriteAction, postUPRBigWriteAction,    postUSTBigWriteAction,
+                                     postVVBigWriteAction,
+                                     postXORBigWriteAction,   postYustBigWriteAction
+                                     ;
+
+
+possible calls  superReaderRegister:
+getACMDSmallModbusRegister,
+                                     getAISmallModbusRegister, getANDBigModbusRegister,
+                                     getDOUTBigModbusRegister, getDOUTSmallModbusRegister, getDTRBigModbusRegister,
+                                     getDVOUTBigModbusRegister,
+                                     getDVBigModbusRegister,   getDVSmallModbusRegister,   getGCMDSmallModbusRegister,
+                                     getIUSmallModbusRegister, getKEYBigModbusRegister,    
+                                     getMFTBigModbusRegister,  getNOTBigModbusRegister,    getORBigModbusRegister,
+                                     getPFBigModbusRegister,   getDFRESBigModbusRegister,
+                                     getPKVBigModbusRegister,  getQAISmallModbusRegister,  getRAISmallModbusRegister,
+                                     getREGBigModbusRegister,  getPREGBigModbusRegister,
+                                     getRDSBigModbusRegister,
+                                     getRPRBigModbusRegister,   getRPRSmallModbusRegister,  getSDIBigModbusRegister,
+                                     getSDISmallModbusRegister, getUPRBigModbusRegister,    getUSTBigModbusRegister,
+                                     getVVBigModbusRegister,
+                                     getXORBigModbusRegister,   getYustBigModbusRegister
+                                     ;
+//exclude loadRPRSmallActualData;
+max recursion depth getRPRSmallModbusRegister : 1;
+
+possible calls superReaderBit :     
+getACMDSmallModbusBit,
+                                     getAISmallModbusBit, getANDBigModbusBit,
+                                     getDOUTBigModbusBit, getDOUTSmallModbusBit, getDTRBigModbusBit,
+                                     getDVOUTBigModbusBit,
+                                     getDVBigModbusBit,   getDVSmallModbusBit,   getGCMDSmallModbusBit,
+                                     getIUSmallModbusBit, getKEYBigModbusBit,    
+                                     getMFTBigModbusBit,  getNOTBigModbusBit,    getORBigModbusBit,
+                                     getPFBigModbusBit,   getDFRESBigModbusBit,
+                                     getPKVBigModbusBit,  getQAISmallModbusBit,  getRAISmallModbusBit,
+                                     getREGBigModbusBit,  getPREGBigModbusBit,
+                                     getRDSBigModbusBit,
+                                     getRPRBigModbusBit,   getRPRSmallModbusBit,  getSDIBigModbusBit,
+                                     getSDISmallModbusBit, getUPRBigModbusBit,    getUSTBigModbusBit,
+                                     getVVBigModbusBit,
+                                     getXORBigModbusBit,   getYustBigModbusBit
+                                     ;
+                                     
+possible calls superWriterRegister:  
+setACMDSmallModbusRegister,
+                                     setAISmallModbusRegister, setANDBigModbusRegister,
+                                     setDOUTBigModbusRegister, setDOUTSmallModbusRegister, setDTRBigModbusRegister,
+                                     setDVOUTBigModbusRegister,
+                                     setDVBigModbusRegister,   setDVSmallModbusRegister,   setGCMDSmallModbusRegister,
+                                     setIUSmallModbusRegister, setKEYBigModbusRegister,    
+                                     setMFTBigModbusRegister,  setNOTBigModbusRegister,    setORBigModbusRegister,
+                                     setPFBigModbusRegister,   setDFRESBigModbusRegister,
+                                     setPKVBigModbusRegister,  setQAISmallModbusRegister,  setRAISmallModbusRegister,
+                                     setREGBigModbusRegister,  setPREGBigModbusRegister,
+                                     setRDSBigModbusRegister,
+                                     setRPRBigModbusRegister,   setRPRSmallModbusRegister,  setSDIBigModbusRegister,
+                                     setSDISmallModbusRegister, setUPRBigModbusRegister,    setUSTBigModbusRegister,
+                                     setVVBigModbusRegister,
+                                     setXORBigModbusRegister,   setYustBigModbusRegister
+                                     ;
+
+possible calls superWriterBit :      
+setACMDSmallModbusBit,
+                                     setAISmallModbusBit, setANDBigModbusBit,
+                                     setDOUTBigModbusBit, setDOUTSmallModbusBit, setDTRBigModbusBit,
+                                     setDVOUTBigModbusBit,
+                                     setDVBigModbusBit,   setDVSmallModbusBit,   setGCMDSmallModbusBit,
+                                     setIUSmallModbusBit, setKEYBigModbusBit,    
+                                     setMFTBigModbusBit,  setNOTBigModbusBit,    setORBigModbusBit,
+                                     setPFBigModbusBit,   setDFRESBigModbusBit,
+                                     setPKVBigModbusBit,  setQAISmallModbusBit,  setRAISmallModbusBit,
+                                     setREGBigModbusBit,  setPREGBigModbusBit,
+                                     setRDSBigModbusBit,
+                                     setRPRBigModbusBit,   setRPRSmallModbusBit,  setSDIBigModbusBit,
+                                     setSDISmallModbusBit, setUPRBigModbusBit,    setUSTBigModbusBit,
+                                     setVVBigModbusBit,
+                                     setXORBigModbusBit,   setYustBigModbusBit
+                                     ;
+
+
