@@ -49,6 +49,7 @@ exclude USBD_USR_DeviceConnected, USBD_USR_DeviceDisconnected;
 exclude _LocaleC_isupper;
 
 //Ігоря функції
+/*
 possible calls superPostWriteAction :
 postACMDSmallWriteAction,
                                      postAISmallWriteAction, postANDBigWriteAction,
@@ -141,5 +142,5 @@ setACMDSmallModbusBit,
                                      setVVBigModbusBit,
                                      setXORBigModbusBit,   setYustBigModbusBit
                                      ;
-
+*/
 

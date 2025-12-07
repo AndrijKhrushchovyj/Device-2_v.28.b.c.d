@@ -206,8 +206,8 @@ void watchdog_routine(unsigned int maska, unsigned int const label)
 /*************************************************************************
 Періодичні низькопріоритетні задачі
 *************************************************************************/
-void decoderN_BIGACMDArrayLoader(void);
-void decoderN_SMALLACMDArrayLoader(void);
+// void decoderN_BIGACMDArrayLoader(void);
+// void decoderN_SMALLACMDArrayLoader(void);
 void periodical_operations(unsigned int full_actions)
 {
   watchdog_routine((before_full_start == true) ? UNITED_BITS_WATCHDOG_SHORT : UNITED_BITS_WATCHDOG, 9);
@@ -259,8 +259,8 @@ void periodical_operations(unsigned int full_actions)
 
   //Робота з Watchdog
   watchdog_routine((before_full_start == true) ? UNITED_BITS_WATCHDOG_SHORT : UNITED_BITS_WATCHDOG, 10);
-  decoderN_BIGACMDArrayLoader();
-  decoderN_SMALLACMDArrayLoader();
+  // decoderN_BIGACMDArrayLoader();
+  // decoderN_SMALLACMDArrayLoader();
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   /*******************/
@@ -500,8 +500,8 @@ void periodical_operations_communication(unsigned int ar_working)
         password_set_LAN = 1;
     }
 
-    if (LAN_received_count > 0)
-      inputPacketParserLAN();
+    // if (LAN_received_count > 0)
+    //   inputPacketParserLAN();
   }
 #endif
 
@@ -536,8 +536,8 @@ void periodical_operations_communication(unsigned int ar_working)
       //Робота з Watchdog
       watchdog_routine(UNITED_BITS_WATCHDOG, 13);
 
-      //Обробляємо запит
-      inputPacketParserRS485();
+      // //Обробляємо запит
+      // inputPacketParserRS485();
 
       //Виставляємо, що кількість прийнятих байт рівна 0
       RxBuffer_RS485_count = 0;

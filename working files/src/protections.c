@@ -1109,7 +1109,7 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
             number_max_U_dr = 0;
             for (size_t i = 0; i < _NUMBER_IDENTIFIER; ++i)
               arr_identifiers[i] = NULL;
-            next_free_array = (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR);
+            // next_free_array = (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR);
 
             /*
             Перевірку необхідності запису фіксації вимірювань при роботі ЧАПВ здійснювати

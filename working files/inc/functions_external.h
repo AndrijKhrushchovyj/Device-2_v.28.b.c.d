@@ -226,7 +226,6 @@ extern unsigned int count_number_set_bit(unsigned int*, unsigned int);
 
 extern void set_bit(unsigned int*, unsigned int);
 extern void clear_bit(unsigned int*, unsigned int);
-extern void make_koef_for_resurs(void);
 extern long GetNumberChangingInLogElem( long lIdx);
 
 extern void CmdPlusTimeLogHundler(unsigned int *p_active_functions);
@@ -330,12 +329,12 @@ extern void low_routine_for_KP(void);
 extern void proc_Gs_blk_out(void* pv,unsigned long lCtrGsSrc,short* p_arrOrdNumsGsSignal ); 
 extern void proc_Mms_blk_out(void* pv,unsigned long lCtrMmsSrc,short* p_arrOrdNumsMmsSignal );
 extern void proc_Lan_blk_out(unsigned short *p_rang_Out_LAN,unsigned int *p_active_functions, void *pLanDsc);
-extern void inputPacketParserLAN(void);
+// extern void inputPacketParserLAN(void);
 void make_ekran_settings_synchro(void);
 #endif
 
-extern void inputPacketParserUSB(void);
-extern void inputPacketParserRS485(void);
+// extern void inputPacketParserUSB(void);
+// extern void inputPacketParserRS485(void);
 
 #if (__VER__ >= 8000000)
 extern int _ForceReloadDstRules (void);

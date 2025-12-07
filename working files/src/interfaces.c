@@ -151,7 +151,7 @@ void Usb_routines(void)
           }
         }
         //Орацювання даних по протоколу MODBUS-RTU прийнятих з USB
-        inputPacketParserUSB();
+        // inputPacketParserUSB();
       }
     }
   }

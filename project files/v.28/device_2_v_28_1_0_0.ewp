@@ -5725,6 +5725,9 @@
             <group>
                 <name>interfaces</name>
                 <file>
+                    <name>$PROJ_DIR$\..\..\working files\src\interfaces.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\working files\src\modbus.c</name>
                 </file>
             </group>

@@ -1435,7 +1435,6 @@ void main_routines_for_spi1(void)
                   if (index >= SIZE_BUFFER_FOR_AR) index = 0; /*Умова мал аб бути ==, але щоб перестахуватися на невизначену помилку я поставив >=*/
                 }
               } 
-              make_koef_for_resurs();
 #if (                                   \
      (MODYFIKACIA_VERSII_PZ == 0) ||    \
      (MODYFIKACIA_VERSII_PZ == 3) ||    \

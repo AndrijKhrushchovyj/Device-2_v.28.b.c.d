@@ -3524,17 +3524,6 @@ unsigned int set_new_settings_from_interface(unsigned int source)
   }
 #endif
 	
-	unsigned int set_koef_resurs = false;
-	if (
-			(current_settings.setpoint_Inom               != current_settings_interfaces.setpoint_Inom              ) ||
-			(current_settings.setpoint_r_kom_st_Inom      != current_settings_interfaces.setpoint_r_kom_st_Inom     ) ||
-			(current_settings.setpoint_Inom_vymk          != current_settings_interfaces.setpoint_Inom_vymk         ) ||
-			(current_settings.setpoint_r_kom_st_Inom_vymk != current_settings_interfaces.setpoint_r_kom_st_Inom_vymk)
-		 )	
-	{
-		set_koef_resurs = true;
-	}
-  
   if (error == 0)
   {
     if ((type_of_settings_changed & (1 << DEFAULT_SETTINGS_SET_BIT)) != 0)
@@ -3591,8 +3580,6 @@ unsigned int set_new_settings_from_interface(unsigned int source)
     }
 #endif    
     		
-		if (set_koef_resurs != 0) make_koef_for_resurs();
-
     if (reload_DST_Rules)
     {
 #if (__VER__ >= 8000000)
