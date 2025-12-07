@@ -49,33 +49,32 @@ extern EXTENDED_SAMPLE ADCs_data_raw[NUMBER_ANALOG_CANALES];
 extern int ADCs_data[NUMBER_ANALOG_CANALES];
 extern unsigned long long sqr_current_data_3I0[NUMBER_POINT];
 
-extern unsigned int changed_ustuvannja; 
+extern unsigned int changed_ustuvannja;
 extern unsigned char crc_ustuvannja;
 extern unsigned int ustuvannja_meas[NUMBER_ANALOG_CANALES], ustuvannja[NUMBER_ANALOG_CANALES], edit_ustuvannja[NUMBER_ANALOG_CANALES];
 extern int phi_ustuvannja_meas[NUMBER_ANALOG_CANALES], phi_ustuvannja[NUMBER_ANALOG_CANALES], phi_edit_ustuvannja[NUMBER_ANALOG_CANALES];
-extern float phi_ustuvannja_sin_cos_meas[2*NUMBER_ANALOG_CANALES], phi_ustuvannja_sin_cos[2*NUMBER_ANALOG_CANALES];
+extern float phi_ustuvannja_sin_cos_meas[2 * NUMBER_ANALOG_CANALES], phi_ustuvannja_sin_cos[2 * NUMBER_ANALOG_CANALES];
 
 extern const float sin_data_f[NUMBER_POINT];
 extern const float cos_data_f[NUMBER_POINT];
 extern unsigned int index_sin_cos_array;
 extern unsigned int index_data_sin_cos_array;
-extern int data_sin[NUMBER_POINT*NUMBER_ANALOG_CANALES];
-extern int data_cos[NUMBER_POINT*NUMBER_ANALOG_CANALES];
+extern int data_sin[NUMBER_POINT * NUMBER_ANALOG_CANALES];
+extern int data_cos[NUMBER_POINT * NUMBER_ANALOG_CANALES];
 extern unsigned int index_data_sin_and_cos_array;
-extern int ortogonal_irq[2*NUMBER_ANALOG_CANALES];
-extern int ortogonal[2*NUMBER_ANALOG_CANALES][2];
+extern int ortogonal_irq[2 * NUMBER_ANALOG_CANALES];
+extern int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
 extern unsigned long long sum_sqr_data_3I0_irq;
 extern unsigned long long sum_sqr_data_3I0[2];
 //extern unsigned int semaphore_measure_values;
 extern unsigned int semaphore_measure_values_low;
 extern unsigned int bank_ortogonal;
 
-extern int data_sin2[NUMBER_POINT*NUMBER_I2G_CANALES];
-extern int data_cos2[NUMBER_POINT*NUMBER_I2G_CANALES];
+extern int data_sin2[NUMBER_POINT * NUMBER_I2G_CANALES];
+extern int data_cos2[NUMBER_POINT * NUMBER_I2G_CANALES];
 extern unsigned int index_data_sin2_cos2_array;
-extern int ortogonal2_irq[2*NUMBER_I2G_CANALES];
-extern int ortogonal2[2*NUMBER_I2G_CANALES][2];
-
+extern int ortogonal2_irq[2 * NUMBER_I2G_CANALES];
+extern int ortogonal2[2 * NUMBER_I2G_CANALES][2];
 
 extern unsigned int semaphore_measure_values_low1;
 
@@ -83,15 +82,15 @@ extern unsigned int number_inputs_for_fix_one_second;
 extern unsigned int number_inputs_for_fix_one_period;
 extern unsigned int measurement[_NUMBER_IM];
 extern unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high;
-extern unsigned int measurement_middle[_NUMBER_IM]; 
-extern unsigned int measurement_low[_NUMBER_IM]; 
+extern unsigned int measurement_middle[_NUMBER_IM];
+extern unsigned int measurement_low[_NUMBER_IM];
 
 extern const unsigned int index_converter_Ib_p[NUMBER_ANALOG_CANALES];
 extern const unsigned int index_converter_I04_p[NUMBER_ANALOG_CANALES];
 extern const unsigned int index_converter_Ib_l[NUMBER_ANALOG_CANALES];
 extern const unsigned int index_converter_I04_l[NUMBER_ANALOG_CANALES];
-extern int ortogonal_calc[2*FULL_ORT_MAX];
-extern int ortogonal_calc_low[2*FULL_ORT_MAX];
+extern int ortogonal_calc[2 * FULL_ORT_MAX];
+extern int ortogonal_calc_low[2 * FULL_ORT_MAX];
 extern int phi_angle[2][FULL_ORT_MAX];
 extern uint32_t bank_for_calc_phi_angle, state_calc_phi_angle;
 extern int base_index_for_angle;
@@ -129,17 +128,16 @@ extern unsigned int Ix_bilshe_porogu[3];
 extern unsigned int temp_states_for_mtz;
 
 //ЗДЗ
-#if (                                   \
-     (MODYFIKACIA_VERSII_PZ == 0) ||    \
-     (MODYFIKACIA_VERSII_PZ == 3) ||    \
-     (MODYFIKACIA_VERSII_PZ == 4) ||    \
-     (MODYFIKACIA_VERSII_PZ == 6) ||    \
-     (MODYFIKACIA_VERSII_PZ == 7) ||    \
-     (MODYFIKACIA_VERSII_PZ == 10)||    \
-     (MODYFIKACIA_VERSII_PZ == 13)||    \
-     (MODYFIKACIA_VERSII_PZ == 14)||    \
-     (MODYFIKACIA_VERSII_PZ == 17)      \
-    )   
+#if (                              \
+  (MODYFIKACIA_VERSII_PZ == 0) ||  \
+  (MODYFIKACIA_VERSII_PZ == 3) ||  \
+  (MODYFIKACIA_VERSII_PZ == 4) ||  \
+  (MODYFIKACIA_VERSII_PZ == 6) ||  \
+  (MODYFIKACIA_VERSII_PZ == 7) ||  \
+  (MODYFIKACIA_VERSII_PZ == 10) || \
+  (MODYFIKACIA_VERSII_PZ == 13) || \
+  (MODYFIKACIA_VERSII_PZ == 14) || \
+  (MODYFIKACIA_VERSII_PZ == 17))
 extern uint32_t delta_time_test;
 extern uint32_t zdz_ovd_diagnostyka;
 extern uint32_t test_OVD;
@@ -176,7 +174,7 @@ extern unsigned int active_inputs_lock_guard_prt;
 extern unsigned int active_inputs_prt;
 extern unsigned int active_inputs_low;
 extern unsigned int state_outputs;
-extern unsigned int state_outputs_raw,state_outputs_raw_dbg;
+extern unsigned int state_outputs_raw, state_outputs_raw_dbg;
 extern unsigned int state_signal_outputs;
 #ifdef NUMBER_DS
 extern unsigned int ds;
@@ -212,7 +210,7 @@ extern unsigned int i1g_bilshe_porogu[NUMBER_I2G_CANALES];
 extern unsigned int i2g_bilshe_porogu[NUMBER_I2G_CANALES];
 
 //12345
-extern unsigned int  previous_states_MTZ04_vvid_pr_0;
+extern unsigned int previous_states_MTZ04_vvid_pr_0;
 
 extern unsigned int static_logic_APV_0;
 extern unsigned int previous_states_APV_0;
@@ -256,8 +254,8 @@ extern const uint32_t index_n_Out_LAN[MAX_NAMBER_LANGUAGE][1];
 
 extern unsigned int edit_rang_Out_LAN[N_BIG];
 extern const uint32_t rang_iec61850_blocks[2][N_SMALL];
-#endif  
-  
+#endif
+
 extern const uint32_t index_number_UP[MAX_NAMBER_LANGUAGE][3];
 
 extern unsigned int periodical_tasks_TEST_SETTINGS;
@@ -283,7 +281,7 @@ extern unsigned int realDateTime;
 extern const uint32_t max_value_for_tf[1 + _FIX_NUMBER_PROTECTION][MAX_ROW_LIST_SOURCE_TF];
 
 extern unsigned char calibration;
-extern unsigned char time_edit[7]; 
+extern unsigned char time_edit[7];
 extern unsigned char calibration_edit;
 extern int etap_reset_of_bit;
 
@@ -301,7 +299,7 @@ extern int32_t time_ms_save_l, time_ms_save_h;
 extern time_t time_dat_save_l, time_dat_save_h;
 extern unsigned int save_time_dat_l, save_time_dat_h;
 
-extern unsigned int changed_settings; 
+extern unsigned int changed_settings;
 extern unsigned char crc_settings;
 extern __SETTINGS current_settings_prt, current_settings;
 extern unsigned int settings_prt_Ib_I04;
@@ -310,7 +308,6 @@ extern unsigned int TCurrent_prt;
 extern unsigned int type_of_input_prt;
 extern unsigned int type_of_input_signal_prt;
 extern unsigned int dopusk_dv_prt[NUMBER_INPUTS];
-
 
 extern __SETTINGS edition_settings, current_settings_interfaces;
 
@@ -439,7 +436,7 @@ extern enum _fix_date_time_avar arDateTimeState;
 
 //Дискретний реєстратор
 extern unsigned char crc_info_rejestrator_dr;
-extern  __INFO_REJESTRATOR info_rejestrator_dr;
+extern __INFO_REJESTRATOR info_rejestrator_dr;
 extern unsigned char crc_info_rejestrator_dr_ctrl;
 extern __INFO_REJESTRATOR info_rejestrator_dr_ctrl;
 extern unsigned int state_dr_record;
@@ -464,18 +461,8 @@ extern unsigned int max_phase_current_dr;
 extern int max_I2g_to_I1g;
 extern unsigned int min_voltage_dr;
 extern unsigned int max_voltage_dr;
-extern unsigned int number_max_phase_dr;
-extern unsigned int number_max_phase04_dr;
-extern unsigned int number_max_ZNAM_dr;
-extern unsigned int number_max_3I0_dr_1g;
-extern unsigned int number_max_3I0_dr_otherg;
-extern unsigned int number_max_3I0_r_dr;
-extern unsigned int number_max_3U0_dr;
 extern unsigned int number_min_U_dr;
 extern unsigned int number_max_U_dr;
-extern unsigned int number_max_ZOP_dr;
-extern unsigned int number_min_f_achr_dr;
-extern unsigned int number_f_chapv_dr;
 extern unsigned int type_view_max_values_dr;
 extern int index_cell_into_array_for_min_max_measurement_dr;
 extern unsigned int control_extra_settings_1_dr_for_manu;
@@ -484,7 +471,7 @@ extern enum _fix_date_time_avar drDateTimeState;
 
 //Реєстратор програмних помилок
 extern unsigned char crc_info_rejestrator_pr_err;
-extern  __INFO_REJESTRATOR info_rejestrator_pr_err;
+extern __INFO_REJESTRATOR info_rejestrator_pr_err;
 extern unsigned char crc_info_rejestrator_pr_err_ctrl;
 extern __INFO_REJESTRATOR info_rejestrator_pr_err_ctrl;
 extern unsigned char buffer_pr_err_records[SIZE_BUFFER_FOR_PR_ERR];
@@ -569,7 +556,7 @@ extern unsigned int timeout_idle_USB;
 //extern uint8_t USB_Tx_last_buffer[256];
 //extern uint32_t USB_Tx_count;
 
-extern uint8_t  USB_Tx_State;
+extern uint8_t USB_Tx_State;
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
 //MODBUS-TCP
@@ -614,9 +601,9 @@ extern unsigned int edit_serial_number_dev;
 
 //Для відображення інформації про причину відключення
 extern unsigned int info_vidkluchennja_vymykacha[(VYMKNENNJA_VID_MAX_NUMBER / 32) + ((VYMKNENNJA_VID_MAX_NUMBER % 32) != 0)];
-extern __info_vymk info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER]; 
+extern __info_vymk info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER];
 
-extern unsigned int  watchdog_l2;
+extern unsigned int watchdog_l2;
 extern unsigned int control_word_of_watchdog;
 extern unsigned int test_watchdogs;
 
@@ -655,12 +642,10 @@ extern uint8_t Output_Out_LAN_block[N_OUT_LAN];
 extern unsigned int activation_function_from_KP[N_SMALL];
 extern unsigned int ctrl_activation_function_from_KP[N_SMALL];
 
-
 #endif
 
-extern  unsigned char chGbl__REL1_REL8__W_VAL;
-extern  volatile unsigned char  chGbl__CDHO1_CDHO7__W_VAL;
-
+extern unsigned char chGbl__REL1_REL8__W_VAL;
+extern volatile unsigned char chGbl__CDHO1_CDHO7__W_VAL;
 
 extern unsigned short const __checksum;
 extern unsigned int __checksum_begin;
@@ -668,7 +653,6 @@ extern unsigned int __checksum_end;
 
 extern unsigned int __ICFEDIT_region_RAM1_start__;
 extern unsigned int __ICFEDIT_region_RAM1_size__;
-
 
 #ifdef DEBUG_TEST
 
@@ -680,7 +664,6 @@ extern unsigned int __ICFEDIT_region_RAM1_size__;
 //extern unsigned int temp_value_for_debbuging_1;
 //extern unsigned int temp_value_for_debbuging_2;
 //extern unsigned int temp_value_for_debbuging_3;
-
 
 #endif
 

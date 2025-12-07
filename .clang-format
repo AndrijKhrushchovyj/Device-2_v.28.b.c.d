@@ -1,0 +1,20 @@
+BasedOnStyle: LLVM
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+BreakBeforeBraces: Allman
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+IndentCaseLabels: true
+IndentCaseBlocks: true
+SpaceAfterCStyleCast: true
+SpacesInParentheses: false
+SpaceBeforeParens: ControlStatements
+PointerAlignment: Right
+ContinuationIndentWidth: 2
+ColumnLimit: 0
+
+SortIncludes: false
+
+ReflowComments: false

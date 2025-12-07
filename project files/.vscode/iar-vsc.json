@@ -1,0 +1,19 @@
+{
+  "workspace": {
+    "path": "${workspaceFolder}\\device_2_v_28_b_c_d.eww"
+  },
+  "workspaces": {
+    "${workspaceFolder}\\device_2_v_28_b_c_d.eww": {
+      "configs": {
+        "${workspaceFolder}\\v.28\\device_2_v_28_1_0_0.ewp": "Flash-Debug",
+        "${workspaceFolder}\\v.28\\device_2_v_28_11_0_0.ewp": "Flash-Debug"
+      },
+      "selected": {
+        "path": "${workspaceFolder}\\v.28\\device_2_v_28_11_0_0.ewp"
+      }
+    }
+  },
+  "workbench": {
+    "path": "C:\\Program Files\\IAR\\ewarm-9.70.2"
+  }
+}
