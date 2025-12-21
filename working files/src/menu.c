@@ -10979,7 +10979,7 @@ void main_manu_function(void)
 
                         current_settings.control_zz = edition_settings.control_zz;
                         //Обновляємо значення
-                        action_after_changing_zz1_type(&current_settings);
+                        // action_after_changing_zz1_type(&current_settings);
 
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
@@ -13469,7 +13469,7 @@ void main_manu_function(void)
                         changed_settings = CHANGED_ETAP_EXECUTION;
 
                         //Обновляємо значення
-                        action_after_changing_extra_settings(edition_settings.control_extra_settings_1, &current_settings);
+                        // action_after_changing_extra_settings(edition_settings.control_extra_settings_1, &current_settings);
 
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
@@ -19049,7 +19049,7 @@ void main_manu_function(void)
                   int32_t index_position = current_ekran.index_position;
                   uint32_t value = (edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] >> (16 * index_position)) & 0xffff;
 
-                  do
+                  // do
                   {
                     if (++value >= max_value_for_tf[1 + _FIX_NUMBER_PROTECTION - 1][index_position])
                       value = 0;
@@ -19064,10 +19064,10 @@ void main_manu_function(void)
                         value = (i < (_FIX_NUMBER_PROTECTION - 1)) ? max_value_for_tf[1 + i][index_position] : 0;
                       }
                     }
-                  } while (
+                  } /* while (
                     (index_position == INDEX_ML_LIST_SOURCE_INPUT_TF) &&
                     ((value == (1 + RANG_PO_NZZ)) || (value == (1 + RANG_NZZ)) || (value == (1 + RANG_SECTOR_NZZ))) &&
-                    ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0));
+                    ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0)); */
 
                   edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] &= (uint32_t)(~(0xffff << (16 * index_position)));
                   edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] |= ((value & 0xffff) << (16 * index_position));
@@ -21417,7 +21417,7 @@ void main_manu_function(void)
                   int32_t index_position = current_ekran.index_position;
                   int32_t value = (edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] >> (16 * index_position)) & 0xffff;
 
-                  do
+                  // do
                   {
                     if (--value < 0)
                       value = max_value_for_tf[1 + _FIX_NUMBER_PROTECTION - 1][index_position] - 1;
@@ -21432,10 +21432,10 @@ void main_manu_function(void)
                         value = max_value_for_tf[1 + i - 1][index_position] - 1;
                       }
                     }
-                  } while (
+                  } /* while (
                     (index_position == INDEX_ML_LIST_SOURCE_INPUT_TF) &&
                     ((value == (1 + RANG_PO_NZZ)) || (value == (1 + RANG_NZZ)) || (value == (1 + RANG_SECTOR_NZZ))) &&
-                    ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0));
+                    ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0)); */
 
                   edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] &= (uint32_t)(~(0xffff << (16 * index_position)));
                   edition_settings.ranguvannja_tf[current_ekran.current_level - EKRAN_LIST_SOURCE_TF1] |= ((value & 0xffff) << (16 * index_position));
@@ -22285,10 +22285,10 @@ void main_manu_function(void)
                 else
                 {
                   unsigned int found_new_index = 0;
-                  int add_filter[0 + 1] =
-                    {
-                      -1 /*признак завершення масиву*/
-                    };
+                  // int add_filter[0 + 1] =
+                  //   {
+                  //     -1 /*признак завершення масиву*/
+                  //   };
                   //                EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                   //                {
                   //                  {1, RANG_SMALL_DF1_IN , RANG_SMALL_DF8_IN   , 1, current_settings.number_defined_df },
@@ -22303,24 +22303,10 @@ void main_manu_function(void)
                   while (found_new_index == 0)
                   {
                     check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                      add_filter,
+                                                                      /* add_filter */ NULL,
                                                                       /*el_filter,*/
                                                                       1,
                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_MTZ_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_MTZ04_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_ZNAM_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_ZDZ_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_ZZ_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_TZNP_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_APV_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_UROV_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_ZOP_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
-                                                                      NUMBER_VMP_SIGNAL_FOR_RANG_SMALL,
                                                                       NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                     //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -22636,13 +22622,13 @@ void main_manu_function(void)
                 else
                 {
                   unsigned int found_new_index = 0;
-                  int add_filter[3 + 1] =
-                    {
-                      RANG_PO_NZZ,
-                      RANG_NZZ,
-                      RANG_SECTOR_NZZ,
-                      -1 /*признак завершення масиву*/
-                    };
+                  // int add_filter[3 + 1] =
+                  //   {
+                  //     RANG_PO_NZZ,
+                  //     RANG_NZZ,
+                  //     RANG_SECTOR_NZZ,
+                  //     -1 /*признак завершення масиву*/
+                  //   };
                   //                EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                   //                {
                   //                  {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
@@ -22657,24 +22643,10 @@ void main_manu_function(void)
                   while (found_new_index == 0)
                   {
                     check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                      add_filter,
+                                                                      /* add_filter */ NULL,
                                                                       /*el_filter,*/
                                                                       1,
                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                      NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                      NUMBER_MTZ04_SIGNAL_FOR_RANG,
-                                                                      NUMBER_ZNAM_SIGNAL_FOR_RANG,
-                                                                      NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                      NUMBER_ZZ_SIGNAL_FOR_RANG,
-                                                                      NUMBER_TZNP_SIGNAL_FOR_RANG,
-                                                                      NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                      NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG,
-                                                                      NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                      NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                      NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                      NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                      NUMBER_UP_SIGNAL_FOR_RANG,
-                                                                      NUMBER_VMP_SIGNAL_FOR_RANG,
                                                                       NUMBER_EL_SIGNAL_FOR_RANG);
 
                     //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
@@ -24271,10 +24243,10 @@ void main_manu_function(void)
                   {
                     //Редагування
                     unsigned int found_new_index = 0;
-                    int add_filter[0 + 1] =
-                      {
-                        -1 /*признак завершення масиву*/
-                      };
+                    // int add_filter[0 + 1] =
+                    //   {
+                    //     -1 /*признак завершення масиву*/
+                    //   };
                     //                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                     //                  {
                     //                    {1, RANG_SMALL_DF1_IN , RANG_SMALL_DF8_IN   , 1, current_settings.number_defined_df },
@@ -24292,24 +24264,10 @@ void main_manu_function(void)
                     while (found_new_index == 0)
                     {
                       check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                        add_filter,
+                                                                        /* add_filter */ NULL,
                                                                         /*el_filter,*/
                                                                         0,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_MTZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_MTZ04_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZNAM_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZDZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_TZNP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_APV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UROV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZOP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_VMP_SIGNAL_FOR_RANG_SMALL,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                       //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -24628,13 +24586,13 @@ void main_manu_function(void)
                   {
                     //Редагування
                     unsigned int found_new_index = 0;
-                    int add_filter[3 + 1] =
-                      {
-                        RANG_PO_NZZ,
-                        RANG_NZZ,
-                        RANG_SECTOR_NZZ,
-                        -1 /*признак завершення масиву*/
-                      };
+                    // int add_filter[3 + 1] =
+                    //   {
+                    //     RANG_PO_NZZ,
+                    //     RANG_NZZ,
+                    //     RANG_SECTOR_NZZ,
+                    //     -1 /*признак завершення масиву*/
+                    //   };
                     //                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                     //                  {
                     //                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
@@ -24652,24 +24610,10 @@ void main_manu_function(void)
                     while (found_new_index == 0)
                     {
                       check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                        add_filter,
+                                                                        /* add_filter */ NULL,
                                                                         /*el_filter,*/
                                                                         0,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                        NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_MTZ04_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZNAM_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_TZNP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_VMP_SIGNAL_FOR_RANG,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG);
                       //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
                       if (
@@ -24993,10 +24937,10 @@ void main_manu_function(void)
                   {
                     //Редагування
                     unsigned int found_new_index = 0;
-                    int add_filter[0 + 1] =
-                      {
-                        -1 /*признак завершення масиву*/
-                      };
+                    // int add_filter[0 + 1] =
+                    //   {
+                    //     -1 /*признак завершення масиву*/
+                    //   };
                     //                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                     //                  {
                     //                    {1, RANG_SMALL_DF1_IN , RANG_SMALL_DF8_IN   , 1, current_settings.number_defined_df },
@@ -25014,24 +24958,10 @@ void main_manu_function(void)
                     while (found_new_index == 0)
                     {
                       check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                        add_filter,
+                                                                        /* add_filter */ NULL,
                                                                         /*el_filter,*/
                                                                         1,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_MTZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_MTZ04_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZNAM_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZDZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZZ_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_TZNP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_APV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UROV_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_ZOP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
-                                                                        NUMBER_VMP_SIGNAL_FOR_RANG_SMALL,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                       //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -25350,13 +25280,13 @@ void main_manu_function(void)
                   {
                     //Редагування
                     unsigned int found_new_index = 0;
-                    int add_filter[3 + 1] =
-                      {
-                        RANG_PO_NZZ,
-                        RANG_NZZ,
-                        RANG_SECTOR_NZZ,
-                        -1 /*признак завершення масиву*/
-                      };
+                    // int add_filter[3 + 1] =
+                    //   {
+                    //     RANG_PO_NZZ,
+                    //     RANG_NZZ,
+                    //     RANG_SECTOR_NZZ,
+                    //     -1 /*признак завершення масиву*/
+                    //   };
                     //                  EL_FILTER_STRUCT el_filter[NUMBER_DEFINED_ELEMENTS] =
                     //                  {
                     //                    {1, RANG_DF1_IN , RANG_DF8_OUT, 2, current_settings.number_defined_df },
@@ -25374,24 +25304,10 @@ void main_manu_function(void)
                     while (found_new_index == 0)
                     {
                       check_current_index_is_presented_in_configuration(&found_new_index,
-                                                                        add_filter,
+                                                                        /* add_filter */ NULL,
                                                                         /*el_filter,*/
                                                                         1,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG,
-                                                                        NUMBER_MTZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_MTZ04_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZNAM_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZDZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZZ_SIGNAL_FOR_RANG,
-                                                                        NUMBER_TZNP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_APV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ACHR_CHAPV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UROV_SIGNAL_FOR_RANG,
-                                                                        NUMBER_ZOP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG,
-                                                                        NUMBER_UP_SIGNAL_FOR_RANG,
-                                                                        NUMBER_VMP_SIGNAL_FOR_RANG,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG);
 
                       //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування

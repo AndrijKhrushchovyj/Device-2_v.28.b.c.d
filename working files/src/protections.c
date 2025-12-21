@@ -2135,18 +2135,7 @@ inline void main_protection(void)
       MASKA_FOR_INPUT_SIGNALS_0,
       MASKA_FOR_INPUT_SIGNALS_1,
       MASKA_FOR_INPUT_SIGNALS_2,
-      MASKA_FOR_INPUT_SIGNALS_3,
-      MASKA_FOR_INPUT_SIGNALS_4,
-      MASKA_FOR_INPUT_SIGNALS_5,
-      MASKA_FOR_INPUT_SIGNALS_6,
-      MASKA_FOR_INPUT_SIGNALS_7,
-      MASKA_FOR_INPUT_SIGNALS_8
-
-#ifdef MASKA_FOR_INPUT_SIGNALS_9
-      ,
-      MASKA_FOR_INPUT_SIGNALS_9
-#endif
-    };
+      MASKA_FOR_INPUT_SIGNALS_3};
   for (unsigned int i = 0; i < N_BIG; i++)
     active_functions[i] &= (unsigned int) (~maska_input_signals[i]);
 
@@ -2770,66 +2759,6 @@ inline void main_protection(void)
 
     //Âèìêíåííÿ ÂÂ
     active_functions[RANG_OTKL_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OTKL_VV) != 0) << (RANG_OTKL_VV & 0x1f);
-
-    //ÌÒÇ
-    active_functions[RANG_BLOCK_MTZ1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ1) != 0) << (RANG_BLOCK_MTZ1 & 0x1f);
-    active_functions[RANG_BLOCK_MTZ2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ2) != 0) << (RANG_BLOCK_MTZ2 & 0x1f);
-    active_functions[RANG_BLOCK_USK_MTZ2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_USK_MTZ2) != 0) << (RANG_BLOCK_USK_MTZ2 & 0x1f);
-    active_functions[RANG_BLOCK_MTZ3 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ3) != 0) << (RANG_BLOCK_MTZ3 & 0x1f);
-    active_functions[RANG_BLOCK_MTZ4 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ4) != 0) << (RANG_BLOCK_MTZ4 & 0x1f);
-
-    //Áëîê äëÿ ÌÒÇ 0.4êÂ
-    active_functions[RANG_BLOCK_MTZ04_1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ04_1) != 0) << (RANG_BLOCK_MTZ04_1 & 0x1f);
-    active_functions[RANG_BLOCK_MTZ04_2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_MTZ04_2) != 0) << (RANG_BLOCK_MTZ04_2 & 0x1f);
-    active_functions[RANG_BLOCK_USK_MTZ04_2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_USK_MTZ04_2) != 0) << (RANG_BLOCK_USK_MTZ04_2 & 0x1f);
-
-    //ÇÍàì
-    active_functions[RANG_BLOCK_ZNAM >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_ZNAM) != 0) << (RANG_BLOCK_ZNAM & 0x1f);
-
-    //Áëîê äëÿ ÇÄÇ
-    active_functions[RANG_BLOCK_ZDZ >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_ZDZ) != 0) << (RANG_BLOCK_ZDZ & 0x1f);
-    active_functions[RANG_PUSK_ZDZ_VID_DV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_PUSK_ZDZ_VID_DV) != 0) << (RANG_PUSK_ZDZ_VID_DV & 0x1f);
-
-    //ÑÇÇ
-    active_functions[RANG_BLOCK_NZZ >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_NZZ) != 0) << (RANG_BLOCK_NZZ & 0x1f);
-
-    //Áëîê ÒÇÍÏ
-    active_functions[RANG_BLOCK_TZNP1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_TZNP1) != 0) << (RANG_BLOCK_TZNP1 & 0x1f);
-    active_functions[RANG_BLOCK_TZNP2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_TZNP2) != 0) << (RANG_BLOCK_TZNP2 & 0x1f);
-    active_functions[RANG_BLOCK_TZNP3 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_TZNP3) != 0) << (RANG_BLOCK_TZNP3 & 0x1f);
-
-    //ÀÏÂ
-    active_functions[RANG_STAT_BLK_APV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_STAT_BLK_APV) != 0) << (RANG_STAT_BLK_APV & 0x1f);
-
-    //×ÀÏÂ
-    active_functions[RANG_ACHR_CHAPV_VID_DV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_ACHR_CHAPV_VID_DV) != 0) << (RANG_ACHR_CHAPV_VID_DV & 0x1f);
-    active_functions[RANG_BLOCK_ACHR1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_ACHR1) != 0) << (RANG_BLOCK_ACHR1 & 0x1f);
-    active_functions[RANG_BLOCK_ACHR2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_ACHR2) != 0) << (RANG_BLOCK_ACHR2 & 0x1f);
-
-    //ÓÐÎÂ
-    active_functions[RANG_BLOCK_UROV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UROV) != 0) << (RANG_BLOCK_UROV & 0x1f);
-    active_functions[RANG_PUSK_UROV_VID_DV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_PUSK_UROV_VID_DV) != 0) << (RANG_PUSK_UROV_VID_DV & 0x1f);
-
-    //Áëîê ÇÎÏ(ÊÎÔ)
-    active_functions[RANG_BLOCK_ZOP >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_ZOP) != 0) << (RANG_BLOCK_ZOP & 0x1f);
-
-    //Áëîê äëÿ Umin
-    active_functions[RANG_BLOCK_UMIN1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMIN1) != 0) << (RANG_BLOCK_UMIN1 & 0x1f);
-    active_functions[RANG_START_UMIN1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_START_UMIN1) != 0) << (RANG_START_UMIN1 & 0x1f);
-    active_functions[RANG_BLOCK_UMIN2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMIN2) != 0) << (RANG_BLOCK_UMIN2 & 0x1f);
-    active_functions[RANG_START_UMIN2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_START_UMIN2) != 0) << (RANG_START_UMIN2 & 0x1f);
-
-    //Áëîê äëÿ Umax
-    active_functions[RANG_BLOCK_UMAX1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMAX1) != 0) << (RANG_BLOCK_UMAX1 & 0x1f);
-    active_functions[RANG_BLOCK_UMAX2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMAX2) != 0) << (RANG_BLOCK_UMAX2 & 0x1f);
-
-    //Áëîêóâàííÿ äëÿ ÓÇ
-    for (size_t i = 0; i < NUMBER_UP; i++)
-    {
-      uint32_t rang_small_block_up = RANG_SMALL_BLOCK_UP1 + i;
-      uint32_t rang_block_up = RANG_BLOCK_UP1 + 3 * i;
-      active_functions[rang_block_up >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, rang_small_block_up) != 0) << (rang_block_up & 0x1f);
-    }
   }
   /**************************/
 
@@ -2848,8 +2777,7 @@ inline void main_protection(void)
     static unsigned int const command_signales[N_SMALL] =
       {
         COMMAND_SIGNALES_0,
-        COMMAND_SIGNALES_1,
-        COMMAND_SIGNALES_2};
+        COMMAND_SIGNALES_1};
 
     static unsigned int prev_active_functions_small[N_SOURCE][N_SMALL];
 
@@ -3165,18 +3093,7 @@ inline void main_protection(void)
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_0,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_2,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_5,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_7,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_8
-
-#ifdef MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_9
-      ,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_9
-#endif
-    };
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3};
   unsigned int comp = false;
   COMPARE_NOT_ZERO_OR(comp, active_functions, maska_signals_for_lock_group, N_BIG)
   if (comp)
@@ -3313,18 +3230,7 @@ inline void main_protection(void)
           MASKA_EL_SIGNALS_0,
           MASKA_EL_SIGNALS_1,
           MASKA_EL_SIGNALS_2,
-          MASKA_EL_SIGNALS_3,
-          MASKA_EL_SIGNALS_4,
-          MASKA_EL_SIGNALS_5,
-          MASKA_EL_SIGNALS_6,
-          MASKA_EL_SIGNALS_7,
-          MASKA_EL_SIGNALS_8
-
-#ifdef MASKA_EL_SIGNALS_9
-          ,
-          MASKA_EL_SIGNALS_9
-#endif
-        };
+          MASKA_EL_SIGNALS_3};
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_el_signals[i]);
 
@@ -3352,18 +3258,7 @@ inline void main_protection(void)
         MASKA_INFO_SIGNALES_0,
         MASKA_INFO_SIGNALES_1,
         MASKA_INFO_SIGNALES_2,
-        MASKA_INFO_SIGNALES_3,
-        MASKA_INFO_SIGNALES_4,
-        MASKA_INFO_SIGNALES_5,
-        MASKA_INFO_SIGNALES_6,
-        MASKA_INFO_SIGNALES_7,
-        MASKA_INFO_SIGNALES_8
-
-#ifdef MASKA_INFO_SIGNALES_9
-        ,
-        MASKA_INFO_SIGNALES_9
-#endif
-      };
+        MASKA_INFO_SIGNALES_3};
 
     for (size_t i = 0; i != N_BIG; ++i)
       active_functions[i] &= maska_info_signals[i];
@@ -3499,18 +3394,7 @@ inline void main_protection(void)
         MASKA_TRIGGER_SIGNALES_0,
         MASKA_TRIGGER_SIGNALES_1,
         MASKA_TRIGGER_SIGNALES_2,
-        MASKA_TRIGGER_SIGNALES_3,
-        MASKA_TRIGGER_SIGNALES_4,
-        MASKA_TRIGGER_SIGNALES_5,
-        MASKA_TRIGGER_SIGNALES_6,
-        MASKA_TRIGGER_SIGNALES_7,
-        MASKA_TRIGGER_SIGNALES_8
-
-#ifdef MASKA_TRIGGER_SIGNALES_9
-        ,
-        MASKA_TRIGGER_SIGNALES_9
-#endif
-      };
+        MASKA_TRIGGER_SIGNALES_3};
     comp = true;
     for (size_t i = 0; i != N_BIG; ++i)
     {

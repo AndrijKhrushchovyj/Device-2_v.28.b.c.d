@@ -4,21 +4,21 @@
 #include "stm32f2xx_it.h"
 
 #ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED
-  #if defined ( __ICCARM__ ) /*!< IAR Compiler */
-    #pragma data_alignment=4   
-  #endif
+#if defined(__ICCARM__) /*!< IAR Compiler */
+#pragma data_alignment = 4
+#endif
 #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
-   
-__ALIGN_BEGIN USB_OTG_CORE_HANDLE    USB_OTG_dev __ALIGN_END ;
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE USB_OTG_dev __ALIGN_END;
 
 void MX_FATFS_Init(void);
 
-void Configure_I2C(I2C_TypeDef*);
+void Configure_I2C(I2C_TypeDef *);
 void FSMC_SRAM_Init(void);
 
 int main(void);
 void ar_routine_with_fatfs(unsigned int);
-unsigned int ar_free_space(int*, int*);
+unsigned int ar_free_space(int *, int *);
 void periodical_operations(unsigned int);
 void periodical_operations_communication(unsigned int);
 void global_vareiables_installation(void);
@@ -36,14 +36,14 @@ unsigned int clear_lcd(void);
 unsigned int mode_viewing(unsigned int, unsigned int, unsigned int);
 unsigned int hd44780_puts(unsigned char *, unsigned int);
 unsigned int hd44780_test(unsigned char *, unsigned int);
-unsigned int Win1251toHd44780 (unsigned int);
-unsigned int read_data_from_lcd(unsigned char*);
+unsigned int Win1251toHd44780(unsigned int);
+unsigned int read_data_from_lcd(unsigned char *);
 unsigned int write_data_to_lcd(unsigned char);
 unsigned int write_command_to_lcd(unsigned char);
 unsigned int hd44780_gotoxy(unsigned char, unsigned char);
-unsigned int hd44780_puts_xy (unsigned char, unsigned char, unsigned char *);
+unsigned int hd44780_puts_xy(unsigned char, unsigned char, unsigned char *);
 void view_whole_ekran(void);
-void check_state_key(GPIO_TypeDef*, uint16_t, unsigned int);
+void check_state_key(GPIO_TypeDef *, uint16_t, unsigned int);
 int index_language_in_array(int);
 
 void inc_or_dec_value(unsigned int *, unsigned int);
@@ -56,8 +56,8 @@ void make_ekran_time(void);
 void edit_time(unsigned int);
 void make_ekran_ask_rewrite(void);
 unsigned int check_data_for_data_time_menu(void);
-void make_ekran_about_error(const unsigned char [][MAX_COL_LCD]);
-void make_ekran_about_activation_command(unsigned int, unsigned char [][MAX_NAMBER_LANGUAGE][MAX_COL_LCD]);
+void make_ekran_about_error(const unsigned char[][MAX_COL_LCD]);
+void make_ekran_about_activation_command(unsigned int, unsigned char[][MAX_NAMBER_LANGUAGE][MAX_COL_LCD]);
 void make_ekran_configuration(unsigned int);
 void make_ekran_measurement(void);
 void make_ekran_measurement_voltage_type(void);
@@ -93,9 +93,9 @@ void make_ekran_timeout_znam(unsigned int);
 void make_ekran_control_znam(void);
 void make_ekran_timeout_zdz(unsigned int);
 void make_ekran_control_zdz(void);
-void calc_symbol_and_put_into_working_ekran(unsigned char*, void*, void*, unsigned int*, unsigned int, unsigned int, unsigned int, unsigned int);
-void calc_int_symbol_and_put_into_working_ekran(unsigned char*, unsigned int*, unsigned int*, unsigned int*, unsigned int);
-unsigned int edit_setpoint(unsigned int,  unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+void calc_symbol_and_put_into_working_ekran(unsigned char *, void *, void *, unsigned int *, unsigned int, unsigned int, unsigned int, unsigned int);
+void calc_int_symbol_and_put_into_working_ekran(unsigned char *, unsigned int *, unsigned int *, unsigned int *, unsigned int);
+unsigned int edit_setpoint(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 unsigned int check_data_setpoint(unsigned int, unsigned int, unsigned int);
 void make_ekran_setpoint_zz(unsigned int);
 void make_ekran_timeout_zz(unsigned int);
@@ -126,13 +126,14 @@ void make_ekran_control_UP(void);
 void make_ekran_chose_of_list_for_ranguvannja(__id_input_output);
 void make_ekran_transformator(void);
 void make_ekran_transformator_control(void);
-void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned int * 
+void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned int *
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-                                                                              , int, int
+                                   ,
+                                   int, int
 #endif
 );
 void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int, unsigned int *);
-void check_current_index_is_presented_in_configuration(unsigned int*, int*, /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int);
+void check_current_index_is_presented_in_configuration(unsigned int *, int *, /*EL_FILTER_STRUCT[],*/ int, int, int);
 void make_ekran_choose_CBOn_CBOff(void);
 void make_ekran_setpoint_switch(void);
 void make_ekran_timeout_switch(void);
@@ -182,7 +183,7 @@ void make_ekran_info(void);
 void make_ekran_date_time_pz(void);
 void make_ekran_chose_item_of_point_time_settings(void);
 void make_ekran_time_settings(unsigned int);
-void make_ekran_diagnostyka(unsigned int volatile*);
+void make_ekran_diagnostyka(unsigned int volatile *);
 void make_ekran_list_inputs_outputs(void);
 void make_ekran_state_inputs_or_outputs(unsigned int);
 void make_ekran_list_registrators(void);
@@ -201,7 +202,6 @@ void make_ekran_data_and_time_elem_stt_registrator(unsigned int type_of_registra
 void make_ekran_timeout_digital_registrator(void);
 void make_ekran_settings_digital_registrators(void);
 
-
 void make_ekran_setting_language(void);
 void make_ekran_resurs(void);
 void make_ekran_energy(unsigned int);
@@ -209,36 +209,34 @@ void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
 
 unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);
-unsigned int action_after_changing_extra_settings(unsigned int, __SETTINGS *);
-void action_after_changing_zz1_type(__SETTINGS *);
 void action_after_changing_resurs_pickup(__SETTINGS *);
 void action_during_changing_button_mode(__SETTINGS *, __SETTINGS *);
 void def_pickup_timeout_UP(__SETTINGS *, uint32_t, uint32_t);
 void action_after_changing_input_UP(__SETTINGS *, uint32_t, uint32_t);
 void action_after_changing_ctrl_UP(__SETTINGS *, uint32_t);
-void change_setpoint_to_ctrl_UP(__SETTINGS * const, uint32_t const);
+void change_setpoint_to_ctrl_UP(__SETTINGS *const, uint32_t const);
 //void action_after_changing_number_el(__SETTINGS *, unsigned int);
 void calculate_namber_bit_waiting_for_rs_485(void);
 void fix_change_settings(unsigned int, unsigned int);
 unsigned int set_new_settings_from_interface(unsigned int);
-void restore_trigger_functions(unsigned int*);
+void restore_trigger_functions(unsigned int *);
 void changing_diagnostyka_state(void);
-unsigned int count_number_set_bit(unsigned int*, unsigned int);
+unsigned int count_number_set_bit(unsigned int *, unsigned int);
 
-long GetNumberChangingInLogElem( long lIdx);
+long GetNumberChangingInLogElem(long lIdx);
 
 void CmdPlusTimeLogHundler(unsigned int *p_active_functions);
 void GetCmdPlusTimeLogElem(unsigned int *p_elem, long lIdx);
 void GetDateTimeLogElem(unsigned int *p_elem, long lIdx);
 void GetMsLogElem(unsigned int *p_elem, long lIdx);
-long GetNumberChangingInLogElemUseLocal( long lIdx);
-long GetNumberChangingInLogElem( long lIdx);
+long GetNumberChangingInLogElemUseLocal(long lIdx);
+long GetNumberChangingInLogElem(long lIdx);
 void CmdPlusTimeStampLogHundler(unsigned int *p_active_functions);
 
-long GetMsLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
-long GetDateTimeLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
-long GetCmdPlusTimeLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
-void CleanCmdPlusTimeLog(void); 
+long GetMsLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
+long GetDateTimeLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
+long GetCmdPlusTimeLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
+void CleanCmdPlusTimeLog(void);
 void PuCmdinRawBuf(unsigned int *p_active_functions);
 void make_ekran_time_ms_c_val_c_name_sr_format_changing_signals(void);
 void make_ekran_signals_stable_one_in_data_elem_stt_reg(void);
@@ -251,14 +249,14 @@ void Usb_routines(void);
 void USART_RS485_Configure(void);
 void restart_monitoring_RS485(void);
 void start_transmint_data_via_RS_485(unsigned int);
-unsigned short int  AddCRC(unsigned char, unsigned short int);
+unsigned short int AddCRC(unsigned char, unsigned short int);
 
-unsigned int start_write_buffer_via_I2C(uint32_t, uint32_t, uint8_t*, uint32_t);
-unsigned int start_read_buffer_via_I2C(uint32_t, uint32_t, uint8_t*, uint32_t);
+unsigned int start_write_buffer_via_I2C(uint32_t, uint32_t, uint8_t *, uint32_t);
+unsigned int start_read_buffer_via_I2C(uint32_t, uint32_t, uint8_t *, uint32_t);
 void main_routines_for_i2c(void);
 void error_start_i2c(void);
 
-void find_new_ADC_canal_to_read(unsigned int, unsigned int*);
+void find_new_ADC_canal_to_read(unsigned int, unsigned int *);
 void control_reading_ADCs(void);
 void Fourier(void);
 void fapch(void);
@@ -285,14 +283,14 @@ void dataflash_mamory_buffer_into_memory(int);
 void control_settings(void);
 void control_ustuvannja(void);
 void control_trg_func(void);
-unsigned int control_info_rejestrator(__INFO_REJESTRATOR*, unsigned char);
-unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR*, unsigned char);
+unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
+unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
 void control_resurs(void);
 
 void watchdog_routine(unsigned int, unsigned int const);
 void total_error_sw_fixed(void);
 
-void setpoints_selecting(unsigned int*, unsigned int);
+void setpoints_selecting(unsigned int *, unsigned int);
 
 int str_to_int_DATE_Mmm(void);
 
@@ -311,8 +309,7 @@ void make_ekran_settings_synchro(void);
 // extern void inputPacketParserRS485(void);
 
 #if (__VER__ >= 8000000)
-extern int _ForceReloadDstRules (void);
+extern int _ForceReloadDstRules(void);
 #endif
 
 #endif
-

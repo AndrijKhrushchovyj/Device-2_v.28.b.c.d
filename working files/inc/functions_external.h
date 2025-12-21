@@ -1,24 +1,24 @@
 #ifndef __EXTERNAL_FUNCTIONS_H
 #define __EXTERNAL_FUNCTIONS_H
 
-extern USB_OTG_CORE_HANDLE           USB_OTG_dev;
-extern uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+extern USB_OTG_CORE_HANDLE USB_OTG_dev;
+extern uint32_t USBD_OTG_ISR_Handler(USB_OTG_CORE_HANDLE *pdev);
 
-#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED 
-extern uint32_t USBD_OTG_EP1IN_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
-extern uint32_t USBD_OTG_EP1OUT_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
+#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
+extern uint32_t USBD_OTG_EP1IN_ISR_Handler(USB_OTG_CORE_HANDLE *pdev);
+extern uint32_t USBD_OTG_EP1OUT_ISR_Handler(USB_OTG_CORE_HANDLE *pdev);
 #endif
 
-extern CDC_IF_Prop_TypeDef  APP_FOPS;
+extern CDC_IF_Prop_TypeDef APP_FOPS;
 
 extern void MX_FATFS_Init(void);
 
-extern void Configure_I2C(I2C_TypeDef*);
+extern void Configure_I2C(I2C_TypeDef *);
 extern void FSMC_SRAM_Init(void);
 
 extern int main(void);
 extern void ar_routine_with_fatfs(unsigned int);
-extern unsigned int ar_free_space(int*, int*);
+extern unsigned int ar_free_space(int *, int *);
 extern void periodical_operations(unsigned int);
 extern void periodical_operations_communication(unsigned int);
 extern void global_vareiables_installation(void);
@@ -36,14 +36,14 @@ extern unsigned int clear_lcd(void);
 extern unsigned int mode_viewing(unsigned int, unsigned int, unsigned int);
 extern unsigned int hd44780_puts(unsigned char *, unsigned int);
 extern unsigned int hd44780_test(unsigned char *, unsigned int);
-extern unsigned int Win1251toHd44780 (unsigned int);
-extern unsigned int read_data_from_lcd(unsigned char*);
+extern unsigned int Win1251toHd44780(unsigned int);
+extern unsigned int read_data_from_lcd(unsigned char *);
 extern unsigned int write_data_to_lcd(unsigned char);
 extern unsigned int write_command_to_lcd(unsigned char);
 extern unsigned int hd44780_gotoxy(unsigned char, unsigned char);
-extern unsigned int hd44780_puts_xy (unsigned char, unsigned char, unsigned char *);
+extern unsigned int hd44780_puts_xy(unsigned char, unsigned char, unsigned char *);
 extern void view_whole_ekran(void);
-extern void check_state_key(GPIO_TypeDef*, uint16_t, unsigned int);
+extern void check_state_key(GPIO_TypeDef *, uint16_t, unsigned int);
 extern int index_language_in_array(int);
 
 extern void inc_or_dec_value(unsigned int *, unsigned int);
@@ -56,8 +56,8 @@ extern void make_ekran_time(void);
 extern void edit_time(unsigned int);
 extern void make_ekran_ask_rewrite(void);
 extern unsigned int check_data_for_data_time_menu(void);
-extern void make_ekran_about_error(const unsigned char [][MAX_COL_LCD]);
-extern void make_ekran_about_activation_command(unsigned int, unsigned char [][MAX_NAMBER_LANGUAGE][MAX_COL_LCD]);
+extern void make_ekran_about_error(const unsigned char[][MAX_COL_LCD]);
+extern void make_ekran_about_activation_command(unsigned int, unsigned char[][MAX_NAMBER_LANGUAGE][MAX_COL_LCD]);
 extern void make_ekran_configuration(unsigned int);
 extern void make_ekran_measurement(void);
 extern void make_ekran_measurement_voltage_type(void);
@@ -93,9 +93,9 @@ extern void make_ekran_timeout_znam(unsigned int);
 extern void make_ekran_control_znam(void);
 extern void make_ekran_timeout_zdz(unsigned int);
 extern void make_ekran_control_zdz(void);
-extern void calc_symbol_and_put_into_working_ekran(unsigned char*, void*, void*, unsigned int*, unsigned int, unsigned int, unsigned int, unsigned int);
-extern void calc_int_symbol_and_put_into_working_ekran(unsigned char*, unsigned int*, unsigned int*, unsigned int*, unsigned int);
-extern unsigned int edit_setpoint(unsigned int,  unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+extern void calc_symbol_and_put_into_working_ekran(unsigned char *, void *, void *, unsigned int *, unsigned int, unsigned int, unsigned int, unsigned int);
+extern void calc_int_symbol_and_put_into_working_ekran(unsigned char *, unsigned int *, unsigned int *, unsigned int *, unsigned int);
+extern unsigned int edit_setpoint(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 extern unsigned int check_data_setpoint(unsigned int, unsigned int, unsigned int);
 extern void make_ekran_setpoint_zz(unsigned int);
 extern void make_ekran_timeout_zz(unsigned int);
@@ -126,13 +126,14 @@ extern void make_ekran_control_UP(void);
 extern void make_ekran_chose_of_list_for_ranguvannja(__id_input_output);
 extern void make_ekran_transformator(void);
 extern void make_ekran_transformator_control(void);
-extern void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned int * 
+extern void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned int *
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-                                                                               , int, int
+                                          ,
+                                          int, int
 #endif
 );
 extern void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int, unsigned int *);
-extern void check_current_index_is_presented_in_configuration(unsigned int*, int*, /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int);
+extern void check_current_index_is_presented_in_configuration(unsigned int *, int *, /*EL_FILTER_STRUCT[],*/ int, int, int);
 extern void make_ekran_choose_CBOn_CBOff(void);
 extern void make_ekran_setpoint_switch(void);
 extern void make_ekran_timeout_switch(void);
@@ -182,7 +183,7 @@ extern void make_ekran_info(void);
 extern void make_ekran_date_time_pz(void);
 extern void make_ekran_chose_item_of_point_time_settings(void);
 extern void make_ekran_time_settings(unsigned int);
-extern void make_ekran_diagnostyka(unsigned int volatile*);
+extern void make_ekran_diagnostyka(unsigned int volatile *);
 extern void make_ekran_list_inputs_outputs(void);
 extern void make_ekran_state_inputs_or_outputs(unsigned int);
 extern void make_ekran_list_registrators(void);
@@ -206,39 +207,36 @@ extern void make_ekran_data_and_time_elem_stt_registrator(unsigned int type_of_r
 extern void make_ekran_timeout_digital_registrator(void);
 extern void make_ekran_settings_digital_registrators(void);
 
-
 extern unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);
-extern unsigned int action_after_changing_extra_settings(unsigned int, __SETTINGS *);
-extern void action_after_changing_zz1_type(__SETTINGS *);
 extern void action_after_changing_resurs_pickup(__SETTINGS *);
 extern void action_during_changing_button_mode(__SETTINGS *, __SETTINGS *);
 extern void def_pickup_timeout_UP(__SETTINGS *, uint32_t, uint32_t);
 extern void action_after_changing_input_UP(__SETTINGS *, uint32_t, uint32_t);
 extern void action_after_changing_ctrl_UP(__SETTINGS *, uint32_t);
-extern void change_setpoint_to_ctrl_UP(__SETTINGS * const, uint32_t const);
+extern void change_setpoint_to_ctrl_UP(__SETTINGS *const, uint32_t const);
 //extern void action_after_changing_number_el(__SETTINGS *, unsigned int);
 extern void calculate_namber_bit_waiting_for_rs_485(void);
 extern void fix_change_settings(unsigned int, unsigned int);
 extern unsigned int set_new_settings_from_interface(unsigned int);
-extern void restore_trigger_functions(unsigned int*);
+extern void restore_trigger_functions(unsigned int *);
 extern void changing_diagnostyka_state(void);
-extern unsigned int count_number_set_bit(unsigned int*, unsigned int);
+extern unsigned int count_number_set_bit(unsigned int *, unsigned int);
 
-extern void set_bit(unsigned int*, unsigned int);
-extern void clear_bit(unsigned int*, unsigned int);
-extern long GetNumberChangingInLogElem( long lIdx);
+extern void set_bit(unsigned int *, unsigned int);
+extern void clear_bit(unsigned int *, unsigned int);
+extern long GetNumberChangingInLogElem(long lIdx);
 
 extern void CmdPlusTimeLogHundler(unsigned int *p_active_functions);
 extern void GetCmdPlusTimeLogElem(unsigned int *p_elem, long lIdx);
 extern void GetDateTimeLogElem(unsigned int *p_elem, long lIdx);
 extern void GetMsLogElem(unsigned int *p_elem, long lIdx);
-extern long GetNumberChangingInLogElemUseLocal( long lIdx);
-extern long GetNumberChangingInLogElem( long lIdx);
+extern long GetNumberChangingInLogElemUseLocal(long lIdx);
+extern long GetNumberChangingInLogElem(long lIdx);
 extern void CmdPlusTimeStampLogHundler(unsigned int *p_active_functions);
 
-extern long GetMsLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
-extern long GetDateTimeLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
-extern long GetCmdPlusTimeLogElemPlWnum(unsigned int *p_elem, long lIdx,unsigned long ulWorkNumber);
+extern long GetMsLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
+extern long GetDateTimeLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
+extern long GetCmdPlusTimeLogElemPlWnum(unsigned int *p_elem, long lIdx, unsigned long ulWorkNumber);
 extern void CleanCmdPlusTimeLog(void);
 extern void PuCmdinRawBuf(unsigned int *p_active_functions);
 extern void make_ekran_signals_stable_one_in_data_elem_stt_reg(void);
@@ -250,14 +248,14 @@ extern void Usb_routines(void);
 extern void USART_RS485_Configure(void);
 extern void restart_monitoring_RS485(void);
 extern void start_transmint_data_via_RS_485(unsigned int);
-extern unsigned short int  AddCRC(unsigned char, unsigned short int);
+extern unsigned short int AddCRC(unsigned char, unsigned short int);
 
-extern unsigned int start_write_buffer_via_I2C(uint32_t, uint32_t, uint8_t*, uint32_t);
-extern unsigned int start_read_buffer_via_I2C(uint32_t, uint32_t, uint8_t*, uint32_t);
+extern unsigned int start_write_buffer_via_I2C(uint32_t, uint32_t, uint8_t *, uint32_t);
+extern unsigned int start_read_buffer_via_I2C(uint32_t, uint32_t, uint8_t *, uint32_t);
 extern void main_routines_for_i2c(void);
 extern void error_start_i2c(void);
 
-extern void find_new_ADC_canal_to_read(unsigned int, unsigned int*);
+extern void find_new_ADC_canal_to_read(unsigned int, unsigned int *);
 extern void control_reading_ADCs(void);
 extern void Fourier(void);
 extern void fapch(void);
@@ -284,8 +282,8 @@ extern void dataflash_mamory_buffer_into_memory(int);
 extern void control_settings(void);
 extern void control_ustuvannja(void);
 extern void control_trg_func(void);
-extern unsigned int control_info_rejestrator(__INFO_REJESTRATOR*, unsigned char);
-extern unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR*, unsigned char);
+extern unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
+extern unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
 extern void control_resurs(void);
 
 extern void watchdog_routine(unsigned int, unsigned int const);
@@ -315,7 +313,7 @@ extern void USARTRS485_IRQHandler(void);
 extern void DMA_StreamRS485_Tx_IRQHandler(void);
 extern void EXITI_POWER_IRQHandler(void);
 
-extern void setpoints_selecting(unsigned int*, unsigned int);
+extern void setpoints_selecting(unsigned int *, unsigned int);
 
 extern int str_to_int_DATE_Mmm(void);
 
@@ -326,9 +324,9 @@ extern void start_transmint_data_via_CANAL1_MO(void);
 extern void start_receive_data_via_CANAL1_MO(void);
 extern void CANAL2_MO_routine(void);
 extern void low_routine_for_KP(void);
-extern void proc_Gs_blk_out(void* pv,unsigned long lCtrGsSrc,short* p_arrOrdNumsGsSignal ); 
-extern void proc_Mms_blk_out(void* pv,unsigned long lCtrMmsSrc,short* p_arrOrdNumsMmsSignal );
-extern void proc_Lan_blk_out(unsigned short *p_rang_Out_LAN,unsigned int *p_active_functions, void *pLanDsc);
+extern void proc_Gs_blk_out(void *pv, unsigned long lCtrGsSrc, short *p_arrOrdNumsGsSignal);
+extern void proc_Mms_blk_out(void *pv, unsigned long lCtrMmsSrc, short *p_arrOrdNumsMmsSignal);
+extern void proc_Lan_blk_out(unsigned short *p_rang_Out_LAN, unsigned int *p_active_functions, void *pLanDsc);
 // extern void inputPacketParserLAN(void);
 void make_ekran_settings_synchro(void);
 #endif
@@ -337,7 +335,7 @@ void make_ekran_settings_synchro(void);
 // extern void inputPacketParserRS485(void);
 
 #if (__VER__ >= 8000000)
-extern int _ForceReloadDstRules (void);
+extern int _ForceReloadDstRules(void);
 #endif
 
 #endif
