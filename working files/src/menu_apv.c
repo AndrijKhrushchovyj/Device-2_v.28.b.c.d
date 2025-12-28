@@ -397,60 +397,60 @@ void make_ekran_control_apv()
   int position_temp = current_ekran.index_position;
   int index_of_ekran;
   
-  if ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-  {
-    for (int current_index = INDEX_ML_CTRAPV_STARTED_FROM_MTZ1; current_index <= INDEX_ML_CTRAPV_STARTED_FROM_MTZ4; current_index++ )
-    {
-      int i = current_index - additional_current;
-      unsigned int maska_1, maska_2;
-      maska_1 = (1 << i) - 1;
-      maska_2 = (unsigned int)(~maska_1);
+  // if ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
+  // {
+  //   for (int current_index = INDEX_ML_CTRAPV_STARTED_FROM_MTZ1; current_index <= INDEX_ML_CTRAPV_STARTED_FROM_MTZ4; current_index++ )
+  //   {
+  //     int i = current_index - additional_current;
+  //     unsigned int maska_1, maska_2;
+  //     maska_1 = (1 << i) - 1;
+  //     maska_2 = (unsigned int)(~maska_1);
     
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((i+1) < (MAX_ROW_FOR_CONTROL_APV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i < (MAX_ROW_FOR_CONTROL_APV - additional_current));
+  //     if ((i+1) <= position_temp) position_temp--;
+  //     do
+  //     {
+  //       for(unsigned int j = 0; j<MAX_COL_LCD; j++)
+  //       {
+  //         if ((i+1) < (MAX_ROW_FOR_CONTROL_APV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+  //         else name_string_tmp[i][j] = ' ';
+  //       }
+  //       i++;
+  //     }
+  //     while (i < (MAX_ROW_FOR_CONTROL_APV - additional_current));
     
-      unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
-      temp_data = (temp_data & maska_1) | temp_data_1;
+  //     unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
+  //     temp_data = (temp_data & maska_1) | temp_data_1;
 
-      additional_current++;
-    }
-  }
+  //     additional_current++;
+  //   }
+  // }
 
-  if ((current_settings.configuration & (1<<UROV_BIT_CONFIGURATION)) == 0)
-  {
-    {
-      int i = INDEX_ML_CTRAPV_BLK_CTRL_PRVV2 - additional_current;
-      unsigned int maska_1, maska_2;
-      maska_1 = (1 << i) - 1;
-      maska_2 = (unsigned int)(~maska_1);
+  // if ((current_settings.configuration & (1<<UROV_BIT_CONFIGURATION)) == 0)
+  // {
+  //   {
+  //     int i = INDEX_ML_CTRAPV_BLK_CTRL_PRVV2 - additional_current;
+  //     unsigned int maska_1, maska_2;
+  //     maska_1 = (1 << i) - 1;
+  //     maska_2 = (unsigned int)(~maska_1);
     
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j<MAX_COL_LCD; j++)
-        {
-          if ((i+1) < (MAX_ROW_FOR_CONTROL_APV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i < (MAX_ROW_FOR_CONTROL_APV - additional_current));
+  //     if ((i+1) <= position_temp) position_temp--;
+  //     do
+  //     {
+  //       for(unsigned int j = 0; j<MAX_COL_LCD; j++)
+  //       {
+  //         if ((i+1) < (MAX_ROW_FOR_CONTROL_APV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+  //         else name_string_tmp[i][j] = ' ';
+  //       }
+  //       i++;
+  //     }
+  //     while (i < (MAX_ROW_FOR_CONTROL_APV - additional_current));
     
-      unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
-      temp_data = (temp_data & maska_1) | temp_data_1;
+  //     unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
+  //     temp_data = (temp_data & maska_1) | temp_data_1;
 
-      additional_current++;
-    }
-  }
+  //     additional_current++;
+  //   }
+  // }
   /******************************************/
 
   //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)

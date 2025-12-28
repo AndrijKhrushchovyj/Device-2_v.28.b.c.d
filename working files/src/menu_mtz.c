@@ -277,7 +277,7 @@ void make_ekran_setpoint_mtz(unsigned int group)
     }
   };
 
-  unsigned int isZNam = current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION);
+  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */0;
 
   int index_language = index_language_in_array(current_settings.language);
   
@@ -1168,7 +1168,7 @@ void make_ekran_timeout_mtz(unsigned int group)
   };
 
   int index_language = index_language_in_array(current_settings.language);
-  unsigned int isZNam = current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION);
+  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */0;
  
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -1996,7 +1996,7 @@ void make_ekran_control_mtz()
     }
   };
 
-  unsigned int isZNam = current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION);
+  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */0;
   int index_language = index_language_in_array(current_settings.language);
   
   unsigned int position_temp = current_ekran.index_position;

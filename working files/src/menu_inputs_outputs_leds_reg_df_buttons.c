@@ -581,14 +581,6 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
         {-1, -1},
         {-1, -1},
         {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL),
          (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_EL_SIGNAL_FOR_RANG_SMALL - 1)}};
 
@@ -1163,14 +1155,6 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     unsigned int i, offset = 0;
     static const int min_max_number[_FIX_NUMBER_PROTECTION][2] =
       {
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
         {-1, -1},
         {-1, -1},
         {-1, -1},

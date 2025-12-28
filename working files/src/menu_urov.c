@@ -230,377 +230,377 @@ void make_ekran_timeout_urov(unsigned int group)
 /*****************************************************/
 void make_ekran_control_urov()
 {
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP + 1][MAX_COL_LCD] = 
-  {
-    {
-      "      УРОВ      ",
-      "    от МТЗ 1    ",
-      "    от МТЗ 2    ",
-      "    от МТЗ 3    ",
-      "    от МТЗ 4    ",
-      "  от МТЗ0.4 1   ",
-      "  от МТЗ0.4 2   ",
-      "     от ЗДЗ     ",
-      "     от 3I0     ",
-      "     от 3U0     ",
-      "     от НЗЗ     ",
-      "   от ТЗНП 1    ",
-      "   от ТЗНП 2    ",
-      "   от ТЗНП 3    ",
-      "   от ЗОП(I)    ",
-      "   от Umin 1    ",
-      "   от Umin 2    ",
-      "   от Umax 1    ",
-      "   от Umax 2    ",
-      "    от АЧР 1    ",
-      "    от АЧР 2    ",
-      "    от УЗ x     "
-    },
-    {
-      "      ПРВВ      ",
-      "   від МСЗ 1    ",
-      "   від МСЗ 2    ",
-      "   від МСЗ 3    ",
-      "   від МСЗ 4    ",
-      "  від МСЗ0.4 1  ",
-      "  від МСЗ0.4 2  ",
-      "    від ЗДЗ     ",
-      "    від 3I0     ",
-      "    від 3U0     ",
-      "    від СЗЗ     ",
-      "   від СЗНП 1   ",
-      "   від СЗНП 2   ",
-      "   від СЗНП 3   ",
-      "   від ЗЗП(I)   ",
-      "   від Umin 1   ",
-      "   від Umin 2   ",
-      "   від Umax 1   ",
-      "   від Umax 2   ",
-      "   від АЧР 1    ",
-      "   від АЧР 2    ",
-      "    від УЗ x    "
-    },
-    {
-      "      CBF       ",
-      "   via OCP 1    ",
-      "   via OCP 2    ",
-      "   via OCP 3    ",
-      "   via OCP 4    ",
-      "  via LVOCP 1   ",
-      "  via LVOCP 2   ",
-      "    via AFD     ",
-      "  via EFP 3I0   ",
-      "  via EFP 3V0   ",
-      "   via SDEFP    ",
-      "   via DEFP 1   ",
-      "   via DEFP 2   ",
-      "   via DEFP 3   ",
-      "   via NSOCP    ",
-      "   via UVP 1    ",
-      "   via UVP 2    ",
-      "   via OVP 1    ",
-      "   via OVP 2    ",
-      "   via LFC 1    ",
-      "   via LFC 2    ",
-      "   via MFP x    "
-    },
-    {
-      "      УРОВ      ",
-      "    от МТЗ 1    ",
-      "    от МТЗ 2    ",
-      "    от МТЗ 3    ",
-      "    от МТЗ 4    ",
-      "  от МТЗ0.4 1   ",
-      "  от МТЗ0.4 2   ",
-      "     от ЗДЗ     ",
-      "     от 3I0     ",
-      "     от 3U0     ",
-      "     от НЗЗ     ",
-      "   от ТЗНП 1    ",
-      "   от ТЗНП 2    ",
-      "   от ТЗНП 3    ",
-      "   от ЗОП(I)    ",
-      "   от Umin 1    ",
-      "   от Umin 2    ",
-      "   от Umax 1    ",
-      "   от Umax 2    ",
-      "    от АЧР 1    ",
-      "    от АЧР 2    ",
-      "    от УЗ x     "
-    }
-  };
-  static const uint32_t index_number_UP_prvv[MAX_NAMBER_LANGUAGE] = {10, 11, 11, 10};
+  // static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP + 1][MAX_COL_LCD] = 
+  // {
+  //   {
+  //     "      УРОВ      ",
+  //     "    от МТЗ 1    ",
+  //     "    от МТЗ 2    ",
+  //     "    от МТЗ 3    ",
+  //     "    от МТЗ 4    ",
+  //     "  от МТЗ0.4 1   ",
+  //     "  от МТЗ0.4 2   ",
+  //     "     от ЗДЗ     ",
+  //     "     от 3I0     ",
+  //     "     от 3U0     ",
+  //     "     от НЗЗ     ",
+  //     "   от ТЗНП 1    ",
+  //     "   от ТЗНП 2    ",
+  //     "   от ТЗНП 3    ",
+  //     "   от ЗОП(I)    ",
+  //     "   от Umin 1    ",
+  //     "   от Umin 2    ",
+  //     "   от Umax 1    ",
+  //     "   от Umax 2    ",
+  //     "    от АЧР 1    ",
+  //     "    от АЧР 2    ",
+  //     "    от УЗ x     "
+  //   },
+  //   {
+  //     "      ПРВВ      ",
+  //     "   від МСЗ 1    ",
+  //     "   від МСЗ 2    ",
+  //     "   від МСЗ 3    ",
+  //     "   від МСЗ 4    ",
+  //     "  від МСЗ0.4 1  ",
+  //     "  від МСЗ0.4 2  ",
+  //     "    від ЗДЗ     ",
+  //     "    від 3I0     ",
+  //     "    від 3U0     ",
+  //     "    від СЗЗ     ",
+  //     "   від СЗНП 1   ",
+  //     "   від СЗНП 2   ",
+  //     "   від СЗНП 3   ",
+  //     "   від ЗЗП(I)   ",
+  //     "   від Umin 1   ",
+  //     "   від Umin 2   ",
+  //     "   від Umax 1   ",
+  //     "   від Umax 2   ",
+  //     "   від АЧР 1    ",
+  //     "   від АЧР 2    ",
+  //     "    від УЗ x    "
+  //   },
+  //   {
+  //     "      CBF       ",
+  //     "   via OCP 1    ",
+  //     "   via OCP 2    ",
+  //     "   via OCP 3    ",
+  //     "   via OCP 4    ",
+  //     "  via LVOCP 1   ",
+  //     "  via LVOCP 2   ",
+  //     "    via AFD     ",
+  //     "  via EFP 3I0   ",
+  //     "  via EFP 3V0   ",
+  //     "   via SDEFP    ",
+  //     "   via DEFP 1   ",
+  //     "   via DEFP 2   ",
+  //     "   via DEFP 3   ",
+  //     "   via NSOCP    ",
+  //     "   via UVP 1    ",
+  //     "   via UVP 2    ",
+  //     "   via OVP 1    ",
+  //     "   via OVP 2    ",
+  //     "   via LFC 1    ",
+  //     "   via LFC 2    ",
+  //     "   via MFP x    "
+  //   },
+  //   {
+  //     "      УРОВ      ",
+  //     "    от МТЗ 1    ",
+  //     "    от МТЗ 2    ",
+  //     "    от МТЗ 3    ",
+  //     "    от МТЗ 4    ",
+  //     "  от МТЗ0.4 1   ",
+  //     "  от МТЗ0.4 2   ",
+  //     "     от ЗДЗ     ",
+  //     "     от 3I0     ",
+  //     "     от 3U0     ",
+  //     "     от НЗЗ     ",
+  //     "   от ТЗНП 1    ",
+  //     "   от ТЗНП 2    ",
+  //     "   от ТЗНП 3    ",
+  //     "   от ЗОП(I)    ",
+  //     "   от Umin 1    ",
+  //     "   от Umin 2    ",
+  //     "   от Umax 1    ",
+  //     "   от Umax 2    ",
+  //     "    от АЧР 1    ",
+  //     "    от АЧР 2    ",
+  //     "    от УЗ x     "
+  //   }
+  // };
+  // static const uint32_t index_number_UP_prvv[MAX_NAMBER_LANGUAGE] = {10, 11, 11, 10};
   
-  unsigned char name_string_tmp[MAX_ROW_FOR_CONTROL_UROV][MAX_COL_LCD];
+  // unsigned char name_string_tmp[MAX_ROW_FOR_CONTROL_UROV][MAX_COL_LCD];
 
-  int index_language = index_language_in_array(current_settings.language);
-  for(int index_1 = 0; index_1 < MAX_ROW_FOR_CONTROL_UROV; index_1++)
-  {
-    unsigned int index_row = (index_1 < (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP)) ? index_1 : (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP);
-    for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
-    {
-      if (
-          (index_1 >= (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP)) &&
-          (index_2 == index_number_UP_prvv[index_language]) 
-         )
-      {
-        name_string_tmp[index_1][index_2] = 0x30 + (index_1 - (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP) + 1);
-      }
-      else name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
-    }
-  }
+  // int index_language = index_language_in_array(current_settings.language);
+  // for(int index_1 = 0; index_1 < MAX_ROW_FOR_CONTROL_UROV; index_1++)
+  // {
+  //   unsigned int index_row = (index_1 < (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP)) ? index_1 : (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP);
+  //   for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+  //   {
+  //     if (
+  //         (index_1 >= (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP)) &&
+  //         (index_2 == index_number_UP_prvv[index_language]) 
+  //        )
+  //     {
+  //       name_string_tmp[index_1][index_2] = 0x30 + (index_1 - (MAX_ROW_FOR_CONTROL_UROV - NUMBER_UP) + 1);
+  //     }
+  //     else name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
+  //   }
+  // }
   
-  unsigned int temp_data;
-  if(current_ekran.edition == 0) temp_data = current_settings.control_urov;
-  else temp_data = edition_settings.control_urov;
+  // unsigned int temp_data;
+  // if(current_ekran.edition == 0) temp_data = current_settings.control_urov;
+  // else temp_data = edition_settings.control_urov;
         
-  /******************************************/
-  //Виключаємо поля, які не треба відображати
-  /******************************************/
-  int additional_current_mtz = 0, additional_current_mtz04 = 0, additional_current_zdz = 0;
-  int additional_current_zz = 0, additional_current_tznp = 0, additional_current_zop = 0;
-  int additional_current_Umin = 0, additional_current_Umax = 0, additional_current_achr = 0;
-  int additional_current_up = 0;
-  int position_temp = current_ekran.index_position;
-  int index_of_ekran;
+  // /******************************************/
+  // //Виключаємо поля, які не треба відображати
+  // /******************************************/
+  // int additional_current_mtz = 0, additional_current_mtz04 = 0, additional_current_zdz = 0;
+  // int additional_current_zz = 0, additional_current_tznp = 0, additional_current_zop = 0;
+  // int additional_current_Umin = 0, additional_current_Umax = 0, additional_current_achr = 0;
+  // int additional_current_up = 0;
+  // int position_temp = current_ekran.index_position;
+  // int index_of_ekran;
 
-  int additional_current = additional_current_mtz  + additional_current_mtz04 + additional_current_zdz  + 
-                           additional_current_zz   + additional_current_tznp  + additional_current_zop  + 
-                           additional_current_Umin + additional_current_Umax  + additional_current_achr + 
-                           additional_current_up;
-  for (int current_index = 0; current_index < MAX_ROW_FOR_CONTROL_UROV; current_index++ )
-  {
+  // int additional_current = additional_current_mtz  + additional_current_mtz04 + additional_current_zdz  + 
+  //                          additional_current_zz   + additional_current_tznp  + additional_current_zop  + 
+  //                          additional_current_Umin + additional_current_Umax  + additional_current_achr + 
+  //                          additional_current_up;
+  // for (int current_index = 0; current_index < MAX_ROW_FOR_CONTROL_UROV; current_index++ )
+  // {
 
-    if (
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-         )   
-         &&
-         ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (  
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<MTZ04_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3I0) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3U0) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ZZ_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
-         )
-         &&  
-         ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0)  
-        )
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP3)
-         )   
-         &&
-         ((current_settings.configuration & (1<<TZNP_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
-        )  
-        ||
-        (
-         (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR2)
-         )   
-         &&
-         ((current_settings.configuration & (1<<ACHR_CHAPV_BIT_CONFIGURATION)) == 0)
-        )
-        ||
-        (
-         (
-          (current_index >= INDEX_ML_CTRUROV_STARTED_FROM_UP1) &&
-          (current_index <= INDEX_ML_CTRUROV_STARTED_FROM_UP1 + NUMBER_UP - 1)
-         )   
-         &&
-         ((current_settings.configuration & (1<<UP_BIT_CONFIGURATION)) == 0)
-        )
-       )   
-    {
-      int i = current_index - additional_current;
-      unsigned int maska_1, maska_2;
-      maska_1 = (1 << i) - 1;
-      maska_2 = (unsigned int)(~maska_1);
+  //   if (
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<MTZ_BIT_CONFIGURATION)) == 0)
+  //       )  
+  //       ||
+  //       (  
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_2)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<MTZ04_BIT_CONFIGURATION)) == 0)
+  //       )  
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<ZDZ_BIT_CONFIGURATION)) == 0)
+  //       )
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3I0) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3U0) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<ZZ_BIT_CONFIGURATION)) == 0)
+  //       )
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
+  //        )
+  //        &&  
+  //        ((current_settings.control_zz & CTR_ZZ1_TYPE) != 0)  
+  //       )
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP2) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP3)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<TZNP_BIT_CONFIGURATION)) == 0)
+  //       )  
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<ZOP_BIT_CONFIGURATION)) == 0)
+  //       )
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<UMIN_BIT_CONFIGURATION)) == 0)
+  //       )  
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<UMAX_BIT_CONFIGURATION)) == 0)
+  //       )  
+  //       ||
+  //       (
+  //        (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR2)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<ACHR_CHAPV_BIT_CONFIGURATION)) == 0)
+  //       )
+  //       ||
+  //       (
+  //        (
+  //         (current_index >= INDEX_ML_CTRUROV_STARTED_FROM_UP1) &&
+  //         (current_index <= INDEX_ML_CTRUROV_STARTED_FROM_UP1 + NUMBER_UP - 1)
+  //        )   
+  //        &&
+  //        ((current_settings.configuration & (1<<UP_BIT_CONFIGURATION)) == 0)
+  //       )
+  //      )   
+  //   {
+  //     int i = current_index - additional_current;
+  //     unsigned int maska_1, maska_2;
+  //     maska_1 = (1 << i) - 1;
+  //     maska_2 = (unsigned int)(~maska_1);
     
-      if ((i+1) <= position_temp) position_temp--;
-      do
-      {
-        for(unsigned int j = 0; j < MAX_COL_LCD; j++)
-        {
-          if ((i+1) < (MAX_ROW_FOR_CONTROL_UROV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else name_string_tmp[i][j] = ' ';
-        }
-        i++;
-      }
-      while (i < (MAX_ROW_FOR_CONTROL_UROV -  additional_current));
+  //     if ((i+1) <= position_temp) position_temp--;
+  //     do
+  //     {
+  //       for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+  //       {
+  //         if ((i+1) < (MAX_ROW_FOR_CONTROL_UROV - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+  //         else name_string_tmp[i][j] = ' ';
+  //       }
+  //       i++;
+  //     }
+  //     while (i < (MAX_ROW_FOR_CONTROL_UROV -  additional_current));
     
-      unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
-      temp_data = (temp_data & maska_1) | temp_data_1;
+  //     unsigned int temp_data_1 = (temp_data >> 1) & maska_2;
+  //     temp_data = (temp_data & maska_1) | temp_data_1;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
-         )   
-        additional_current_mtz++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ2) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ3) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ4)
+  //        )   
+  //       additional_current_mtz++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_2)
-         )   
-        additional_current_mtz04++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_MTZ04_2)
+  //        )   
+  //       additional_current_mtz04++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
-         )   
-        additional_current_zdz++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZDZ)
+  //        )   
+  //       additional_current_zdz++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3I0) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3U0) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
-         )   
-        additional_current_zz++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3I0) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_3U0) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_NZZ)
+  //        )   
+  //       additional_current_zz++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP2) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP3)
-         )   
-        additional_current_tznp++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP2) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_TZNP3)
+  //        )   
+  //       additional_current_tznp++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
-         )   
-        additional_current_zop++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ZOP1)
+  //        )   
+  //       additional_current_zop++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
-         )   
-        additional_current_Umin++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMIN2)
+  //        )   
+  //       additional_current_Umin++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
-         )   
-        additional_current_Umax++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_UMAX2)
+  //        )   
+  //       additional_current_Umax++;
 
-      if (
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR1) ||
-          (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR2)
-         )   
-        additional_current_achr++;
+  //     if (
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR1) ||
+  //         (current_index == INDEX_ML_CTRUROV_STARTED_FROM_ACHR2)
+  //        )   
+  //       additional_current_achr++;
 
-      if (
-          (current_index >= INDEX_ML_CTRUROV_STARTED_FROM_UP1) &&
-          (current_index <= INDEX_ML_CTRUROV_STARTED_FROM_UP1 + NUMBER_UP - 1)
-         )   
-        additional_current_up++;
+  //     if (
+  //         (current_index >= INDEX_ML_CTRUROV_STARTED_FROM_UP1) &&
+  //         (current_index <= INDEX_ML_CTRUROV_STARTED_FROM_UP1 + NUMBER_UP - 1)
+  //        )   
+  //       additional_current_up++;
       
-      additional_current = additional_current_mtz  + additional_current_mtz04 + additional_current_zdz  + 
-                           additional_current_zz   + additional_current_tznp  + additional_current_zop  + 
-                           additional_current_Umin + additional_current_Umax  + additional_current_achr +
-                           additional_current_up;
-    }
-  }
-  /******************************************/
+  //     additional_current = additional_current_mtz  + additional_current_mtz04 + additional_current_zdz  + 
+  //                          additional_current_zz   + additional_current_tznp  + additional_current_zop  + 
+  //                          additional_current_Umin + additional_current_Umax  + additional_current_achr +
+  //                          additional_current_up;
+  //   }
+  // }
+  // /******************************************/
   
-  //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
-  index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+  // //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
+  // index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
   
-  for (unsigned int i=0; i< MAX_ROW_LCD; i++)
-  {
-    int index_of_ekran_tmp = index_of_ekran >> 1;
-    if (index_of_ekran_tmp < (MAX_ROW_FOR_CONTROL_UROV - additional_current))
-    {
-      if ((i & 0x1) == 0)
-      {
-        //У непарному номері рядку виводимо заголовок
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[index_of_ekran_tmp][j];
-      }
-      else
-      {
-        //У парному номері рядку виводимо значення уставки
-        unsigned int index_ctr = index_of_ekran_tmp;
+  // for (unsigned int i=0; i< MAX_ROW_LCD; i++)
+  // {
+  //   int index_of_ekran_tmp = index_of_ekran >> 1;
+  //   if (index_of_ekran_tmp < (MAX_ROW_FOR_CONTROL_UROV - additional_current))
+  //   {
+  //     if ((i & 0x1) == 0)
+  //     {
+  //       //У непарному номері рядку виводимо заголовок
+  //       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[index_of_ekran_tmp][j];
+  //     }
+  //     else
+  //     {
+  //       //У парному номері рядку виводимо значення уставки
+  //       unsigned int index_ctr = index_of_ekran_tmp;
 
-        for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information_off_on[index_language][(temp_data >> index_ctr) & 0x1][j];
-        if (position_temp == index_of_ekran_tmp) current_ekran.position_cursor_x = cursor_x_off_on[index_language][(temp_data >> index_ctr) & 0x1];
-      }
-    }
-    else
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+  //       for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = information_off_on[index_language][(temp_data >> index_ctr) & 0x1][j];
+  //       if (position_temp == index_of_ekran_tmp) current_ekran.position_cursor_x = cursor_x_off_on[index_language][(temp_data >> index_ctr) & 0x1];
+  //     }
+  //   }
+  //   else
+  //     for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
 
-    index_of_ekran++;
-  }
+  //   index_of_ekran++;
+  // }
 
-  //Відображення курору по вертикалі і курсор завжди має бути у полі із значенням устаки
-  current_ekran.position_cursor_y = ((position_temp<<1) + 1) & (MAX_ROW_LCD - 1);
-  //Курсор видимий
-  current_ekran.cursor_on = 1;
-  //Курсор не мигає
-  if(current_ekran.edition == 0)current_ekran.cursor_blinking_on = 0;
-  else current_ekran.cursor_blinking_on = 1;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+  // //Відображення курору по вертикалі і курсор завжди має бути у полі із значенням устаки
+  // current_ekran.position_cursor_y = ((position_temp<<1) + 1) & (MAX_ROW_LCD - 1);
+  // //Курсор видимий
+  // current_ekran.cursor_on = 1;
+  // //Курсор не мигає
+  // if(current_ekran.edition == 0)current_ekran.cursor_blinking_on = 0;
+  // else current_ekran.cursor_blinking_on = 1;
+  // //Обновити повністю весь екран
+  // current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
 }
 /*****************************************************/
 
