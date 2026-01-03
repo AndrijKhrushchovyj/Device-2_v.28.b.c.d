@@ -2134,7 +2134,10 @@ inline void main_protection(void)
       MASKA_FOR_INPUT_SIGNALS_0,
       MASKA_FOR_INPUT_SIGNALS_1,
       MASKA_FOR_INPUT_SIGNALS_2,
-      MASKA_FOR_INPUT_SIGNALS_3};
+      MASKA_FOR_INPUT_SIGNALS_3,
+      MASKA_FOR_INPUT_SIGNALS_4,
+      MASKA_FOR_INPUT_SIGNALS_5,
+      MASKA_FOR_INPUT_SIGNALS_6};
   for (unsigned int i = 0; i < N_BIG; i++)
     active_functions[i] &= (unsigned int) (~maska_input_signals[i]);
 
@@ -3093,7 +3096,10 @@ inline void main_protection(void)
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_0,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_2,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3};
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3,
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4,
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_5,
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6};
   unsigned int comp = false;
   COMPARE_NOT_ZERO_OR(comp, active_functions, maska_signals_for_lock_group, N_BIG)
   if (comp)
@@ -3230,7 +3236,10 @@ inline void main_protection(void)
           MASKA_EL_SIGNALS_0,
           MASKA_EL_SIGNALS_1,
           MASKA_EL_SIGNALS_2,
-          MASKA_EL_SIGNALS_3};
+          MASKA_EL_SIGNALS_3,
+          MASKA_EL_SIGNALS_4,
+          MASKA_EL_SIGNALS_5,
+          MASKA_EL_SIGNALS_6};
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_el_signals[i]);
 
@@ -3258,7 +3267,10 @@ inline void main_protection(void)
         MASKA_INFO_SIGNALES_0,
         MASKA_INFO_SIGNALES_1,
         MASKA_INFO_SIGNALES_2,
-        MASKA_INFO_SIGNALES_3};
+        MASKA_INFO_SIGNALES_3,
+        MASKA_INFO_SIGNALES_4,
+        MASKA_INFO_SIGNALES_5,
+        MASKA_INFO_SIGNALES_6};
 
     for (size_t i = 0; i != N_BIG; ++i)
       active_functions[i] &= maska_info_signals[i];
@@ -3394,7 +3406,10 @@ inline void main_protection(void)
         MASKA_TRIGGER_SIGNALES_0,
         MASKA_TRIGGER_SIGNALES_1,
         MASKA_TRIGGER_SIGNALES_2,
-        MASKA_TRIGGER_SIGNALES_3};
+        MASKA_TRIGGER_SIGNALES_3,
+        MASKA_TRIGGER_SIGNALES_4,
+        MASKA_TRIGGER_SIGNALES_5,
+        MASKA_TRIGGER_SIGNALES_6};
     comp = true;
     for (size_t i = 0; i != N_BIG; ++i)
     {
