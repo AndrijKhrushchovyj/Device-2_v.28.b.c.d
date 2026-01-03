@@ -472,16 +472,19 @@ SRAM1 unsigned int reinit_LCD;
 SRAM1 __CURRENT_EKRAN current_ekran;
 SRAM1 int position_in_current_level_menu[MAX_LEVEL_MENU];       //Масив у якому збкрігається індекс текучоїпозиції
 SRAM1 int previous_level_in_current_level_menu[MAX_LEVEL_MENU]; //Масив у якому збкрігається занчення попередніх екранів для даного рівня меню
+const uint32_t binary_input_signals[N_SMALL] =
+  {
+    MASKA_INPUT_SIGNALS_0,
+    MASKA_INPUT_SIGNALS_1,
+    MASKA_INPUT_SIGNALS_2};
 const uint32_t buttons_mode[NUMBER_BUTTON_MODE][N_SMALL] =
   {
-    {
-      MASKA_BUTTON_MODE_0_SIGNALS_0,
-      MASKA_BUTTON_MODE_0_SIGNALS_1,
-    },
-    {
-      MASKA_BUTTON_MODE_1_SIGNALS_0,
-      MASKA_BUTTON_MODE_1_SIGNALS_1,
-    }};
+    {MASKA_BUTTON_MODE_0_SIGNALS_0,
+     MASKA_BUTTON_MODE_0_SIGNALS_1,
+     MASKA_BUTTON_MODE_0_SIGNALS_2},
+    {MASKA_BUTTON_MODE_1_SIGNALS_0,
+     MASKA_BUTTON_MODE_1_SIGNALS_1,
+     MASKA_BUTTON_MODE_1_SIGNALS_2}};
 
 const uint32_t output_boards[N_OUTPUT_BOARDS][2] =
   {
@@ -613,8 +616,8 @@ SRAM1 unsigned int edit_rang_Out_LAN[N_BIG];
 
 const uint32_t rang_iec61850_blocks[2][N_SMALL] =
   {
-    {MASKA_IN_GOOSE_SIGNALS_0, MASKA_IN_GOOSE_SIGNALS_1, MASKA_IN_GOOSE_SIGNALS_2, MASKA_IN_GOOSE_SIGNALS_3},
-    {MASKA_IN_MMS_SIGNALS_0, MASKA_IN_MMS_SIGNALS_1, MASKA_IN_MMS_SIGNALS_2, MASKA_IN_MMS_SIGNALS_3}};
+    {MASKA_IN_GOOSE_SIGNALS_0, MASKA_IN_GOOSE_SIGNALS_1, MASKA_IN_GOOSE_SIGNALS_2},
+    {MASKA_IN_MMS_SIGNALS_0, MASKA_IN_MMS_SIGNALS_1, MASKA_IN_MMS_SIGNALS_2}};
 
 #endif
 

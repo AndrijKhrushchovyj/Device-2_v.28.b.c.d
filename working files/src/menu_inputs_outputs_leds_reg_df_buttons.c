@@ -575,19 +575,25 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
     unsigned int i, offset = 0;
     static const int min_max_number[_FIX_NUMBER_PROTECTION][2] =
       {
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
-        {-1, -1},
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL),
-         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_EL_SIGNAL_FOR_RANG_SMALL - 1)}};
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL - 1)},
+        {-1, -1},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL + NUMBER_EL_SIGNAL_FOR_RANG_SMALL - 1)}};
 
     /*************************************************************/
     //Фільтруємо сигнали, яких у даній конфігурації неприсутні
     /*************************************************************/
     if (
+      (type_ekran == INDEX_VIEWING_INPUT) ||
       (type_ekran == INDEX_VIEWING_BUTTON)
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
       ||
@@ -599,7 +605,9 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
       //У випадку, якщо відображення здійснюється вікна функціональних кнопок, Вх.GOOSE блоіків, або  Вх.MMS блоіків
       /*************************************************************/
       const uint32_t *p_array = NULL;
-      if (type_ekran == INDEX_VIEWING_BUTTON)
+      if (type_ekran == INDEX_VIEWING_INPUT)
+        p_array = binary_input_signals;
+      else if (type_ekran == INDEX_VIEWING_BUTTON)
         p_array = buttons_mode[(current_settings.buttons_mode >> (number_ekran - EKRAN_RANGUVANNJA_BUTTON_1)) & 0x1];
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
       else if (type_ekran == INDEX_VIEWING_IEC61850_RANG)
@@ -696,6 +704,7 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
         if (min_max_number[i][0] >= 0)
         {
           if (
+            (type_ekran == INDEX_VIEWING_INPUT) ||
             (type_ekran == INDEX_VIEWING_BUTTON)
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
             ||
@@ -707,7 +716,9 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
             Випадок коли деякі сигнали треба відфільтрувати
             */
             const uint32_t *p_array = NULL;
-            if (type_ekran == INDEX_VIEWING_BUTTON)
+            if (type_ekran == INDEX_VIEWING_INPUT)
+              p_array = binary_input_signals;
+            else if (type_ekran == INDEX_VIEWING_BUTTON)
               p_array = buttons_mode[(current_settings.buttons_mode >> (number_ekran - EKRAN_RANGUVANNJA_BUTTON_1)) & 0x1];
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
             else if (type_ekran == INDEX_VIEWING_IEC61850_RANG)

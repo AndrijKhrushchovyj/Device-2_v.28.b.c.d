@@ -1532,8 +1532,7 @@ inline void main_protection(void)
     {
       COMMAND_PERMITTED_FROM_KP_SIGNALES_0,
       COMMAND_PERMITTED_FROM_KP_SIGNALES_1,
-      COMMAND_PERMITTED_FROM_KP_SIGNALES_2,
-      COMMAND_PERMITTED_FROM_KP_SIGNALES_3};
+      COMMAND_PERMITTED_FROM_KP_SIGNALES_2};
 #endif
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
@@ -2777,7 +2776,8 @@ inline void main_protection(void)
     static unsigned int const command_signales[N_SMALL] =
       {
         COMMAND_SIGNALES_0,
-        COMMAND_SIGNALES_1};
+        COMMAND_SIGNALES_1,
+        COMMAND_SIGNALES_2};
 
     static unsigned int prev_active_functions_small[N_SOURCE][N_SMALL];
 

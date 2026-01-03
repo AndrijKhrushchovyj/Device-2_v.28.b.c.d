@@ -242,6 +242,7 @@ extern unsigned int reinit_LCD;
 extern __CURRENT_EKRAN current_ekran;
 extern int position_in_current_level_menu[MAX_LEVEL_MENU];
 extern int previous_level_in_current_level_menu[MAX_LEVEL_MENU];
+extern const uint32_t binary_input_signals[N_SMALL];
 extern const uint32_t buttons_mode[NUMBER_BUTTON_MODE][N_SMALL];
 extern const uint32_t output_boards[N_OUTPUT_BOARDS][2];
 extern const uint32_t input_boards[N_INPUT_BOARDS][2];
