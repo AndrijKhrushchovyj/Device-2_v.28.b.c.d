@@ -18,7 +18,7 @@
 #include "const_menu_chose_settings.h"
 #include "const_menu_chose_extra_settings.h"
 #include "const_menu_chose_grupa_ustavok.h"
-#include "const_menu_mtz.h"
+#include "const_menu_rpn.h"
 #include "const_menu_mtz04.h"
 #include "const_menu_znam.h"
 #include "const_menu_zdz.h"
@@ -70,7 +70,7 @@
 #include "const_menu_vidkluchennja.h"
 #include "const_menu_reprogram.h"
 
-#include "const_septoints_interval.h" 
+#include "const_septoints_interval.h"
 #include "const_measurement.h"
 
 #include "const_koef_povernennja.h"
@@ -90,4 +90,4 @@
 
 #include "SEGGER_SYSVIEW.h"
 
-#endif 
+#endif

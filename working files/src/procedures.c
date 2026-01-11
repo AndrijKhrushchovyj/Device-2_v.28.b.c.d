@@ -17,11 +17,11 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ) ||
       ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ) &&
        (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_MTZ)) ||
-      ((current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_MTZ))
+      ((current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4)) ||
+      ((current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_RPN))
       error_window |= (1 << RPN_BIT_CONFIGURATION);
   }
   //Ïåðåâ³ðêà ÇÑÕ

@@ -783,10 +783,10 @@ void main_manu_function(void)
                   (current_ekran.index_position == INDEX_ML1_Umax) ||
                   (current_ekran.index_position == INDEX_ML1_Umin))
                 {
-                  //Переходимо на меню МСЗ
+                  //Переходимо на меню РПН
                   if (current_ekran.index_position == INDEX_ML1_RPN)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_MTZ;
-                  //Переходимо на меню МСЗ 0.4кВ
+                  //Переходимо на меню РПН 0.4кВ
                   else if (current_ekran.index_position == INDEX_ML1_ZSKh)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_MTZ04;
                   //Переходимо на меню ЗНам
@@ -2688,20 +2688,20 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ)
                 {
-                  //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки МСЗ
+                  //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки РПН
                   if (
                     (current_ekran.index_position >= INDEX_ML_GROUP1) &&
                     (current_ekran.index_position <= INDEX_ML_GROUP4))
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення атбраної групи уставок для МСЗ
+                    //Переходимо на меню відображення атбраної групи уставок для РПН
                     current_ekran.current_level = EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ + (current_ekran.index_position - INDEX_ML_GROUP1);
                   }
                   else if (current_ekran.index_position == INDEX_ML_CONTROL_WITH_GROUPS)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення управлінської інформації для МСЗ
-                    current_ekran.current_level = EKRAN_CONTROL_MTZ;
+                    //Переходимо на меню відображення управлінської інформації для РПН
+                    current_ekran.current_level = EKRAN_CONTROL_RPN;
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
@@ -2712,37 +2712,37 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ) &&
                   (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_MTZ))
                 {
-                  //Натисну кнопка Enter у вікні вибору уставок-витримок МСЗ
+                  //Натисну кнопка Enter у вікні вибору уставок-витримок РПН
                   if (current_ekran.index_position == INDEX_ML_SETPOINT)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення уставок для МСЗ
-                    current_ekran.current_level = EKRAN_SETPOINT_MTZ_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ);
+                    //Переходимо на меню відображення уставок для РПН
+                    current_ekran.current_level = EKRAN_SETPOINT_RPN_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ);
                   }
                   else if (current_ekran.index_position == INDEX_ML_TIMEOUT)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення витримок для МСЗ
-                    current_ekran.current_level = EKRAN_TIMEOUT_MTZ_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ);
+                    //Переходимо на меню відображення витримок для РПН
+                    current_ekran.current_level = EKRAN_TIMEOUT_RPN_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ);
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
                 }
                 else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ04)
                 {
-                  //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки МСЗ 0.4кВ
+                  //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки РПН 0.4кВ
                   if (
                     (current_ekran.index_position >= INDEX_ML_GROUP1) &&
                     (current_ekran.index_position <= INDEX_ML_GROUP4))
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення атбраної групи уставок для МСЗ 0.4кВ
+                    //Переходимо на меню відображення атбраної групи уставок для РПН 0.4кВ
                     current_ekran.current_level = EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ04 + (current_ekran.index_position - INDEX_ML_GROUP1);
                   }
                   else if (current_ekran.index_position == INDEX_ML_CONTROL_WITH_GROUPS)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення управлінської інформації для МСЗ 0.4кВ
+                    //Переходимо на меню відображення управлінської інформації для РПН 0.4кВ
                     current_ekran.current_level = EKRAN_CONTROL_MTZ04;
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
@@ -2754,17 +2754,17 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ04) &&
                   (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_MTZ04))
                 {
-                  //Натисну кнопка Enter у вікні вибору уставок-витримок МСЗ 0.4кВ
+                  //Натисну кнопка Enter у вікні вибору уставок-витримок РПН 0.4кВ
                   if (current_ekran.index_position == INDEX_ML_SETPOINT)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення уставок для МСЗ 0.4кВ
+                    //Переходимо на меню відображення уставок для РПН 0.4кВ
                     current_ekran.current_level = EKRAN_SETPOINT_MTZ04_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ04);
                   }
                   else if (current_ekran.index_position == INDEX_ML_TIMEOUT)
                   {
                     //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення витримок для МСЗ 0.4кВ
+                    //Переходимо на меню відображення витримок для РПН 0.4кВ
                     current_ekran.current_level = EKRAN_TIMEOUT_MTZ04_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ04);
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
@@ -5965,15 +5965,15 @@ void main_manu_function(void)
         /****************************************************************************************************************************************/
 
         /******************************************************************************************************************************************/
-      case EKRAN_SETPOINT_MTZ_GROUP1:
-      case EKRAN_SETPOINT_MTZ_GROUP2:
-      case EKRAN_SETPOINT_MTZ_GROUP3:
-      case EKRAN_SETPOINT_MTZ_GROUP4:
-      case EKRAN_TIMEOUT_MTZ_GROUP1:
-      case EKRAN_TIMEOUT_MTZ_GROUP2:
-      case EKRAN_TIMEOUT_MTZ_GROUP3:
-      case EKRAN_TIMEOUT_MTZ_GROUP4:
-      case EKRAN_CONTROL_MTZ:
+      case EKRAN_SETPOINT_RPN_GROUP1:
+      case EKRAN_SETPOINT_RPN_GROUP2:
+      case EKRAN_SETPOINT_RPN_GROUP3:
+      case EKRAN_SETPOINT_RPN_GROUP4:
+      case EKRAN_TIMEOUT_RPN_GROUP1:
+      case EKRAN_TIMEOUT_RPN_GROUP2:
+      case EKRAN_TIMEOUT_RPN_GROUP3:
+      case EKRAN_TIMEOUT_RPN_GROUP4:
+      case EKRAN_CONTROL_RPN:
       case EKRAN_SETPOINT_MTZ04_GROUP1:
       case EKRAN_SETPOINT_MTZ04_GROUP2:
       case EKRAN_SETPOINT_MTZ04_GROUP3:
@@ -6153,39 +6153,36 @@ void main_manu_function(void)
             {
 
               if (
-                (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
               {
-                unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                if (current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_SETPOINT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_SETPOINT_MTZ))
+                if (current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_RPN)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
 
-                //Формуємо екран уставок МСЗ
-                int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
+                //Формуємо екран уставок РПН
+                int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
                 make_ekran_setpoint_mtz(group);
               }
               else if (
-                (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
               {
-                unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                if (current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_TIMEOUT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_TIMEOUT_MTZ))
+                if (current_ekran.index_position >= MAX_ROW_FOR_TIMEOUT_RPN)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
 
-                //Формуємо екран витримок МСЗ
-                int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                //Формуємо екран витримок РПН
+                int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
                 make_ekran_timeout_mtz(group);
               }
-              else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+              else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
               {
-                unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                if (current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_CONTROL_MTZ : WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ))
+                if (current_ekran.index_position >= WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ)
                   current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_CONTROL_MTZ] = current_ekran.index_position;
+                position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
 
-                //Формуємо екран управлінської інформації для МСЗ
+                //Формуємо екран управлінської інформації для РПН
                 make_ekran_control_mtz();
               }
               else if (
@@ -6196,7 +6193,7 @@ void main_manu_function(void)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
 
-                //Формуємо екран уставок МСЗ 0.4кВ
+                //Формуємо екран уставок РПН 0.4кВ
                 int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ04_GROUP1);
                 make_ekran_setpoint_mtz04(group);
               }
@@ -6208,7 +6205,7 @@ void main_manu_function(void)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
 
-                //Формуємо екран витримок МСЗ 0.4кВ
+                //Формуємо екран витримок РПН 0.4кВ
                 int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ04_GROUP1);
                 make_ekran_timeout_mtz04(group);
               }
@@ -6218,7 +6215,7 @@ void main_manu_function(void)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_CONTROL_MTZ04] = current_ekran.index_position;
 
-                //Формуємо екран управлінської інформації для МСЗ 0.4кВ
+                //Формуємо екран управлінської інформації для РПН 0.4кВ
                 make_ekran_control_mtz04();
               }
               else if (
@@ -6960,293 +6957,245 @@ void main_manu_function(void)
 
                   //Копіюємо текчі настройки у структуру для редагування
                   if (
-                    (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                   {
-                    int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
+                    int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                     {
                       edition_settings.setpoint_mtz_1[group] = current_settings.setpoint_mtz_1[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                     {
                       edition_settings.setpoint_mtz_1_n_vpered[group] = current_settings.setpoint_mtz_1_n_vpered[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                     {
                       edition_settings.setpoint_mtz_1_n_nazad[group] = current_settings.setpoint_mtz_1_n_nazad[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                     {
                       edition_settings.setpoint_mtz_1_angle[group] = current_settings.setpoint_mtz_1_angle[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_ANGLE_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                     {
                       edition_settings.setpoint_mtz_1_po_napruzi[group] = current_settings.setpoint_mtz_1_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                     {
                       edition_settings.setpoint_mtz_1_U[group] = current_settings.setpoint_mtz_1_U[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_U_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                    {
-                      edition_settings.setpoint_mtz_1_k_znam[group] = current_settings.setpoint_mtz_1_k_znam[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                     {
                       edition_settings.setpoint_mtz_2[group] = current_settings.setpoint_mtz_2[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                     {
                       edition_settings.setpoint_mtz_2_n_vpered[group] = current_settings.setpoint_mtz_2_n_vpered[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                     {
                       edition_settings.setpoint_mtz_2_n_nazad[group] = current_settings.setpoint_mtz_2_n_nazad[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                     {
                       edition_settings.setpoint_mtz_2_angle[group] = current_settings.setpoint_mtz_2_angle[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_ANGLE_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                     {
                       edition_settings.setpoint_mtz_2_po_napruzi[group] = current_settings.setpoint_mtz_2_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                     {
                       edition_settings.setpoint_mtz_2_U[group] = current_settings.setpoint_mtz_2_U[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_U_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                    {
-                      edition_settings.setpoint_mtz_2_k_znam[group] = current_settings.setpoint_mtz_2_k_znam[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                     {
                       edition_settings.setpoint_mtz_3[group] = current_settings.setpoint_mtz_3[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                     {
                       edition_settings.setpoint_mtz_3_n_vpered[group] = current_settings.setpoint_mtz_3_n_vpered[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                     {
                       edition_settings.setpoint_mtz_3_n_nazad[group] = current_settings.setpoint_mtz_3_n_nazad[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                     {
                       edition_settings.setpoint_mtz_3_angle[group] = current_settings.setpoint_mtz_3_angle[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_ANGLE_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                     {
                       edition_settings.setpoint_mtz_3_po_napruzi[group] = current_settings.setpoint_mtz_3_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                     {
                       edition_settings.setpoint_mtz_3_U[group] = current_settings.setpoint_mtz_3_U[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_U_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                    {
-                      edition_settings.setpoint_mtz_3_k_znam[group] = current_settings.setpoint_mtz_3_k_znam[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                     {
                       edition_settings.setpoint_mtz_4[group] = current_settings.setpoint_mtz_4[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                     {
                       edition_settings.setpoint_mtz_4_n_vpered[group] = current_settings.setpoint_mtz_4_n_vpered[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                     {
                       edition_settings.setpoint_mtz_4_n_nazad[group] = current_settings.setpoint_mtz_4_n_nazad[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                     {
                       edition_settings.setpoint_mtz_4_angle[group] = current_settings.setpoint_mtz_4_angle[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_ANGLE_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                     {
                       edition_settings.setpoint_mtz_4_po_napruzi[group] = current_settings.setpoint_mtz_4_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                     {
                       edition_settings.setpoint_mtz_4_U[group] = current_settings.setpoint_mtz_4_U[group];
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_U_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                    {
-                      edition_settings.setpoint_mtz_4_k_znam[group] = current_settings.setpoint_mtz_4_k_znam[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_K_BEGIN;
-                    }
                   }
                   else if (
-                    (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                     {
                       edition_settings.timeout_mtz_1[group] = current_settings.timeout_mtz_1[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                     {
                       edition_settings.timeout_mtz_1_n_vpered[group] = current_settings.timeout_mtz_1_n_vpered[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                     {
                       edition_settings.timeout_mtz_1_n_nazad[group] = current_settings.timeout_mtz_1_n_nazad[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                     {
                       edition_settings.timeout_mtz_1_po_napruzi[group] = current_settings.timeout_mtz_1_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                    {
-                      edition_settings.timeout_mtz_1_k_znam[group] = current_settings.timeout_mtz_1_k_znam[group];
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_1_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                     {
                       edition_settings.timeout_mtz_2[group] = current_settings.timeout_mtz_2[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                     {
                       edition_settings.timeout_mtz_2_pr[group] = current_settings.timeout_mtz_2_pr[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PR_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                     {
                       edition_settings.timeout_mtz_2_n_vpered[group] = current_settings.timeout_mtz_2_n_vpered[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                     {
                       edition_settings.timeout_mtz_2_n_vpered_pr[group] = current_settings.timeout_mtz_2_n_vpered_pr[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_PR_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                     {
                       edition_settings.timeout_mtz_2_n_nazad[group] = current_settings.timeout_mtz_2_n_nazad[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                     {
                       edition_settings.timeout_mtz_2_n_nazad_pr[group] = current_settings.timeout_mtz_2_n_nazad_pr[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_PR_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                     {
                       edition_settings.timeout_mtz_2_po_napruzi[group] = current_settings.timeout_mtz_2_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                     {
                       edition_settings.timeout_mtz_2_po_napruzi_pr[group] = current_settings.timeout_mtz_2_po_napruzi_pr[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_PR_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                     {
                       edition_settings.timeout_mtz_2_vvid_pr[group] = current_settings.timeout_mtz_2_vvid_pr[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_VVID_PR_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                    {
-                      edition_settings.timeout_mtz_2_k_znam[group] = current_settings.timeout_mtz_2_k_znam[group];
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_2_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                     {
                       edition_settings.timeout_mtz_3[group] = current_settings.timeout_mtz_3[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                     {
                       edition_settings.timeout_mtz_3_n_vpered[group] = current_settings.timeout_mtz_3_n_vpered[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                     {
                       edition_settings.timeout_mtz_3_n_nazad[group] = current_settings.timeout_mtz_3_n_nazad[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                     {
                       edition_settings.timeout_mtz_3_po_napruzi[group] = current_settings.timeout_mtz_3_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                    {
-                      edition_settings.timeout_mtz_3_k_znam[group] = current_settings.timeout_mtz_3_k_znam[group];
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_3_K_BEGIN;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                     {
                       edition_settings.timeout_mtz_4[group] = current_settings.timeout_mtz_4[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                     {
                       edition_settings.timeout_mtz_4_n_vpered[group] = current_settings.timeout_mtz_4_n_vpered[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_VPERED_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                     {
                       edition_settings.timeout_mtz_4_n_nazad[group] = current_settings.timeout_mtz_4_n_nazad[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_NAZAD_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                     {
                       edition_settings.timeout_mtz_4_po_napruzi[group] = current_settings.timeout_mtz_4_po_napruzi[group];
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_PO_NAPRUZI_BEGIN;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                    {
-                      edition_settings.timeout_mtz_4_k_znam[group] = current_settings.timeout_mtz_4_k_znam[group];
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_4_K_BEGIN;
-                    }
                   }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                  else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
                     edition_settings.type_mtz1 = current_settings.type_mtz1;
                     edition_settings.type_mtz2 = current_settings.type_mtz2;
@@ -8236,293 +8185,245 @@ void main_manu_function(void)
                   unsigned int found_changes = 0;
 
                   if (
-                    (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                   {
-                    int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
+                    int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                     {
                       if (edition_settings.setpoint_mtz_1[group] != current_settings.setpoint_mtz_1[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                     {
                       if (edition_settings.setpoint_mtz_1_n_vpered[group] != current_settings.setpoint_mtz_1_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                     {
                       if (edition_settings.setpoint_mtz_1_n_nazad[group] != current_settings.setpoint_mtz_1_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                     {
                       if (edition_settings.setpoint_mtz_1_angle[group] != current_settings.setpoint_mtz_1_angle[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                     {
                       if (edition_settings.setpoint_mtz_1_po_napruzi[group] != current_settings.setpoint_mtz_1_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                     {
                       if (edition_settings.setpoint_mtz_1_U[group] != current_settings.setpoint_mtz_1_U[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                    {
-                      if (edition_settings.setpoint_mtz_1_k_znam[group] != current_settings.setpoint_mtz_1_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                     {
                       if (edition_settings.setpoint_mtz_2[group] != current_settings.setpoint_mtz_2[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                     {
                       if (edition_settings.setpoint_mtz_2_n_vpered[group] != current_settings.setpoint_mtz_2_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                     {
                       if (edition_settings.setpoint_mtz_2_n_nazad[group] != current_settings.setpoint_mtz_2_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                     {
                       if (edition_settings.setpoint_mtz_2_angle[group] != current_settings.setpoint_mtz_2_angle[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                     {
                       if (edition_settings.setpoint_mtz_2_po_napruzi[group] != current_settings.setpoint_mtz_2_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                     {
                       if (edition_settings.setpoint_mtz_2_U[group] != current_settings.setpoint_mtz_2_U[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                    {
-                      if (edition_settings.setpoint_mtz_2_k_znam[group] != current_settings.setpoint_mtz_2_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                     {
                       if (edition_settings.setpoint_mtz_3[group] != current_settings.setpoint_mtz_3[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                     {
                       if (edition_settings.setpoint_mtz_3_n_vpered[group] != current_settings.setpoint_mtz_3_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                     {
                       if (edition_settings.setpoint_mtz_3_n_nazad[group] != current_settings.setpoint_mtz_3_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                     {
                       if (edition_settings.setpoint_mtz_3_angle[group] != current_settings.setpoint_mtz_3_angle[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                     {
                       if (edition_settings.setpoint_mtz_3_po_napruzi[group] != current_settings.setpoint_mtz_3_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                     {
                       if (edition_settings.setpoint_mtz_3_U[group] != current_settings.setpoint_mtz_3_U[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                    {
-                      if (edition_settings.setpoint_mtz_3_k_znam[group] != current_settings.setpoint_mtz_3_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                     {
                       if (edition_settings.setpoint_mtz_4[group] != current_settings.setpoint_mtz_4[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                     {
                       if (edition_settings.setpoint_mtz_4_n_vpered[group] != current_settings.setpoint_mtz_4_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                     {
                       if (edition_settings.setpoint_mtz_4_n_nazad[group] != current_settings.setpoint_mtz_4_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                     {
                       if (edition_settings.setpoint_mtz_4_angle[group] != current_settings.setpoint_mtz_4_angle[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                     {
                       if (edition_settings.setpoint_mtz_4_po_napruzi[group] != current_settings.setpoint_mtz_4_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                     {
                       if (edition_settings.setpoint_mtz_4_U[group] != current_settings.setpoint_mtz_4_U[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                    {
-                      if (edition_settings.setpoint_mtz_4_k_znam[group] != current_settings.setpoint_mtz_4_k_znam[group])
-                        found_changes = 1;
-                    }
                   }
                   else if (
-                    (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                     {
                       if (edition_settings.timeout_mtz_1[group] != current_settings.timeout_mtz_1[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                     {
                       if (edition_settings.timeout_mtz_1_n_vpered[group] != current_settings.timeout_mtz_1_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                     {
                       if (edition_settings.timeout_mtz_1_n_nazad[group] != current_settings.timeout_mtz_1_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                     {
                       if (edition_settings.timeout_mtz_1_po_napruzi[group] != current_settings.timeout_mtz_1_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                    {
-                      if (edition_settings.timeout_mtz_1_k_znam[group] != current_settings.timeout_mtz_1_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                     {
                       if (edition_settings.timeout_mtz_2[group] != current_settings.timeout_mtz_2[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                     {
                       if (edition_settings.timeout_mtz_2_pr[group] != current_settings.timeout_mtz_2_pr[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                     {
                       if (edition_settings.timeout_mtz_2_n_vpered[group] != current_settings.timeout_mtz_2_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                     {
                       if (edition_settings.timeout_mtz_2_n_vpered_pr[group] != current_settings.timeout_mtz_2_n_vpered_pr[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                     {
                       if (edition_settings.timeout_mtz_2_n_nazad[group] != current_settings.timeout_mtz_2_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                     {
                       if (edition_settings.timeout_mtz_2_n_nazad_pr[group] != current_settings.timeout_mtz_2_n_nazad_pr[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                     {
                       if (edition_settings.timeout_mtz_2_po_napruzi[group] != current_settings.timeout_mtz_2_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                     {
                       if (edition_settings.timeout_mtz_2_po_napruzi_pr[group] != current_settings.timeout_mtz_2_po_napruzi_pr[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                     {
                       if (edition_settings.timeout_mtz_2_vvid_pr[group] != current_settings.timeout_mtz_2_vvid_pr[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                    {
-                      if (edition_settings.timeout_mtz_2_k_znam[group] != current_settings.timeout_mtz_2_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                     {
                       if (edition_settings.timeout_mtz_3[group] != current_settings.timeout_mtz_3[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                     {
                       if (edition_settings.timeout_mtz_3_n_vpered[group] != current_settings.timeout_mtz_3_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                     {
                       if (edition_settings.timeout_mtz_3_n_nazad[group] != current_settings.timeout_mtz_3_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                     {
                       if (edition_settings.timeout_mtz_3_po_napruzi[group] != current_settings.timeout_mtz_3_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                    {
-                      if (edition_settings.timeout_mtz_3_k_znam[group] != current_settings.timeout_mtz_3_k_znam[group])
-                        found_changes = 1;
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                     {
                       if (edition_settings.timeout_mtz_4[group] != current_settings.timeout_mtz_4[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                     {
                       if (edition_settings.timeout_mtz_4_n_vpered[group] != current_settings.timeout_mtz_4_n_vpered[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                     {
                       if (edition_settings.timeout_mtz_4_n_nazad[group] != current_settings.timeout_mtz_4_n_nazad[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                     {
                       if (edition_settings.timeout_mtz_4_po_napruzi[group] != current_settings.timeout_mtz_4_po_napruzi[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                    {
-                      if (edition_settings.timeout_mtz_4_k_znam[group] != current_settings.timeout_mtz_4_k_znam[group])
-                        found_changes = 1;
-                    }
                   }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                  else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
                     if (
                       (edition_settings.control_mtz != current_settings.control_mtz) ||
@@ -9503,13 +9404,12 @@ void main_manu_function(void)
                   current_ekran.edition = 3;
                   //Перевіряємо достовірність даних
                   if (
-                    (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                   {
-                    int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
+                    int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1[group], SETPOINT_MTZ1_MIN, SETPOINT_MTZ1_MAX) == 1)
                       {
@@ -9526,7 +9426,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1_n_vpered[group], SETPOINT_MTZ1_N_VPERED_MIN, SETPOINT_MTZ1_N_VPERED_MAX) == 1)
                       {
@@ -9543,7 +9443,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1_n_nazad[group], SETPOINT_MTZ1_N_NAZAD_MIN, SETPOINT_MTZ1_N_NAZAD_MAX) == 1)
                       {
@@ -9560,7 +9460,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1_angle[group], SETPOINT_MTZ1_ANGLE_MIN, SETPOINT_MTZ1_ANGLE_MAX) == 1)
                       {
@@ -9581,7 +9481,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1_po_napruzi[group], SETPOINT_MTZ1_PO_NAPRUZI_MIN, SETPOINT_MTZ1_PO_NAPRUZI_MAX) == 1)
                       {
@@ -9598,7 +9498,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_1_U[group], SETPOINT_MTZ1_U_MIN, SETPOINT_MTZ1_U_MAX) == 1)
                       {
@@ -9615,25 +9515,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_mtz_1_k_znam[group], SETPOINT_MTZ1_ZNAM_MIN, SETPOINT_MTZ1_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_mtz_1_k_znam[group] != current_settings.setpoint_mtz_1_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_mtz_1_k_znam[group] = edition_settings.setpoint_mtz_1_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2[group], SETPOINT_MTZ2_MIN, SETPOINT_MTZ2_MAX) == 1)
                       {
@@ -9650,7 +9532,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2_n_vpered[group], SETPOINT_MTZ2_N_VPERED_MIN, SETPOINT_MTZ2_N_VPERED_MAX) == 1)
                       {
@@ -9667,7 +9549,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2_n_nazad[group], SETPOINT_MTZ2_N_NAZAD_MIN, SETPOINT_MTZ2_N_NAZAD_MAX) == 1)
                       {
@@ -9684,7 +9566,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2_angle[group], SETPOINT_MTZ2_ANGLE_MIN, SETPOINT_MTZ2_ANGLE_MAX) == 1)
                       {
@@ -9705,7 +9587,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2_po_napruzi[group], SETPOINT_MTZ2_PO_NAPRUZI_MIN, SETPOINT_MTZ2_PO_NAPRUZI_MAX) == 1)
                       {
@@ -9722,7 +9604,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_2_U[group], SETPOINT_MTZ2_U_MIN, SETPOINT_MTZ2_U_MAX) == 1)
                       {
@@ -9739,25 +9621,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_mtz_2_k_znam[group], SETPOINT_MTZ2_ZNAM_MIN, SETPOINT_MTZ2_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_mtz_2_k_znam[group] != current_settings.setpoint_mtz_2_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_mtz_2_k_znam[group] = edition_settings.setpoint_mtz_2_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3[group], SETPOINT_MTZ3_MIN, SETPOINT_MTZ3_MAX) == 1)
                       {
@@ -9774,7 +9638,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3_n_vpered[group], SETPOINT_MTZ3_N_VPERED_MIN, SETPOINT_MTZ3_N_VPERED_MAX) == 1)
                       {
@@ -9791,7 +9655,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3_n_nazad[group], SETPOINT_MTZ3_N_NAZAD_MIN, SETPOINT_MTZ3_N_NAZAD_MAX) == 1)
                       {
@@ -9808,7 +9672,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3_angle[group], SETPOINT_MTZ3_ANGLE_MIN, SETPOINT_MTZ3_ANGLE_MAX) == 1)
                       {
@@ -9829,7 +9693,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3_po_napruzi[group], SETPOINT_MTZ3_PO_NAPRUZI_MIN, SETPOINT_MTZ3_PO_NAPRUZI_MAX) == 1)
                       {
@@ -9846,7 +9710,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_3_U[group], SETPOINT_MTZ3_U_MIN, SETPOINT_MTZ3_U_MAX) == 1)
                       {
@@ -9863,25 +9727,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_mtz_3_k_znam[group], SETPOINT_MTZ3_ZNAM_MIN, SETPOINT_MTZ3_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_mtz_3_k_znam[group] != current_settings.setpoint_mtz_3_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_mtz_3_k_znam[group] = edition_settings.setpoint_mtz_3_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4[group], SETPOINT_MTZ4_MIN, SETPOINT_MTZ4_MAX) == 1)
                       {
@@ -9898,7 +9744,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4_n_vpered[group], SETPOINT_MTZ4_N_VPERED_MIN, SETPOINT_MTZ4_N_VPERED_MAX) == 1)
                       {
@@ -9915,7 +9761,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4_n_nazad[group], SETPOINT_MTZ4_N_NAZAD_MIN, SETPOINT_MTZ4_N_NAZAD_MAX) == 1)
                       {
@@ -9932,7 +9778,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4_angle[group], SETPOINT_MTZ4_ANGLE_MIN, SETPOINT_MTZ4_ANGLE_MAX) == 1)
                       {
@@ -9953,7 +9799,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4_po_napruzi[group], SETPOINT_MTZ4_PO_NAPRUZI_MIN, SETPOINT_MTZ4_PO_NAPRUZI_MAX) == 1)
                       {
@@ -9970,7 +9816,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_mtz_4_U[group], SETPOINT_MTZ4_U_MIN, SETPOINT_MTZ4_U_MAX) == 1)
                       {
@@ -9987,32 +9833,14 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_mtz_4_k_znam[group], SETPOINT_MTZ4_ZNAM_MIN, SETPOINT_MTZ4_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_mtz_4_k_znam[group] != current_settings.setpoint_mtz_4_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_mtz_4_k_znam[group] = edition_settings.setpoint_mtz_4_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
                   }
                   else if (
-                    (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                    (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                    (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                    (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                    int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
 
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_1[group], TIMEOUT_MTZ1_MIN, TIMEOUT_MTZ1_MAX) == 1)
                       {
@@ -10029,7 +9857,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_1_n_vpered[group], TIMEOUT_MTZ1_N_VPERED_MIN, TIMEOUT_MTZ1_N_VPERED_MAX) == 1)
                       {
@@ -10046,7 +9874,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_1_n_nazad[group], TIMEOUT_MTZ1_N_NAZAD_MIN, TIMEOUT_MTZ1_N_NAZAD_MAX) == 1)
                       {
@@ -10063,7 +9891,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_1_po_napruzi[group], TIMEOUT_MTZ1_PO_NAPRUZI_MIN, TIMEOUT_MTZ1_PO_NAPRUZI_MAX) == 1)
                       {
@@ -10080,25 +9908,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.timeout_mtz_1_k_znam[group], TIMEOUT_MTZ1_ZNAM_MIN, TIMEOUT_MTZ1_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.timeout_mtz_1_k_znam[group] != current_settings.timeout_mtz_1_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.timeout_mtz_1_k_znam[group] = edition_settings.timeout_mtz_1_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2[group], TIMEOUT_MTZ2_MIN, TIMEOUT_MTZ2_MAX) == 1)
                       {
@@ -10115,7 +9925,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_pr[group], TIMEOUT_MTZ2_PR_MIN, TIMEOUT_MTZ2_PR_MAX) == 1)
                       {
@@ -10132,7 +9942,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_n_vpered[group], TIMEOUT_MTZ2_N_VPERED_MIN, TIMEOUT_MTZ2_N_VPERED_MAX) == 1)
                       {
@@ -10149,7 +9959,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_n_vpered_pr[group], TIMEOUT_MTZ2_N_VPERED_PR_MIN, TIMEOUT_MTZ2_N_VPERED_PR_MAX) == 1)
                       {
@@ -10166,7 +9976,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_n_nazad[group], TIMEOUT_MTZ2_N_NAZAD_MIN, TIMEOUT_MTZ2_N_NAZAD_MAX) == 1)
                       {
@@ -10183,7 +9993,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_n_nazad_pr[group], TIMEOUT_MTZ2_N_NAZAD_PR_MIN, TIMEOUT_MTZ2_N_NAZAD_PR_MAX) == 1)
                       {
@@ -10200,7 +10010,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_po_napruzi[group], TIMEOUT_MTZ2_PO_NAPRUZI_MIN, TIMEOUT_MTZ2_PO_NAPRUZI_MAX) == 1)
                       {
@@ -10217,7 +10027,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_po_napruzi_pr[group], TIMEOUT_MTZ2_PO_NAPRUZI_PR_MIN, TIMEOUT_MTZ2_PO_NAPRUZI_PR_MAX) == 1)
                       {
@@ -10234,7 +10044,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_2_vvid_pr[group], TIMEOUT_MTZ2_VVID_PR_MIN, TIMEOUT_MTZ2_VVID_PR_MAX) == 1)
                       {
@@ -10251,25 +10061,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.timeout_mtz_2_k_znam[group], TIMEOUT_MTZ2_ZNAM_MIN, TIMEOUT_MTZ2_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.timeout_mtz_2_k_znam[group] != current_settings.timeout_mtz_2_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.timeout_mtz_2_k_znam[group] = edition_settings.timeout_mtz_2_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_3[group], TIMEOUT_MTZ3_MIN, TIMEOUT_MTZ3_MAX) == 1)
                       {
@@ -10286,7 +10078,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_3_n_vpered[group], TIMEOUT_MTZ3_N_VPERED_MIN, TIMEOUT_MTZ3_N_VPERED_MAX) == 1)
                       {
@@ -10303,7 +10095,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_3_n_nazad[group], TIMEOUT_MTZ3_N_NAZAD_MIN, TIMEOUT_MTZ3_N_NAZAD_MAX) == 1)
                       {
@@ -10320,7 +10112,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_3_po_napruzi[group], TIMEOUT_MTZ3_PO_NAPRUZI_MIN, TIMEOUT_MTZ3_PO_NAPRUZI_MAX) == 1)
                       {
@@ -10337,25 +10129,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.timeout_mtz_3_k_znam[group], TIMEOUT_MTZ3_ZNAM_MIN, TIMEOUT_MTZ3_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.timeout_mtz_3_k_znam[group] != current_settings.timeout_mtz_3_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.timeout_mtz_3_k_znam[group] = edition_settings.timeout_mtz_3_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_4[group], TIMEOUT_MTZ4_MIN, TIMEOUT_MTZ4_MAX) == 1)
                       {
@@ -10372,7 +10146,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_4_n_vpered[group], TIMEOUT_MTZ4_N_VPERED_MIN, TIMEOUT_MTZ4_N_VPERED_MAX) == 1)
                       {
@@ -10389,7 +10163,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_4_n_nazad[group], TIMEOUT_MTZ4_N_NAZAD_MIN, TIMEOUT_MTZ4_N_NAZAD_MAX) == 1)
                       {
@@ -10406,7 +10180,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                     {
                       if (check_data_setpoint(edition_settings.timeout_mtz_4_po_napruzi[group], TIMEOUT_MTZ4_PO_NAPRUZI_MIN, TIMEOUT_MTZ4_PO_NAPRUZI_MAX) == 1)
                       {
@@ -10423,25 +10197,8 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                    {
-                      if (check_data_setpoint(edition_settings.timeout_mtz_4_k_znam[group], TIMEOUT_MTZ4_ZNAM_MIN, TIMEOUT_MTZ4_ZNAM_MAX) == 1)
-                      {
-                        if (edition_settings.timeout_mtz_4_k_znam[group] != current_settings.timeout_mtz_4_k_znam[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.timeout_mtz_4_k_znam[group] = edition_settings.timeout_mtz_4_k_znam[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
                   }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                  else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
                     if (
                       ((edition_settings.control_mtz & ((unsigned int) (~CTR_MTZ_MASKA))) == 0) &&
@@ -13440,166 +13197,139 @@ void main_manu_function(void)
               {
                 //Натиснута кнопка UP
                 if (
-                  (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                 {
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
+                  int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
 
                   if (current_ekran.edition == 0)
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
                     if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = (isZNam ? WITHZNAM_MAX_ROW_FOR_SETPOINT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_SETPOINT_MTZ) - 1;
+                      current_ekran.index_position = MAX_ROW_FOR_SETPOINT_RPN - 1;
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                       edition_settings.setpoint_mtz_1[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1[group], 1, COL_SETPOINT_MTZ_1_COMMA, COL_SETPOINT_MTZ_1_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                       edition_settings.setpoint_mtz_1_n_vpered[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_n_vpered[group], 1, COL_SETPOINT_MTZ_1_N_VPERED_COMMA, COL_SETPOINT_MTZ_1_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                       edition_settings.setpoint_mtz_1_n_nazad[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_n_nazad[group], 1, COL_SETPOINT_MTZ_1_N_NAZAD_COMMA, COL_SETPOINT_MTZ_1_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                       edition_settings.setpoint_mtz_1_angle[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_angle[group], 0, 0, COL_SETPOINT_MTZ_1_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_1_po_napruzi[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_po_napruzi[group], 1, COL_SETPOINT_MTZ_1_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_1_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                       edition_settings.setpoint_mtz_1_U[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_U[group], 1, COL_SETPOINT_MTZ_1_U_COMMA, COL_SETPOINT_MTZ_1_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                      edition_settings.setpoint_mtz_1_k_znam[group] = edit_setpoint(1, edition_settings.setpoint_mtz_1_k_znam[group], 1, COL_SETPOINT_MTZ_1_K_COMMA, COL_SETPOINT_MTZ_1_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                       edition_settings.setpoint_mtz_2[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2[group], 1, COL_SETPOINT_MTZ_2_COMMA, COL_SETPOINT_MTZ_2_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                       edition_settings.setpoint_mtz_2_n_vpered[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_n_vpered[group], 1, COL_SETPOINT_MTZ_2_N_VPERED_COMMA, COL_SETPOINT_MTZ_2_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                       edition_settings.setpoint_mtz_2_n_nazad[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_n_nazad[group], 1, COL_SETPOINT_MTZ_2_N_NAZAD_COMMA, COL_SETPOINT_MTZ_2_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                       edition_settings.setpoint_mtz_2_angle[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_angle[group], 0, 0, COL_SETPOINT_MTZ_2_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_2_po_napruzi[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_po_napruzi[group], 1, COL_SETPOINT_MTZ_2_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_2_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                       edition_settings.setpoint_mtz_2_U[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_U[group], 1, COL_SETPOINT_MTZ_2_U_COMMA, COL_SETPOINT_MTZ_2_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                      edition_settings.setpoint_mtz_2_k_znam[group] = edit_setpoint(1, edition_settings.setpoint_mtz_2_k_znam[group], 1, COL_SETPOINT_MTZ_2_K_COMMA, COL_SETPOINT_MTZ_2_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                       edition_settings.setpoint_mtz_3[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3[group], 1, COL_SETPOINT_MTZ_3_COMMA, COL_SETPOINT_MTZ_3_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                       edition_settings.setpoint_mtz_3_n_vpered[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_n_vpered[group], 1, COL_SETPOINT_MTZ_3_N_VPERED_COMMA, COL_SETPOINT_MTZ_3_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                       edition_settings.setpoint_mtz_3_n_nazad[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_n_nazad[group], 1, COL_SETPOINT_MTZ_3_N_NAZAD_COMMA, COL_SETPOINT_MTZ_3_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                       edition_settings.setpoint_mtz_3_angle[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_angle[group], 0, 0, COL_SETPOINT_MTZ_3_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_3_po_napruzi[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_po_napruzi[group], 1, COL_SETPOINT_MTZ_3_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_3_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                       edition_settings.setpoint_mtz_3_U[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_U[group], 1, COL_SETPOINT_MTZ_3_U_COMMA, COL_SETPOINT_MTZ_3_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                      edition_settings.setpoint_mtz_3_k_znam[group] = edit_setpoint(1, edition_settings.setpoint_mtz_3_k_znam[group], 1, COL_SETPOINT_MTZ_3_K_COMMA, COL_SETPOINT_MTZ_3_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                       edition_settings.setpoint_mtz_4[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4[group], 1, COL_SETPOINT_MTZ_4_COMMA, COL_SETPOINT_MTZ_4_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                       edition_settings.setpoint_mtz_4_n_vpered[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_n_vpered[group], 1, COL_SETPOINT_MTZ_4_N_VPERED_COMMA, COL_SETPOINT_MTZ_4_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                       edition_settings.setpoint_mtz_4_n_nazad[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_n_nazad[group], 1, COL_SETPOINT_MTZ_4_N_NAZAD_COMMA, COL_SETPOINT_MTZ_4_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                       edition_settings.setpoint_mtz_4_angle[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_angle[group], 0, 0, COL_SETPOINT_MTZ_4_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_4_po_napruzi[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_po_napruzi[group], 1, COL_SETPOINT_MTZ_4_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_4_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                       edition_settings.setpoint_mtz_4_U[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_U[group], 1, COL_SETPOINT_MTZ_4_U_COMMA, COL_SETPOINT_MTZ_4_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                      edition_settings.setpoint_mtz_4_k_znam[group] = edit_setpoint(1, edition_settings.setpoint_mtz_4_k_znam[group], 1, COL_SETPOINT_MTZ_4_K_COMMA, COL_SETPOINT_MTZ_4_K_END, 1);
                   }
-                  //Формуємо екран уставок МСЗ
+                  //Формуємо екран уставок РПН
                   make_ekran_setpoint_mtz(group);
                 }
                 else if (
-                  (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                 {
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
 
                   if (current_ekran.edition == 0)
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
                     if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = (isZNam ? WITHZNAM_MAX_ROW_FOR_TIMEOUT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_TIMEOUT_MTZ) - 1;
+                      current_ekran.index_position = MAX_ROW_FOR_TIMEOUT_RPN - 1;
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                       edition_settings.timeout_mtz_1[group] = edit_setpoint(1, edition_settings.timeout_mtz_1[group], 1, COL_TMO_MTZ_1_COMMA, COL_TMO_MTZ_1_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                       edition_settings.timeout_mtz_1_n_vpered[group] = edit_setpoint(1, edition_settings.timeout_mtz_1_n_vpered[group], 1, COL_TMO_MTZ_1_N_VPERED_COMMA, COL_TMO_MTZ_1_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                       edition_settings.timeout_mtz_1_n_nazad[group] = edit_setpoint(1, edition_settings.timeout_mtz_1_n_nazad[group], 1, COL_TMO_MTZ_1_N_NAZAD_COMMA, COL_TMO_MTZ_1_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                       edition_settings.timeout_mtz_1_po_napruzi[group] = edit_setpoint(1, edition_settings.timeout_mtz_1_po_napruzi[group], 1, COL_TMO_MTZ_1_PO_NAPRUZI_COMMA, COL_TMO_MTZ_1_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                      edition_settings.timeout_mtz_1_k_znam[group] = edit_setpoint(1, edition_settings.timeout_mtz_1_k_znam[group], 1, COL_TMO_MTZ_1_K_COMMA, COL_TMO_MTZ_1_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                       edition_settings.timeout_mtz_2[group] = edit_setpoint(1, edition_settings.timeout_mtz_2[group], 1, COL_TMO_MTZ_2_COMMA, COL_TMO_MTZ_2_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                       edition_settings.timeout_mtz_2_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_pr[group], 1, COL_TMO_MTZ_2_PR_COMMA, COL_TMO_MTZ_2_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                       edition_settings.timeout_mtz_2_n_vpered[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_n_vpered[group], 1, COL_TMO_MTZ_2_N_VPERED_COMMA, COL_TMO_MTZ_2_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                       edition_settings.timeout_mtz_2_n_vpered_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_n_vpered_pr[group], 1, COL_TMO_MTZ_2_N_VPERED_PR_COMMA, COL_TMO_MTZ_2_N_VPERED_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                       edition_settings.timeout_mtz_2_n_nazad[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_n_nazad[group], 1, COL_TMO_MTZ_2_N_NAZAD_COMMA, COL_TMO_MTZ_2_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                       edition_settings.timeout_mtz_2_n_nazad_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_n_nazad_pr[group], 1, COL_TMO_MTZ_2_N_NAZAD_PR_COMMA, COL_TMO_MTZ_2_N_NAZAD_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                       edition_settings.timeout_mtz_2_po_napruzi[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_po_napruzi[group], 1, COL_TMO_MTZ_2_PO_NAPRUZI_COMMA, COL_TMO_MTZ_2_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                       edition_settings.timeout_mtz_2_po_napruzi_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_po_napruzi_pr[group], 1, COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA, COL_TMO_MTZ_2_PO_NAPRUZI_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                       edition_settings.timeout_mtz_2_vvid_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_vvid_pr[group], 1, COL_TMO_MTZ_2_VVID_PR_COMMA, COL_TMO_MTZ_2_VVID_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                      edition_settings.timeout_mtz_2_k_znam[group] = edit_setpoint(1, edition_settings.timeout_mtz_2_k_znam[group], 1, COL_TMO_MTZ_2_K_COMMA, COL_TMO_MTZ_2_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                       edition_settings.timeout_mtz_3[group] = edit_setpoint(1, edition_settings.timeout_mtz_3[group], 1, COL_TMO_MTZ_3_COMMA, COL_TMO_MTZ_3_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                       edition_settings.timeout_mtz_3_n_vpered[group] = edit_setpoint(1, edition_settings.timeout_mtz_3_n_vpered[group], 1, COL_TMO_MTZ_3_N_VPERED_COMMA, COL_TMO_MTZ_3_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                       edition_settings.timeout_mtz_3_n_nazad[group] = edit_setpoint(1, edition_settings.timeout_mtz_3_n_nazad[group], 1, COL_TMO_MTZ_3_N_NAZAD_COMMA, COL_TMO_MTZ_3_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                       edition_settings.timeout_mtz_3_po_napruzi[group] = edit_setpoint(1, edition_settings.timeout_mtz_3_po_napruzi[group], 1, COL_TMO_MTZ_3_PO_NAPRUZI_COMMA, COL_TMO_MTZ_3_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                      edition_settings.timeout_mtz_3_k_znam[group] = edit_setpoint(1, edition_settings.timeout_mtz_3_k_znam[group], 1, COL_TMO_MTZ_3_K_COMMA, COL_TMO_MTZ_3_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                       edition_settings.timeout_mtz_4[group] = edit_setpoint(1, edition_settings.timeout_mtz_4[group], 1, COL_TMO_MTZ_4_COMMA, COL_TMO_MTZ_4_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                       edition_settings.timeout_mtz_4_n_vpered[group] = edit_setpoint(1, edition_settings.timeout_mtz_4_n_vpered[group], 1, COL_TMO_MTZ_4_N_VPERED_COMMA, COL_TMO_MTZ_4_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                       edition_settings.timeout_mtz_4_n_nazad[group] = edit_setpoint(1, edition_settings.timeout_mtz_4_n_nazad[group], 1, COL_TMO_MTZ_4_N_NAZAD_COMMA, COL_TMO_MTZ_4_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                       edition_settings.timeout_mtz_4_po_napruzi[group] = edit_setpoint(1, edition_settings.timeout_mtz_4_po_napruzi[group], 1, COL_TMO_MTZ_4_PO_NAPRUZI_COMMA, COL_TMO_MTZ_4_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                      edition_settings.timeout_mtz_4_k_znam[group] = edit_setpoint(1, edition_settings.timeout_mtz_4_k_znam[group], 1, COL_TMO_MTZ_4_K_COMMA, COL_TMO_MTZ_4_K_END, 1);
                   }
-                  //Формуємо екран витримок МСЗ
+                  //Формуємо екран витримок РПН
                   make_ekran_timeout_mtz(group);
                 }
-                else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
                   if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = (isZNam ? WITHZNAM_MAX_ROW_FOR_CONTROL_MTZ : WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ) - 1;
-                  position_in_current_level_menu[EKRAN_CONTROL_MTZ] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для МСЗ
+                    current_ekran.index_position = WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ - 1;
+                  position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
+                  //Формуємо екран управлінської інформації для РПН
                   make_ekran_control_mtz();
                 }
                 else if (
@@ -13622,7 +13352,7 @@ void main_manu_function(void)
                     else if (current_ekran.index_position == INDEX_ML_STPMTZ04_2)
                       edition_settings.setpoint_mtz04_2[group] = edit_setpoint(1, edition_settings.setpoint_mtz04_2[group], 1, COL_SETPOINT_MTZ04_2_COMMA, COL_SETPOINT_MTZ04_2_END, 10);
                   }
-                  //Формуємо екран уставок МСЗ 0.4кВ
+                  //Формуємо екран уставок РПН 0.4кВ
                   make_ekran_setpoint_mtz04(group);
                 }
                 else if (
@@ -13649,7 +13379,7 @@ void main_manu_function(void)
                     else if (current_ekran.index_position == INDEX_ML_TMOMTZ04_2_VVID_PR)
                       edition_settings.timeout_mtz04_2_vvid_pr[group] = edit_setpoint(1, edition_settings.timeout_mtz04_2_vvid_pr[group], 1, COL_TMO_MTZ04_2_VVID_PR_COMMA, COL_TMO_MTZ04_2_VVID_PR_END, 10);
                   }
-                  //Формуємо екран витримок МСЗ 0.4кВ
+                  //Формуємо екран витримок РПН 0.4кВ
                   make_ekran_timeout_mtz04(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_MTZ04)
@@ -13657,7 +13387,7 @@ void main_manu_function(void)
                   if (--current_ekran.index_position < 0)
                     current_ekran.index_position = MAX_ROW_FOR_CONTROL_MTZ04 - 1;
                   position_in_current_level_menu[EKRAN_CONTROL_MTZ04] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для МСЗ 0.4кВ
+                  //Формуємо екран управлінської інформації для РПН 0.4кВ
                   make_ekran_control_mtz04();
                 }
                 else if (
@@ -15054,166 +14784,139 @@ void main_manu_function(void)
               {
                 //Натиснута кнопка DOWN
                 if (
-                  (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                 {
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
+                  int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
 
                   if (current_ekran.edition == 0)
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (++current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_SETPOINT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_SETPOINT_MTZ))
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_RPN)
                       current_ekran.index_position = 0;
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                       edition_settings.setpoint_mtz_1[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1[group], 1, COL_SETPOINT_MTZ_1_COMMA, COL_SETPOINT_MTZ_1_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                       edition_settings.setpoint_mtz_1_n_vpered[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_n_vpered[group], 1, COL_SETPOINT_MTZ_1_N_VPERED_COMMA, COL_SETPOINT_MTZ_1_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                       edition_settings.setpoint_mtz_1_n_nazad[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_n_nazad[group], 1, COL_SETPOINT_MTZ_1_N_NAZAD_COMMA, COL_SETPOINT_MTZ_1_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                       edition_settings.setpoint_mtz_1_angle[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_angle[group], 0, 0, COL_SETPOINT_MTZ_1_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_1_po_napruzi[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_po_napruzi[group], 1, COL_SETPOINT_MTZ_1_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_1_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                       edition_settings.setpoint_mtz_1_U[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_U[group], 1, COL_SETPOINT_MTZ_1_U_COMMA, COL_SETPOINT_MTZ_1_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                      edition_settings.setpoint_mtz_1_k_znam[group] = edit_setpoint(0, edition_settings.setpoint_mtz_1_k_znam[group], 1, COL_SETPOINT_MTZ_1_K_COMMA, COL_SETPOINT_MTZ_1_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                       edition_settings.setpoint_mtz_2[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2[group], 1, COL_SETPOINT_MTZ_2_COMMA, COL_SETPOINT_MTZ_2_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                       edition_settings.setpoint_mtz_2_n_vpered[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_n_vpered[group], 1, COL_SETPOINT_MTZ_2_N_VPERED_COMMA, COL_SETPOINT_MTZ_2_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                       edition_settings.setpoint_mtz_2_n_nazad[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_n_nazad[group], 1, COL_SETPOINT_MTZ_2_N_NAZAD_COMMA, COL_SETPOINT_MTZ_2_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                       edition_settings.setpoint_mtz_2_angle[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_angle[group], 0, 0, COL_SETPOINT_MTZ_2_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_2_po_napruzi[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_po_napruzi[group], 1, COL_SETPOINT_MTZ_2_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_2_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                       edition_settings.setpoint_mtz_2_U[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_U[group], 1, COL_SETPOINT_MTZ_2_U_COMMA, COL_SETPOINT_MTZ_2_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                      edition_settings.setpoint_mtz_2_k_znam[group] = edit_setpoint(0, edition_settings.setpoint_mtz_2_k_znam[group], 1, COL_SETPOINT_MTZ_2_K_COMMA, COL_SETPOINT_MTZ_2_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                       edition_settings.setpoint_mtz_3[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3[group], 1, COL_SETPOINT_MTZ_3_COMMA, COL_SETPOINT_MTZ_3_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                       edition_settings.setpoint_mtz_3_n_vpered[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_n_vpered[group], 1, COL_SETPOINT_MTZ_3_N_VPERED_COMMA, COL_SETPOINT_MTZ_3_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                       edition_settings.setpoint_mtz_3_n_nazad[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_n_nazad[group], 1, COL_SETPOINT_MTZ_3_N_NAZAD_COMMA, COL_SETPOINT_MTZ_3_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                       edition_settings.setpoint_mtz_3_angle[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_angle[group], 0, 0, COL_SETPOINT_MTZ_3_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_3_po_napruzi[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_po_napruzi[group], 1, COL_SETPOINT_MTZ_3_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_3_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                       edition_settings.setpoint_mtz_3_U[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_U[group], 1, COL_SETPOINT_MTZ_3_U_COMMA, COL_SETPOINT_MTZ_3_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                      edition_settings.setpoint_mtz_3_k_znam[group] = edit_setpoint(0, edition_settings.setpoint_mtz_3_k_znam[group], 1, COL_SETPOINT_MTZ_3_K_COMMA, COL_SETPOINT_MTZ_3_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                       edition_settings.setpoint_mtz_4[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4[group], 1, COL_SETPOINT_MTZ_4_COMMA, COL_SETPOINT_MTZ_4_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                       edition_settings.setpoint_mtz_4_n_vpered[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_n_vpered[group], 1, COL_SETPOINT_MTZ_4_N_VPERED_COMMA, COL_SETPOINT_MTZ_4_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                       edition_settings.setpoint_mtz_4_n_nazad[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_n_nazad[group], 1, COL_SETPOINT_MTZ_4_N_NAZAD_COMMA, COL_SETPOINT_MTZ_4_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                       edition_settings.setpoint_mtz_4_angle[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_angle[group], 0, 0, COL_SETPOINT_MTZ_4_ANGLE_END, 1);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                       edition_settings.setpoint_mtz_4_po_napruzi[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_po_napruzi[group], 1, COL_SETPOINT_MTZ_4_PO_NAPRUZI_COMMA, COL_SETPOINT_MTZ_4_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                       edition_settings.setpoint_mtz_4_U[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_U[group], 1, COL_SETPOINT_MTZ_4_U_COMMA, COL_SETPOINT_MTZ_4_U_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                      edition_settings.setpoint_mtz_4_k_znam[group] = edit_setpoint(0, edition_settings.setpoint_mtz_4_k_znam[group], 1, COL_SETPOINT_MTZ_4_K_COMMA, COL_SETPOINT_MTZ_4_K_END, 1);
                   }
-                  //Формуємо екран уставок МСЗ
+                  //Формуємо екран уставок РПН
                   make_ekran_setpoint_mtz(group);
                 }
                 else if (
-                  (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                 {
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
 
                   if (current_ekran.edition == 0)
                   {
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (++current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_TIMEOUT_MTZ : WITHOUTZNAM_MAX_ROW_FOR_TIMEOUT_MTZ))
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_TIMEOUT_RPN)
                       current_ekran.index_position = 0;
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                    if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                       edition_settings.timeout_mtz_1[group] = edit_setpoint(0, edition_settings.timeout_mtz_1[group], 1, COL_TMO_MTZ_1_COMMA, COL_TMO_MTZ_1_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                       edition_settings.timeout_mtz_1_n_vpered[group] = edit_setpoint(0, edition_settings.timeout_mtz_1_n_vpered[group], 1, COL_TMO_MTZ_1_N_VPERED_COMMA, COL_TMO_MTZ_1_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                       edition_settings.timeout_mtz_1_n_nazad[group] = edit_setpoint(0, edition_settings.timeout_mtz_1_n_nazad[group], 1, COL_TMO_MTZ_1_N_NAZAD_COMMA, COL_TMO_MTZ_1_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                       edition_settings.timeout_mtz_1_po_napruzi[group] = edit_setpoint(0, edition_settings.timeout_mtz_1_po_napruzi[group], 1, COL_TMO_MTZ_1_PO_NAPRUZI_COMMA, COL_TMO_MTZ_1_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                      edition_settings.timeout_mtz_1_k_znam[group] = edit_setpoint(0, edition_settings.timeout_mtz_1_k_znam[group], 1, COL_TMO_MTZ_1_K_COMMA, COL_TMO_MTZ_1_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                       edition_settings.timeout_mtz_2[group] = edit_setpoint(0, edition_settings.timeout_mtz_2[group], 1, COL_TMO_MTZ_2_COMMA, COL_TMO_MTZ_2_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                       edition_settings.timeout_mtz_2_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_pr[group], 1, COL_TMO_MTZ_2_PR_COMMA, COL_TMO_MTZ_2_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                       edition_settings.timeout_mtz_2_n_vpered[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_n_vpered[group], 1, COL_TMO_MTZ_2_N_VPERED_COMMA, COL_TMO_MTZ_2_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                       edition_settings.timeout_mtz_2_n_vpered_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_n_vpered_pr[group], 1, COL_TMO_MTZ_2_N_VPERED_PR_COMMA, COL_TMO_MTZ_2_N_VPERED_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                       edition_settings.timeout_mtz_2_n_nazad[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_n_nazad[group], 1, COL_TMO_MTZ_2_N_NAZAD_COMMA, COL_TMO_MTZ_2_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                       edition_settings.timeout_mtz_2_n_nazad_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_n_nazad_pr[group], 1, COL_TMO_MTZ_2_N_NAZAD_PR_COMMA, COL_TMO_MTZ_2_N_NAZAD_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                       edition_settings.timeout_mtz_2_po_napruzi[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_po_napruzi[group], 1, COL_TMO_MTZ_2_PO_NAPRUZI_COMMA, COL_TMO_MTZ_2_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                       edition_settings.timeout_mtz_2_po_napruzi_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_po_napruzi_pr[group], 1, COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA, COL_TMO_MTZ_2_PO_NAPRUZI_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                       edition_settings.timeout_mtz_2_vvid_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_vvid_pr[group], 1, COL_TMO_MTZ_2_VVID_PR_COMMA, COL_TMO_MTZ_2_VVID_PR_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                      edition_settings.timeout_mtz_2_k_znam[group] = edit_setpoint(0, edition_settings.timeout_mtz_2_k_znam[group], 1, COL_TMO_MTZ_2_K_COMMA, COL_TMO_MTZ_2_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                       edition_settings.timeout_mtz_3[group] = edit_setpoint(0, edition_settings.timeout_mtz_3[group], 1, COL_TMO_MTZ_3_COMMA, COL_TMO_MTZ_3_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                       edition_settings.timeout_mtz_3_n_vpered[group] = edit_setpoint(0, edition_settings.timeout_mtz_3_n_vpered[group], 1, COL_TMO_MTZ_3_N_VPERED_COMMA, COL_TMO_MTZ_3_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                       edition_settings.timeout_mtz_3_n_nazad[group] = edit_setpoint(0, edition_settings.timeout_mtz_3_n_nazad[group], 1, COL_TMO_MTZ_3_N_NAZAD_COMMA, COL_TMO_MTZ_3_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                       edition_settings.timeout_mtz_3_po_napruzi[group] = edit_setpoint(0, edition_settings.timeout_mtz_3_po_napruzi[group], 1, COL_TMO_MTZ_3_PO_NAPRUZI_COMMA, COL_TMO_MTZ_3_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                      edition_settings.timeout_mtz_3_k_znam[group] = edit_setpoint(0, edition_settings.timeout_mtz_3_k_znam[group], 1, COL_TMO_MTZ_3_K_COMMA, COL_TMO_MTZ_3_K_END, 1);
-
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                       edition_settings.timeout_mtz_4[group] = edit_setpoint(0, edition_settings.timeout_mtz_4[group], 1, COL_TMO_MTZ_4_COMMA, COL_TMO_MTZ_4_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                       edition_settings.timeout_mtz_4_n_vpered[group] = edit_setpoint(0, edition_settings.timeout_mtz_4_n_vpered[group], 1, COL_TMO_MTZ_4_N_VPERED_COMMA, COL_TMO_MTZ_4_N_VPERED_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                       edition_settings.timeout_mtz_4_n_nazad[group] = edit_setpoint(0, edition_settings.timeout_mtz_4_n_nazad[group], 1, COL_TMO_MTZ_4_N_NAZAD_COMMA, COL_TMO_MTZ_4_N_NAZAD_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                       edition_settings.timeout_mtz_4_po_napruzi[group] = edit_setpoint(0, edition_settings.timeout_mtz_4_po_napruzi[group], 1, COL_TMO_MTZ_4_PO_NAPRUZI_COMMA, COL_TMO_MTZ_4_PO_NAPRUZI_END, 10);
-                    else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                      edition_settings.timeout_mtz_4_k_znam[group] = edit_setpoint(0, edition_settings.timeout_mtz_4_k_znam[group], 1, COL_TMO_MTZ_4_K_COMMA, COL_TMO_MTZ_4_K_END, 1);
                   }
-                  //Формуємо екран витримок МСЗ
+                  //Формуємо екран витримок РПН
                   make_ekran_timeout_mtz(group);
                 }
-                else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (++current_ekran.index_position >= (isZNam ? WITHZNAM_MAX_ROW_FOR_CONTROL_MTZ : WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ))
+                  if (++current_ekran.index_position >= WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ)
                     current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_CONTROL_MTZ] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для МСЗ
+                  position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
+                  //Формуємо екран управлінської інформації для РПН
                   make_ekran_control_mtz();
                 }
                 else if (
@@ -15236,7 +14939,7 @@ void main_manu_function(void)
                     else if (current_ekran.index_position == INDEX_ML_STPMTZ04_2)
                       edition_settings.setpoint_mtz04_2[group] = edit_setpoint(0, edition_settings.setpoint_mtz04_2[group], 1, COL_SETPOINT_MTZ04_2_COMMA, COL_SETPOINT_MTZ04_2_END, 10);
                   }
-                  //Формуємо екран уставок МСЗ 0.4кВ
+                  //Формуємо екран уставок РПН 0.4кВ
                   make_ekran_setpoint_mtz04(group);
                 }
                 else if (
@@ -15263,7 +14966,7 @@ void main_manu_function(void)
                     else if (current_ekran.index_position == INDEX_ML_TMOMTZ04_2_VVID_PR)
                       edition_settings.timeout_mtz04_2_vvid_pr[group] = edit_setpoint(0, edition_settings.timeout_mtz04_2_vvid_pr[group], 1, COL_TMO_MTZ04_2_VVID_PR_COMMA, COL_TMO_MTZ04_2_VVID_PR_END, 10);
                   }
-                  //Формуємо екран витримок МСЗ 0.4кВ
+                  //Формуємо екран витримок РПН 0.4кВ
                   make_ekran_timeout_mtz04(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_MTZ04)
@@ -15271,7 +14974,7 @@ void main_manu_function(void)
                   if (++current_ekran.index_position >= MAX_ROW_FOR_CONTROL_MTZ04)
                     current_ekran.index_position = 0;
                   position_in_current_level_menu[EKRAN_CONTROL_MTZ04] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для МСЗ 0.4кВ
+                  //Формуємо екран управлінської інформації для РПН 0.4кВ
                   make_ekran_control_mtz04();
                 }
                 else if (
@@ -16668,11 +16371,10 @@ void main_manu_function(void)
                 current_ekran.position_cursor_x++;
                 //Перевіряємо, чи ми не вийшли за межі виділені для значення даної уставки, або позицію коми
                 if (
-                  (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16680,7 +16382,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16688,7 +16390,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16696,13 +16398,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_1_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_ANGLE_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16710,7 +16412,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_U_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16718,16 +16420,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_U_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_1_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16735,7 +16428,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16743,7 +16436,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16751,13 +16444,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_2_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_ANGLE_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16765,7 +16458,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_U_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16773,16 +16466,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_U_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_2_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16790,7 +16474,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16798,7 +16482,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16806,13 +16490,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_3_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_ANGLE_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16820,7 +16504,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_U_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16828,16 +16512,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_U_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_3_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16845,7 +16520,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16853,7 +16528,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16861,13 +16536,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_4_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_ANGLE_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16875,7 +16550,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_U_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16883,25 +16558,16 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_U_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_4_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_K_BEGIN;
-                  }
 
-                  //Формуємо екран уставок МСЗ
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
+                  //Формуємо екран уставок РПН
+                  int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
                   make_ekran_setpoint_mtz(group);
                 }
                 else if (
-                  (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16909,7 +16575,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16917,7 +16583,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16925,7 +16591,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16933,16 +16599,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_1_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_1_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_1_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16950,7 +16607,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PR_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16958,7 +16615,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PR_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16966,7 +16623,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_VPERED_PR_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16974,7 +16631,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_VPERED_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_PR_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16982,7 +16639,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_NAZAD_PR_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16990,7 +16647,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_NAZAD_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_PR_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -16998,7 +16655,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17006,7 +16663,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PO_NAPRUZI_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_PR_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_VVID_PR_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17014,16 +16671,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_VVID_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_VVID_PR_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_2_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_2_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_2_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17031,7 +16679,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17039,7 +16687,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17047,7 +16695,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17055,16 +16703,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_3_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_3_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_3_K_BEGIN;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17072,7 +16711,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_N_VPERED_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17080,7 +16719,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_VPERED_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17088,7 +16727,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_NAZAD_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x++;
@@ -17096,38 +16735,29 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_PO_NAPRUZI_BEGIN;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_K_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_4_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_4_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_4_K_BEGIN;
-                  }
 
-                  //Формуємо екран витримок МСЗ
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                  //Формуємо екран витримок РПН
+                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
                   make_ekran_timeout_mtz(group);
                 }
-                else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_1_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_1_TYPE))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_TYPE)
                   {
                     if (++edition_settings.type_mtz1 > TYPE_MTZ_VOLTAGE)
                       edition_settings.type_mtz1 = TYPE_MTZ_SIMPLE;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_2_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_2_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_TYPE)
                   {
                     if (++edition_settings.type_mtz2 > TYPE_MTZ_DEPENDENT_RTV_I)
                       edition_settings.type_mtz2 = TYPE_MTZ_SIMPLE;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_3_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_3_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_TYPE)
                   {
                     if (++edition_settings.type_mtz3 > TYPE_MTZ_VOLTAGE)
                       edition_settings.type_mtz3 = TYPE_MTZ_SIMPLE;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_4_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_4_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_TYPE)
                   {
                     if (++edition_settings.type_mtz4 > TYPE_MTZ_VOLTAGE)
                       edition_settings.type_mtz4 = TYPE_MTZ_SIMPLE;
@@ -17137,110 +16767,46 @@ void main_manu_function(void)
                     unsigned int maska = 0;
 
                     //Виділяємо, який біт треба міняти
-                    if (isZNam)
-                    {
-                      if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM_TYPE);
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-                    } //if
-                    else
-                    {
-                      if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM      ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM_TYPE ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM      ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM_TYPE ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM      ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM_TYPE ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM      ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM_TYPE ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-                    } //if
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
 
                     //Міняємо на протилежний відповідний біт для вибраної позиції
                     edition_settings.control_mtz ^= maska;
                   }
 
-                  //Формуємо екран управлінської інформації для МСЗ
+                  //Формуємо екран управлінської інформації для РПН
                   make_ekran_control_mtz();
                 }
                 else if (
@@ -17264,7 +16830,7 @@ void main_manu_function(void)
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ04_2_BEGIN;
                   }
 
-                  //Формуємо екран уставок МСЗ 0.4кВ
+                  //Формуємо екран уставок РПН 0.4кВ
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ04_GROUP1);
                   make_ekran_setpoint_mtz04(group);
                 }
@@ -17305,7 +16871,7 @@ void main_manu_function(void)
                       current_ekran.position_cursor_x = COL_TMO_MTZ04_2_VVID_PR_BEGIN;
                   }
 
-                  //Формуємо екран витримок МСЗ 0.4кВ
+                  //Формуємо екран витримок РПН 0.4кВ
                   int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ04_GROUP1);
                   make_ekran_timeout_mtz04(group);
                 }
@@ -17339,7 +16905,7 @@ void main_manu_function(void)
                     edition_settings.control_mtz04 ^= maska;
                   }
 
-                  //Формуємо екран управлінської інформації для МСЗ 0.4кВ
+                  //Формуємо екран управлінської інформації для РПН 0.4кВ
                   make_ekran_control_mtz04();
                 }
                 else if (
@@ -19033,11 +18599,10 @@ void main_manu_function(void)
                 current_ekran.position_cursor_x--;
                 //Перевіряємо, чи ми не вийшли за межі виділені для значення даної уставки, або позицію коми
                 if (
-                  (current_ekran.current_level >= EKRAN_SETPOINT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_SETPOINT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4))
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1 : WITHOUTZNAM_INDEX_ML_STPMTZ1))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19045,7 +18610,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19053,7 +18618,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19061,13 +18626,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_1_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_ANGLE_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19075,7 +18640,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_U : WITHOUTZNAM_INDEX_ML_STPMTZ1_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ1_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_U_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19083,16 +18648,8 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_U_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ1_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_1_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_1_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_1_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_1_K_END;
-                  }
 
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2 : WITHOUTZNAM_INDEX_ML_STPMTZ2))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19100,7 +18657,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19108,7 +18665,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19116,13 +18673,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_2_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_ANGLE_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19130,7 +18687,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_U : WITHOUTZNAM_INDEX_ML_STPMTZ2_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ2_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_U_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19138,16 +18695,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_U_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ2_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_2_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_2_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_2_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_2_K_END;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3 : WITHOUTZNAM_INDEX_ML_STPMTZ3))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19155,7 +18703,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19163,7 +18711,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19171,13 +18719,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_3_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_ANGLE_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19185,7 +18733,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_U : WITHOUTZNAM_INDEX_ML_STPMTZ3_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ3_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_U_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19193,16 +18741,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_U_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ3_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_3_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_3_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_3_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_3_K_END;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4 : WITHOUTZNAM_INDEX_ML_STPMTZ4))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19210,7 +18749,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19218,7 +18757,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19226,13 +18765,13 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_ANGLE : WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_ANGLE)
                   {
                     if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_4_ANGLE_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_ANGLE_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_ANGLE_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19240,7 +18779,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_U : WITHOUTZNAM_INDEX_ML_STPMTZ4_U))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_STPMTZ4_U)
                   {
                     if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_U_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19248,25 +18787,16 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_U_END))
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_U_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_STPMTZ4_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_MTZ_4_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_MTZ_4_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_MTZ_4_K_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_MTZ_4_K_END;
-                  }
 
-                  //Формуємо екран уставок МСЗ
-                  int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ_GROUP1);
+                  //Формуємо екран уставок РПН
+                  int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
                   make_ekran_setpoint_mtz(group);
                 }
                 else if (
-                  (current_ekran.current_level >= EKRAN_TIMEOUT_MTZ_GROUP1) &&
-                  (current_ekran.current_level <= EKRAN_TIMEOUT_MTZ_GROUP4))
+                  (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
+                  (current_ekran.current_level <= EKRAN_TIMEOUT_RPN_GROUP4))
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1 : WITHOUTZNAM_INDEX_ML_TMOMTZ1))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19274,7 +18804,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19282,7 +18812,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19290,7 +18820,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19298,16 +18828,8 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_1_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_1_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ1_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_1_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_1_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_1_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_1_K_END;
-                  }
 
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2 : WITHOUTZNAM_INDEX_ML_TMOMTZ2))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19315,7 +18837,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PR_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19323,7 +18845,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PR_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19331,7 +18853,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_VPERED_PR_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19339,7 +18861,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_VPERED_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_PR_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19347,7 +18869,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_N_NAZAD_PR_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19355,7 +18877,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_N_NAZAD_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_PR_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19363,7 +18885,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19371,7 +18893,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_PO_NAPRUZI_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_PR_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_VVID_PR : WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_VVID_PR_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19379,16 +18901,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_2_VVID_PR_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_2_VVID_PR_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ2_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_2_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_2_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_2_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_2_K_END;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3 : WITHOUTZNAM_INDEX_ML_TMOMTZ3))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19396,7 +18909,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19404,7 +18917,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19412,7 +18925,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19420,16 +18933,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_3_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_3_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ3_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_3_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_3_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_3_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_3_K_END;
-                  }
-
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4 : WITHOUTZNAM_INDEX_ML_TMOMTZ4))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19437,7 +18941,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_VPERED : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_N_VPERED_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19445,7 +18949,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_N_VPERED_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_VPERED_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_N_NAZAD : WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_N_NAZAD_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19453,7 +18957,7 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_N_NAZAD_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_NAZAD_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI : WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_PO_NAPRUZI_COMMA)
                       current_ekran.position_cursor_x--;
@@ -19461,38 +18965,29 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_MTZ_4_PO_NAPRUZI_END))
                       current_ekran.position_cursor_x = COL_TMO_MTZ_4_PO_NAPRUZI_END;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_TMOMTZ4_K : 100))
-                  {
-                    if (current_ekran.position_cursor_x == COL_TMO_MTZ_4_K_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_MTZ_4_K_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_MTZ_4_K_END))
-                      current_ekran.position_cursor_x = COL_TMO_MTZ_4_K_END;
-                  }
 
-                  //Формуємо екран витримок МСЗ
-                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ_GROUP1);
+                  //Формуємо екран витримок РПН
+                  int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
                   make_ekran_timeout_mtz(group);
                 }
-                else if (current_ekran.current_level == EKRAN_CONTROL_MTZ)
+                else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int isZNam = /* current_settings.configuration & (1 << ZNAM_BIT_CONFIGURATION) */ 0;
-                  if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_1_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_1_TYPE))
+                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_TYPE)
                   {
                     if (--edition_settings.type_mtz1 < 0)
                       edition_settings.type_mtz1 = TYPE_MTZ_VOLTAGE;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_2_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_2_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_TYPE)
                   {
                     if (--edition_settings.type_mtz2 < 0)
                       edition_settings.type_mtz2 = TYPE_MTZ_DEPENDENT_RTV_I;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_3_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_3_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_TYPE)
                   {
                     if (--edition_settings.type_mtz3 < 0)
                       edition_settings.type_mtz3 = TYPE_MTZ_VOLTAGE;
                   }
-                  else if (current_ekran.index_position == (isZNam ? WITHZNAM_INDEX_ML_CTRMTZ_4_TYPE : WITHOUTZNAM_INDEX_ML_CTRMTZ_4_TYPE))
+                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_TYPE)
                   {
                     if (--edition_settings.type_mtz4 < 0)
                       edition_settings.type_mtz4 = TYPE_MTZ_VOLTAGE;
@@ -19502,110 +18997,54 @@ void main_manu_function(void)
                     unsigned int maska = 0;
 
                     //Виділяємо, який біт треба міняти
-                    if (isZNam)
-                    {
-                      if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_1_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM_TYPE);
+                    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM_TYPE);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_2_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM_TYPE);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_3_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM_TYPE);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_ZNAM)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM);
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_4_ZNAM_TYPE)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM_TYPE);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM);
+                    //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM_TYPE);
 
-                      else if (current_ekran.index_position == WITHZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-                    } //if
-                    else
-                    {
-                      if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM       ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM);
-                      //                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM_TYPE  ) maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_ZNAM_TYPE);
-
-                      else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                        maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-                    } //if
+                    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
+                      maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
 
                     //Міняємо на протилежний відповідний біт для вибраної позиції
                     edition_settings.control_mtz ^= maska;
                   }
 
-                  //Формуємо екран управлінської інформації для МСЗ
+                  //Формуємо екран управлінської інформації для РПН
                   make_ekran_control_mtz();
                 }
                 else if (
@@ -19629,7 +19068,7 @@ void main_manu_function(void)
                       current_ekran.position_cursor_x = COL_SETPOINT_MTZ04_2_END;
                   }
 
-                  //Формуємо екран уставок МСЗ 0.4кВ
+                  //Формуємо екран уставок РПН 0.4кВ
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_MTZ04_GROUP1);
                   make_ekran_setpoint_mtz04(group);
                 }
@@ -19670,7 +19109,7 @@ void main_manu_function(void)
                       current_ekran.position_cursor_x = COL_TMO_MTZ04_2_VVID_PR_END;
                   }
 
-                  //Формуємо екран витримок МСЗ 0.4кВ
+                  //Формуємо екран витримок РПН 0.4кВ
                   int group = (current_ekran.current_level - EKRAN_TIMEOUT_MTZ04_GROUP1);
                   make_ekran_timeout_mtz04(group);
                 }
@@ -19704,7 +19143,7 @@ void main_manu_function(void)
                     edition_settings.control_mtz04 ^= maska;
                   }
 
-                  //Формуємо екран управлінської інформації для МСЗ 0.4кВ
+                  //Формуємо екран управлінської інформації для РПН 0.4кВ
                   make_ekran_control_mtz04();
                 }
                 else if (
