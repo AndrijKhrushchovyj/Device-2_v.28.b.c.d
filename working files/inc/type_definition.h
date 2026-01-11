@@ -6,228 +6,192 @@
 
 typedef struct
 {
-  int current_level;                  //Текучий рівень відображуваного екрану
- 
-  int index_position;                 //Вказує на якій ми зараз є позиції
+  int current_level; //Текучий рівень відображуваного екрану
 
-  int position_cursor_x;              //X - координата курсору
-  int position_cursor_y;              //Y - координата курсору
-  
-  unsigned int edition;               //0 - вікно зараз не в режимі редагується;
-                                      //1 - вікно зараз в режимі редагування;
-                                      //2 - вікно чекає підтвердження редагування
-                                      //3 - у вікні виведено повідомлення про те, що під час введення даних була зафіксована помилка величиниданих
-  
-  unsigned int cursor_on;             //1 - курсор відображається/ 0 - курсор не відображається
-  unsigned int cursor_blinking_on;    //1 - курсор мигає/ 0 - курсор не мигає
-  
-  unsigned int current_action;        //Дія яку треба виконати з текучим екраном
-                                      //0 - Нічого не виконувати
-                                      //1 - Перемістити курсор, ш/або змінити стан його відображення
-                                      //2 - Повністю обновити інформацію
+  int index_position; //Вказує на якій ми зараз є позиції
+
+  int position_cursor_x; //X - координата курсору
+  int position_cursor_y; //Y - координата курсору
+
+  unsigned int edition; //0 - вікно зараз не в режимі редагується;
+                        //1 - вікно зараз в режимі редагування;
+                        //2 - вікно чекає підтвердження редагування
+                        //3 - у вікні виведено повідомлення про те, що під час введення даних була зафіксована помилка величиниданих
+
+  unsigned int cursor_on;          //1 - курсор відображається/ 0 - курсор не відображається
+  unsigned int cursor_blinking_on; //1 - курсор мигає/ 0 - курсор не мигає
+
+  unsigned int current_action; //Дія яку треба виконати з текучим екраном
+                               //0 - Нічого не виконувати
+                               //1 - Перемістити курсор, ш/або змінити стан його відображення
+                               //2 - Повністю обновити інформацію
 
 } __CURRENT_EKRAN;
 
 typedef struct
 {
-  int position_cursor_x;              //X - координата курсору
+  int position_cursor_x; //X - координата курсору
 
-  unsigned int cursor_on;             //1 - курсор відображається/ 0 - курсор не відображається
-  unsigned int cursor_blinking_on;    //1 - курсор мигає/ 0 - курсор не мигає
+  unsigned int cursor_on;          //1 - курсор відображається/ 0 - курсор не відображається
+  unsigned int cursor_blinking_on; //1 - курсор мигає/ 0 - курсор не мигає
 } __PREVIOUS_STATE_CURSOR;
 
 typedef struct
 {
   //Тип пристрою
   unsigned int device_id;
-  
-  //Дискретні входи
-  unsigned int type_of_input;                          //Тип дискретного входу 0 - прямий, 1 - інверсний
-  unsigned int type_of_input_signal;                   //Тип сигналу дискретного входу 0 - постійний , 1 - змінний
-  unsigned int dopusk_dv[NUMBER_INPUTS];              //Допуски ДВ
-    
-  unsigned int ranguvannja_inputs[N_SMALL*NUMBER_INPUTS]; //Ранжування дискретних входів
-  unsigned int ranguvannja_outputs[N_BIG*NUMBER_OUTPUTS]; //Ранжування дискретних вхиодів
-  unsigned int ranguvannja_leds[N_BIG*NUMBER_LEDS];       //Ранжування свіотіндикаторів
 
-  unsigned int ranguvannja_analog_registrator[N_BIG];     //Ранжування аналогового реєстратора
-  unsigned int ranguvannja_digital_registrator[N_BIG];    //Ранжування дискретного реєстратора
-  
-  int timeout_prolongation_work_digital_registrator;        //Час продолвження роботи  дискретного реєстратора
-  
+  //Дискретні входи
+  unsigned int type_of_input;            //Тип дискретного входу 0 - прямий, 1 - інверсний
+  unsigned int type_of_input_signal;     //Тип сигналу дискретного входу 0 - постійний , 1 - змінний
+  unsigned int dopusk_dv[NUMBER_INPUTS]; //Допуски ДВ
+
+  unsigned int ranguvannja_inputs[N_SMALL * NUMBER_INPUTS]; //Ранжування дискретних входів
+  unsigned int ranguvannja_outputs[N_BIG * NUMBER_OUTPUTS]; //Ранжування дискретних вхиодів
+  unsigned int ranguvannja_leds[N_BIG * NUMBER_LEDS];       //Ранжування свіотіндикаторів
+
+  unsigned int ranguvannja_analog_registrator[N_BIG];  //Ранжування аналогового реєстратора
+  unsigned int ranguvannja_digital_registrator[N_BIG]; //Ранжування дискретного реєстратора
+
+  int timeout_prolongation_work_digital_registrator; //Час продолвження роботи  дискретного реєстратора
+
   //Блок увімкнення-вимкнення вимикача
-  unsigned int ranguvannja_off_cb[N_BIG];                 //Ранжування блоку вимкнення силового вимикача
-  unsigned int ranguvannja_on_cb[N_BIG];                  //Ранжування блоку увімкнення силового вимикача
-  
+  unsigned int ranguvannja_off_cb[N_BIG]; //Ранжування блоку вимкнення силового вимикача
+  unsigned int ranguvannja_on_cb[N_BIG];  //Ранжування блоку увімкнення силового вимикача
+
   //Тип дискретних виходів
-  unsigned int type_of_output;                        //Тип дискретних виходів
-                                                      //0 - Командний
-                                                      //1 - Сигналький (постійний або імпульсний)
-  
-  unsigned int type_of_output_modif;                  //Тип дискретних сигнальних виходів
-                                                      //0 - Сигналький (постійний)
-                                                      //1 - Сигналький (імпульсний)
-  
+  unsigned int type_of_output; //Тип дискретних виходів
+                               //0 - Командний
+                               //1 - Сигналький (постійний або імпульсний)
+
+  unsigned int type_of_output_modif; //Тип дискретних сигнальних виходів
+                                     //0 - Сигналький (постійний)
+                                     //1 - Сигналький (імпульсний)
+
   //Тип світлоіндикаторів
-  unsigned int type_of_led;                           //Тип світлоіндикаторі
-                                                      //0 - Нормальний
-                                                      //1 - Тригерний
-    
-  unsigned int number_iteration_el;                                             //Максимальна кількість ітерацій для розширеної логіки
-//  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу
-//  unsigned int number_defined_dt;                                               //Кількість визначуваних тригерів у конфігурації приладу
-//  unsigned int number_defined_and;                                              //Кількість визначуваних "І" у конфігурації приладу
-//  unsigned int number_defined_or;                                               //Кількість визначуваних "АБО" у конфігурації приладу
-//  unsigned int number_defined_xor;                                              //Кількість визначуваних "Викл.ВБО" у конфігурації приладу
-//  unsigned int number_defined_not;                                              //Кількість визначуваних "НЕ" у конфігурації приладу
+  unsigned int type_of_led; //Тип світлоіндикаторі
+                            //0 - Нормальний
+                            //1 - Тригерний
+
+  unsigned int number_iteration_el; //Максимальна кількість ітерацій для розширеної логіки
+                                    //  unsigned int number_defined_df;                                               //Кількість визначуваних функцій у конфігурації приладу
+                                    //  unsigned int number_defined_dt;                                               //Кількість визначуваних тригерів у конфігурації приладу
+                                    //  unsigned int number_defined_and;                                              //Кількість визначуваних "І" у конфігурації приладу
+                                    //  unsigned int number_defined_or;                                               //Кількість визначуваних "АБО" у конфігурації приладу
+                                    //  unsigned int number_defined_xor;                                              //Кількість визначуваних "Викл.ВБО" у конфігурації приладу
+                                    //  unsigned int number_defined_not;                                              //Кількість визначуваних "НЕ" у конфігурації приладу
 
   //Опреділювальні функції
-  unsigned int type_df;                                                 //Тип опреділювальної функції
-                                                                        //0 - Пряма
-                                                                        //1 - Зворотня
-  int timeout_pause_df[NUMBER_DEFINED_FUNCTIONS];                       //Час затримки спрацюваня опреділювальної функції
-  int timeout_work_df[NUMBER_DEFINED_FUNCTIONS];                        //Час роботи опреділювальної функції
-  unsigned int ranguvannja_df_source_plus[N_BIG*NUMBER_DEFINED_FUNCTIONS];  //Ранжування прямих команд опреділювальниї функцій
-  unsigned int ranguvannja_df_source_minus[N_BIG*NUMBER_DEFINED_FUNCTIONS]; //Ранжування інверсних команд опреділювальниї функцій
-  unsigned int ranguvannja_df_source_blk[N_BIG*NUMBER_DEFINED_FUNCTIONS];   //Ранжування команд блокування опреділювальниї функцій
-  unsigned int ranguvannja_df_source_reset[N_BIG*NUMBER_DEFINED_FUNCTIONS]; //Ранжування команд скидання таймерів опреділювальниї функцій
+  unsigned int type_df;                                                       //Тип опреділювальної функції
+                                                                              //0 - Пряма
+                                                                              //1 - Зворотня
+  int timeout_pause_df[NUMBER_DEFINED_FUNCTIONS];                             //Час затримки спрацюваня опреділювальної функції
+  int timeout_work_df[NUMBER_DEFINED_FUNCTIONS];                              //Час роботи опреділювальної функції
+  unsigned int ranguvannja_df_source_plus[N_BIG * NUMBER_DEFINED_FUNCTIONS];  //Ранжування прямих команд опреділювальниї функцій
+  unsigned int ranguvannja_df_source_minus[N_BIG * NUMBER_DEFINED_FUNCTIONS]; //Ранжування інверсних команд опреділювальниї функцій
+  unsigned int ranguvannja_df_source_blk[N_BIG * NUMBER_DEFINED_FUNCTIONS];   //Ранжування команд блокування опреділювальниї функцій
+  unsigned int ranguvannja_df_source_reset[N_BIG * NUMBER_DEFINED_FUNCTIONS]; //Ранжування команд скидання таймерів опреділювальниї функцій
 
-  unsigned int ranguvannja_set_dt_source_plus[N_BIG*NUMBER_DEFINED_TRIGGERS];   //Ранжування прямих команд встановлення опреділювальних триґерів
-  unsigned int ranguvannja_set_dt_source_minus[N_BIG*NUMBER_DEFINED_TRIGGERS];  //Ранжування інверсних команд встановлення опреділювальних триґерів
-  unsigned int ranguvannja_reset_dt_source_plus[N_BIG*NUMBER_DEFINED_TRIGGERS]; //Ранжування прямих команд скидання опреділювальних триґерів
-  unsigned int ranguvannja_reset_dt_source_minus[N_BIG*NUMBER_DEFINED_TRIGGERS];//Ранжування інверсних команд скидання опреділювальних триґерів
+  unsigned int ranguvannja_set_dt_source_plus[N_BIG * NUMBER_DEFINED_TRIGGERS];    //Ранжування прямих команд встановлення опреділювальних триґерів
+  unsigned int ranguvannja_set_dt_source_minus[N_BIG * NUMBER_DEFINED_TRIGGERS];   //Ранжування інверсних команд встановлення опреділювальних триґерів
+  unsigned int ranguvannja_reset_dt_source_plus[N_BIG * NUMBER_DEFINED_TRIGGERS];  //Ранжування прямих команд скидання опреділювальних триґерів
+  unsigned int ranguvannja_reset_dt_source_minus[N_BIG * NUMBER_DEFINED_TRIGGERS]; //Ранжування інверсних команд скидання опреділювальних триґерів
 
-  unsigned int ranguvannja_d_and[N_BIG*NUMBER_DEFINED_AND];                     //Ранжування команд джерел визначуваних "І"
-  unsigned int ranguvannja_d_or[N_BIG*NUMBER_DEFINED_OR];                       //Ранжування команд джерел визначуваних "АБО"
-  unsigned int ranguvannja_d_xor[N_BIG*NUMBER_DEFINED_XOR];                     //Ранжування команд джерел визначуваних "Викл.АБО"
-  unsigned int ranguvannja_d_not[N_BIG*NUMBER_DEFINED_NOT];                     //Ранжування команд джерел визначуваних "НЕ"
-  
-  uint32_t ranguvannja_tf[NUMBER_TRANSFER_FUNCTIONS];                           //Ранжування передавальних функцій
-  
-  uint32_t buttons_mode;                                                        //Режими роботи ФК
-                                                                                //0 - Звичайна кнопка
-                                                                                //1 - Двопозиційний ключ
-  unsigned int ranguvannja_buttons[N_SMALL*NUMBER_DEFINED_BUTTONS];             //Ранжування опреділюваних кнопок
+  unsigned int ranguvannja_d_and[N_BIG * NUMBER_DEFINED_AND]; //Ранжування команд джерел визначуваних "І"
+  unsigned int ranguvannja_d_or[N_BIG * NUMBER_DEFINED_OR];   //Ранжування команд джерел визначуваних "АБО"
+  unsigned int ranguvannja_d_xor[N_BIG * NUMBER_DEFINED_XOR]; //Ранжування команд джерел визначуваних "Викл.АБО"
+  unsigned int ranguvannja_d_not[N_BIG * NUMBER_DEFINED_NOT]; //Ранжування команд джерел визначуваних "НЕ"
+
+  uint32_t ranguvannja_tf[NUMBER_TRANSFER_FUNCTIONS]; //Ранжування передавальних функцій
+
+  uint32_t buttons_mode;                                              //Режими роботи ФК
+                                                                      //0 - Звичайна кнопка
+                                                                      //1 - Двопозиційний ключ
+  unsigned int ranguvannja_buttons[N_SMALL * NUMBER_DEFINED_BUTTONS]; //Ранжування опреділюваних кнопок
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-  uint32_t ranguvannja_In_GOOSE[N_IN_GOOSE][N_IN_GOOSE_MMS_OUT][N_SMALL];       //Ранжування виходів Вхідних GOOSE блоків
-  uint32_t ranguvannja_In_MMS[N_IN_MMS][N_IN_GOOSE_MMS_OUT][N_SMALL];           //Ранжування виходів Вхідних MMS блоків
-  uint16_t ranguvannja_Out_LAN[N_OUT_LAN][N_OUT_LAN_IN][MAX_FUNCTIONS_IN_OUT_LAN];//Ранжування входів  Вихідних мережевих блоків
-#endif  
-  
-  unsigned int configuration;         //Конфігурація приладу
-  
-  unsigned int grupa_ustavok;         //Група уставок
-                                      // 1 - Група 1
-                                      // 2 - Група 2
-                                      // 3 - Група 3
-                                      // 4 - Група 4
-  
-  //МСЗ
-  int type_mtz1;                                                      //Тип МСЗ1 (0 - Проста, 1 - Направлена, 2 -  З пуском по напрузі)
-  unsigned int setpoint_mtz_1[NUMBER_GROUP_USTAVOK];                  //Уставка МСЗ першої ступені (проста)
-  unsigned int setpoint_mtz_1_n_vpered[NUMBER_GROUP_USTAVOK];         //Уставка МСЗ першої ступені (направлена:вперед)
-  unsigned int setpoint_mtz_1_n_nazad[NUMBER_GROUP_USTAVOK];          //Уставка МСЗ першої ступені (направлена:назад)
-  unsigned int setpoint_mtz_1_angle[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ першої ступені (кут довороту)
-           int setpoint_mtz_1_angle_cos[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ першої ступені (косинус кута довороту)
-           int setpoint_mtz_1_angle_sin[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ першої ступені (синус кута довороту)
-  unsigned int setpoint_mtz_1_po_napruzi[NUMBER_GROUP_USTAVOK];       //Уставка МСЗ першої ступені (по напрузі)
-  unsigned int setpoint_mtz_1_U[NUMBER_GROUP_USTAVOK];                //Уставка МСЗ першої ступені (напруга пуску)
-  unsigned int setpoint_mtz_1_k_znam[NUMBER_GROUP_USTAVOK];           //Уставка загрублення уставок МСЗ1 по ЗНАМ
-  int type_mtz2;                                                      //Тип МСЗ2 (0 - Проста, 1 - Направлена, 2 -  З пуском по напрузі, 3 - Залежна А, 4 - Залежна В, 5 - Залежна С)
-  unsigned int setpoint_mtz_2[NUMBER_GROUP_USTAVOK];                  //Уставка МСЗ другої ступені
-  unsigned int setpoint_mtz_2_n_vpered[NUMBER_GROUP_USTAVOK];         //Уставка МСЗ другої ступені (направлена:вперед)
-  unsigned int setpoint_mtz_2_n_nazad[NUMBER_GROUP_USTAVOK];          //Уставка МСЗ другої ступені (направлена:назад)
-  unsigned int setpoint_mtz_2_angle[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ другої ступені (кут довороту)
-           int setpoint_mtz_2_angle_cos[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ другої ступені (косинус кута довороту)
-           int setpoint_mtz_2_angle_sin[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ другої ступені (синус кута довороту)
-  unsigned int setpoint_mtz_2_po_napruzi[NUMBER_GROUP_USTAVOK];       //Уставка МСЗ другої ступені (по напрузі)
-  unsigned int setpoint_mtz_2_U[NUMBER_GROUP_USTAVOK];                //Уставка МСЗ другої ступені (напруга пуску)
-  unsigned int setpoint_mtz_2_k_znam[NUMBER_GROUP_USTAVOK];           //Уставка загрублення уставок МСЗ2 по ЗНАМ
-  int type_mtz3;                                                      //Тип МСЗ3 (0 - Проста, 1 - Направлена, 2 -  З пуском по напрузі)
-  unsigned int setpoint_mtz_3[NUMBER_GROUP_USTAVOK];                  //Уставка МСЗ третьої ступені
-  unsigned int setpoint_mtz_3_n_vpered[NUMBER_GROUP_USTAVOK];         //Уставка МСЗ третьої ступені (направлена:вперед)
-  unsigned int setpoint_mtz_3_n_nazad[NUMBER_GROUP_USTAVOK];          //Уставка МСЗ третьої ступені (направлена:назад)
-  unsigned int setpoint_mtz_3_angle[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ третьої ступені (кут довороту)
-           int setpoint_mtz_3_angle_cos[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ третьої ступені (косинус кута довороту)
-           int setpoint_mtz_3_angle_sin[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ третьої ступені (синус кута довороту)
-  unsigned int setpoint_mtz_3_po_napruzi[NUMBER_GROUP_USTAVOK];       //Уставка МСЗ третьої ступені (по напрузі)
-  unsigned int setpoint_mtz_3_U[NUMBER_GROUP_USTAVOK];                //Уставка МСЗ третьої ступені (напруга пуску)
-  unsigned int setpoint_mtz_3_k_znam[NUMBER_GROUP_USTAVOK];           //Уставка загрублення уставок МСЗ3 по ЗНАМ
-  int type_mtz4;                                                      //Тип МСЗ4 (0 - Проста, 1 - Направлена, 2 -  З пуском по напрузі)
-  unsigned int setpoint_mtz_4[NUMBER_GROUP_USTAVOK];                  //Уставка МСЗ четвертої ступені
-  unsigned int setpoint_mtz_4_n_vpered[NUMBER_GROUP_USTAVOK];         //Уставка МСЗ четвертої ступені (направлена:вперед)
-  unsigned int setpoint_mtz_4_n_nazad[NUMBER_GROUP_USTAVOK];          //Уставка МСЗ четвертої ступені (направлена:назад)
-  unsigned int setpoint_mtz_4_angle[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ четвертої ступені (кут довороту)
-           int setpoint_mtz_4_angle_cos[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ четвертої ступені (косинус кута довороту)
-           int setpoint_mtz_4_angle_sin[NUMBER_GROUP_USTAVOK];        //Уставка МСЗ четвертої ступені (синус кута довороту)
-  unsigned int setpoint_mtz_4_po_napruzi[NUMBER_GROUP_USTAVOK];       //Уставка МСЗ четвертої ступені (по напрузі)
-  unsigned int setpoint_mtz_4_U[NUMBER_GROUP_USTAVOK];                //Уставка МСЗ четвертої ступені (напруга пуску)
-  unsigned int setpoint_mtz_4_k_znam[NUMBER_GROUP_USTAVOK];           //Уставка загрублення уставок МСЗ4 по ЗНАМ
-
-  int timeout_mtz_1[NUMBER_GROUP_USTAVOK];                            //Витримка МСЗ першої ступені
-  int timeout_mtz_1_n_vpered[NUMBER_GROUP_USTAVOK];                   //Витримка МСЗ першої ступені (направлена:вперед)
-  int timeout_mtz_1_n_nazad[NUMBER_GROUP_USTAVOK];                    //Витримка МСЗ першої ступені (направлена:назад)
-  int timeout_mtz_1_po_napruzi[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ першої ступені (по напрузі)
-  unsigned int timeout_mtz_1_k_znam[NUMBER_GROUP_USTAVOK];            //Уставка загрублення витримок МСЗ1 по ЗНАМ
-  int timeout_mtz_2[NUMBER_GROUP_USTAVOK];                            //Витримка МСЗ другої ступені
-  int timeout_mtz_2_pr[NUMBER_GROUP_USTAVOK];                         //Витримка присторення МСЗ другої ступені
-  int timeout_mtz_2_n_vpered[NUMBER_GROUP_USTAVOK];                   //Витримка МСЗ другої ступені (направлена:вперед)
-  int timeout_mtz_2_n_vpered_pr[NUMBER_GROUP_USTAVOK];                //Витримка присторення МСЗ другої ступені (направлена:вперед)
-  int timeout_mtz_2_n_nazad[NUMBER_GROUP_USTAVOK];                    //Витримка МСЗ другої ступені (направлена:назад)
-  int timeout_mtz_2_n_nazad_pr[NUMBER_GROUP_USTAVOK];                 //Витримка присторення МСЗ другої ступені (направлена:назад)
-  int timeout_mtz_2_po_napruzi[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ другої ступені (по напрузі)
-  int timeout_mtz_2_po_napruzi_pr[NUMBER_GROUP_USTAVOK];              //Витримка присторення МСЗ другої ступені (по напрузі)
-  int timeout_mtz_2_vvid_pr[NUMBER_GROUP_USTAVOK];                    //Витримка вводу присорення МСЗ2
-  unsigned int timeout_mtz_2_k_znam[NUMBER_GROUP_USTAVOK];            //Уставка загрублення витримок МСЗ2 по ЗНАМ
-  int timeout_mtz_3[NUMBER_GROUP_USTAVOK];                            //Витримка МСЗ третьої ступені
-  int timeout_mtz_3_n_vpered[NUMBER_GROUP_USTAVOK];                   //Витримка МСЗ третьої ступені (направлена:вперед)
-  int timeout_mtz_3_n_nazad[NUMBER_GROUP_USTAVOK];                    //Витримка МСЗ третьої ступені (направлена:назад)
-  int timeout_mtz_3_po_napruzi[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ третьої ступені (по напрузі)
-  unsigned int timeout_mtz_3_k_znam[NUMBER_GROUP_USTAVOK];            //Уставка загрублення витримок МСЗ3 по ЗНАМ
-  int timeout_mtz_4[NUMBER_GROUP_USTAVOK];                            //Витримка МСЗ четвертої ступені
-  int timeout_mtz_4_n_vpered[NUMBER_GROUP_USTAVOK];                   //Витримка МСЗ третьої ступені (направлена:вперед)
-  int timeout_mtz_4_n_nazad[NUMBER_GROUP_USTAVOK];                    //Витримка МСЗ третьої ступені (направлена:назад)
-  int timeout_mtz_4_po_napruzi[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ третьої ступені (по напрузі)
-  unsigned int timeout_mtz_4_k_znam[NUMBER_GROUP_USTAVOK];            //Уставка загрублення витримок МСЗ4 по ЗНАМ
-
-  unsigned int control_mtz;                                 //Поле для управління МСЗ
-  
-  //МСЗ 0.4кВ
-  unsigned int setpoint_mtz04_1[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ 0.4кВ першої ступені
-  int type_mtz04_2;                                               //Тип МСЗ2 0.4кВ (0 - Проста, 3 - Залежна А, 4 - Залежна В, 5 - Залежна С)
-  unsigned int setpoint_mtz04_2[NUMBER_GROUP_USTAVOK];            //Уставка МСЗ 0.4кВ другої ступені
-
-  int timeout_mtz04_1[NUMBER_GROUP_USTAVOK];                      //Витримка МСЗ 0.4кВ першої ступені
-  int timeout_mtz04_2[NUMBER_GROUP_USTAVOK];                      //Витримка МСЗ 0.4кВ друго 0.4кВї ступені
-  int timeout_mtz04_2_pr[NUMBER_GROUP_USTAVOK];                   //Витримка присторення МСЗ другої ступені
-  int timeout_mtz04_2_vvid_pr[NUMBER_GROUP_USTAVOK];              //Витримка вводу присорення МСЗ2 0.4кВ
-
-  unsigned int control_mtz04;                                 //Поле для управління МСЗ 0.4кВ
-  
-  //ЗНам
-  unsigned int setpoint_znam[NUMBER_GROUP_USTAVOK];         //уставка ЗНАМ
-  int timeout_znam[NUMBER_GROUP_USTAVOK];                   //Витримка  ЗНАМ
-  unsigned int control_znam;                                //Поле для управління ЗНАМ
-  
-  //ЗДЗ
-  int32_t timeout_zdz[NUMBER_GROUP_USTAVOK];                //Витримка ЗДЗ
-  unsigned int control_zdz;                                 //Поле для управління ЗДЗ
-#if (                                   \
-     (MODYFIKACIA_VERSII_PZ == 0) ||    \
-     (MODYFIKACIA_VERSII_PZ == 3) ||    \
-     (MODYFIKACIA_VERSII_PZ == 4) ||    \
-     (MODYFIKACIA_VERSII_PZ == 6) ||    \
-     (MODYFIKACIA_VERSII_PZ == 7) ||    \
-     (MODYFIKACIA_VERSII_PZ == 10)||    \
-     (MODYFIKACIA_VERSII_PZ == 13)||    \
-     (MODYFIKACIA_VERSII_PZ == 14)||    \
-     (MODYFIKACIA_VERSII_PZ == 17)    \
-    )   
-   int32_t zdz_ovd_porig;                                   //Поріг спрацювання ОВД
+  uint32_t ranguvannja_In_GOOSE[N_IN_GOOSE][N_IN_GOOSE_MMS_OUT][N_SMALL];          //Ранжування виходів Вхідних GOOSE блоків
+  uint32_t ranguvannja_In_MMS[N_IN_MMS][N_IN_GOOSE_MMS_OUT][N_SMALL];              //Ранжування виходів Вхідних MMS блоків
+  uint16_t ranguvannja_Out_LAN[N_OUT_LAN][N_OUT_LAN_IN][MAX_FUNCTIONS_IN_OUT_LAN]; //Ранжування входів  Вихідних мережевих блоків
 #endif
-  int32_t ctrl_zdz_type;                                    //Тип контролю ЗДЗ
-                                                            /*
+
+  unsigned int configuration; //Конфігурація приладу
+
+  unsigned int grupa_ustavok; //Група уставок
+                              // 1 - Група 1
+                              // 2 - Група 2
+                              // 3 - Група 3
+                              // 4 - Група 4
+
+  //МСЗ
+  unsigned int setpoint_rpn_osn[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Напруга основна" (В)
+  unsigned int setpoint_rpn_zony[NUMBER_GROUP_USTAVOK]; //Уставка РПН: "Ширина зони" (xx,xx %)- з точністю до сотих
+  unsigned int setpoint_rpn_per[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Максимальна кількісьл переключень"
+  unsigned int setpoint_rpn_dod[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Напруга допом." (В)
+  unsigned int setpoint_rpn_K[NUMBER_GROUP_USTAVOK];    //Уставка РПН: "Струмова компенсація"
+
+  int timeout_mtz_1[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ першої ступені
+  int timeout_mtz_1_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ першої ступені (направлена:вперед)
+  int timeout_mtz_1_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ першої ступені (направлена:назад)
+  int timeout_mtz_1_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ першої ступені (по напрузі)
+  unsigned int timeout_mtz_1_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ1 по ЗНАМ
+  int timeout_mtz_2[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ другої ступені
+  int timeout_mtz_2_pr[NUMBER_GROUP_USTAVOK];              //Витримка присторення МСЗ другої ступені
+  int timeout_mtz_2_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ другої ступені (направлена:вперед)
+  int timeout_mtz_2_n_vpered_pr[NUMBER_GROUP_USTAVOK];     //Витримка присторення МСЗ другої ступені (направлена:вперед)
+  int timeout_mtz_2_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ другої ступені (направлена:назад)
+  int timeout_mtz_2_n_nazad_pr[NUMBER_GROUP_USTAVOK];      //Витримка присторення МСЗ другої ступені (направлена:назад)
+  int timeout_mtz_2_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ другої ступені (по напрузі)
+  int timeout_mtz_2_po_napruzi_pr[NUMBER_GROUP_USTAVOK];   //Витримка присторення МСЗ другої ступені (по напрузі)
+  int timeout_mtz_2_vvid_pr[NUMBER_GROUP_USTAVOK];         //Витримка вводу присорення МСЗ2
+  unsigned int timeout_mtz_2_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ2 по ЗНАМ
+  int timeout_mtz_3[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ третьої ступені
+  int timeout_mtz_3_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ третьої ступені (направлена:вперед)
+  int timeout_mtz_3_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ третьої ступені (направлена:назад)
+  int timeout_mtz_3_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ третьої ступені (по напрузі)
+  unsigned int timeout_mtz_3_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ3 по ЗНАМ
+  int timeout_mtz_4[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ четвертої ступені
+  int timeout_mtz_4_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ третьої ступені (направлена:вперед)
+  int timeout_mtz_4_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ третьої ступені (направлена:назад)
+  int timeout_mtz_4_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ третьої ступені (по напрузі)
+  unsigned int timeout_mtz_4_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ4 по ЗНАМ
+
+  unsigned int control_mtz; //Поле для управління МСЗ
+
+  //МСЗ 0.4кВ
+  unsigned int setpoint_mtz04_1[NUMBER_GROUP_USTAVOK]; //Уставка МСЗ 0.4кВ першої ступені
+  int type_mtz04_2;                                    //Тип МСЗ2 0.4кВ (0 - Проста, 3 - Залежна А, 4 - Залежна В, 5 - Залежна С)
+  unsigned int setpoint_mtz04_2[NUMBER_GROUP_USTAVOK]; //Уставка МСЗ 0.4кВ другої ступені
+
+  int timeout_mtz04_1[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ 0.4кВ першої ступені
+  int timeout_mtz04_2[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ 0.4кВ друго 0.4кВї ступені
+  int timeout_mtz04_2_pr[NUMBER_GROUP_USTAVOK];      //Витримка присторення МСЗ другої ступені
+  int timeout_mtz04_2_vvid_pr[NUMBER_GROUP_USTAVOK]; //Витримка вводу присорення МСЗ2 0.4кВ
+
+  unsigned int control_mtz04; //Поле для управління МСЗ 0.4кВ
+
+  //ЗНам
+  unsigned int setpoint_znam[NUMBER_GROUP_USTAVOK]; //уставка ЗНАМ
+  int timeout_znam[NUMBER_GROUP_USTAVOK];           //Витримка  ЗНАМ
+  unsigned int control_znam;                        //Поле для управління ЗНАМ
+
+  //ЗДЗ
+  int32_t timeout_zdz[NUMBER_GROUP_USTAVOK]; //Витримка ЗДЗ
+  unsigned int control_zdz;                  //Поле для управління ЗДЗ
+#if (                              \
+  (MODYFIKACIA_VERSII_PZ == 0) ||  \
+  (MODYFIKACIA_VERSII_PZ == 3) ||  \
+  (MODYFIKACIA_VERSII_PZ == 4) ||  \
+  (MODYFIKACIA_VERSII_PZ == 6) ||  \
+  (MODYFIKACIA_VERSII_PZ == 7) ||  \
+  (MODYFIKACIA_VERSII_PZ == 10) || \
+  (MODYFIKACIA_VERSII_PZ == 13) || \
+  (MODYFIKACIA_VERSII_PZ == 14) || \
+  (MODYFIKACIA_VERSII_PZ == 17))
+  int32_t zdz_ovd_porig; //Поріг спрацювання ОВД
+#endif
+  int32_t ctrl_zdz_type; //Тип контролю ЗДЗ
+                         /*
                                                             0 - Без контролю
                                                             1 - Контроль по I
                                                             2 - Контроль по U
@@ -236,212 +200,209 @@ typedef struct
                                                             */
 
   //ЗЗ
-  unsigned int setpoint_zz_3I0[NUMBER_GROUP_USTAVOK];       //уставка ЗЗ/3I0
-  unsigned int setpoint_zz_3U0[NUMBER_GROUP_USTAVOK];       //уставка ЗЗ/3U0
+  unsigned int setpoint_zz_3I0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3I0
+  unsigned int setpoint_zz_3U0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3U0
 
-  int timeout_zz_3I0[NUMBER_GROUP_USTAVOK];                 //Витримка ЗЗ/3I0
-  int timeout_zz_3U0[NUMBER_GROUP_USTAVOK];                 //Витримка ЗЗ/3I0
-  int timeout_nzz[NUMBER_GROUP_USTAVOK];                    //Витримка СЗЗ
+  int timeout_zz_3I0[NUMBER_GROUP_USTAVOK]; //Витримка ЗЗ/3I0
+  int timeout_zz_3U0[NUMBER_GROUP_USTAVOK]; //Витримка ЗЗ/3I0
+  int timeout_nzz[NUMBER_GROUP_USTAVOK];    //Витримка СЗЗ
 
-   unsigned int control_zz;                                 //Поле для управління ЗЗ
+  unsigned int control_zz; //Поле для управління ЗЗ
 
   //ТЗНП
-  unsigned int setpoint_tznp_1_3I0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3I0 першої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_1_3U0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3U0 першої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_1_3I0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 першої ступені (направлений:назад)
-  unsigned int setpoint_tznp_1_3U0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 першої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_1_angle[NUMBER_GROUP_USTAVOK];     //Уставка ТЗНП першої ступені (кут довороту)
-           int setpoint_tznp_1_angle_cos[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП першої ступені (косинус кута довороту)
-           int setpoint_tznp_1_angle_sin[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП першої ступені (синус кута довороту)
-  unsigned int setpoint_tznp_2_3I0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3I0 другої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_2_3U0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3U0 другої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_2_3I0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 другої ступені (направлений:назад)
-  unsigned int setpoint_tznp_2_3U0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 другої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_2_angle[NUMBER_GROUP_USTAVOK];     //Уставка ТЗНП другої ступені (кут довороту)
-           int setpoint_tznp_2_angle_cos[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП другої ступені (косинус кута довороту)
-           int setpoint_tznp_2_angle_sin[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП другої ступені (синус кута довороту)
-  unsigned int setpoint_tznp_3_3I0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3I0 третьої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_3_3U0_vpered[NUMBER_GROUP_USTAVOK];//Уставка ТЗНП 3U0 третьої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_3_3I0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 третьої ступені (направлений:назад)
-  unsigned int setpoint_tznp_3_3U0_nazad[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 третьої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_3_angle[NUMBER_GROUP_USTAVOK];     //Уставка ТЗНП першої третьої (кут довороту)
-           int setpoint_tznp_3_angle_cos[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП першої третьої (косинус кута довороту)
-           int setpoint_tznp_3_angle_sin[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП першої третьої (синус кута довороту)
+  unsigned int setpoint_tznp_1_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 першої ступені (направлений:вперед)
+  unsigned int setpoint_tznp_1_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 першої ступені  (направлений:вперед)
+  unsigned int setpoint_tznp_1_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 першої ступені (направлений:назад)
+  unsigned int setpoint_tznp_1_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 першої ступені  (направлений:назад)
+  unsigned int setpoint_tznp_1_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП першої ступені (кут довороту)
+  int setpoint_tznp_1_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої ступені (косинус кута довороту)
+  int setpoint_tznp_1_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої ступені (синус кута довороту)
+  unsigned int setpoint_tznp_2_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 другої ступені (направлений:вперед)
+  unsigned int setpoint_tznp_2_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 другої ступені  (направлений:вперед)
+  unsigned int setpoint_tznp_2_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 другої ступені (направлений:назад)
+  unsigned int setpoint_tznp_2_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 другої ступені  (направлений:назад)
+  unsigned int setpoint_tznp_2_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП другої ступені (кут довороту)
+  int setpoint_tznp_2_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП другої ступені (косинус кута довороту)
+  int setpoint_tznp_2_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП другої ступені (синус кута довороту)
+  unsigned int setpoint_tznp_3_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 третьої ступені (направлений:вперед)
+  unsigned int setpoint_tznp_3_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 третьої ступені  (направлений:вперед)
+  unsigned int setpoint_tznp_3_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 третьої ступені (направлений:назад)
+  unsigned int setpoint_tznp_3_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 третьої ступені  (направлений:назад)
+  unsigned int setpoint_tznp_3_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП першої третьої (кут довороту)
+  int setpoint_tznp_3_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої третьої (косинус кута довороту)
+  int setpoint_tznp_3_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої третьої (синус кута довороту)
 
-  int timeout_tznp_1_vpered[NUMBER_GROUP_USTAVOK];              //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_1_nazad[NUMBER_GROUP_USTAVOK];               //Витримка ТЗНП першої ступені (направлений:назад)
-  int timeout_tznp_2_vpered[NUMBER_GROUP_USTAVOK];              //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_2_nazad[NUMBER_GROUP_USTAVOK];               //Витримка ТЗНП першої ступені (направлений:назад)
-  int timeout_tznp_3_vpered[NUMBER_GROUP_USTAVOK];              //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_3_nazad[NUMBER_GROUP_USTAVOK];               //Витримка ТЗНП першої ступені (направлений:назад)
+  int timeout_tznp_1_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
+  int timeout_tznp_1_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
+  int timeout_tznp_2_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
+  int timeout_tznp_2_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
+  int timeout_tznp_3_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
+  int timeout_tznp_3_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
 
-   unsigned int control_tznp;                                   //Поле для управління ТЗНП
-  
+  unsigned int control_tznp; //Поле для управління ТЗНП
+
   //АПВ
-  int timeout_apv_1[NUMBER_GROUP_USTAVOK];                    //Витримка 1 Циклу АПВ
-  int timeout_apv_2[NUMBER_GROUP_USTAVOK];                    //Витримка 2 Циклу АПВ
-  int timeout_apv_3[NUMBER_GROUP_USTAVOK];                    //Витримка 3 Циклу АПВ
-  int timeout_apv_4[NUMBER_GROUP_USTAVOK];                    //Витримка 4 Циклу АПВ
-  int timeout_apv_block_vid_apv1[NUMBER_GROUP_USTAVOK];       //Блокування АПВ від роботи АПВ1
-  int timeout_apv_block_vid_apv2[NUMBER_GROUP_USTAVOK];       //Блокування АПВ від роботи АПВ2
-  int timeout_apv_block_vid_apv3[NUMBER_GROUP_USTAVOK];       //Блокування АПВ від роботи АПВ3
-  int timeout_apv_block_vid_apv4[NUMBER_GROUP_USTAVOK];       //Блокування АПВ від роботи АПВ4
-  int timeout_apv_block_vid_VV[NUMBER_GROUP_USTAVOK];         //Витримка блокування АПВ в момекнт включення вимикача
-  unsigned int control_apv;             //Поле для управління АПВ
-  
+  int timeout_apv_1[NUMBER_GROUP_USTAVOK];              //Витримка 1 Циклу АПВ
+  int timeout_apv_2[NUMBER_GROUP_USTAVOK];              //Витримка 2 Циклу АПВ
+  int timeout_apv_3[NUMBER_GROUP_USTAVOK];              //Витримка 3 Циклу АПВ
+  int timeout_apv_4[NUMBER_GROUP_USTAVOK];              //Витримка 4 Циклу АПВ
+  int timeout_apv_block_vid_apv1[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ1
+  int timeout_apv_block_vid_apv2[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ2
+  int timeout_apv_block_vid_apv3[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ3
+  int timeout_apv_block_vid_apv4[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ4
+  int timeout_apv_block_vid_VV[NUMBER_GROUP_USTAVOK];   //Витримка блокування АПВ в момекнт включення вимикача
+  unsigned int control_apv;                             //Поле для управління АПВ
+
   //АЧР-ЧАПВ
   unsigned int setpoint_achr_chapv_uf[NUMBER_GROUP_USTAVOK]; //уставка АЧР ЧАПВ UF1
-  unsigned int setpoint_achr1_f_rab[NUMBER_GROUP_USTAVOK];    //уставка FРаб АЧР1 частоти F
-  unsigned int setpoint_chapv1_f_rab[NUMBER_GROUP_USTAVOK];   //уставка FРаб ЧАПВ1 частотм F
-  unsigned int setpoint_achr2_f_rab[NUMBER_GROUP_USTAVOK];    //уставка FРаб АЧР2 частотм F
-  unsigned int setpoint_chapv2_f_rab[NUMBER_GROUP_USTAVOK];   //уставка FРаб ЧАПВ2 частотм F
+  unsigned int setpoint_achr1_f_rab[NUMBER_GROUP_USTAVOK];   //уставка FРаб АЧР1 частоти F
+  unsigned int setpoint_chapv1_f_rab[NUMBER_GROUP_USTAVOK];  //уставка FРаб ЧАПВ1 частотм F
+  unsigned int setpoint_achr2_f_rab[NUMBER_GROUP_USTAVOK];   //уставка FРаб АЧР2 частотм F
+  unsigned int setpoint_chapv2_f_rab[NUMBER_GROUP_USTAVOK];  //уставка FРаб ЧАПВ2 частотм F
 
-  int timeout_achr_1[NUMBER_GROUP_USTAVOK];                   //Витримка Циклу АЧР1
-  int timeout_chapv_1[NUMBER_GROUP_USTAVOK];                  //Витримка Циклу ЧАПВ1
-  int timeout_achr_2[NUMBER_GROUP_USTAVOK];                   //Витримка Циклу АЧР2
-  int timeout_chapv_2[NUMBER_GROUP_USTAVOK];                  //Витримка Циклу ЧАПВ2
+  int timeout_achr_1[NUMBER_GROUP_USTAVOK];  //Витримка Циклу АЧР1
+  int timeout_chapv_1[NUMBER_GROUP_USTAVOK]; //Витримка Циклу ЧАПВ1
+  int timeout_achr_2[NUMBER_GROUP_USTAVOK];  //Витримка Циклу АЧР2
+  int timeout_chapv_2[NUMBER_GROUP_USTAVOK]; //Витримка Циклу ЧАПВ2
 
-  unsigned int control_achr_chapv;      //Поле для управління АЧР-ЧАПВ
-  
+  unsigned int control_achr_chapv; //Поле для управління АЧР-ЧАПВ
+
   //УРОВ
-  unsigned int setpoint_urov[NUMBER_GROUP_USTAVOK];         //уставка УРОВ
-  int timeout_urov_1[NUMBER_GROUP_USTAVOK];                 //Витримка УРОВ першої ступені
-  int timeout_urov_2[NUMBER_GROUP_USTAVOK];                 //Витримка УРОВ другої ступені
-  unsigned int control_urov;                                //Поле для управління УРОВ
+  unsigned int setpoint_urov[NUMBER_GROUP_USTAVOK]; //уставка УРОВ
+  int timeout_urov_1[NUMBER_GROUP_USTAVOK];         //Витримка УРОВ першої ступені
+  int timeout_urov_2[NUMBER_GROUP_USTAVOK];         //Витримка УРОВ другої ступені
+  unsigned int control_urov;                        //Поле для управління УРОВ
 
   //ЗОП(КОФ)
-  unsigned int setpoint_zop[NUMBER_GROUP_USTAVOK];          //уставка ЗОП(КОФ)
-  int timeout_zop[NUMBER_GROUP_USTAVOK];                    //Витримка  ЗОП(КОФ)
-  unsigned int control_zop;                                 //Поле для управління ЗОП(КОФ)
+  unsigned int setpoint_zop[NUMBER_GROUP_USTAVOK]; //уставка ЗОП(КОФ)
+  int timeout_zop[NUMBER_GROUP_USTAVOK];           //Витримка  ЗОП(КОФ)
+  unsigned int control_zop;                        //Поле для управління ЗОП(КОФ)
 
   //Umin
-  unsigned int setpoint_Umin1[NUMBER_GROUP_USTAVOK];        //уставка Umin1
-  unsigned int setpoint_Umin1_Iblk[NUMBER_GROUP_USTAVOK];   //уставка блокування по струму Umin1
-  unsigned int setpoint_Umin2[NUMBER_GROUP_USTAVOK];        //уставка Umin2
-  unsigned int setpoint_Umin2_Iblk[NUMBER_GROUP_USTAVOK];   //уставка блокування по струму Umin2
-  int timeout_Umin1[NUMBER_GROUP_USTAVOK];                    //Витримка  Umin1
-  int timeout_Umin2[NUMBER_GROUP_USTAVOK];                    //Витримка  Umin2
-  unsigned int control_Umin;                                 //Поле для управління Umin
-  
-  //Umax
-  unsigned int setpoint_Umax1[NUMBER_GROUP_USTAVOK];        //уставка Umax1
-  unsigned int setpoint_Umax2[NUMBER_GROUP_USTAVOK];        //уставка Umax2
-  uint32_t setpoint_kp_Umax[NUMBER_GROUP_USTAVOK];          //Уставка коефіцієнт повернення ЗНмакс
-  int timeout_Umax1[NUMBER_GROUP_USTAVOK];                  //Витримка  Umax1
-  int timeout_Umax2[NUMBER_GROUP_USTAVOK];                  //Витримка  Umax2
-  unsigned int control_Umax;                                //Поле для управління Umax
-  
-  //Універсальний захист
-  int32_t setpoint_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];      //Уставка для всіх ступенів
-  uint32_t setpoint_UP_KP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];  //Уставка для "Коефіцієнта повернення" всіх ступенів
-  int32_t timeout_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];       //Витримка для Універсального захисту
-  uint32_t control_UP;                                          //Поля для управління
-  int32_t ctrl_UP_input[NUMBER_UP];                             //Вибір входу Універсального захисту
+  unsigned int setpoint_Umin1[NUMBER_GROUP_USTAVOK];      //уставка Umin1
+  unsigned int setpoint_Umin1_Iblk[NUMBER_GROUP_USTAVOK]; //уставка блокування по струму Umin1
+  unsigned int setpoint_Umin2[NUMBER_GROUP_USTAVOK];      //уставка Umin2
+  unsigned int setpoint_Umin2_Iblk[NUMBER_GROUP_USTAVOK]; //уставка блокування по струму Umin2
+  int timeout_Umin1[NUMBER_GROUP_USTAVOK];                //Витримка  Umin1
+  int timeout_Umin2[NUMBER_GROUP_USTAVOK];                //Витримка  Umin2
+  unsigned int control_Umin;                              //Поле для управління Umin
 
-  unsigned int T0;                      //Коефіцієнт трансформації для трансформатора 3I0
-  unsigned int TCurrent;                //Коефіцієнт трансформації для трансформатора струмів
-  unsigned int TCurrent04;              //Коефіцієнт трансформації для трансформатора струмів сторони 0.4кВ
-  unsigned int TVoltage;                //Коефіцієнт трансформації для трансформатора напруг
-  unsigned int control_transformator;   //налаштування для меню "Трансформатор"
-  
-  unsigned int password1;                                       //Пароль для редагування з меню
-  unsigned int password2;                                       //Пароль для очистки лічилчників енегії і ресурсу вимикача
-  unsigned int password3;                                       //Пароль для переходу у режим програмування
-  unsigned int timeout_deactivation_password_interface_USB;     //Час деактивації паролю для редагування з інтерфейсу USB
-  unsigned int password_interface_USB;                          //Пароль для редагування з інтерфейсу USB
-  unsigned int timeout_deactivation_password_interface_RS485;   //Час деактивації паролю для редагування з інтерфейсу RS485
-  unsigned int password_interface_RS485;                        //Пароль для редагування з інтерфейсу RS485
-  
+  //Umax
+  unsigned int setpoint_Umax1[NUMBER_GROUP_USTAVOK]; //уставка Umax1
+  unsigned int setpoint_Umax2[NUMBER_GROUP_USTAVOK]; //уставка Umax2
+  uint32_t setpoint_kp_Umax[NUMBER_GROUP_USTAVOK];   //Уставка коефіцієнт повернення ЗНмакс
+  int timeout_Umax1[NUMBER_GROUP_USTAVOK];           //Витримка  Umax1
+  int timeout_Umax2[NUMBER_GROUP_USTAVOK];           //Витримка  Umax2
+  unsigned int control_Umax;                         //Поле для управління Umax
+
+  //Універсальний захист
+  int32_t setpoint_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];     //Уставка для всіх ступенів
+  uint32_t setpoint_UP_KP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK]; //Уставка для "Коефіцієнта повернення" всіх ступенів
+  int32_t timeout_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];      //Витримка для Універсального захисту
+  uint32_t control_UP;                                         //Поля для управління
+  int32_t ctrl_UP_input[NUMBER_UP];                            //Вибір входу Універсального захисту
+
+  unsigned int T0;                    //Коефіцієнт трансформації для трансформатора 3I0
+  unsigned int TCurrent;              //Коефіцієнт трансформації для трансформатора струмів
+  unsigned int TCurrent04;            //Коефіцієнт трансформації для трансформатора струмів сторони 0.4кВ
+  unsigned int TVoltage;              //Коефіцієнт трансформації для трансформатора напруг
+  unsigned int control_transformator; //налаштування для меню "Трансформатор"
+
+  unsigned int password1;                                     //Пароль для редагування з меню
+  unsigned int password2;                                     //Пароль для очистки лічилчників енегії і ресурсу вимикача
+  unsigned int password3;                                     //Пароль для переходу у режим програмування
+  unsigned int timeout_deactivation_password_interface_USB;   //Час деактивації паролю для редагування з інтерфейсу USB
+  unsigned int password_interface_USB;                        //Пароль для редагування з інтерфейсу USB
+  unsigned int timeout_deactivation_password_interface_RS485; //Час деактивації паролю для редагування з інтерфейсу RS485
+  unsigned int password_interface_RS485;                      //Пароль для редагування з інтерфейсу RS485
+
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-  unsigned int timeout_deactivation_password_interface_LAN;   //Час деактивації паролю для редагування з інтерфейсу LAN
-  unsigned int password_interface_LAN;                        //Пароль для редагування з інтерфейсу LAN
-#endif  
+  unsigned int timeout_deactivation_password_interface_LAN; //Час деактивації паролю для редагування з інтерфейсу LAN
+  unsigned int password_interface_LAN;                      //Пароль для редагування з інтерфейсу LAN
+#endif
 
   unsigned int timeout_idle_new_settings;
 
   //Вимикач
-  unsigned int setpoint_Inom;                   //Номінальний струм вимикача
-  unsigned int setpoint_r_kom_st_Inom;          //Ресурс комунікаційної стійкості при номінальному струмі вимикача
-  unsigned int setpoint_Inom_vymk;              //Номінальний струм вимкнення вимикача
-  unsigned int setpoint_r_kom_st_Inom_vymk;     //Ресурс комунікаційної стійкості при номінальному струмі вимкнення вимикача
-  unsigned int setpoint_pochatkovyj_resurs;     //Початковий ресурс вимикача
-  unsigned int setpoint_krytychnyj_resurs;      //Критичний ресурс вимикача
-  unsigned int setpoint_pochatkova_k_vymk;      //Початкова кількість вимкнень
-  int timeout_swch_on;                          //Витримка T вкл.
-  int timeout_swch_off;                         //Витримка T відкл.
-  int timeout_swch_udl_blk_on;                  //Витримка T "удлинение сигнала блокировки включения"
-  int timeout_pryvoda_VV;                       //Витримка T "Привіода ВВ"
-  unsigned int control_switch;                  //Поле для управління вимикачем
-  
-  
-  
+  unsigned int setpoint_Inom;               //Номінальний струм вимикача
+  unsigned int setpoint_r_kom_st_Inom;      //Ресурс комунікаційної стійкості при номінальному струмі вимикача
+  unsigned int setpoint_Inom_vymk;          //Номінальний струм вимкнення вимикача
+  unsigned int setpoint_r_kom_st_Inom_vymk; //Ресурс комунікаційної стійкості при номінальному струмі вимкнення вимикача
+  unsigned int setpoint_pochatkovyj_resurs; //Початковий ресурс вимикача
+  unsigned int setpoint_krytychnyj_resurs;  //Критичний ресурс вимикача
+  unsigned int setpoint_pochatkova_k_vymk;  //Початкова кількість вимкнень
+  int timeout_swch_on;                      //Витримка T вкл.
+  int timeout_swch_off;                     //Витримка T відкл.
+  int timeout_swch_udl_blk_on;              //Витримка T "удлинение сигнала блокировки включения"
+  int timeout_pryvoda_VV;                   //Витримка T "Привіода ВВ"
+  unsigned int control_switch;              //Поле для управління вимикачем
+
   //Визначення місця пошкодження
-  unsigned int lines[2];                        //Кількість ділянок
-  unsigned int dovgyna[2][MAX_NUMBER_LINES_VMP];//Довжина ліній
-  unsigned int opir[2][MAX_NUMBER_LINES_VMP];   //Питомий опір ліній
-  unsigned int control_vmp;                     //Поле для управління ВМП
-  
+  unsigned int lines[2];                         //Кількість ділянок
+  unsigned int dovgyna[2][MAX_NUMBER_LINES_VMP]; //Довжина ліній
+  unsigned int opir[2][MAX_NUMBER_LINES_VMP];    //Питомий опір ліній
+  unsigned int control_vmp;                      //Поле для управління ВМП
+
   //Аналоговий реєстратор
-  unsigned int prefault_number_periods; //Час доаварійного масиву (кількість періодів промислової частоти)
-  unsigned int postfault_number_periods;//Час післяарійного масиву (кількість періодів промислової частоти)
-  unsigned int control_ar;              //Поля для управління аналоговим реєстратором
+  unsigned int prefault_number_periods;  //Час доаварійного масиву (кількість періодів промислової частоти)
+  unsigned int postfault_number_periods; //Час післяарійного масиву (кількість періодів промислової частоти)
+  unsigned int control_ar;               //Поля для управління аналоговим реєстратором
 
   //Комунікація
-  unsigned int name_of_cell[MAX_CHAR_IN_NAME_OF_CELL];//І'мя ячейки
+  unsigned int name_of_cell[MAX_CHAR_IN_NAME_OF_CELL];                                                            //І'мя ячейки
   unsigned short int user_register[(M_ADDRESS_LAST_USER_REGISTER_DATA - M_ADDRESS_FIRST_USER_REGISTER_DATA) + 1]; //Регістри користувача
-  unsigned int address;                                //Адреса
-  int speed_RS485;                                    //швидкість обміну
-                                                        // 0 - 9600
-                                                        // 1 - 14400
-                                                        // 2 - 19200
-                                                        // 3 - 28800
-                                                        // 4 - 38400
-                                                        // 5 - 57600
-                                                        // 6 - 115200
-  int pare_bit_RS485;                                 //паритет
-                                                        // 0 - NONE
-                                                        // 1 - ODD
-                                                        // 2 - EVEN
-  int number_stop_bit_RS485;                          //кількість стоп-біт
-                                                        // 0 - 1 stop-bit
-                                                        // 1 - 2 stop-bits
-  unsigned int time_out_1_RS485;                        //time-out наступного символу = X/10 символу
-  
-  int language;                                         //мова меню  0= змінна мов не підтримується; 1=RU; 2=UA; 3=EN; 4=KZ; 5=др.
-  
-  unsigned int control_extra_settings_1;                //Поле для додаткових налаштувань
+  unsigned int address;                                                                                           //Адреса
+  int speed_RS485;                                                                                                //швидкість обміну
+                                                                                                                  // 0 - 9600
+                                                                                                                  // 1 - 14400
+                                                                                                                  // 2 - 19200
+                                                                                                                  // 3 - 28800
+                                                                                                                  // 4 - 38400
+                                                                                                                  // 5 - 57600
+                                                                                                                  // 6 - 115200
+  int pare_bit_RS485;                                                                                             //паритет
+                                                                                                                  // 0 - NONE
+                                                                                                                  // 1 - ODD
+                                                                                                                  // 2 - EVEN
+  int number_stop_bit_RS485;                                                                                      //кількість стоп-біт
+                                                                                                                  // 0 - 1 stop-bit
+                                                                                                                  // 1 - 2 stop-bits
+  unsigned int time_out_1_RS485;                                                                                  //time-out наступного символу = X/10 символу
 
+  int language; //мова меню  0= змінна мов не підтримується; 1=RU; 2=UA; 3=EN; 4=KZ; 5=др.
 
-  int32_t time_zone;                                    //Часова зона
-  uint32_t dst;                                         //Перехід на літній час
-  uint32_t dst_on_rule;                                 //Правило переходу на Літній час
-  uint32_t dst_off_rule;                                //Правило переходу на стандартний час
-  
+  unsigned int control_extra_settings_1; //Поле для додаткових налаштувань
+
+  int32_t time_zone;     //Часова зона
+  uint32_t dst;          //Перехід на літній час
+  uint32_t dst_on_rule;  //Правило переходу на Літній час
+  uint32_t dst_off_rule; //Правило переходу на стандартний час
+
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   //IP4
-  uint16_t IP4[4];                                      //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
-  uint32_t mask;                                        //XX
-  uint16_t gateway[4];                                  //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
-  
-  uint16_t IP_time_server[4];                           //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
+  uint16_t IP4[4];     //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
+  uint32_t mask;       //XX
+  uint16_t gateway[4]; //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
+
+  uint16_t IP_time_server[4]; //XXX.XXX.XXX.XXX Можна б було обійтися типом в один байт, але для редагування може виходити число 999, тому я вибрав двобайтний тип
   uint32_t port_time_server;
   uint32_t period_sync;
-  
+
 #endif
-  
-  time_t time_setpoints;                                    //Час останніх змін уставок-витримок-управління
-  unsigned char source_setpoints;                           //0 - мінімальні параметри
-                                                            //1 - клавіатура
-                                                            //2 - USB
-                                                            //3 - RS-485
-                                                            //4 - Ethernet
-  
-  time_t time_ranguvannja;                                  //Час останніх змін ранжування
-  unsigned char source_ranguvannja;                         //0 - мінімальні параметри
-                                                            //1 - клавіатура
-                                                            //2 - USB
-                                                            //3 - RS-485
-                                                            //4 - Ethernet
+
+  time_t time_setpoints;          //Час останніх змін уставок-витримок-управління
+  unsigned char source_setpoints; //0 - мінімальні параметри
+                                  //1 - клавіатура
+                                  //2 - USB
+                                  //3 - RS-485
+                                  //4 - Ethernet
+
+  time_t time_ranguvannja;          //Час останніх змін ранжування
+  unsigned char source_ranguvannja; //0 - мінімальні параметри
+                                    //1 - клавіатура
+                                    //2 - USB
+                                    //3 - RS-485
+                                    //4 - Ethernet
 } __SETTINGS;
 
 typedef struct _info_vymk
@@ -453,29 +414,27 @@ typedef struct _info_vymk
 typedef struct
 {
   //Стан обміну
-  int state_execution;        //-1 - драйвер готовий до початку нових транзакцій
-                              // 0 - відбувається обмін
-                              // 1 - обмін завершений без помилок
-                              // 2 - обмін завершений з помилками
-  
-  
+  int state_execution; //-1 - драйвер готовий до початку нових транзакцій
+                       // 0 - відбувається обмін
+                       // 1 - обмін завершений без помилок
+                       // 2 - обмін завершений з помилками
+
   //Ідентифікатор пристрою, з яким ведетьсяобмін
-  int device_id;              //-1 - пристрій не визначений
-//                              // EEPROM_ADDRESS - EEPROM
-                              // RTC_ADDRESS - RTC
+  int device_id; //-1 - пристрій не визначений
+                 //                              // EEPROM_ADDRESS - EEPROM
+                 // RTC_ADDRESS - RTC
   //Код операції
-  int action;                 //-1 - не визначений
-                              // 0 - запис адреси для подальшого зчитування
-                              // 1 - зчитування
-                              // 2 - запис адреси і запис даних
-  
+  int action; //-1 - не визначений
+              // 0 - запис адреси для подальшого зчитування
+              // 1 - зчитування
+              // 2 - запис адреси і запис даних
 
   //Внутрішня адреса по якій буде іти звертання
   unsigned int internal_address;
 
   //Кількість байт для читання/запису (корисних)
   unsigned int number_bytes;
-  
+
   //Вказівник на буфер (корисний)
   uint8_t *point_buffer;
 
@@ -498,21 +457,21 @@ typedef struct _FIL_FATFS
 {
   unsigned int opened;
   FIL fil;
-  
+
 } __FIL_FATFS;
 
 typedef struct
 {
-  unsigned int state_execution;     //стан виконуваної заразоперації
-  
-  unsigned int code_operation;      //Код виконуваної операції
+  unsigned int state_execution; //стан виконуваної заразоперації
+
+  unsigned int code_operation; //Код виконуваної операції
 
 } __DRIVER_SPI_DF;
 
 typedef struct
 {
   unsigned char label_start_record;
-  time_t time_dat; 
+  time_t time_dat;
   int32_t time_ms;
   unsigned int T0;
   unsigned int TCurrent;
@@ -524,11 +483,12 @@ typedef struct
   unsigned int cur_active_sources[N_BIG];
 } __HEADER_AR;
 
-typedef enum __STATE_READING_ADCs {
-STATE_READING_ADCs_NONE = 0,
-STATE_READING_WRITE,
-STATE_READING_WRITE_READ,
-STATE_READING_READ
+typedef enum __STATE_READING_ADCs
+{
+  STATE_READING_ADCs_NONE = 0,
+  STATE_READING_WRITE,
+  STATE_READING_WRITE_READ,
+  STATE_READING_READ
 } STATE_READING_ADCs;
 
 typedef enum _full_ort_index __full_ort_index;
@@ -562,14 +522,13 @@ typedef struct
 {
   unsigned int time_stemp;
   unsigned int DATA_fix;
-  int data [AR_NUMBER_ANALOG_CANALES];
+  int data[AR_NUMBER_ANALOG_CANALES];
   unsigned int active_functions[N_BIG];
   int state_ar_record;
-  
+
 } DATA_FOR_OSCYLOGRAPH;
 
-
-typedef struct 
+typedef struct
 {
   unsigned int x1;
   int y1;
@@ -592,9 +551,9 @@ typedef struct
   int Ub_y2;
 
   unsigned int Uc_x1;
-  int Uc_y1;  
+  int Uc_y1;
   unsigned int Uc_x2;
-  int Uc_y2;  
+  int Uc_y2;
 
 } POPEREDNJY_PERECHID;
 
@@ -621,7 +580,7 @@ typedef enum _setting_data
 
 typedef struct _vd
 {
-           int sign;
+  int sign;
   unsigned int begin;
   unsigned int comma;
   unsigned int end;
@@ -640,7 +599,7 @@ typedef enum _index_I_U
 {
   INDEX_I = 0,
   INDEX_U,
-  
+
   _NUMBER_FOR_I_U
 } __index_I_U;
 
@@ -658,35 +617,32 @@ typedef enum _id_input_output
   ID_NOT,
   ID_TF,
 
-
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-  
+
   ID_IN_GOOSE,
   ID_IN_MMS,
   ID_OUT_LAN,
 #endif
-  
-  _MAX_ID_INPUT_OUPUT
-  
-} __id_input_output;
 
+  _MAX_ID_INPUT_OUPUT
+
+} __id_input_output;
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
 
 typedef struct _control_info
 {
-	unsigned int const * const p_ctrl;
-	size_t const n_bit;
+  unsigned int const *const p_ctrl;
+  size_t const n_bit;
 } __control_info;
 
 #endif
 
-
 typedef struct _meas_to_d_meas
 {
-  unsigned int const * const arr;
+  unsigned int const *const arr;
   size_t const ind;
-  
+
 } __meas_to_d_meas;
 
 typedef struct _test_watchdog
@@ -701,8 +657,7 @@ typedef struct _test_watchdog
   int InputMux_l2;
   unsigned int time_delta_watchdog_output_max;
   int32_t delta;
-  
-} __test_watchdog;
 
+} __test_watchdog;
 
 #endif

@@ -1638,70 +1638,13 @@ void min_settings(__SETTINGS *target_label)
 
   target_label->grupa_ustavok = SETPOINT_GRUPA_USTAVOK_MIN;
 
-  target_label->type_mtz1 = TYPE_MTZ_SIMPLE;
-  target_label->type_mtz2 = TYPE_MTZ_SIMPLE;
-  target_label->type_mtz3 = TYPE_MTZ_SIMPLE;
-  target_label->type_mtz4 = TYPE_MTZ_SIMPLE;
-
   for (unsigned int i = 0; i < NUMBER_GROUP_USTAVOK; i++)
   {
-    unsigned int angle;
-    float angle_f;
-    target_label->setpoint_mtz_1[i] = SETPOINT_MTZ1_MIN;
-    target_label->setpoint_mtz_1_n_vpered[i] = SETPOINT_MTZ1_N_VPERED_MIN;
-    target_label->setpoint_mtz_1_n_nazad[i] = SETPOINT_MTZ1_N_NAZAD_MIN;
-
-    angle = SETPOINT_MTZ1_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_mtz_1_angle[i] = angle;
-    target_label->setpoint_mtz_1_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_mtz_1_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-
-    target_label->setpoint_mtz_1_po_napruzi[i] = SETPOINT_MTZ1_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_1_U[i] = SETPOINT_MTZ1_U_MIN;
-    target_label->setpoint_mtz_1_k_znam[i] = SETPOINT_MTZ1_ZNAM_MIN;
-
-    target_label->setpoint_mtz_2[i] = SETPOINT_MTZ2_MIN;
-    target_label->setpoint_mtz_2_n_vpered[i] = SETPOINT_MTZ2_N_VPERED_MIN;
-    target_label->setpoint_mtz_2_n_nazad[i] = SETPOINT_MTZ2_N_NAZAD_MIN;
-
-    angle = SETPOINT_MTZ2_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_mtz_2_angle[i] = angle;
-    target_label->setpoint_mtz_2_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_mtz_2_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-
-    target_label->setpoint_mtz_2_po_napruzi[i] = SETPOINT_MTZ2_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_2_U[i] = SETPOINT_MTZ2_U_MIN;
-    target_label->setpoint_mtz_2_k_znam[i] = SETPOINT_MTZ2_ZNAM_MIN;
-
-    target_label->setpoint_mtz_3[i] = SETPOINT_MTZ3_MIN;
-    target_label->setpoint_mtz_3_n_vpered[i] = SETPOINT_MTZ3_N_VPERED_MIN;
-    target_label->setpoint_mtz_3_n_nazad[i] = SETPOINT_MTZ3_N_NAZAD_MIN;
-
-    angle = SETPOINT_MTZ3_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_mtz_3_angle[i] = angle;
-    target_label->setpoint_mtz_3_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_mtz_3_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-
-    target_label->setpoint_mtz_3_po_napruzi[i] = SETPOINT_MTZ3_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_3_U[i] = SETPOINT_MTZ3_U_MIN;
-    target_label->setpoint_mtz_3_k_znam[i] = SETPOINT_MTZ3_ZNAM_MIN;
-
-    target_label->setpoint_mtz_4[i] = SETPOINT_MTZ4_MIN;
-    target_label->setpoint_mtz_4_n_vpered[i] = SETPOINT_MTZ4_N_VPERED_MIN;
-    target_label->setpoint_mtz_4_n_nazad[i] = SETPOINT_MTZ4_N_NAZAD_MIN;
-
-    angle = SETPOINT_MTZ4_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_mtz_4_angle[i] = angle;
-    target_label->setpoint_mtz_4_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_mtz_4_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-
-    target_label->setpoint_mtz_4_po_napruzi[i] = SETPOINT_MTZ4_PO_NAPRUZI_MIN;
-    target_label->setpoint_mtz_4_U[i] = SETPOINT_MTZ4_U_MIN;
-    target_label->setpoint_mtz_4_k_znam[i] = SETPOINT_MTZ4_ZNAM_MIN;
+    target_label->setpoint_rpn_osn[i] = SETPOINT_RPN_OSN_WORK;
+    target_label->setpoint_rpn_zony[i] = SETPOINT_RPN_ZONY_WORK;
+    target_label->setpoint_rpn_per[i] = SETPOINT_RPN_PER_WORK;
+    target_label->setpoint_rpn_dod[i] = SETPOINT_RPN_DOD_WORK;
+    target_label->setpoint_rpn_K[i] = SETPOINT_RPN_K_MAX;
 
     target_label->timeout_mtz_1[i] = TIMEOUT_MTZ1_MIN;
     target_label->timeout_mtz_1_n_vpered[i] = TIMEOUT_MTZ1_N_VPERED_MIN;
@@ -1756,33 +1699,21 @@ void min_settings(__SETTINGS *target_label)
     target_label->setpoint_tznp_1_3I0_nazad[i] = SETPOINT_TZNP1_3I0_NAZAD_MIN;
     target_label->setpoint_tznp_1_3U0_nazad[i] = SETPOINT_TZNP1_3U0_NAZAD_MIN;
 
-    angle = SETPOINT_TZNP1_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_tznp_1_angle[i] = angle;
-    target_label->setpoint_tznp_1_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_tznp_1_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
+    target_label->setpoint_tznp_1_angle[i] = SETPOINT_TZNP1_ANGLE_MIN;
 
     target_label->setpoint_tznp_2_3I0_vpered[i] = SETPOINT_TZNP2_3I0_VPERED_MIN;
     target_label->setpoint_tznp_2_3U0_vpered[i] = SETPOINT_TZNP2_3U0_VPERED_MIN;
     target_label->setpoint_tznp_2_3I0_nazad[i] = SETPOINT_TZNP2_3I0_NAZAD_MIN;
     target_label->setpoint_tznp_2_3U0_nazad[i] = SETPOINT_TZNP2_3U0_NAZAD_MIN;
 
-    angle = SETPOINT_TZNP2_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_tznp_2_angle[i] = angle;
-    target_label->setpoint_tznp_2_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_tznp_2_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
+    target_label->setpoint_tznp_2_angle[i] = SETPOINT_TZNP2_ANGLE_MIN;
 
     target_label->setpoint_tznp_3_3I0_vpered[i] = SETPOINT_TZNP3_3I0_VPERED_MIN;
     target_label->setpoint_tznp_3_3U0_vpered[i] = SETPOINT_TZNP3_3U0_VPERED_MIN;
     target_label->setpoint_tznp_3_3I0_nazad[i] = SETPOINT_TZNP3_3I0_NAZAD_MIN;
     target_label->setpoint_tznp_3_3U0_nazad[i] = SETPOINT_TZNP3_3U0_NAZAD_MIN;
 
-    angle = SETPOINT_TZNP3_ANGLE_MIN;
-    angle_f = (float) angle;
-    target_label->setpoint_tznp_3_angle[i] = angle;
-    target_label->setpoint_tznp_3_angle_cos[i] = (int) (AMPLITUDA_FI * /*cos*/ arm_cos_f32(/*(double)*/ (PI * angle_f / 180.0f)));
-    target_label->setpoint_tznp_3_angle_sin[i] = (int) (AMPLITUDA_FI * /*sin*/ arm_sin_f32(/*(double)*/ (PI * angle_f / 180.0f)));
+    target_label->setpoint_tznp_3_angle[i] = SETPOINT_TZNP3_ANGLE_MIN;
 
     target_label->timeout_tznp_1_vpered[i] = TIMEOUT_TZNP1_VPERED_MIN;
     target_label->timeout_tznp_1_nazad[i] = TIMEOUT_TZNP1_NAZAD_MIN;
