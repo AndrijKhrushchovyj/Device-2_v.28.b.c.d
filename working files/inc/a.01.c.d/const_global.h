@@ -1252,6 +1252,7 @@ enum __odynyci_vymirjuvannja
 {
   INDEX_A = 0,
   INDEX_V,
+  INDEX_PERCENT,
   INDEX_SECOND,
 
   NUMBER_ODYNYCI_VYMIRJUVANNJA

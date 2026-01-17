@@ -37,9 +37,9 @@ enum _index_ml_stp_rpn
 #define COL_SETPOINT_RPN_DOD_COMMA 7
 #define COL_SETPOINT_RPN_DOD_END 8
 
-#define COL_SETPOINT_RPN_K_BEGIN 3
-#define COL_SETPOINT_RPN_K_COMMA 6
-#define COL_SETPOINT_RPN_K_END 8
+#define COL_SETPOINT_RPN_K_BEGIN 6
+#define COL_SETPOINT_RPN_K_COMMA 7
+#define COL_SETPOINT_RPN_K_END 9
 
 enum _index_ml_tmo_rpn
 {
