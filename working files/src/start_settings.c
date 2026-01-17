@@ -1622,7 +1622,7 @@ void min_settings(__SETTINGS *target_label)
   for (size_t i = 0; i < NUMBER_UP; i++)
     target_label->ctrl_UP_input[i] = UP_CTRL_Ia_Ib_Ic;
 
-  target_label->control_mtz = 0;
+  target_label->control_rpn = CONTROL_RPN_WORK;
   target_label->control_mtz04 = 0;
   target_label->control_znam = 0;
   target_label->control_zdz = 0;

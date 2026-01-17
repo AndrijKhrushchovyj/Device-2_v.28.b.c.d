@@ -6162,7 +6162,7 @@ void main_manu_function(void)
 
                 //Формуємо екран уставок РПН
                 int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
-                make_ekran_setpoint_mtz(group);
+                make_ekran_setpoint_rpn(group);
               }
               else if (
                 (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
@@ -6174,16 +6174,16 @@ void main_manu_function(void)
 
                 //Формуємо екран витримок РПН
                 int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
-                make_ekran_timeout_mtz(group);
+                make_ekran_timeout_rpn(group);
               }
               else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
               {
-                if (current_ekran.index_position >= WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ)
+                if (current_ekran.index_position >= MAX_ROW_FOR_CONTROL_RPN)
                   current_ekran.index_position = 0;
                 position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
 
                 //Формуємо екран управлінської інформації для РПН
-                make_ekran_control_mtz();
+                make_ekran_control_rpn();
               }
               else if (
                 (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&
@@ -7022,7 +7022,7 @@ void main_manu_function(void)
                   }
                   else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
-                    edition_settings.control_mtz = current_settings.control_mtz;
+                    edition_settings.control_rpn = current_settings.control_rpn;
                   }
                   else if (
                     (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&
@@ -8071,7 +8071,7 @@ void main_manu_function(void)
                   }
                   else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
-                    if (edition_settings.control_mtz != current_settings.control_mtz)
+                    if (edition_settings.control_rpn != current_settings.control_rpn)
                       found_changes = 1;
                   }
                   else if (
@@ -9233,14 +9233,14 @@ void main_manu_function(void)
                   }
                   else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                   {
-                    if ((edition_settings.control_mtz & ((unsigned int) (~CTR_MTZ_MASKA))) == 0)
+                    if ((edition_settings.control_rpn & ((unsigned int) (~CTR_RPN_MASKA))) == 0)
                     {
-                      if (edition_settings.control_mtz != current_settings.control_mtz)
+                      if (edition_settings.control_rpn != current_settings.control_rpn)
                       {
                         //Помічаємо, що поле структури зараз буде змінене
                         changed_settings = CHANGED_ETAP_EXECUTION;
 
-                        current_settings.control_mtz = edition_settings.control_mtz;
+                        current_settings.control_rpn = edition_settings.control_rpn;
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
                       }
@@ -12242,7 +12242,7 @@ void main_manu_function(void)
                       edition_settings.setpoint_rpn_K[group] = edit_setpoint(1, edition_settings.setpoint_rpn_K[group], 1, COL_SETPOINT_RPN_K_COMMA, COL_SETPOINT_RPN_K_END, 1);
                   }
                   //Формуємо екран уставок РПН
-                  make_ekran_setpoint_mtz(group);
+                  make_ekran_setpoint_rpn(group);
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
@@ -12271,15 +12271,15 @@ void main_manu_function(void)
                       edition_settings.timeout_rpn_nespr[group] = edit_setpoint(1, edition_settings.timeout_rpn_nespr[group], 1, COL_TMO_RPN_NESPR_COMMA, COL_TMO_RPN_NESPR_END, 10);
                   }
                   //Формуємо екран витримок РПН
-                  make_ekran_timeout_mtz(group);
+                  make_ekran_timeout_rpn(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
                   if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ - 1;
+                    current_ekran.index_position = MAX_ROW_FOR_CONTROL_RPN - 1;
                   position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
                   //Формуємо екран управлінської інформації для РПН
-                  make_ekran_control_mtz();
+                  make_ekran_control_rpn();
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&
@@ -13759,7 +13759,7 @@ void main_manu_function(void)
                       edition_settings.setpoint_rpn_K[group] = edit_setpoint(0, edition_settings.setpoint_rpn_K[group], 1, COL_SETPOINT_RPN_K_COMMA, COL_SETPOINT_RPN_K_END, 1);
                   }
                   //Формуємо екран уставок РПН
-                  make_ekran_setpoint_mtz(group);
+                  make_ekran_setpoint_rpn(group);
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
@@ -13788,15 +13788,15 @@ void main_manu_function(void)
                       edition_settings.timeout_rpn_nespr[group] = edit_setpoint(0, edition_settings.timeout_rpn_nespr[group], 1, COL_TMO_RPN_NESPR_COMMA, COL_TMO_RPN_NESPR_END, 10);
                   }
                   //Формуємо екран витримок РПН
-                  make_ekran_timeout_mtz(group);
+                  make_ekran_timeout_rpn(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  if (++current_ekran.index_position >= WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ)
+                  if (++current_ekran.index_position >= MAX_ROW_FOR_CONTROL_RPN)
                     current_ekran.index_position = 0;
                   position_in_current_level_menu[EKRAN_CONTROL_RPN] = current_ekran.index_position;
                   //Формуємо екран управлінської інформації для РПН
-                  make_ekran_control_mtz();
+                  make_ekran_control_rpn();
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&
@@ -15294,7 +15294,7 @@ void main_manu_function(void)
 
                   //Формуємо екран уставок РПН
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
-                  make_ekran_setpoint_mtz(group);
+                  make_ekran_setpoint_rpn(group);
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
@@ -15339,53 +15339,18 @@ void main_manu_function(void)
 
                   //Формуємо екран витримок РПН
                   int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
-                  make_ekran_timeout_mtz(group);
+                  make_ekran_timeout_rpn(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int maska = 0;
-
-                  //Виділяємо, який біт треба міняти
-                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-
-                  //Міняємо на протилежний відповідний біт для вибраної позиції
-                  edition_settings.control_mtz ^= maska;
+                  if (current_ekran.index_position < MAX_ROW_FOR_CONTROL_RPN)
+                  {
+                    //Міняємо на протилежний відповідний біт для вибраної позиції
+                    edition_settings.control_rpn ^= (1u << current_ekran.index_position);
+                  }
 
                   //Формуємо екран управлінської інформації для РПН
-                  make_ekran_control_mtz();
+                  make_ekran_control_rpn();
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&
@@ -17221,7 +17186,7 @@ void main_manu_function(void)
 
                   //Формуємо екран уставок РПН
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_RPN_GROUP1);
-                  make_ekran_setpoint_mtz(group);
+                  make_ekran_setpoint_rpn(group);
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
@@ -17267,53 +17232,18 @@ void main_manu_function(void)
 
                   //Формуємо екран витримок РПН
                   int group = (current_ekran.current_level - EKRAN_TIMEOUT_RPN_GROUP1);
-                  make_ekran_timeout_mtz(group);
+                  make_ekran_timeout_rpn(group);
                 }
                 else if (current_ekran.current_level == EKRAN_CONTROL_RPN)
                 {
-                  unsigned int maska = 0;
-
-                  //Виділяємо, який біт треба міняти
-                  if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_1_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_NAZAD);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENNJA);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_2_PRYSKORENA);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_3_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_VPERED);
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_4_NAZAD);
-
-                  else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-                    maska = MASKA_FOR_BIT(N_BIT_CTRMTZ_NESPR_KIL_NAPR);
-
-                  //Міняємо на протилежний відповідний біт для вибраної позиції
-                  edition_settings.control_mtz ^= maska;
+                  if (current_ekran.index_position < MAX_ROW_FOR_CONTROL_RPN)
+                  {
+                    //Міняємо на протилежний відповідний біт для вибраної позиції
+                    edition_settings.control_rpn ^= (1u << current_ekran.index_position);
+                  }
 
                   //Формуємо екран управлінської інформації для РПН
-                  make_ekran_control_mtz();
+                  make_ekran_control_rpn();
                 }
                 else if (
                   (current_ekran.current_level >= EKRAN_SETPOINT_MTZ04_GROUP1) &&

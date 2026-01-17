@@ -696,16 +696,6 @@ __SETTINGS current_settings;
 #endif
 SRAM1 __SETTINGS edition_settings, current_settings_interfaces;
 
-//ÌÑÇ
-unsigned int ocp_general_bits;
-uint32_t static_ocp_select_tmp_bits;
-uint32_t static_ocp_tmp_bits;
-uint32_t static_ocp_fw_tmp_bits;
-uint32_t static_ocp_bw_tmp_bits;
-uint32_t static_ocp_by_U_tmp_bits;
-//uint32_t static_ocp_dep_tmp_bits;
-uint32_t static_ocp_dep_rez_bits;
-
 //ÌÑÇ 0.4êÂ
 unsigned int ocp04_general_bits;
 uint32_t static_ocp04_tmp_bits;

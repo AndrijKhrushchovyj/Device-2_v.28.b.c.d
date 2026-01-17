@@ -3287,15 +3287,6 @@ inline void main_protection(void)
 
     //Переводимо у початковий стан деякі глобальні змінні
 
-    ocp_general_bits = 0;
-    static_ocp_select_tmp_bits = 0;
-    static_ocp_tmp_bits = 0;
-    static_ocp_fw_tmp_bits = 0;
-    static_ocp_bw_tmp_bits = 0;
-    static_ocp_by_U_tmp_bits = 0;
-    //		static_ocp_dep_tmp_bits = 0;
-    static_ocp_dep_rez_bits = 0;
-
     ocp04_general_bits = 0;
     static_ocp04_tmp_bits = 0;
     //		static_ocp04_dep_tmp_bits = 0;

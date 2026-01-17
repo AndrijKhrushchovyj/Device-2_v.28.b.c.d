@@ -136,7 +136,7 @@ typedef struct
   int timeout_rpn_perekl[NUMBER_GROUP_USTAVOK];         //Витримка РПН: "Час перемик."
   unsigned int timeout_rpn_nespr[NUMBER_GROUP_USTAVOK]; //Витримка РПН: "Час неспр."
 
-  unsigned int control_mtz; //Поле для управління МСЗ
+  unsigned int control_rpn; //Поле для управління РПН
 
   //МСЗ 0.4кВ
   unsigned int setpoint_mtz04_1[NUMBER_GROUP_USTAVOK]; //Уставка МСЗ 0.4кВ першої ступені

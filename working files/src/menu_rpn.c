@@ -57,9 +57,9 @@ static int first_position_for_unlimited_word(void)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення уставок МТЗ
+//Формуємо екран відображення уставок РПН
 /*****************************************************/
-void make_ekran_setpoint_mtz(unsigned int group)
+void make_ekran_setpoint_rpn(unsigned int group)
 {
   static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_RPN][MAX_COL_LCD] =
     {
@@ -296,9 +296,9 @@ void make_ekran_setpoint_mtz(unsigned int group)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення витримок МТЗ
+//Формуємо екран відображення витримок РПН
 /*****************************************************/
-void make_ekran_timeout_mtz(unsigned int group)
+void make_ekran_timeout_rpn(unsigned int group)
 {
   static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_RPN][MAX_COL_LCD] =
     {
@@ -522,92 +522,228 @@ void make_ekran_timeout_mtz(unsigned int group)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення значення управлінської інформації для МТЗ
+//Формуємо екран відображення значення управлінської інформації для РПН
 /*****************************************************/
-void make_ekran_control_mtz()
+void make_ekran_control_rpn()
 {
-  static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ][MAX_COL_LCD] =
+  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CONTROL_RPN][MAX_COL_LCD] =
     {
-      {"     МТЗ 1      ",
-       "   Тип МТЗ 1    ",
-       "   МТЗН 1 Пр.   ",
-       "  МТЗН 1 Обр.   ",
-       "     МТЗ 2      ",
-       "   Тип МТЗ 2    ",
-       "   МТЗН 2 Пр.   ",
-       "  МТЗН 2 Обр.   ",
-       " Ускорение МТЗ 2",
-       "Ускоренная МТЗ 2",
-       "     МТЗ 3      ",
-       "   Тип МТЗ 3    ",
-       "   МТЗН 3 Пр.   ",
-       "  МТЗН 3 Обр.   ",
-       "     МТЗ 4      ",
-       "   Тип МТЗ 4    ",
-       "   МТЗН 4 Пр.   ",
-       "  МТЗН 4 Обр.   ",
-       "    НЦН-МТЗ     "},
-      {"     МСЗ 1      ",
-       "   Тип МСЗ 1    ",
-       " МСЗС 1 Прямий  ",
-       "  МСЗС 1 Звор.  ",
-       "     МСЗ 2      ",
-       "   Тип МСЗ2     ",
-       " МСЗС 2 Прямий  ",
-       "  МСЗС 2 Звор.  ",
-       "Прискорення МСЗ2",
-       "Прискорений МСЗ2",
-       "     МСЗ 3      ",
-       "   Тип МСЗ 3    ",
-       " МСЗС 3 Прямий  ",
-       "  МСЗС 3 Звор.  ",
-       "     МСЗ 4      ",
-       "   Тип МСЗ 4    ",
-       " МСЗС 4 Прямий  ",
-       "  МСЗС 4 Звор.  ",
-       "    НКН-МСЗ     "},
-      {"     OCP 1      ",
-       "   OCP 1 Type   ",
-       "   DOCP 1 Fw    ",
-       "   DOCP 1 Bw    ",
-       "     OCP 2      ",
-       "   OCP 2 Type   ",
-       "   DOCP 2 Fw    ",
-       "   DOCP 2 Bw    ",
-       " OCP 2 Acc Ena  ",
-       "  OCP 2 Acc C   ",
-       "     OCP 3      ",
-       "   OCP 3 Type   ",
-       "   DOCP 3 Fw    ",
-       "   DOCP 3 Bw    ",
-       "     OCP 4      ",
-       "   OCP 4 Type   ",
-       "   DOCP 4 Fw    ",
-       "   DOCP 4 Bw    ",
-       "    OCP VCM     "},
-      {"     МТЗ 1      ",
-       "   Тип МТЗ 1    ",
-       "   МТЗН 1 Пр.   ",
-       "  МТЗН 1 Обр.   ",
-       "     МТЗ 2      ",
-       "   Тип МТЗ 2    ",
-       "   МТЗН 2 Пр.   ",
-       "  МТЗН 2 Обр.   ",
-       " Ускорение МТЗ 2",
-       "Ускоренная МТЗ 2",
-       "     МТЗ 3      ",
-       "   Тип МТЗ 3    ",
-       "   МТЗН 3 Пр.   ",
-       "  МТЗН 3 Обр.   ",
-       "     МТЗ 4      ",
-       "   Тип МТЗ 4    ",
-       "   МТЗН 4 Пр.   ",
-       "  МТЗН 4 Обр.   ",
-       "    НЦН-МТЗ     "}};
+      {" Трансформатор  ",
+       "      Режим     ",
+       "     Режим ТМ   ",
+       " Доп.контр.по U ",
+       "Токовая компенс.",
+       "      РПН       ",
+       " 2-я гр.уставок ",
+       "  Основной ТН2  ",
+       "   Разр.Тест    "},
+      {" Трансформатор  ",
+       "      Режим     ",
+       "     Режим ТМ   ",
+       " Дод.контр.по U ",
+       " Струмова комп. ",
+       "      РПН       ",
+       " 2-а гр.уставок ",
+       "  Основний ТН2  ",
+       "   Дозв.Тест    "},
+      {"  Transformer   ",
+       "      Mode      ",
+       "    TM Mode     ",
+       "Ad.ctrl.of Aux.V",
+       " Current Comp.  ",
+       "      OLTC      ",
+       " Pick-up Set 2  ",
+       "  VT2 is Main   ",
+       "  Permit Test   "},
+      {" Трансформатор  ",
+       "      Режим     ",
+       "     Режим ТМ   ",
+       " Доп.контр.по U ",
+       " Токовая комп.  ",
+       "      РПН       ",
+       " 2-я гр.уставок ",
+       "  Основной ТН2  ",
+       "   Разр.Тест    "},
+    };
+  const unsigned char information[MAX_ROW_FOR_CONTROL_RPN][MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
+    {
+      {{"     2 обм.     ", "     3 обм.     "},
+       {"     2 обм.     ", "     3 обм.     "},
+       {"   2 Windings   ", "   3 Windings   "},
+       {"     2 обм.     ", "     3 обм.     "}},
+      {{"   Импульсный   ", "  Непрерывный   "},
+       {"   Імпульсний   ", "  Безперервний  "},
+       {"    Impulse     ", "   Continuous   "},
+       {"   Импульсный   ", "  Непрерывный   "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Откл.      ", "      Вкл.      "},
+       {"     Вимк.      ", "     Ввімк.     "},
+       {"      Off       ", "       On       "},
+       {"     Косу.      ", "     Сљнд.      "}}};
+  const unsigned int cursor_x[MAX_ROW_FOR_CONTROL_RPN][MAX_NAMBER_LANGUAGE][2] =
+    {
+      {{4, 4},
+       {4, 4},
+       {2, 2},
+       {4, 4}},
+      {{2, 1},
+       {2, 1},
+       {3, 2},
+       {2, 1}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}},
+      {{4, 5},
+       {4, 4},
+       {5, 6},
+       {4, 4}}};
 
-  int index_language = index_language_in_array(current_settings.language);
+  unsigned char name_string_tmp[MAX_ROW_FOR_CONTROL_RPN][MAX_COL_LCD];
+  unsigned char information_tmp[MAX_ROW_FOR_CONTROL_RPN][2][MAX_COL_LCD];
+  unsigned int cursor_x_tmp[MAX_ROW_FOR_CONTROL_RPN][2];
 
+  int const index_language = index_language_in_array(current_settings.language);
+
+  for (int index_1 = 0; index_1 < MAX_ROW_FOR_CONTROL_RPN; index_1++)
+  {
+    for (int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+    {
+      name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
+
+      for (int index_3 = 0; index_3 < 2; index_3++)
+        information_tmp[index_1][index_3][index_2] = information[index_1][index_language][index_3][index_2];
+    }
+
+    for (int index_3 = 0; index_3 < 2; index_3++)
+      cursor_x_tmp[index_1][index_3] = cursor_x[index_1][index_language][index_3];
+  }
+
+  unsigned int additional_current = 0;
   unsigned int position_temp = current_ekran.index_position;
+
+  unsigned int temp_data;
+  if (current_ekran.edition == 0)
+    temp_data = current_settings.control_rpn;
+  else
+    temp_data = edition_settings.control_rpn;
+
+  if ((temp_data & (1u << INDEX_ML_CTRRPN_TRANSF)) == 0)
+  {
+    /*************************************************************/
+    //У випадку, якщо вибрано двообмотковий трансформатор, то відобпраження можливості встановлення основним ТН2 прибираємо
+    /*************************************************************/
+    while (additional_current < 2)
+    {
+      //Першою фільтруємо настройку з більшим індексом, щоб не мати порблем з формуванням маски, коли вже попердньо перша фільтрація проведена
+      unsigned int index_deleted_feild;
+
+      if (additional_current == 0)
+        index_deleted_feild = INDEX_ML_CTRRPN_OSNOVNYJ_TN2;
+      else
+        index_deleted_feild = INDEX_ML_CTRRPN_DOD_KONTUR;
+
+      /*************************************************************/
+      //Відкидаємо ім'я даного поля і зміщаємо біти
+      /*************************************************************/
+
+      //Формуємо маску біт, які не треба переміщати при переміщенні імен полів
+      unsigned int maska = 0;
+      for (unsigned int j = 0; j < index_deleted_feild; j++)
+        maska |= (1 << j);
+
+      /***/
+      //Зміщуємо біти стану реанжування функцій разом із їх назвами
+      /***/
+      unsigned int new_temp_data_1, new_temp_data_2;
+
+      new_temp_data_1 = temp_data & maska;
+
+      new_temp_data_2 = temp_data & ((unsigned int) (~maska));
+      new_temp_data_2 = new_temp_data_2 >> 1;
+      new_temp_data_2 &= (unsigned int) (~maska);
+
+      temp_data = new_temp_data_1 | new_temp_data_2;
+      /***/
+      for (unsigned int j = index_deleted_feild; j < (MAX_ROW_FOR_CONTROL_RPN - additional_current); j++)
+      {
+        if ((j + 1) < (MAX_ROW_FOR_CONTROL_RPN - additional_current))
+        {
+          for (unsigned int k = 0; k < MAX_COL_LCD; k++)
+          {
+            name_string_tmp[j][k] = name_string_tmp[j + 1][k];
+
+            for (unsigned int l = 0; l < 2; l++)
+              information_tmp[j][l][k] = information_tmp[j + 1][l][k];
+          }
+
+          for (unsigned int l = 0; l < 2; l++)
+            cursor_x_tmp[j][l] = cursor_x_tmp[j + 1][l];
+        }
+        else
+        {
+          for (unsigned int k = 0; k < MAX_COL_LCD; k++)
+          {
+            name_string_tmp[j][k] = ' ';
+
+            for (unsigned int l = 0; l < 2; l++)
+              information_tmp[j][l][k] = ' ';
+          }
+
+          for (unsigned int l = 0; l < 2; l++)
+            cursor_x_tmp[j][l] = 0;
+        }
+      }
+      if (current_ekran.index_position >= ((int) index_deleted_feild))
+        position_temp--;
+      additional_current++;
+      /*************************************************************/
+    }
+  }
+
   unsigned int index_of_ekran;
 
   //Множення на два величини position_temp потрібне для того, бо на одну позицію ми використовуємо два рядки (назва + значення)
@@ -616,78 +752,21 @@ void make_ekran_control_mtz()
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     unsigned int index_of_ekran_tmp = index_of_ekran >> 1;
-    if (index_of_ekran_tmp < (unsigned int) (WITHOUTZNAM_MAX_ROW_FOR_CONTROL_MTZ))
+    if (index_of_ekran_tmp < (unsigned int) (MAX_ROW_FOR_CONTROL_RPN))
     {
       if ((i & 0x1) == 0)
       {
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = name_string_withoutznam[index_language][index_of_ekran_tmp][j];
+          working_ekran[i][j] = name_string_tmp[index_of_ekran_tmp][j];
       }
       else
       {
-        //У парному номері рядку виводимо значення уставки
-        unsigned int index_ctr = index_of_ekran_tmp;
+        //У парному номері рядку виводимо значення
 
-        __SETTINGS *point;
-        if (current_ekran.edition == 0)
-          point = &current_settings;
-        else
-          point = &edition_settings;
-
-        if (
-          (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_TYPE) ||
-          (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_TYPE) ||
-          (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_TYPE) ||
-          (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_TYPE))
-        {
-        }
-        else
-        {
-          unsigned int temp_data = point->control_mtz;
-          unsigned int n_bit = 0;
-
-          //Виділяємо номер біту
-          if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_1)
-            n_bit = N_BIT_CTRMTZ_1;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_VPERED)
-            n_bit = N_BIT_CTRMTZ_1_VPERED;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_NAZAD)
-            n_bit = N_BIT_CTRMTZ_1_NAZAD;
-          //            else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_1_ZNAM        ) n_bit = N_BIT_CTRMTZ_1_ZNAM;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2)
-            n_bit = N_BIT_CTRMTZ_2;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_VPERED)
-            n_bit = N_BIT_CTRMTZ_2_VPERED;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_NAZAD)
-            n_bit = N_BIT_CTRMTZ_2_NAZAD;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENNJA)
-            n_bit = N_BIT_CTRMTZ_2_PRYSKORENNJA;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_PRYSKORENA)
-            n_bit = N_BIT_CTRMTZ_2_PRYSKORENA;
-          //            else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_2_ZNAM        ) n_bit = N_BIT_CTRMTZ_2_ZNAM;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_3)
-            n_bit = N_BIT_CTRMTZ_3;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_VPERED)
-            n_bit = N_BIT_CTRMTZ_3_VPERED;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_NAZAD)
-            n_bit = N_BIT_CTRMTZ_3_NAZAD;
-          //            else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_3_ZNAM        ) n_bit = N_BIT_CTRMTZ_3_ZNAM;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_4)
-            n_bit = N_BIT_CTRMTZ_4;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_VPERED)
-            n_bit = N_BIT_CTRMTZ_4_VPERED;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_NAZAD)
-            n_bit = N_BIT_CTRMTZ_4_NAZAD;
-          //            else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_4_ZNAM        ) n_bit = N_BIT_CTRMTZ_4_ZNAM;
-          else if (index_ctr == WITHOUTZNAM_INDEX_ML_CTRMTZ_NESPR_KIL_NAPR)
-            n_bit = N_BIT_CTRMTZ_NESPR_KIL_NAPR;
-
-          for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-            working_ekran[i][j] = information_off_on[index_language][(temp_data >> n_bit) & 0x1][j];
-          if (position_temp == index_of_ekran_tmp)
-            current_ekran.position_cursor_x = cursor_x_off_on[index_language][(temp_data >> n_bit) & 0x1];
-        }
+        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+          working_ekran[i][j] = information_tmp[index_of_ekran_tmp][(temp_data >> index_of_ekran_tmp) & 0x1][j];
+        current_ekran.position_cursor_x = cursor_x_tmp[index_of_ekran_tmp][(temp_data >> index_of_ekran_tmp) & 0x1];
       }
     }
     else

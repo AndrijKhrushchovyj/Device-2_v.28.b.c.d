@@ -312,16 +312,6 @@ extern unsigned int dopusk_dv_prt[NUMBER_INPUTS];
 
 extern __SETTINGS edition_settings, current_settings_interfaces;
 
-//ÌÑÇ
-extern unsigned int ocp_general_bits;
-extern uint32_t static_ocp_select_tmp_bits;
-extern uint32_t static_ocp_tmp_bits;
-extern uint32_t static_ocp_fw_tmp_bits;
-extern uint32_t static_ocp_bw_tmp_bits;
-extern uint32_t static_ocp_by_U_tmp_bits;
-//extern uint32_t static_ocp_dep_tmp_bits;
-extern uint32_t static_ocp_dep_rez_bits;
-
 //ÌÑÇ 0.4êÂ
 extern unsigned int ocp04_general_bits;
 extern uint32_t static_ocp04_tmp_bits;

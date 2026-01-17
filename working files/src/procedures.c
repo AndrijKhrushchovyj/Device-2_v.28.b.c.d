@@ -115,12 +115,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи РПН зараз знято з конфігурації
     if ((target_label->configuration & (1 << RPN_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ступені МТЗ
-      target_label->control_mtz &= (unsigned int) (~(
-        MASKA_FOR_BIT(N_BIT_CTRMTZ_1) |
-        MASKA_FOR_BIT(N_BIT_CTRMTZ_2) |
-        MASKA_FOR_BIT(N_BIT_CTRMTZ_3) |
-        MASKA_FOR_BIT(N_BIT_CTRMTZ_4)));
+      //Виводим ступені РПН
+      target_label->control_rpn = (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRRPN_STATE));
 
       //Формуємо маски функцій РПН
       for (unsigned int i = 0; i < N_SMALL; i++)
@@ -281,7 +277,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи ЗСХ зараз знято з конфігурації
     if ((target_label->configuration & (1 << ZSKh_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ступені МТЗ 0.4кВ
+      //Виводим ступені РПН 0.4кВ
       target_label->control_mtz04 &= (unsigned int) (~(CTR_MTZ04_1 | CTR_MTZ04_2));
 
       //Формуємо маки функцій ЗСХ
