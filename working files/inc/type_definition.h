@@ -123,38 +123,18 @@ typedef struct
                               // 3 - Група 3
                               // 4 - Група 4
 
-  //МСЗ
+  //РПН
   unsigned int setpoint_rpn_osn[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Напруга основна" (В)
   unsigned int setpoint_rpn_zony[NUMBER_GROUP_USTAVOK]; //Уставка РПН: "Ширина зони" (xx,xx %)- з точністю до сотих
   unsigned int setpoint_rpn_per[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Максимальна кількісьл переключень"
   unsigned int setpoint_rpn_dod[NUMBER_GROUP_USTAVOK];  //Уставка РПН: "Напруга допом." (В)
   unsigned int setpoint_rpn_K[NUMBER_GROUP_USTAVOK];    //Уставка РПН: "Струмова компенсація"
 
-  int timeout_mtz_1[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ першої ступені
-  int timeout_mtz_1_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ першої ступені (направлена:вперед)
-  int timeout_mtz_1_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ першої ступені (направлена:назад)
-  int timeout_mtz_1_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ першої ступені (по напрузі)
-  unsigned int timeout_mtz_1_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ1 по ЗНАМ
-  int timeout_mtz_2[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ другої ступені
-  int timeout_mtz_2_pr[NUMBER_GROUP_USTAVOK];              //Витримка присторення МСЗ другої ступені
-  int timeout_mtz_2_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ другої ступені (направлена:вперед)
-  int timeout_mtz_2_n_vpered_pr[NUMBER_GROUP_USTAVOK];     //Витримка присторення МСЗ другої ступені (направлена:вперед)
-  int timeout_mtz_2_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ другої ступені (направлена:назад)
-  int timeout_mtz_2_n_nazad_pr[NUMBER_GROUP_USTAVOK];      //Витримка присторення МСЗ другої ступені (направлена:назад)
-  int timeout_mtz_2_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ другої ступені (по напрузі)
-  int timeout_mtz_2_po_napruzi_pr[NUMBER_GROUP_USTAVOK];   //Витримка присторення МСЗ другої ступені (по напрузі)
-  int timeout_mtz_2_vvid_pr[NUMBER_GROUP_USTAVOK];         //Витримка вводу присорення МСЗ2
-  unsigned int timeout_mtz_2_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ2 по ЗНАМ
-  int timeout_mtz_3[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ третьої ступені
-  int timeout_mtz_3_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ третьої ступені (направлена:вперед)
-  int timeout_mtz_3_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ третьої ступені (направлена:назад)
-  int timeout_mtz_3_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ третьої ступені (по напрузі)
-  unsigned int timeout_mtz_3_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ3 по ЗНАМ
-  int timeout_mtz_4[NUMBER_GROUP_USTAVOK];                 //Витримка МСЗ четвертої ступені
-  int timeout_mtz_4_n_vpered[NUMBER_GROUP_USTAVOK];        //Витримка МСЗ третьої ступені (направлена:вперед)
-  int timeout_mtz_4_n_nazad[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ третьої ступені (направлена:назад)
-  int timeout_mtz_4_po_napruzi[NUMBER_GROUP_USTAVOK];      //Витримка МСЗ третьої ступені (по напрузі)
-  unsigned int timeout_mtz_4_k_znam[NUMBER_GROUP_USTAVOK]; //Уставка загрублення витримок МСЗ4 по ЗНАМ
+  int timeout_rpn_ub_pryb[NUMBER_GROUP_USTAVOK];        //Витримка РПН: "Час Зн./Підв."
+  int timeout_rpn_ub_pryb_prysk[NUMBER_GROUP_USTAVOK];  //Витримка РПН: "Зн./Підв. Приск."
+  int timeout_rpn_prysk_vid_Umax[NUMBER_GROUP_USTAVOK]; //Витримка РПН: "Час пр.ЗНмакс1"
+  int timeout_rpn_perekl[NUMBER_GROUP_USTAVOK];         //Витримка РПН: "Час перемик."
+  unsigned int timeout_rpn_nespr[NUMBER_GROUP_USTAVOK]; //Витримка РПН: "Час неспр."
 
   unsigned int control_mtz; //Поле для управління МСЗ
 

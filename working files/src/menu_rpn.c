@@ -302,92 +302,28 @@ void make_ekran_timeout_mtz(unsigned int group)
 {
   static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_RPN][MAX_COL_LCD] =
     {
-      {"     МТЗ 1      ",
-       "   МТЗН 1 Пр.   ",
-       "  МТЗН 1 Обр.   ",
-       "    МТЗПН 1     ",
-       "     МТЗ 2      ",
-       "   Уск.МТЗ 2    ",
-       "   МТЗН 2 Пр.   ",
-       " Уск.МТЗН 2 Пр. ",
-       "  МТЗН 2 Обр.   ",
-       " Уск.МТЗН 2 Обр.",
-       "    МТЗПН 2     ",
-       "  Уск.МТЗПН 2   ",
-       " Ввод Уск.МТЗ 2 ",
-       "     МТЗ 3      ",
-       "   МТЗН 3 Пр.   ",
-       "  МТЗН 3 Обр.   ",
-       "    МТЗПН 3     ",
-       "     МТЗ 4      ",
-       "   МТЗН 4 Пр.   ",
-       "  МТЗН 4 Обр.   ",
-       "    МТЗПН 4     "},
-      {"     МСЗ 1      ",
-       " МСЗС 1 Прямий  ",
-       " МСЗС 1 Звор.   ",
-       "    МСЗПН 1     ",
-       "     МСЗ 2      ",
-       "  Приск.МСЗ 2   ",
-       " МСЗС 2 Прямий  ",
-       "Приск.МСЗС 2 Пр.",
-       "  МСЗС 2 Звор.  ",
-       "Приск.МСЗС 2 Зв.",
-       "     МСЗПН 2    ",
-       " Приск.МСЗПН 2  ",
-       "Ввід Приск.МСЗ 2",
-       "     МСЗ 3      ",
-       " МСЗС 3 Прямий  ",
-       " МСЗС 3 Звор.   ",
-       "    МСЗПН 3     ",
-       "     МСЗ 4      ",
-       " МСЗС 4 Прямий  ",
-       " МСЗС 4 Звор.   ",
-       "    МСЗПН 4     "},
-      {"     OCP 1      ",
-       "   DOCP 1 Fw    ",
-       "   DOCP 1 Bw    ",
-       "     VOCP 1     ",
-       "     OCP 2      ",
-       "  OCP 2 AcOpDl  ",
-       "   DOCP 2 Fw    ",
-       "DOCP 2 Fw AcOpDl",
-       "   DOCP 2 Bw    ",
-       "DOCP 2 Bw AcOpDl",
-       "     VOCP 2     ",
-       " VOCP 2 AcOpDl  ",
-       "OCP 2 Acc Ena T ",
-       "     OCP 3      ",
-       "   DOCP 3 Fw    ",
-       "   DOCP 3 Bw    ",
-       "     VOCP 3     ",
-       "     OCP 4      ",
-       "   DOCP 4 Fw    ",
-       "   DOCP 4 Bw    ",
-       "     VOCP 4     "},
-      {"     МТЗ 1      ",
-       "   МТЗН 1 Пр.   ",
-       "  МТЗН 1 Обр.   ",
-       "    МТЗПН 1     ",
-       "     МТЗ 2      ",
-       "   Уск.МТЗ 2    ",
-       "   МТЗН 2 Пр.   ",
-       " Уск.МТЗН 2 Пр. ",
-       "  МТЗН 2 Обр.   ",
-       " Уск.МТЗН 2 Обр.",
-       "    МТЗПН 2     ",
-       "  Уск.МТЗПН 2   ",
-       " Ввод Уск.МТЗ 2 ",
-       "     МТЗ 3      ",
-       "   МТЗН 3 Пр.   ",
-       "  МТЗН 3 Обр.   ",
-       "    МТЗПН 3     ",
-       "     МТЗ 4      ",
-       "   МТЗН 4 Пр.   ",
-       "  МТЗН 4 Обр.   ",
-       "    МТЗПН 4     "}};
+      {" Время Уб./Приб.",
+       "Уб./Приб. Ускор.",
+       "Вр.Ускор.ЗНмакс1",
+       " Время перекл.  ",
+       " Время неиспр.  "},
+      {" Час Зн./Підв.  ",
+       "Зн./Підв. Приск.",
+       " Час пр.ЗНмакс1 ",
+       "  Час перемик.  ",
+       "   Час неспр.   "},
+      {" Lower/Raise T. ",
+       " Acc.Lower/Raise",
+       " Acc.OVP1 Time  ",
+       " Switching Time ",
+       "   Fault Time   "},
+      {" Время Уб./Приб.",
+       "Уб./Приб. Ускор.",
+       "Вр.Ускор.ЗНмакс1",
+       " Время перекл.  ",
+       " Время неиспр.  "}};
 
-  int index_language = index_language_in_array(current_settings.language);
+  int const index_language = index_language_in_array(current_settings.language);
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -408,173 +344,49 @@ void make_ekran_timeout_mtz(unsigned int group)
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
           working_ekran[i][j] = name_string_withoutznam[index_language][index_of_ekran_tmp][j];
 
-        if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
+        if (index_of_ekran_tmp == INDEX_ML_TMORPN_UB_PRYB)
+        {
+          vaga = 100; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
+          if (view == true)
+            value = current_settings.timeout_rpn_ub_pryb[group]; //у змінну value поміщаємо значення витримки
+          else
+            value = edition_settings.timeout_rpn_ub_pryb[group];
+
+          value /= 1000; //Відображаємо тільки цілу частину, а витримка у пам'яті зберігається з точністю до мілісекунд
+        }
+        else if (index_of_ekran_tmp == INDEX_ML_TMORPN_UB_PRYB_PRYSK)
+        {
+          vaga = 100; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
+          if (view == true)
+            value = current_settings.timeout_rpn_ub_pryb_prysk[group]; //у змінну value поміщаємо значення витримки
+          else
+            value = edition_settings.timeout_rpn_ub_pryb_prysk[group];
+
+          value /= 1000; //Відображаємо тільки цілу частину, а витримка у пам'яті зберігається з точністю до мілісекунд
+        }
+        else if (index_of_ekran_tmp == INDEX_ML_TMORPN_PRYSK_VID_UMAX)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
           if (view == true)
-            value = current_settings.timeout_mtz_1[group]; //у змінну value поміщаємо значення витримки
+            value = current_settings.timeout_rpn_prysk_vid_Umax[group]; //у змінну value поміщаємо значення витримки
           else
-            value = edition_settings.timeout_mtz_1[group];
+            value = edition_settings.timeout_rpn_prysk_vid_Umax[group];
         }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
+        else if (index_of_ekran_tmp == INDEX_ML_TMORPN_PEREKL)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
           if (view == true)
-            value = current_settings.timeout_mtz_1_n_vpered[group]; //у змінну value поміщаємо значення витримки
+            value = current_settings.timeout_rpn_perekl[group]; //у змінну value поміщаємо значення витримки
           else
-            value = edition_settings.timeout_mtz_1_n_vpered[group];
+            value = edition_settings.timeout_rpn_perekl[group];
         }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
+        else if (index_of_ekran_tmp == INDEX_ML_TMORPN_NESPR)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
           if (view == true)
-            value = current_settings.timeout_mtz_1_n_nazad[group]; //у змінну value поміщаємо значення витримки
+            value = current_settings.timeout_rpn_nespr[group]; //у змінну value поміщаємо значення витримки
           else
-            value = edition_settings.timeout_mtz_1_n_nazad[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
-        {
-          vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_1_po_napruzi[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_1_po_napruzi[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
-        {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_pr[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_pr[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_n_vpered[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_n_vpered[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
-        {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_n_vpered_pr[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_n_vpered_pr[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_n_nazad[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_n_nazad[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
-        {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_n_nazad_pr[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_n_nazad_pr[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_po_napruzi[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_po_napruzi[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
-        {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_po_napruzi_pr[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_po_napruzi_pr[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
-        {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_2_vvid_pr[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_2_vvid_pr[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_3[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_3[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_3_n_vpered[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_3_n_vpered[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_3_n_nazad[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_3_n_nazad[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_3_po_napruzi[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_3_po_napruzi[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_4[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_4[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_4_n_vpered[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_4_n_vpered[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_4_n_nazad[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_4_n_nazad[group];
-        }
-        else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
-        {
-          vaga = 100000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки
-          if (view == true)
-            value = current_settings.timeout_mtz_4_po_napruzi[group]; //у змінну value поміщаємо значення витримки
-          else
-            value = edition_settings.timeout_mtz_4_po_napruzi[group];
+            value = edition_settings.timeout_rpn_nespr[group];
         }
 
         first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
@@ -584,278 +396,66 @@ void make_ekran_timeout_mtz(unsigned int group)
         //У парному номері рядку виводимо значення уставки
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         {
-          if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
+          if (index_of_ekran_tmp == INDEX_ML_TMORPN_UB_PRYB)
           {
             if (
-              ((j < COL_TMO_MTZ_1_BEGIN) || (j > COL_TMO_MTZ_1_END)) &&
-              (j != (COL_TMO_MTZ_1_END + 2)))
+              ((j < COL_TMO_RPN_UB_PRYB_BEGIN) || (j > COL_TMO_RPN_UB_PRYB_END)) &&
+              (j != (COL_TMO_RPN_UB_PRYB_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_1_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_1_END + 2))
+            else if (j == (COL_TMO_RPN_UB_PRYB_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_1_COMMA, view, 0);
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, view);
           }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
+          else if (index_of_ekran_tmp == INDEX_ML_TMORPN_UB_PRYB_PRYSK)
           {
             if (
-              ((j < COL_TMO_MTZ_1_N_VPERED_BEGIN) || (j > COL_TMO_MTZ_1_N_VPERED_END)) &&
-              (j != (COL_TMO_MTZ_1_N_VPERED_END + 2)))
+              ((j < COL_TMO_RPN_UB_PRYB_PRYSK_BEGIN) || (j > COL_TMO_RPN_UB_PRYB_PRYSK_END)) &&
+              (j != (COL_TMO_RPN_UB_PRYB_PRYSK_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_1_N_VPERED_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_1_N_VPERED_END + 2))
+            else if (j == (COL_TMO_RPN_UB_PRYB_PRYSK_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_1_N_VPERED_COMMA, view, 0);
+              calc_int_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, view);
           }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
+          else if (index_of_ekran_tmp == INDEX_ML_TMORPN_PRYSK_VID_UMAX)
           {
             if (
-              ((j < COL_TMO_MTZ_1_N_NAZAD_BEGIN) || (j > COL_TMO_MTZ_1_N_NAZAD_END)) &&
-              (j != (COL_TMO_MTZ_1_N_NAZAD_END + 2)))
+              ((j < COL_TMO_RPN_PRYSK_VID_UMAX_BEGIN) || (j > COL_TMO_RPN_PRYSK_VID_UMAX_END)) &&
+              (j != (COL_TMO_RPN_PRYSK_VID_UMAX_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_1_N_NAZAD_COMMA)
+            else if (j == COL_TMO_RPN_PRYSK_VID_UMAX_COMMA)
               working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_1_N_NAZAD_END + 2))
+            else if (j == (COL_TMO_RPN_PRYSK_VID_UMAX_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_1_N_NAZAD_COMMA, view, 0);
+              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_RPN_PRYSK_VID_UMAX_COMMA, view, 0);
           }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
+          else if (index_of_ekran_tmp == INDEX_ML_TMORPN_PEREKL)
           {
             if (
-              ((j < COL_TMO_MTZ_1_PO_NAPRUZI_BEGIN) || (j > COL_TMO_MTZ_1_PO_NAPRUZI_END)) &&
-              (j != (COL_TMO_MTZ_1_PO_NAPRUZI_END + 2)))
+              ((j < COL_TMO_RPN_PEREKL_BEGIN) || (j > COL_TMO_RPN_PEREKL_END)) &&
+              (j != (COL_TMO_RPN_PEREKL_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_1_PO_NAPRUZI_COMMA)
+            else if (j == COL_TMO_RPN_PEREKL_COMMA)
               working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_1_PO_NAPRUZI_END + 2))
+            else if (j == (COL_TMO_RPN_PEREKL_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_1_PO_NAPRUZI_COMMA, view, 0);
+              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_RPN_PEREKL_COMMA, view, 0);
           }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
+          else if (index_of_ekran_tmp == INDEX_ML_TMORPN_NESPR)
           {
             if (
-              ((j < COL_TMO_MTZ_2_BEGIN) || (j > COL_TMO_MTZ_2_END)) &&
-              (j != (COL_TMO_MTZ_2_END + 2)))
+              ((j < COL_TMO_RPN_NESPR_BEGIN) || (j > COL_TMO_RPN_NESPR_END)) &&
+              (j != (COL_TMO_RPN_NESPR_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_COMMA)
+            else if (j == COL_TMO_RPN_NESPR_COMMA)
               working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_END + 2))
+            else if (j == (COL_TMO_RPN_NESPR_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_PR_BEGIN) || (j > COL_TMO_MTZ_2_PR_END)) &&
-              (j != (COL_TMO_MTZ_2_PR_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_PR_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_PR_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_PR_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_N_VPERED_BEGIN) || (j > COL_TMO_MTZ_2_N_VPERED_END)) &&
-              (j != (COL_TMO_MTZ_2_N_VPERED_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_N_VPERED_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_N_VPERED_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_N_VPERED_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_N_VPERED_PR_BEGIN) || (j > COL_TMO_MTZ_2_N_VPERED_PR_END)) &&
-              (j != (COL_TMO_MTZ_2_N_VPERED_PR_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_N_VPERED_PR_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_N_VPERED_PR_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_N_VPERED_PR_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_N_NAZAD_BEGIN) || (j > COL_TMO_MTZ_2_N_NAZAD_END)) &&
-              (j != (COL_TMO_MTZ_2_N_NAZAD_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_N_NAZAD_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_N_NAZAD_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_N_NAZAD_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_N_NAZAD_PR_BEGIN) || (j > COL_TMO_MTZ_2_N_NAZAD_PR_END)) &&
-              (j != (COL_TMO_MTZ_2_N_NAZAD_PR_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_N_NAZAD_PR_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_N_NAZAD_PR_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_N_NAZAD_PR_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_PO_NAPRUZI_BEGIN) || (j > COL_TMO_MTZ_2_PO_NAPRUZI_END)) &&
-              (j != (COL_TMO_MTZ_2_PO_NAPRUZI_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_PO_NAPRUZI_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_PO_NAPRUZI_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_PO_NAPRUZI_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_PO_NAPRUZI_PR_BEGIN) || (j > COL_TMO_MTZ_2_PO_NAPRUZI_PR_END)) &&
-              (j != (COL_TMO_MTZ_2_PO_NAPRUZI_PR_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_PO_NAPRUZI_PR_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_PO_NAPRUZI_PR_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
-          {
-            if (
-              ((j < COL_TMO_MTZ_2_VVID_PR_BEGIN) || (j > COL_TMO_MTZ_2_VVID_PR_END)) &&
-              (j != (COL_TMO_MTZ_2_VVID_PR_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_2_VVID_PR_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_2_VVID_PR_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_2_VVID_PR_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
-          {
-            if (
-              ((j < COL_TMO_MTZ_3_BEGIN) || (j > COL_TMO_MTZ_3_END)) &&
-              (j != (COL_TMO_MTZ_3_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_3_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_3_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_3_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
-          {
-            if (
-              ((j < COL_TMO_MTZ_3_N_VPERED_BEGIN) || (j > COL_TMO_MTZ_3_N_VPERED_END)) &&
-              (j != (COL_TMO_MTZ_3_N_VPERED_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_3_N_VPERED_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_3_N_VPERED_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_3_N_VPERED_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
-          {
-            if (
-              ((j < COL_TMO_MTZ_3_N_NAZAD_BEGIN) || (j > COL_TMO_MTZ_3_N_NAZAD_END)) &&
-              (j != (COL_TMO_MTZ_3_N_NAZAD_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_3_N_NAZAD_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_3_N_NAZAD_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_3_N_NAZAD_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
-          {
-            if (
-              ((j < COL_TMO_MTZ_3_PO_NAPRUZI_BEGIN) || (j > COL_TMO_MTZ_3_PO_NAPRUZI_END)) &&
-              (j != (COL_TMO_MTZ_3_PO_NAPRUZI_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_3_PO_NAPRUZI_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_3_PO_NAPRUZI_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_3_PO_NAPRUZI_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
-          {
-            if (
-              ((j < COL_TMO_MTZ_4_BEGIN) || (j > COL_TMO_MTZ_4_END)) &&
-              (j != (COL_TMO_MTZ_4_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_4_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_4_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_4_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
-          {
-            if (
-              ((j < COL_TMO_MTZ_4_N_VPERED_BEGIN) || (j > COL_TMO_MTZ_4_N_VPERED_END)) &&
-              (j != (COL_TMO_MTZ_4_N_VPERED_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_4_N_VPERED_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_4_N_VPERED_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_4_N_VPERED_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
-          {
-            if (
-              ((j < COL_TMO_MTZ_4_N_NAZAD_BEGIN) || (j > COL_TMO_MTZ_4_N_NAZAD_END)) &&
-              (j != (COL_TMO_MTZ_4_N_NAZAD_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_4_N_NAZAD_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_4_N_NAZAD_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_4_N_NAZAD_COMMA, view, 0);
-          }
-          else if (index_of_ekran_tmp == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
-          {
-            if (
-              ((j < COL_TMO_MTZ_4_PO_NAPRUZI_BEGIN) || (j > COL_TMO_MTZ_4_PO_NAPRUZI_END)) &&
-              (j != (COL_TMO_MTZ_4_PO_NAPRUZI_END + 2)))
-              working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_MTZ_4_PO_NAPRUZI_COMMA)
-              working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_MTZ_4_PO_NAPRUZI_END + 2))
-              working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
-            else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_MTZ_4_PO_NAPRUZI_COMMA, view, 0);
+              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_RPN_NESPR_COMMA, view, 0);
           }
         }
       }
@@ -873,110 +473,30 @@ void make_ekran_timeout_mtz(unsigned int group)
   if (current_ekran.edition == 0)
   {
     int last_position_cursor_x = MAX_COL_LCD;
-    if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1)
+    if (current_ekran.index_position == INDEX_ML_TMORPN_UB_PRYB)
     {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_1_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_1_END;
+      current_ekran.position_cursor_x = COL_TMO_RPN_UB_PRYB_BEGIN;
+      last_position_cursor_x = COL_TMO_RPN_UB_PRYB_END;
     }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_VPERED)
+    else if (current_ekran.index_position == INDEX_ML_TMORPN_UB_PRYB_PRYSK)
     {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_VPERED_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_1_N_VPERED_END;
+      current_ekran.position_cursor_x = COL_TMO_RPN_UB_PRYB_PRYSK_BEGIN;
+      last_position_cursor_x = COL_TMO_RPN_UB_PRYB_PRYSK_END;
     }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_N_NAZAD)
+    else if (current_ekran.index_position == INDEX_ML_TMORPN_PRYSK_VID_UMAX)
     {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_1_N_NAZAD_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_1_N_NAZAD_END;
+      current_ekran.position_cursor_x = COL_TMO_RPN_PRYSK_VID_UMAX_BEGIN;
+      last_position_cursor_x = COL_TMO_RPN_PRYSK_VID_UMAX_END;
     }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ1_PO_NAPRUZI)
+    else if (current_ekran.index_position == INDEX_ML_TMORPN_PEREKL)
     {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_1_PO_NAPRUZI_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_1_PO_NAPRUZI_END;
+      current_ekran.position_cursor_x = COL_TMO_RPN_PEREKL_BEGIN;
+      last_position_cursor_x = COL_TMO_RPN_PEREKL_END;
     }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2)
+    else if (current_ekran.index_position == INDEX_ML_TMORPN_NESPR)
     {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PR)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_PR_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_PR_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_N_VPERED_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_VPERED_PR)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_VPERED_PR_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_N_VPERED_PR_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_N_NAZAD_PR)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_PR_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_N_NAZAD_PR_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_PO_NAPRUZI_PR)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_PR_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_PO_NAPRUZI_PR_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ2_VVID_PR)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_2_VVID_PR_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_2_VVID_PR_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_3_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_3_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_VPERED)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_VPERED_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_3_N_VPERED_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_N_NAZAD)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_3_N_NAZAD_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_3_N_NAZAD_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ3_PO_NAPRUZI)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_3_PO_NAPRUZI_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_3_PO_NAPRUZI_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_4_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_4_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_VPERED)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_VPERED_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_4_N_VPERED_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_N_NAZAD)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_4_N_NAZAD_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_4_N_NAZAD_END;
-    }
-    else if (current_ekran.index_position == WITHOUTZNAM_INDEX_ML_TMOMTZ4_PO_NAPRUZI)
-    {
-      current_ekran.position_cursor_x = COL_TMO_MTZ_4_PO_NAPRUZI_BEGIN;
-      last_position_cursor_x = COL_TMO_MTZ_4_PO_NAPRUZI_END;
+      current_ekran.position_cursor_x = COL_TMO_RPN_NESPR_BEGIN;
+      last_position_cursor_x = COL_TMO_RPN_NESPR_END;
     }
 
     //Підтягуємо курсор до першого символу

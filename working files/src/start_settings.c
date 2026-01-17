@@ -1646,34 +1646,11 @@ void min_settings(__SETTINGS *target_label)
     target_label->setpoint_rpn_dod[i] = SETPOINT_RPN_DOD_WORK;
     target_label->setpoint_rpn_K[i] = SETPOINT_RPN_K_MAX;
 
-    target_label->timeout_mtz_1[i] = TIMEOUT_MTZ1_MIN;
-    target_label->timeout_mtz_1_n_vpered[i] = TIMEOUT_MTZ1_N_VPERED_MIN;
-    target_label->timeout_mtz_1_n_nazad[i] = TIMEOUT_MTZ1_N_NAZAD_MIN;
-    target_label->timeout_mtz_1_po_napruzi[i] = TIMEOUT_MTZ1_PO_NAPRUZI_MIN;
-    target_label->timeout_mtz_1_k_znam[i] = TIMEOUT_MTZ1_ZNAM_MIN;
-
-    target_label->timeout_mtz_2[i] = TIMEOUT_MTZ2_MIN;
-    target_label->timeout_mtz_2_pr[i] = TIMEOUT_MTZ2_PR_MIN;
-    target_label->timeout_mtz_2_n_vpered[i] = TIMEOUT_MTZ2_N_VPERED_MIN;
-    target_label->timeout_mtz_2_n_vpered_pr[i] = TIMEOUT_MTZ2_N_VPERED_PR_MIN;
-    target_label->timeout_mtz_2_n_nazad[i] = TIMEOUT_MTZ2_N_NAZAD_MIN;
-    target_label->timeout_mtz_2_n_nazad_pr[i] = TIMEOUT_MTZ2_N_NAZAD_PR_MIN;
-    target_label->timeout_mtz_2_po_napruzi[i] = TIMEOUT_MTZ2_PO_NAPRUZI_MIN;
-    target_label->timeout_mtz_2_po_napruzi_pr[i] = TIMEOUT_MTZ2_PO_NAPRUZI_PR_MIN;
-    target_label->timeout_mtz_2_vvid_pr[i] = TIMEOUT_MTZ2_VVID_PR_MIN;
-    target_label->timeout_mtz_2_k_znam[i] = TIMEOUT_MTZ2_ZNAM_MIN;
-
-    target_label->timeout_mtz_3[i] = TIMEOUT_MTZ3_MIN;
-    target_label->timeout_mtz_3_n_vpered[i] = TIMEOUT_MTZ3_N_VPERED_MIN;
-    target_label->timeout_mtz_3_n_nazad[i] = TIMEOUT_MTZ3_N_NAZAD_MIN;
-    target_label->timeout_mtz_3_po_napruzi[i] = TIMEOUT_MTZ3_PO_NAPRUZI_MIN;
-    target_label->timeout_mtz_3_k_znam[i] = TIMEOUT_MTZ3_ZNAM_MIN;
-
-    target_label->timeout_mtz_4[i] = TIMEOUT_MTZ4_MIN;
-    target_label->timeout_mtz_4_n_vpered[i] = TIMEOUT_MTZ4_N_VPERED_MIN;
-    target_label->timeout_mtz_4_n_nazad[i] = TIMEOUT_MTZ4_N_NAZAD_MIN;
-    target_label->timeout_mtz_4_po_napruzi[i] = TIMEOUT_MTZ4_PO_NAPRUZI_MIN;
-    target_label->timeout_mtz_4_k_znam[i] = TIMEOUT_MTZ4_ZNAM_MIN;
+    target_label->timeout_rpn_ub_pryb[i] = TIMEOUT_RPN_UB_PRYB_WORK;
+    target_label->timeout_rpn_ub_pryb_prysk[i] = TIMEOUT_RPN_UB_PRYB_PRYSK_WORK;
+    target_label->timeout_rpn_prysk_vid_Umax[i] = TIMEOUT_RPN_UB_PRYSK_VID_UMAX_WORK;
+    target_label->timeout_rpn_perekl[i] = TIMEOUT_RPN_PEREKL_WORK;
+    target_label->timeout_rpn_nespr[i] = TIMEOUT_RPN_NESPR_WORK;
 
     target_label->setpoint_mtz04_1[i] = SETPOINT_MTZ04_1_MIN;
     target_label->setpoint_mtz04_2[i] = SETPOINT_MTZ04_2_MIN;
