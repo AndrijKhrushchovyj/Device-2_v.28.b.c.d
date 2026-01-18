@@ -84,8 +84,8 @@ enum _index_ml_ctrl_rpn
   INDEX_ML_CTRRPN_PERMIT_TEST,
 
   MAX_ROW_FOR_CONTROL_RPN
-
 };
+
 #define CTR_RPN_MASKA (MASKA_FOR_BIT(MAX_ROW_FOR_CONTROL_RPN) - 1)
 
 #endif

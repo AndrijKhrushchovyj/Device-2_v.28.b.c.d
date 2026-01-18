@@ -87,7 +87,7 @@ void make_ekran_timeout_rpn(unsigned int);
 void make_ekran_control_rpn(void);
 void make_ekran_setpoint_mtz04(unsigned int);
 void make_ekran_timeout_mtz04(unsigned int);
-void make_ekran_control_mtz04(void);
+void make_ekran_control_zskh(void);
 void make_ekran_setpoint_znam(unsigned int);
 void make_ekran_timeout_znam(unsigned int);
 void make_ekran_control_znam(void);

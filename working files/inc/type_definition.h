@@ -138,17 +138,8 @@ typedef struct
 
   unsigned int control_rpn; //Поле для управління РПН
 
-  //МСЗ 0.4кВ
-  unsigned int setpoint_mtz04_1[NUMBER_GROUP_USTAVOK]; //Уставка МСЗ 0.4кВ першої ступені
-  int type_mtz04_2;                                    //Тип МСЗ2 0.4кВ (0 - Проста, 3 - Залежна А, 4 - Залежна В, 5 - Залежна С)
-  unsigned int setpoint_mtz04_2[NUMBER_GROUP_USTAVOK]; //Уставка МСЗ 0.4кВ другої ступені
-
-  int timeout_mtz04_1[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ 0.4кВ першої ступені
-  int timeout_mtz04_2[NUMBER_GROUP_USTAVOK];         //Витримка МСЗ 0.4кВ друго 0.4кВї ступені
-  int timeout_mtz04_2_pr[NUMBER_GROUP_USTAVOK];      //Витримка присторення МСЗ другої ступені
-  int timeout_mtz04_2_vvid_pr[NUMBER_GROUP_USTAVOK]; //Витримка вводу присорення МСЗ2 0.4кВ
-
-  unsigned int control_mtz04; //Поле для управління МСЗ 0.4кВ
+  //ЗСХ
+  unsigned int control_zskh; //Поле для управління ЗСХ
 
   //ЗНам
   unsigned int setpoint_znam[NUMBER_GROUP_USTAVOK]; //уставка ЗНАМ

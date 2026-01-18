@@ -11,8 +11,8 @@ __control_info const control_info[] =
     {&current_settings_prt.control_rpn, N_BIT_CTRMTZ_3},
     {&current_settings_prt.control_rpn, N_BIT_CTRMTZ_4},
 
-    {&current_settings_prt.control_mtz04, N_BIT_CTRMTZ04_1},
-    {&current_settings_prt.control_mtz04, N_BIT_CTRMTZ04_2},
+    {&current_settings_prt.control_zskh, N_BIT_CTRMTZ04_1},
+    {&current_settings_prt.control_zskh, N_BIT_CTRMTZ04_2},
 
     {&current_settings_prt.control_znam, CTR_ZNAM_STATE_BIT},
 

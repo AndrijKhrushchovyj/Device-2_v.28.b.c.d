@@ -1603,7 +1603,7 @@ void min_settings(__SETTINGS *target_label)
   }
 #endif
 
-  target_label->configuration = 0;
+  target_label->configuration = CONFIGURATION_WORK;
 
   target_label->ctrl_zdz_type = ZDZ_CTRL_MIN;
 #if (                              \
@@ -1623,7 +1623,7 @@ void min_settings(__SETTINGS *target_label)
     target_label->ctrl_UP_input[i] = UP_CTRL_Ia_Ib_Ic;
 
   target_label->control_rpn = CONTROL_RPN_WORK;
-  target_label->control_mtz04 = 0;
+  target_label->control_zskh = CONTROL_ZSKh_WORK;
   target_label->control_znam = 0;
   target_label->control_zdz = 0;
   target_label->control_zz = 0;
@@ -1651,14 +1651,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_rpn_prysk_vid_Umax[i] = TIMEOUT_RPN_UB_PRYSK_VID_UMAX_WORK;
     target_label->timeout_rpn_perekl[i] = TIMEOUT_RPN_PEREKL_WORK;
     target_label->timeout_rpn_nespr[i] = TIMEOUT_RPN_NESPR_WORK;
-
-    target_label->setpoint_mtz04_1[i] = SETPOINT_MTZ04_1_MIN;
-    target_label->setpoint_mtz04_2[i] = SETPOINT_MTZ04_2_MIN;
-
-    target_label->timeout_mtz04_1[i] = TIMEOUT_MTZ04_1_MIN;
-    target_label->timeout_mtz04_2[i] = TIMEOUT_MTZ04_2_MIN;
-    target_label->timeout_mtz04_2_pr[i] = TIMEOUT_MTZ04_2_PR_MIN;
-    target_label->timeout_mtz04_2_vvid_pr[i] = TIMEOUT_MTZ04_2_VVID_PR_MIN;
 
     target_label->setpoint_znam[i] = SETPOINT_ZNAM_MIN;
     target_label->timeout_znam[i] = TIMEOUT_ZNAM_MIN;

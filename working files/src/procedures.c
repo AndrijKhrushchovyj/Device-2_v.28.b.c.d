@@ -278,7 +278,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     if ((target_label->configuration & (1 << ZSKh_BIT_CONFIGURATION)) == 0)
     {
       //Виводим ступені РПН 0.4кВ
-      target_label->control_mtz04 &= (unsigned int) (~(CTR_MTZ04_1 | CTR_MTZ04_2));
+      target_label->control_zskh &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRZSKh_STATE));
 
       //Формуємо маки функцій ЗСХ
       for (unsigned int i = 0; i < N_SMALL; i++)
