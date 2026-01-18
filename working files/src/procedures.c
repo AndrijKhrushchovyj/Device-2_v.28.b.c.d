@@ -14,9 +14,9 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   if ((new_configuration & (1 << RPN_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_MTZ) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_MTZ) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_MTZ)) ||
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_RPN) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_RPN)) ||
       ((current_ekran.current_level >= EKRAN_SETPOINT_RPN_GROUP1) &&
        (current_ekran.current_level <= EKRAN_SETPOINT_RPN_GROUP4)) ||
       ((current_ekran.current_level >= EKRAN_TIMEOUT_RPN_GROUP1) &&
