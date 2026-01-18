@@ -2388,10 +2388,10 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_VMP.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zdz.h</name>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znam.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znam.h</name>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znkh.h</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zop.h</name>
@@ -2619,10 +2619,10 @@
                     <name>$PROJ_DIR$\..\..\working files\src\menu_VMP.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_zdz.c</name>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_znam.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_znam.c</name>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_znks.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_zop.c</name>

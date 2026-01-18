@@ -42,9 +42,9 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   if ((new_configuration & (1 << ZNKh_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZDZ) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ)) ||
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh)) ||
       ((current_ekran.current_level >= EKRAN_TIMEOUT_ZDZ_GROUP1) &&
        (current_ekran.current_level <= EKRAN_TIMEOUT_ZDZ_GROUP4)) ||
       (current_ekran.current_level == EKRAN_CONTROL_ZDZ))

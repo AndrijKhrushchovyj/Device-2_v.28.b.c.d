@@ -794,7 +794,7 @@ void main_manu_function(void)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZNAM;
                   //Переходимо на меню ЗДЗ
                   else if (current_ekran.index_position == INDEX_ML1_BRP)
-                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZDZ;
+                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZNKh;
                   //Переходимо на меню ЗЗ
                   else if (current_ekran.index_position == INDEX_ML1_Umax)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZZ;
@@ -1580,11 +1580,11 @@ void main_manu_function(void)
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_ZNAM:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_ZNAM:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZNAM:
-      case EKRAN_CHOOSE_SETTINGS_ZDZ:
-      case EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ:
-      case EKRAN_CHOOSE_TIMEOUT_GROUP2_ZDZ:
-      case EKRAN_CHOOSE_TIMEOUT_GROUP3_ZDZ:
-      case EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ:
+      case EKRAN_CHOOSE_SETTINGS_ZNKh:
+      case EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh:
+      case EKRAN_CHOOSE_TIMEOUT_GROUP2_ZNKh:
+      case EKRAN_CHOOSE_TIMEOUT_GROUP3_ZNKh:
+      case EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh:
       case EKRAN_CHOOSE_SETTINGS_ZZ:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZZ:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_ZZ:
@@ -1878,7 +1878,7 @@ void main_manu_function(void)
               else if (
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNAM) ||
-                (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZDZ) ||
+                (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh) ||
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZZ) ||
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_TZNP) ||
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_APV) ||
@@ -1928,8 +1928,8 @@ void main_manu_function(void)
               }
               else if (
                 (
-                  (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ) &&
-                  (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ)) ||
+                  (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
+                  (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh)) ||
                 ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_APV) &&
                  (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_APV)))
               {
@@ -2785,7 +2785,7 @@ void main_manu_function(void)
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
                 }
-                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZDZ)
+                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh)
                 {
                   //Натисну кнопка Enter у вікні вибору група1-...-групаN-настройки ЗДЗ
                   if (
@@ -2794,7 +2794,7 @@ void main_manu_function(void)
                   {
                     //Запам'ятовуємо поперердній екран
                     //Переходимо на меню відображення обраної групи уставок для ЗДЗ
-                    current_ekran.current_level = EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ + (current_ekran.index_position - INDEX_ML_GROUP1);
+                    current_ekran.current_level = EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh + (current_ekran.index_position - INDEX_ML_GROUP1);
                   }
                   else if (current_ekran.index_position == INDEX_ML_CONTROL_WITH_GROUPS)
                   {
@@ -2808,15 +2808,15 @@ void main_manu_function(void)
                   current_ekran.cursor_blinking_on = 0;
                 }
                 else if (
-                  (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ) &&
-                  (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ))
+                  (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
+                  (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh))
                 {
                   //Натисну кнопка Enter у вікні вибору витримок ЗДЗ
                   if (current_ekran.index_position == INDEX_ML_WITH_TIMEOUT_TIMEOUT)
                   {
                     //Запам'ятовуємо поперердній екран
                     //Переходимо на меню відображення витримок для ЗДЗ
-                    current_ekran.current_level = EKRAN_TIMEOUT_ZDZ_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ);
+                    current_ekran.current_level = EKRAN_TIMEOUT_ZDZ_GROUP1 + (current_ekran.current_level - EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh);
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
@@ -4376,7 +4376,7 @@ void main_manu_function(void)
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNAM) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZZ) ||
-                  (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZDZ) ||
+                  (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_TZNP) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_APV) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ACHR_CHAPV) ||
@@ -4425,8 +4425,8 @@ void main_manu_function(void)
                 }
                 else if (
                   (
-                    (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ) &&
-                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ)) ||
+                    (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
+                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh)) ||
                   ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_APV) &&
                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_APV)))
                 {
@@ -5222,7 +5222,7 @@ void main_manu_function(void)
                 else if (
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNAM) ||
-                  (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZDZ) ||
+                  (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZZ) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_TZNP) ||
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_APV) ||
@@ -5273,8 +5273,8 @@ void main_manu_function(void)
                 }
                 else if (
                   (
-                    (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZDZ) &&
-                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZDZ)) ||
+                    (current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
+                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh)) ||
                   ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_APV) &&
                    (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_APV)))
                 {

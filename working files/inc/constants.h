@@ -21,7 +21,7 @@
 #include "const_menu_rpn.h"
 #include "const_menu_zskh.h"
 #include "const_menu_znam.h"
-#include "const_menu_zdz.h"
+#include "const_menu_znkh.h"
 #include "const_menu_zz.h"
 #include "const_menu_tznp.h"
 #include "const_menu_urov.h"
