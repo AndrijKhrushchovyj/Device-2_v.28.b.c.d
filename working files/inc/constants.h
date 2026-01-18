@@ -19,7 +19,7 @@
 #include "const_menu_chose_extra_settings.h"
 #include "const_menu_chose_grupa_ustavok.h"
 #include "const_menu_rpn.h"
-#include "const_menu_mtz04.h"
+#include "const_menu_zskh.h"
 #include "const_menu_znam.h"
 #include "const_menu_zdz.h"
 #include "const_menu_zz.h"
