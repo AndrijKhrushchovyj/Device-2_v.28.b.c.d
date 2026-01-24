@@ -141,34 +141,14 @@ typedef struct
   //ЗСХ
   unsigned int control_zskh; //Поле для управління ЗСХ
 
+  //ЗНХ
+  int32_t timeout_znkh_perekl[NUMBER_GROUP_USTAVOK]; //Витримка ЗНХ: "Час перемик.РПН"
+  unsigned int control_znkh;                         //Поле для управління ЗНХ
+
   //ЗНам
   unsigned int setpoint_znam[NUMBER_GROUP_USTAVOK]; //уставка ЗНАМ
   int timeout_znam[NUMBER_GROUP_USTAVOK];           //Витримка  ЗНАМ
   unsigned int control_znam;                        //Поле для управління ЗНАМ
-
-  //ЗДЗ
-  int32_t timeout_zdz[NUMBER_GROUP_USTAVOK]; //Витримка ЗДЗ
-  unsigned int control_zdz;                  //Поле для управління ЗДЗ
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-  int32_t zdz_ovd_porig; //Поріг спрацювання ОВД
-#endif
-  int32_t ctrl_zdz_type; //Тип контролю ЗДЗ
-                         /*
-                                                            0 - Без контролю
-                                                            1 - Контроль по I
-                                                            2 - Контроль по U
-                                                            3 - Контроль по I або U
-                                                            4 - Контроль по I і U
-                                                            */
 
   //ЗЗ
   unsigned int setpoint_zz_3I0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3I0

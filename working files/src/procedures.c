@@ -45,9 +45,9 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNKh) ||
       ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_ZNKh) &&
        (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_ZNKh)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_ZDZ_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_ZDZ_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_ZDZ))
+      ((current_ekran.current_level >= EKRAN_TIMEOUT_ZNKh_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_TIMEOUT_ZNKh_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_ZNKh))
       error_window |= (1 << ZNKh_BIT_CONFIGURATION);
   }
   //Перевірка БРП
@@ -607,8 +607,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи БРП зараз знято з конфігурації
     if ((target_label->configuration & (1 << BRP_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ЗДЗ
-      target_label->control_zdz &= (unsigned int) (~MASKA_FOR_BIT(CTR_ZDZ_STATE_BIT));
+      //Виводим ЗНХ
+      target_label->control_znkh &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRZNKh_STATE));
 
       //Формуємо маки функцій БРП
       for (unsigned int i = 0; i < N_SMALL; i++)

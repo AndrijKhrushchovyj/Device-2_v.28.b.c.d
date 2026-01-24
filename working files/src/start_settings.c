@@ -1605,27 +1605,13 @@ void min_settings(__SETTINGS *target_label)
 
   target_label->configuration = CONFIGURATION_WORK;
 
-  target_label->ctrl_zdz_type = ZDZ_CTRL_MIN;
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
-  target_label->zdz_ovd_porig = 0;
-#endif
   for (size_t i = 0; i < NUMBER_UP; i++)
     target_label->ctrl_UP_input[i] = UP_CTRL_Ia_Ib_Ic;
 
   target_label->control_rpn = CONTROL_RPN_WORK;
   target_label->control_zskh = CONTROL_ZSKh_WORK;
+  target_label->control_znkh = CONTROL_ZNKh_WORK;
   target_label->control_znam = 0;
-  target_label->control_zdz = 0;
   target_label->control_zz = 0;
   target_label->control_tznp = 0;
   target_label->control_apv = 0;
@@ -1655,7 +1641,7 @@ void min_settings(__SETTINGS *target_label)
     target_label->setpoint_znam[i] = SETPOINT_ZNAM_MIN;
     target_label->timeout_znam[i] = TIMEOUT_ZNAM_MIN;
 
-    target_label->timeout_zdz[i] = TIMEOUT_ZDZ_MIN;
+    target_label->timeout_znkh_perekl[i] = TIMEOUT_ZNKh_PEREKL_MIN;
 
     target_label->setpoint_zz_3I0[i] = SETPOINT_ZZ_3I0_MIN;
     target_label->setpoint_zz_3U0[i] = SETPOINT_ZZ_3U0_MIN;

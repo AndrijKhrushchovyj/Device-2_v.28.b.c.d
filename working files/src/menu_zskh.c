@@ -33,9 +33,9 @@ void make_ekran_control_zskh()
       else
       {
         //У парному номері рядку виводимо значення уставки
-        unsigned int index_ctr = index_of_ekran_tmp;
+        unsigned int const index_ctr = index_of_ekran_tmp;
 
-        unsigned int temp_data = (current_ekran.edition == 0) ? current_settings.control_zskh : edition_settings.control_zskh;
+        unsigned int const temp_data = (current_ekran.edition == 0) ? current_settings.control_zskh : edition_settings.control_zskh;
 
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
           working_ekran[i][j] = information_off_on[index_language][(temp_data >> index_ctr) & 0x1][j];

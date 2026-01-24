@@ -353,7 +353,7 @@ unsigned int Uxy_bilshe_porogu[3];
 unsigned int Ix_bilshe_porogu[3];
 unsigned int temp_states_for_mtz;
 
-//ÇÄÇ
+//ÇÍÕ
 #if (                              \
   (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
