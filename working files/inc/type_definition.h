@@ -149,16 +149,6 @@ typedef struct
   unsigned int setpoint_brp_I_blk[NUMBER_GROUP_USTAVOK]; //Уставка БРП: "Струм блокування"
   unsigned int control_brp;                              //Поле для управління БРП
 
-  //ЗЗ
-  unsigned int setpoint_zz_3I0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3I0
-  unsigned int setpoint_zz_3U0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3U0
-
-  int timeout_zz_3I0[NUMBER_GROUP_USTAVOK]; //Витримка ЗЗ/3I0
-  int timeout_zz_3U0[NUMBER_GROUP_USTAVOK]; //Витримка ЗЗ/3I0
-  int timeout_nzz[NUMBER_GROUP_USTAVOK];    //Витримка СЗЗ
-
-  unsigned int control_zz; //Поле для управління ЗЗ
-
   //ТЗНП
   unsigned int setpoint_tznp_1_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 першої ступені (направлений:вперед)
   unsigned int setpoint_tznp_1_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 першої ступені  (направлений:вперед)

@@ -5649,9 +5649,6 @@
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zskh.h</name>
                 </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zz.h</name>
-                </file>
             </group>
             <group>
                 <name>microcontriller</name>
@@ -5879,9 +5876,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_zskh.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_zz.c</name>
                 </file>
             </group>
             <group>
