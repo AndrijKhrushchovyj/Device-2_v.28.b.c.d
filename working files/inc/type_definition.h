@@ -145,10 +145,9 @@ typedef struct
   int32_t timeout_znkh_perekl[NUMBER_GROUP_USTAVOK]; //Витримка ЗНХ: "Час перемик.РПН"
   unsigned int control_znkh;                         //Поле для управління ЗНХ
 
-  //ЗНам
-  unsigned int setpoint_znam[NUMBER_GROUP_USTAVOK]; //уставка ЗНАМ
-  int timeout_znam[NUMBER_GROUP_USTAVOK];           //Витримка  ЗНАМ
-  unsigned int control_znam;                        //Поле для управління ЗНАМ
+  //БРП
+  unsigned int setpoint_brp_I_blk[NUMBER_GROUP_USTAVOK]; //Уставка БРП: "Струм блокування"
+  unsigned int control_brp;                              //Поле для управління БРП
 
   //ЗЗ
   unsigned int setpoint_zz_3I0[NUMBER_GROUP_USTAVOK]; //уставка ЗЗ/3I0

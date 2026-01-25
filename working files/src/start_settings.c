@@ -1611,7 +1611,7 @@ void min_settings(__SETTINGS *target_label)
   target_label->control_rpn = CONTROL_RPN_WORK;
   target_label->control_zskh = CONTROL_ZSKh_WORK;
   target_label->control_znkh = CONTROL_ZNKh_WORK;
-  target_label->control_znam = 0;
+  target_label->control_brp = CONTROL_BRP_WORK;
   target_label->control_zz = 0;
   target_label->control_tznp = 0;
   target_label->control_apv = 0;
@@ -1638,10 +1638,9 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_rpn_perekl[i] = TIMEOUT_RPN_PEREKL_WORK;
     target_label->timeout_rpn_nespr[i] = TIMEOUT_RPN_NESPR_WORK;
 
-    target_label->setpoint_znam[i] = SETPOINT_ZNAM_MIN;
-    target_label->timeout_znam[i] = TIMEOUT_ZNAM_MIN;
-
     target_label->timeout_znkh_perekl[i] = TIMEOUT_ZNKh_PEREKL_MIN;
+
+    target_label->setpoint_brp_I_blk[i] = SETPOINT_BRP_I_BLK_MIN;
 
     target_label->setpoint_zz_3I0[i] = SETPOINT_ZZ_3I0_MIN;
     target_label->setpoint_zz_3U0[i] = SETPOINT_ZZ_3U0_MIN;

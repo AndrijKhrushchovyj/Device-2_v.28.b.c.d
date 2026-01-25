@@ -5512,6 +5512,9 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_apv.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_brp.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_buttons.h</name>
                 </file>
                 <file>
@@ -5638,9 +5641,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_VMP.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znam.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znkh.h</name>
                 </file>
                 <file>
@@ -5758,6 +5758,9 @@
                     <name>$PROJ_DIR$\..\..\working files\src\menu_apv.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_brp.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_chose_communication_parameters.c</name>
                 </file>
                 <file>
@@ -5867,9 +5870,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_VMP.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_znam.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_znks.c</name>

@@ -28,14 +28,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   if ((new_configuration & (1 << ZSKh_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZNAM) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZNAM) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZNAM)) ||
-      ((current_ekran.current_level >= EKRAN_SETPOINT_ZNAM_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_SETPOINT_ZNAM_GROUP4)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_ZNAM_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_ZNAM_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_ZNAM))
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZSKH) ||
+      (current_ekran.current_level == EKRAN_CONTROL_SZKh))
       error_window |= (1 << ZSKh_BIT_CONFIGURATION);
   }
   //Перевірка ЗНХ
@@ -54,14 +48,12 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   if ((new_configuration & (1 << BRP_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_ZZ) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_ZZ) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_ZZ)) ||
-      ((current_ekran.current_level >= EKRAN_SETPOINT_ZZ_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_SETPOINT_ZZ_GROUP4)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_ZZ_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_ZZ_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_ZZ))
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_BRP) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_GROUP1_BRP) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_GROUP4_BRP)) ||
+      ((current_ekran.current_level >= EKRAN_SETPOINT_BRP_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_SETPOINT_BRP_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_BRP))
       error_window |= (1 << BRP_BIT_CONFIGURATION);
   }
   //Перевірка Umax
@@ -277,7 +269,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи ЗСХ зараз знято з конфігурації
     if ((target_label->configuration & (1 << ZSKh_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ступені РПН 0.4кВ
+      //Виводим ступені ЗСХ
       target_label->control_zskh &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRZSKh_STATE));
 
       //Формуємо маки функцій ЗСХ
@@ -441,10 +433,10 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи ЗНХ зараз знято з конфігурації
     if ((target_label->configuration & (1 << ZNKh_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ступені ЗНам
-      target_label->control_znam &= (~MASKA_FOR_BIT(CTR_ZNAM_STATE_BIT));
+      //Виводим ступені ЗНХ
+      target_label->control_znkh &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRZNKh_STATE));
 
-      //Формуємо маки функцій ЗНам
+      //Формуємо маки функцій ЗНХ
       for (unsigned int i = 0; i < N_SMALL; i++)
         maska[i] = 0;
       for (int i = 0; i < NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL; i++)
@@ -467,14 +459,14 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
             NUMBER_SZKh_SIGNAL_FOR_RANG +
             i));
 
-      //Знімаємо всі функції для ранжування кнопок, які відповідають за ЗНам
+      //Знімаємо всі функції для ранжування кнопок, які відповідають за ЗНХ
       for (int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
       {
         for (size_t m = 0; m < N_SMALL; ++m)
           target_label->ranguvannja_buttons[N_SMALL * i + m] &= ~maska[m];
       }
 
-      //Знімаємо всі функції для ранжування входів, які відповідають за ЗНам
+      //Знімаємо всі функції для ранжування входів, які відповідають за ЗНХ
       for (int i = 0; i < NUMBER_INPUTS; i++)
       {
         for (size_t m = 0; m < N_SMALL; ++m)
@@ -607,8 +599,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи БРП зараз знято з конфігурації
     if ((target_label->configuration & (1 << BRP_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ЗНХ
-      target_label->control_znkh &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRZNKh_STATE));
+      //Виводим БРП
+      target_label->control_brp &= (~MASKA_FOR_BIT(INDEX_ML_CTRBRP_STATE));
 
       //Формуємо маки функцій БРП
       for (unsigned int i = 0; i < N_SMALL; i++)
