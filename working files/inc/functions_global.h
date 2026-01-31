@@ -97,9 +97,6 @@ void calc_symbol_and_put_into_working_ekran(unsigned char *, void *, void *, uns
 void calc_int_symbol_and_put_into_working_ekran(unsigned char *, unsigned int *, unsigned int *, unsigned int *, unsigned int);
 unsigned int edit_setpoint(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
 unsigned int check_data_setpoint(unsigned int, unsigned int, unsigned int);
-void make_ekran_setpoint_achr_chapv(unsigned int);
-void make_ekran_timeout_achr_chapv(unsigned int);
-void make_ekran_control_achr_chapv(void);
 void make_ekran_setpoint_urov(unsigned int);
 void make_ekran_timeout_urov(unsigned int);
 void make_ekran_control_urov(void);

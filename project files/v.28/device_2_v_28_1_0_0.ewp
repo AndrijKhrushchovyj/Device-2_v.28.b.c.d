@@ -5506,9 +5506,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_lcd_and_keyboard.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_achr_chapv.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_brp.h</name>
                 </file>
                 <file>
@@ -5741,9 +5738,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_achr_chapv.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_brp.c</name>
