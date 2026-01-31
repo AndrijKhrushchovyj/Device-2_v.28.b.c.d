@@ -100,9 +100,6 @@ extern unsigned int check_data_setpoint(unsigned int, unsigned int, unsigned int
 extern void make_ekran_setpoint_zz(unsigned int);
 extern void make_ekran_timeout_zz(unsigned int);
 extern void make_ekran_control_zz(void);
-extern void make_ekran_setpoint_tznp(unsigned int);
-extern void make_ekran_timeout_tznp(unsigned int);
-extern void make_ekran_control_tznp(void);
 extern void make_ekran_timeout_apv(unsigned int);
 extern void make_ekran_control_apv(void);
 extern void make_ekran_setpoint_achr_chapv(unsigned int);

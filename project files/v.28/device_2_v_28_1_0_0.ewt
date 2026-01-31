@@ -2370,9 +2370,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_transformator.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_tznp.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_Umax.h</name>
                 </file>
                 <file>
@@ -2593,9 +2590,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_transformator.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_tznp.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_Umax.c</name>

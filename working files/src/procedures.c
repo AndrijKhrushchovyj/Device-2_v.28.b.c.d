@@ -60,26 +60,28 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
   if ((new_configuration & (1 << Umax_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_TZNP) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_TZNP) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_TZNP)) ||
-      ((current_ekran.current_level >= EKRAN_SETPOINT_TZNP_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_SETPOINT_TZNP_GROUP4)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_TZNP_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_TZNP_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_TZNP))
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMAX) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMAX) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMAX)) ||
+      ((current_ekran.current_level >= EKRAN_SETPOINT_UMAX_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_SETPOINT_UMAX_GROUP4)) ||
+      ((current_ekran.current_level >= EKRAN_TIMEOUT_UMAX_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_TIMEOUT_UMAX_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_UMAX))
       error_window |= (1 << Umax_BIT_CONFIGURATION);
   }
   //Перевірка Umin
   if ((new_configuration & (1 << Umin_BIT_CONFIGURATION)) == 0)
   {
     if (
-      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_APV) ||
-      ((current_ekran.current_level >= EKRAN_CHOOSE_TIMEOUT_GROUP1_APV) &&
-       (current_ekran.current_level <= EKRAN_CHOOSE_TIMEOUT_GROUP4_APV)) ||
-      ((current_ekran.current_level >= EKRAN_TIMEOUT_APV_GROUP1) &&
-       (current_ekran.current_level <= EKRAN_TIMEOUT_APV_GROUP4)) ||
-      (current_ekran.current_level == EKRAN_CONTROL_APV))
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UMIN) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UMIN) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UMIN)) ||
+      ((current_ekran.current_level >= EKRAN_SETPOINT_UMIN_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_SETPOINT_UMIN_GROUP4)) ||
+      ((current_ekran.current_level >= EKRAN_TIMEOUT_UMIN_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_TIMEOUT_UMIN_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_UMIN))
       error_window |= (1 << Umin_BIT_CONFIGURATION);
   }
   //Перевірка "Розширеної логіки"
@@ -939,7 +941,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     if ((target_label->configuration & (1 << Umin_BIT_CONFIGURATION)) == 0)
     {
       //Виводим ступені ТЗНП
-      target_label->control_tznp &= (unsigned int) (~(CTR_TZNP1 | CTR_TZNP2 | CTR_TZNP3));
+      target_label->control_Umin &= 0;
 
       //Формуємо маки функцій Umin
       for (unsigned int i = 0; i < N_SMALL; i++)

@@ -1612,7 +1612,6 @@ void min_settings(__SETTINGS *target_label)
   target_label->control_zskh = CONTROL_ZSKh_WORK;
   target_label->control_znkh = CONTROL_ZNKh_WORK;
   target_label->control_brp = CONTROL_BRP_WORK;
-  target_label->control_tznp = 0;
   target_label->control_apv = 0;
   target_label->control_achr_chapv = 0;
   target_label->control_urov = 0;
@@ -1640,34 +1639,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_znkh_perekl[i] = TIMEOUT_ZNKh_PEREKL_MIN;
 
     target_label->setpoint_brp_I_blk[i] = SETPOINT_BRP_I_BLK_MIN;
-
-    target_label->setpoint_tznp_1_3I0_vpered[i] = SETPOINT_TZNP1_3I0_VPERED_MIN;
-    target_label->setpoint_tznp_1_3U0_vpered[i] = SETPOINT_TZNP1_3U0_VPERED_MIN;
-    target_label->setpoint_tznp_1_3I0_nazad[i] = SETPOINT_TZNP1_3I0_NAZAD_MIN;
-    target_label->setpoint_tznp_1_3U0_nazad[i] = SETPOINT_TZNP1_3U0_NAZAD_MIN;
-
-    target_label->setpoint_tznp_1_angle[i] = SETPOINT_TZNP1_ANGLE_MIN;
-
-    target_label->setpoint_tznp_2_3I0_vpered[i] = SETPOINT_TZNP2_3I0_VPERED_MIN;
-    target_label->setpoint_tznp_2_3U0_vpered[i] = SETPOINT_TZNP2_3U0_VPERED_MIN;
-    target_label->setpoint_tznp_2_3I0_nazad[i] = SETPOINT_TZNP2_3I0_NAZAD_MIN;
-    target_label->setpoint_tznp_2_3U0_nazad[i] = SETPOINT_TZNP2_3U0_NAZAD_MIN;
-
-    target_label->setpoint_tznp_2_angle[i] = SETPOINT_TZNP2_ANGLE_MIN;
-
-    target_label->setpoint_tznp_3_3I0_vpered[i] = SETPOINT_TZNP3_3I0_VPERED_MIN;
-    target_label->setpoint_tznp_3_3U0_vpered[i] = SETPOINT_TZNP3_3U0_VPERED_MIN;
-    target_label->setpoint_tznp_3_3I0_nazad[i] = SETPOINT_TZNP3_3I0_NAZAD_MIN;
-    target_label->setpoint_tznp_3_3U0_nazad[i] = SETPOINT_TZNP3_3U0_NAZAD_MIN;
-
-    target_label->setpoint_tznp_3_angle[i] = SETPOINT_TZNP3_ANGLE_MIN;
-
-    target_label->timeout_tznp_1_vpered[i] = TIMEOUT_TZNP1_VPERED_MIN;
-    target_label->timeout_tznp_1_nazad[i] = TIMEOUT_TZNP1_NAZAD_MIN;
-    target_label->timeout_tznp_2_vpered[i] = TIMEOUT_TZNP2_VPERED_MIN;
-    target_label->timeout_tznp_2_nazad[i] = TIMEOUT_TZNP2_NAZAD_MIN;
-    target_label->timeout_tznp_3_vpered[i] = TIMEOUT_TZNP3_VPERED_MIN;
-    target_label->timeout_tznp_3_nazad[i] = TIMEOUT_TZNP3_NAZAD_MIN;
 
     target_label->timeout_apv_1[i] = TIMEOUT_APV1_MIN;
     target_label->timeout_apv_2[i] = TIMEOUT_APV2_MIN;

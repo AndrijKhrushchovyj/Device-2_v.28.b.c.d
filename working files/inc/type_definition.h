@@ -149,38 +149,6 @@ typedef struct
   unsigned int setpoint_brp_I_blk[NUMBER_GROUP_USTAVOK]; //Уставка БРП: "Струм блокування"
   unsigned int control_brp;                              //Поле для управління БРП
 
-  //ТЗНП
-  unsigned int setpoint_tznp_1_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 першої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_1_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 першої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_1_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 першої ступені (направлений:назад)
-  unsigned int setpoint_tznp_1_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 першої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_1_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП першої ступені (кут довороту)
-  int setpoint_tznp_1_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої ступені (косинус кута довороту)
-  int setpoint_tznp_1_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої ступені (синус кута довороту)
-  unsigned int setpoint_tznp_2_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 другої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_2_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 другої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_2_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 другої ступені (направлений:назад)
-  unsigned int setpoint_tznp_2_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 другої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_2_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП другої ступені (кут довороту)
-  int setpoint_tznp_2_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП другої ступені (косинус кута довороту)
-  int setpoint_tznp_2_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП другої ступені (синус кута довороту)
-  unsigned int setpoint_tznp_3_3I0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3I0 третьої ступені (направлений:вперед)
-  unsigned int setpoint_tznp_3_3U0_vpered[NUMBER_GROUP_USTAVOK]; //Уставка ТЗНП 3U0 третьої ступені  (направлений:вперед)
-  unsigned int setpoint_tznp_3_3I0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3I0 третьої ступені (направлений:назад)
-  unsigned int setpoint_tznp_3_3U0_nazad[NUMBER_GROUP_USTAVOK];  //Уставка ТЗНП 3U0 третьої ступені  (направлений:назад)
-  unsigned int setpoint_tznp_3_angle[NUMBER_GROUP_USTAVOK];      //Уставка ТЗНП першої третьої (кут довороту)
-  int setpoint_tznp_3_angle_cos[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої третьої (косинус кута довороту)
-  int setpoint_tznp_3_angle_sin[NUMBER_GROUP_USTAVOK];           //Уставка ТЗНП першої третьої (синус кута довороту)
-
-  int timeout_tznp_1_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_1_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
-  int timeout_tznp_2_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_2_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
-  int timeout_tznp_3_vpered[NUMBER_GROUP_USTAVOK]; //Витримка ТЗНП першої ступені (направлений:вперед)
-  int timeout_tznp_3_nazad[NUMBER_GROUP_USTAVOK];  //Витримка ТЗНП першої ступені (направлений:назад)
-
-  unsigned int control_tznp; //Поле для управління ТЗНП
-
   //АПВ
   int timeout_apv_1[NUMBER_GROUP_USTAVOK];              //Витримка 1 Циклу АПВ
   int timeout_apv_2[NUMBER_GROUP_USTAVOK];              //Витримка 2 Циклу АПВ
