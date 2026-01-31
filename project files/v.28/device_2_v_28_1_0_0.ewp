@@ -5509,9 +5509,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_achr_chapv.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_apv.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_brp.h</name>
                 </file>
                 <file>
@@ -5747,9 +5744,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_achr_chapv.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_apv.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_brp.c</name>

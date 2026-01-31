@@ -1612,7 +1612,6 @@ void min_settings(__SETTINGS *target_label)
   target_label->control_zskh = CONTROL_ZSKh_WORK;
   target_label->control_znkh = CONTROL_ZNKh_WORK;
   target_label->control_brp = CONTROL_BRP_WORK;
-  target_label->control_apv = 0;
   target_label->control_achr_chapv = 0;
   target_label->control_urov = 0;
   target_label->control_zop = 0;
@@ -1639,16 +1638,6 @@ void min_settings(__SETTINGS *target_label)
     target_label->timeout_znkh_perekl[i] = TIMEOUT_ZNKh_PEREKL_MIN;
 
     target_label->setpoint_brp_I_blk[i] = SETPOINT_BRP_I_BLK_MIN;
-
-    target_label->timeout_apv_1[i] = TIMEOUT_APV1_MIN;
-    target_label->timeout_apv_2[i] = TIMEOUT_APV2_MIN;
-    target_label->timeout_apv_3[i] = TIMEOUT_APV3_MIN;
-    target_label->timeout_apv_4[i] = TIMEOUT_APV4_MIN;
-    target_label->timeout_apv_block_vid_apv1[i] = TIMEOUT_APV_BLOCK_VID_APV1_MIN;
-    target_label->timeout_apv_block_vid_apv2[i] = TIMEOUT_APV_BLOCK_VID_APV2_MIN;
-    target_label->timeout_apv_block_vid_apv3[i] = TIMEOUT_APV_BLOCK_VID_APV3_MIN;
-    target_label->timeout_apv_block_vid_apv4[i] = TIMEOUT_APV_BLOCK_VID_APV4_MIN;
-    target_label->timeout_apv_block_vid_VV[i] = TIMEOUT_APV_BLOCK_VID_VV_MIN;
 
     target_label->setpoint_achr_chapv_uf[i] = SETPOINT_ACHR_CHAPV_UF_MIN;
     target_label->setpoint_achr1_f_rab[i] = SETPOINT_ACHR1_F_RAB_MIN;

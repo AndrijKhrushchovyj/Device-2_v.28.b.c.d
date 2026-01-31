@@ -149,18 +149,6 @@ typedef struct
   unsigned int setpoint_brp_I_blk[NUMBER_GROUP_USTAVOK]; //Уставка БРП: "Струм блокування"
   unsigned int control_brp;                              //Поле для управління БРП
 
-  //АПВ
-  int timeout_apv_1[NUMBER_GROUP_USTAVOK];              //Витримка 1 Циклу АПВ
-  int timeout_apv_2[NUMBER_GROUP_USTAVOK];              //Витримка 2 Циклу АПВ
-  int timeout_apv_3[NUMBER_GROUP_USTAVOK];              //Витримка 3 Циклу АПВ
-  int timeout_apv_4[NUMBER_GROUP_USTAVOK];              //Витримка 4 Циклу АПВ
-  int timeout_apv_block_vid_apv1[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ1
-  int timeout_apv_block_vid_apv2[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ2
-  int timeout_apv_block_vid_apv3[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ3
-  int timeout_apv_block_vid_apv4[NUMBER_GROUP_USTAVOK]; //Блокування АПВ від роботи АПВ4
-  int timeout_apv_block_vid_VV[NUMBER_GROUP_USTAVOK];   //Витримка блокування АПВ в момекнт включення вимикача
-  unsigned int control_apv;                             //Поле для управління АПВ
-
   //АЧР-ЧАПВ
   unsigned int setpoint_achr_chapv_uf[NUMBER_GROUP_USTAVOK]; //уставка АЧР ЧАПВ UF1
   unsigned int setpoint_achr1_f_rab[NUMBER_GROUP_USTAVOK];   //уставка FРаб АЧР1 частоти F
