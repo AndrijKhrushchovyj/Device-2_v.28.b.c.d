@@ -5623,9 +5623,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_UP.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_urov.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_vidkluchennja.h</name>
                 </file>
                 <file>
@@ -5837,9 +5834,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_UP.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_urov.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_vidkluchennja.c</name>
