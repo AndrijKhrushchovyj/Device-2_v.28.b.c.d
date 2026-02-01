@@ -5632,9 +5632,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_znkh.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zop.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_zskh.h</name>
                 </file>
             </group>
@@ -5846,9 +5843,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_znks.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_zop.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_zskh.c</name>

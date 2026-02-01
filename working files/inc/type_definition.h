@@ -149,11 +149,6 @@ typedef struct
   unsigned int setpoint_brp_I_blk[NUMBER_GROUP_USTAVOK]; //Уставка БРП: "Струм блокування"
   unsigned int control_brp;                              //Поле для управління БРП
 
-  //ЗОП(КОФ)
-  unsigned int setpoint_zop[NUMBER_GROUP_USTAVOK]; //уставка ЗОП(КОФ)
-  int timeout_zop[NUMBER_GROUP_USTAVOK];           //Витримка  ЗОП(КОФ)
-  unsigned int control_zop;                        //Поле для управління ЗОП(КОФ)
-
   //Umin
   unsigned int setpoint_Umin1[NUMBER_GROUP_USTAVOK];      //уставка Umin1
   unsigned int setpoint_Umin1_Iblk[NUMBER_GROUP_USTAVOK]; //уставка блокування по струму Umin1
