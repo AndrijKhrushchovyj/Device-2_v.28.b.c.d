@@ -771,7 +771,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     if ((target_label->configuration & (1 << Umax_BIT_CONFIGURATION)) == 0)
     {
       //Виводим ЗЗ
-      target_label->control_Umax &= 0;
+      target_label->control_Umax &= ~(MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_1) | MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_2));
 
       //Формуємо маки функцій Umax
       for (unsigned int i = 0; i < N_SMALL; i++)

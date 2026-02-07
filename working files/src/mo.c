@@ -43,7 +43,7 @@ __control_info const control_info[] =
     {&current_settings_prt.control_Umin, INDEX_CTR_UMIN1},
     {&current_settings_prt.control_Umin, INDEX_CTR_UMIN2},
 
-    {&current_settings_prt.control_Umax, INDEX_CTR_UMAX1},
+    {&current_settings_prt.control_Umax, INDEX_ML_CTRUmax_STAGE_1},
     {&current_settings_prt.control_Umax, INDEX_CTR_UMAX2},
 
     {&current_settings_prt.control_UP, (0 * (_CTR_UP_NEXT_BIT - _CTR_UP_PART_II) + CTR_UP_STATE_BIT - _CTR_UP_PART_II)},
