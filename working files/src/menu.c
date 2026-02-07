@@ -6355,25 +6355,15 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_SETPOINT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_STPUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
                     {
                       edition_settings.setpoint_Umin1[group] = current_settings.setpoint_Umin1[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_BEGIN;
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin1_BEGIN;
                     }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
-                    {
-                      edition_settings.setpoint_Umin1_Iblk[group] = current_settings.setpoint_Umin1_Iblk[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_IBLK_BEGIN;
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
                     {
                       edition_settings.setpoint_Umin2[group] = current_settings.setpoint_Umin2[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_BEGIN;
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                    {
-                      edition_settings.setpoint_Umin2_Iblk[group] = current_settings.setpoint_Umin2_Iblk[group];
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_IBLK_BEGIN;
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin2_BEGIN;
                     }
                   }
                   else if (
@@ -6991,24 +6981,14 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_SETPOINT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_STPUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
                     {
                       if (edition_settings.setpoint_Umin1[group] != current_settings.setpoint_Umin1[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
-                    {
-                      if (edition_settings.setpoint_Umin1_Iblk[group] != current_settings.setpoint_Umin1_Iblk[group])
-                        found_changes = 1;
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
                     {
                       if (edition_settings.setpoint_Umin2[group] != current_settings.setpoint_Umin2[group])
-                        found_changes = 1;
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                    {
-                      if (edition_settings.setpoint_Umin2_Iblk[group] != current_settings.setpoint_Umin2_Iblk[group])
                         found_changes = 1;
                     }
                   }
@@ -7799,7 +7779,7 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_SETPOINT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_STPUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_Umin1[group], SETPOINT_UMIN1_MIN, SETPOINT_UMIN1_MAX) == 1)
                       {
@@ -7816,24 +7796,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_Umin1_Iblk[group], SETPOINT_UMIN1_IBLK_MIN, SETPOINT_UMIN1_IBLK_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_Umin1_Iblk[group] != current_settings.setpoint_Umin1_Iblk[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_Umin1_Iblk[group] = edition_settings.setpoint_Umin1_Iblk[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
                     {
                       if (check_data_setpoint(edition_settings.setpoint_Umin2[group], SETPOINT_UMIN2_MIN, SETPOINT_UMIN2_MAX) == 1)
                       {
@@ -7843,23 +7806,6 @@ void main_manu_function(void)
                           changed_settings = CHANGED_ETAP_EXECUTION;
 
                           current_settings.setpoint_Umin2[group] = edition_settings.setpoint_Umin2[group];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                    {
-                      if (check_data_setpoint(edition_settings.setpoint_Umin2_Iblk[group], SETPOINT_UMIN2_IBLK_MIN, SETPOINT_UMIN2_IBLK_MAX) == 1)
-                      {
-                        if (edition_settings.setpoint_Umin2_Iblk[group] != current_settings.setpoint_Umin2_Iblk[group])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.setpoint_Umin2_Iblk[group] = edition_settings.setpoint_Umin2_Iblk[group];
                           //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                           fix_change_settings(0, 1);
                         }
@@ -9580,14 +9526,10 @@ void main_manu_function(void)
                   else
                   {
                     //Редагування числа
-                    if (current_ekran.index_position == INDEX_ML_STPUMIN1)
-                      edition_settings.setpoint_Umin1[group] = edit_setpoint(1, edition_settings.setpoint_Umin1[group], 1, COL_SETPOINT_UMIN1_COMMA, COL_SETPOINT_UMIN1_END, 100);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
-                      edition_settings.setpoint_Umin1_Iblk[group] = edit_setpoint(1, edition_settings.setpoint_Umin1_Iblk[group], 1, COL_SETPOINT_UMIN1_IBLK_COMMA, COL_SETPOINT_UMIN1_IBLK_END, 10);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
-                      edition_settings.setpoint_Umin2[group] = edit_setpoint(1, edition_settings.setpoint_Umin2[group], 1, COL_SETPOINT_UMIN2_COMMA, COL_SETPOINT_UMIN2_END, 100);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                      edition_settings.setpoint_Umin2_Iblk[group] = edit_setpoint(1, edition_settings.setpoint_Umin2_Iblk[group], 1, COL_SETPOINT_UMIN2_IBLK_COMMA, COL_SETPOINT_UMIN2_IBLK_END, 10);
+                    if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
+                      edition_settings.setpoint_Umin1[group] = edit_setpoint(1, edition_settings.setpoint_Umin1[group], 0, 0, COL_SETPOINT_Umin_Umin1_END, 1000);
+                    else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
+                      edition_settings.setpoint_Umin2[group] = edit_setpoint(1, edition_settings.setpoint_Umin2[group], 0, 0, COL_SETPOINT_Umin_Umin2_END, 1000);
                   }
                   //Формуємо екран уставок Umin
                   make_ekran_setpoint_Umin(group);
@@ -10565,14 +10507,10 @@ void main_manu_function(void)
                   else
                   {
                     //Редагування числа
-                    if (current_ekran.index_position == INDEX_ML_STPUMIN1)
-                      edition_settings.setpoint_Umin1[group] = edit_setpoint(0, edition_settings.setpoint_Umin1[group], 1, COL_SETPOINT_UMIN1_COMMA, COL_SETPOINT_UMIN1_END, 100);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
-                      edition_settings.setpoint_Umin1_Iblk[group] = edit_setpoint(0, edition_settings.setpoint_Umin1_Iblk[group], 1, COL_SETPOINT_UMIN1_IBLK_COMMA, COL_SETPOINT_UMIN1_IBLK_END, 10);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
-                      edition_settings.setpoint_Umin2[group] = edit_setpoint(0, edition_settings.setpoint_Umin2[group], 1, COL_SETPOINT_UMIN2_COMMA, COL_SETPOINT_UMIN2_END, 100);
-                    else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                      edition_settings.setpoint_Umin2_Iblk[group] = edit_setpoint(0, edition_settings.setpoint_Umin2_Iblk[group], 1, COL_SETPOINT_UMIN2_IBLK_COMMA, COL_SETPOINT_UMIN2_IBLK_END, 10);
+                    if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
+                      edition_settings.setpoint_Umin1[group] = edit_setpoint(0, edition_settings.setpoint_Umin1[group], 0, 0, COL_SETPOINT_Umin_Umin1_END, 1000);
+                    else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
+                      edition_settings.setpoint_Umin2[group] = edit_setpoint(0, edition_settings.setpoint_Umin2[group], 0, 0, COL_SETPOINT_Umin_Umin2_END, 1000);
                   }
                   //Формуємо екран уставок Umin
                   make_ekran_setpoint_Umin(group);
@@ -11543,37 +11481,17 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_SETPOINT_UMIN_GROUP1) &&
                   (current_ekran.current_level <= EKRAN_SETPOINT_UMIN_GROUP4))
                 {
-                  if (current_ekran.index_position == INDEX_ML_STPUMIN1)
+                  if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
                   {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN1_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN1_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN1_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_BEGIN;
+                    if ((current_ekran.position_cursor_x < COL_SETPOINT_Umin_Umin1_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_SETPOINT_Umin_Umin1_END))
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin1_BEGIN;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
+                  else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
                   {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN1_IBLK_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN1_IBLK_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN1_IBLK_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_IBLK_BEGIN;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN2_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN2_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN2_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_BEGIN;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN2_IBLK_COMMA)
-                      current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN2_IBLK_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN2_IBLK_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_IBLK_BEGIN;
+                    if ((current_ekran.position_cursor_x < COL_SETPOINT_Umin_Umin2_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_SETPOINT_Umin_Umin2_END))
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin2_BEGIN;
                   }
 
                   //Формуємо екран уставок Umin
@@ -12593,37 +12511,17 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_SETPOINT_UMIN_GROUP1) &&
                   (current_ekran.current_level <= EKRAN_SETPOINT_UMIN_GROUP4))
                 {
-                  if (current_ekran.index_position == INDEX_ML_STPUMIN1)
+                  if (current_ekran.index_position == INDEX_ML_STPUmin_Umin1)
                   {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN1_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN1_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN1_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_END;
+                    if ((current_ekran.position_cursor_x < COL_SETPOINT_Umin_Umin1_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_SETPOINT_Umin_Umin1_END))
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin1_END;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN1_IBLK)
+                  else if (current_ekran.index_position == INDEX_ML_STPUmin_Umin2)
                   {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN1_IBLK_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN1_IBLK_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN1_IBLK_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN1_IBLK_END;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN2)
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN2_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN2_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN2_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_END;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_STPUMIN2_IBLK)
-                  {
-                    if (current_ekran.position_cursor_x == COL_SETPOINT_UMIN2_IBLK_COMMA)
-                      current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_UMIN2_IBLK_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_UMIN2_IBLK_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_UMIN2_IBLK_END;
+                    if ((current_ekran.position_cursor_x < COL_SETPOINT_Umin_Umin2_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_SETPOINT_Umin_Umin2_END))
+                      current_ekran.position_cursor_x = COL_SETPOINT_Umin_Umin2_END;
                   }
 
                   //Формуємо екран уставок Umin

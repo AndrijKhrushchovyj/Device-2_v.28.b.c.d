@@ -1636,10 +1636,8 @@ void min_settings(__SETTINGS *target_label)
 
     target_label->setpoint_brp_I_blk[i] = SETPOINT_BRP_I_BLK_WORK;
 
-    target_label->setpoint_Umin1[i] = SETPOINT_UMIN1_MIN;
-    target_label->setpoint_Umin1_Iblk[i] = SETPOINT_UMIN1_IBLK_MIN;
-    target_label->setpoint_Umin2[i] = SETPOINT_UMIN2_MIN;
-    target_label->setpoint_Umin2_Iblk[i] = SETPOINT_UMIN2_IBLK_MIN;
+    target_label->setpoint_Umin1[i] = SETPOINT_UMIN1_WORK;
+    target_label->setpoint_Umin2[i] = SETPOINT_UMIN2_WORK;
     target_label->timeout_Umin1[i] = TIMEOUT_UMIN1_MIN;
     target_label->timeout_Umin2[i] = TIMEOUT_UMIN2_MIN;
 
