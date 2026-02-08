@@ -1109,6 +1109,183 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       }
     }
 
+    //Перевіряємо, чи Універсальний захист зараз знято з конфігурації
+    if ((target_label->configuration & (1 << UP_BIT_CONFIGURATION)) == 0)
+    {
+      for (size_t i = 0; i < NUMBER_UP; i++)
+      {
+        //Виводим ступені УЗ
+        target_label->control_UP &= (unsigned int) (~MASKA_FOR_BIT(i * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_STATE_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I)));
+      }
+
+      //Формуємо маски функцій УЗ
+      for (unsigned int i = 0; i < N_SMALL; i++)
+        maska[i] = 0;
+      for (int i = 0; i < NUMBER_UP_SIGNAL_FOR_RANG_SMALL; i++)
+        _SET_BIT(
+          maska,
+          (
+            NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_RPN_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_BRP_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL +
+            i));
+
+      for (unsigned int i = 0; i < N_BIG; i++)
+        maska_1[i] = 0;
+      for (int i = 0; i < NUMBER_UP_SIGNAL_FOR_RANG; i++)
+        _SET_BIT(
+          maska_1,
+          (
+            NUMBER_GENERAL_SIGNAL_FOR_RANG +
+            NUMBER_RPN_SIGNAL_FOR_RANG +
+            NUMBER_SZKh_SIGNAL_FOR_RANG +
+            NUMBER_SNKh_SIGNAL_FOR_RANG +
+            NUMBER_BRP_SIGNAL_FOR_RANG +
+            NUMBER_UMAX_SIGNAL_FOR_RANG +
+            NUMBER_UMIN_SIGNAL_FOR_RANG +
+            i));
+
+      //Знімаємо всі функції для ранжування входів, які відповідають за УЗ
+      for (int i = 0; i < NUMBER_DEFINED_BUTTONS; i++)
+      {
+        for (size_t m = 0; m < N_SMALL; ++m)
+          target_label->ranguvannja_buttons[N_SMALL * i + m] &= ~maska[m];
+      }
+
+      //Знімаємо всі функції для ранжування входів, які відповідають за УЗ
+      for (int i = 0; i < NUMBER_INPUTS; i++)
+      {
+        for (size_t m = 0; m < N_SMALL; ++m)
+          target_label->ranguvannja_inputs[N_SMALL * i + m] &= ~maska[m];
+      }
+
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+      //Знімаємо всі функції для ранжування виходів Вх.GOOSE блоку
+      for (size_t i = 0; i < N_IN_GOOSE; i++)
+      {
+        for (size_t j = 0; j < N_IN_GOOSE_MMS_OUT; j++)
+        {
+          for (size_t m = 0; m < N_SMALL; ++m)
+            target_label->ranguvannja_In_GOOSE[i][j][N_SMALL * i + m] &= ~maska[m];
+        }
+      }
+
+      //Знімаємо всі функції для ранжування виходів Вх.MMS блоку
+      for (size_t i = 0; i < N_IN_MMS; i++)
+      {
+        for (size_t j = 0; j < N_IN_GOOSE_MMS_OUT; j++)
+        {
+          for (size_t m = 0; m < N_SMALL; ++m)
+            target_label->ranguvannja_In_MMS[i][j][N_SMALL * i + m] &= ~maska[m];
+        }
+      }
+
+      //Знімаємо всі функції для ранжування входів Вихідного Мережевого Блоку
+      for (size_t i = 0; i < N_OUT_LAN; i++)
+      {
+        for (size_t j = 0; j < N_OUT_LAN_IN; j++)
+        {
+          intptr_t additional_current = 0;
+          for (intptr_t k = 0; k < MAX_FUNCTIONS_IN_OUT_LAN; k++)
+          {
+            unsigned int value = target_label->ranguvannja_Out_LAN[i][j][k - additional_current];
+
+            if (value == 0)
+              break;
+            else if ((value >= (RANG_BLOCK_UP1 + 1)) && (value <= ((RANG_BLOCK_UP1 + 3 * NUMBER_UP - 1) + 1)))
+            {
+              for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
+              {
+                if ((l + 1) < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current))
+                {
+                  target_label->ranguvannja_Out_LAN[i][j][l] = target_label->ranguvannja_Out_LAN[i][j][l + 1];
+                }
+                else
+                  target_label->ranguvannja_Out_LAN[i][j][l] = 0;
+              }
+              additional_current++;
+            }
+          }
+        }
+      }
+#endif
+
+      //Знімаємо всі функції для ранжування виходів
+      for (int i = 0; i < NUMBER_OUTPUTS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_outputs[N_BIG * i + j] &= ~maska_1[j];
+      }
+      //Знімаємо всі функції для ранжування світоіндикаторів
+      for (int i = 0; i < NUMBER_LEDS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_leds[N_BIG * i + j] &= ~maska_1[j];
+      }
+      //Знімаємо всі функції для ранжування аналогового і дискретного реєстраторів
+      for (unsigned int j = 0; j < N_BIG; j++)
+      {
+        target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
+        target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
+        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
+        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
+      }
+      //Знімаємо всі функції для ранжування оприділювальних функцій
+      for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+        {
+          target_label->ranguvannja_df_source_plus[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_df_source_minus[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_df_source_blk[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_df_source_reset[N_BIG * i + j] &= ~maska_1[j];
+        }
+      }
+      //Знімаємо всі функції для ранжування оприділювальних триґерів
+      for (int i = 0; i < NUMBER_DEFINED_TRIGGERS; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+        {
+          target_label->ranguvannja_set_dt_source_plus[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_set_dt_source_minus[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_reset_dt_source_plus[N_BIG * i + j] &= ~maska_1[j];
+          target_label->ranguvannja_reset_dt_source_minus[N_BIG * i + j] &= ~maska_1[j];
+        }
+      }
+
+      //Знімаємо всі функції для ранжування визначуваних "І"
+      for (unsigned int i = 0; i < NUMBER_DEFINED_AND; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_d_and[N_BIG * i + j] &= ~maska_1[j];
+      }
+
+      //Знімаємо всі функції для ранжування визначуваних "АБО"
+      for (unsigned int i = 0; i < NUMBER_DEFINED_OR; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_d_or[N_BIG * i + j] &= ~maska_1[j];
+      }
+
+      //Знімаємо всі функції для ранжування визначуваних "Викл.АБО"
+      for (unsigned int i = 0; i < NUMBER_DEFINED_XOR; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_d_xor[N_BIG * i + j] &= ~maska_1[j];
+      }
+
+      //Знімаємо всі функції для ранжування визначуваних "НЕ"
+      for (unsigned int i = 0; i < NUMBER_DEFINED_NOT; i++)
+      {
+        for (unsigned int j = 0; j < N_BIG; j++)
+          target_label->ranguvannja_d_not[N_BIG * i + j] &= ~maska_1[j];
+      }
+    }
+
     //"Розширена логіка"
     if ((target_label->configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
     {

@@ -343,9 +343,9 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
 #define NUMBER_ROW_FOR_NOTHING_INFORMATION 2
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN)][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN) + (1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL)][MAX_COL_LCD] =
 #else
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL + (1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL)][MAX_COL_LCD] =
 #endif
     {
       {"      Нет       ",
@@ -360,6 +360,13 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
       {"      Нет       ",
        "  ранжирования  ",
        NAME_RANG_SMALL_KZ}};
+
+  static const uint32_t index_number_UP_small[MAX_NAMBER_LANGUAGE][1] =
+    {
+      {11},
+      {11},
+      {6},
+      {11}};
 
   unsigned char name_string_tmp[NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL][MAX_COL_LCD];
 
@@ -390,13 +397,29 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
       index_row = index_1;
 #endif
     }
-    else
+    else if (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1))
     {
       index_row = index_1
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
                   + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
 #endif
         ;
+    }
+    else if (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG_SMALL))
+    {
+      index_row = NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + ((index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1)) % 1);
+    }
+    else
+    {
+      index_row = index_1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + 1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL;
     }
 
     for (size_t index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
@@ -441,7 +464,15 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
       else
 #endif
       {
-        name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
+        if (
+          (index_1 >= (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1)) &&
+          (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG_SMALL)) &&
+          (index_2 == index_number_UP_small[index_language][(index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1)) % 1]))
+        {
+          name_string_tmp[index_1][index_2] = 0x30 + ((index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_SMALL_BLOCK_UP1)) / 1 + 1);
+        }
+        else
+          name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
       }
     }
   }
@@ -587,7 +618,9 @@ void make_ekran_set_function_in_bi(unsigned int number_ekran, unsigned int type_
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL),
          (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL - 1)},
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL),
-         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL + NUMBER_EL_SIGNAL_FOR_RANG_SMALL - 1)}};
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL + NUMBER_UP_SIGNAL_FOR_RANG_SMALL - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL + NUMBER_UP_SIGNAL_FOR_RANG_SMALL),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL + NUMBER_RPN_SIGNAL_FOR_RANG_SMALL + NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL + NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL + NUMBER_BRP_SIGNAL_FOR_RANG_SMALL + NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL + NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL + NUMBER_UP_SIGNAL_FOR_RANG_SMALL + NUMBER_EL_SIGNAL_FOR_RANG_SMALL - 1)}};
 
     /*************************************************************/
     //Фільтруємо сигнали, яких у даній конфігурації неприсутні
@@ -932,9 +965,9 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
 #define NUMBER_ROW_FOR_NOTHING_INFORMATION 2
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN)][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN) + (3 - NUMBER_UP_SIGNAL_FOR_RANG)][MAX_COL_LCD] =
 #else
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][NUMBER_ROW_FOR_NOTHING_INFORMATION + NUMBER_TOTAL_SIGNAL_FOR_RANG + (3 - NUMBER_UP_SIGNAL_FOR_RANG)][MAX_COL_LCD] =
 #endif
     {
       {"      Нет       ",
@@ -978,13 +1011,29 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
       index_row = index_1;
 #endif
     }
-    else
+    else if (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1))
     {
       index_row = index_1
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
                   + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
 #endif
         ;
+    }
+    else if (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG))
+    {
+      index_row = NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + ((index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1)) % 3);
+    }
+    else
+    {
+      index_row = index_1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + 3 - NUMBER_UP_SIGNAL_FOR_RANG;
     }
 
     for (size_t index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
@@ -1029,7 +1078,15 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
       else
 #endif
       {
-        name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
+        if (
+          (index_1 >= (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1)) &&
+          (index_1 < (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG)) &&
+          (index_2 == index_number_UP[index_language][(index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1)) % 3]))
+        {
+          name_string_tmp[index_1][index_2] = 0x30 + ((index_1 - (NUMBER_ROW_FOR_NOTHING_INFORMATION + RANG_BLOCK_UP1)) / 3 + 1);
+        }
+        else
+          name_string_tmp[index_1][index_2] = name_string[index_language][index_row][index_2];
       }
     }
   }
@@ -1179,7 +1236,9 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG),
          (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG - 1)},
         {(NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG),
-         (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG - 1)}};
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG + NUMBER_UP_SIGNAL_FOR_RANG - 1)},
+        {(NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG + NUMBER_UP_SIGNAL_FOR_RANG),
+         (NUMBER_GENERAL_SIGNAL_FOR_RANG + NUMBER_RPN_SIGNAL_FOR_RANG + NUMBER_SZKh_SIGNAL_FOR_RANG + NUMBER_SNKh_SIGNAL_FOR_RANG + NUMBER_BRP_SIGNAL_FOR_RANG + NUMBER_UMAX_SIGNAL_FOR_RANG + NUMBER_UMIN_SIGNAL_FOR_RANG + NUMBER_UP_SIGNAL_FOR_RANG + NUMBER_EL_SIGNAL_FOR_RANG - 1)}};
 
     /*************************************************************/
     //Фільтруємо сигнали, яких у даній конфігурації неприсутні

@@ -8,9 +8,9 @@ static inline void get_name_signal(int const index_language, int32_t const input
   if (input == true)
   {
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-    static const uint8_t input_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN)][MAX_COL_LCD] =
+    static const uint8_t input_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN) + (3 - NUMBER_UP_SIGNAL_FOR_RANG)][MAX_COL_LCD] =
 #else
-    static const uint8_t input_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG][MAX_COL_LCD] =
+    static const uint8_t input_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG + (3 - NUMBER_UP_SIGNAL_FOR_RANG)][MAX_COL_LCD] =
 #endif
       {
         {"     Пусто      ", NAME_RANG_RU},
@@ -42,13 +42,29 @@ static inline void get_name_signal(int const index_language, int32_t const input
       index_row = line;
 #endif
     }
-    else
+    else if (line < (1 + RANG_BLOCK_UP1))
     {
       index_row = line
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
                   + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
 #endif
         ;
+    }
+    else if (line < (1 + RANG_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG))
+    {
+      index_row = 1 + RANG_BLOCK_UP1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + ((line - (1 + RANG_BLOCK_UP1)) % 3);
+    }
+    else
+    {
+      index_row = line
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + 3 - NUMBER_UP_SIGNAL_FOR_RANG;
     }
 
     for (size_t i = 0; i < MAX_COL_LCD; ++i)
@@ -93,7 +109,15 @@ static inline void get_name_signal(int const index_language, int32_t const input
       else
 #endif
       {
-        p_name_signal[i] = input_signals[index_language][index_row][i];
+        if (
+          (line >= (1 + RANG_BLOCK_UP1)) &&
+          (line < (1 + RANG_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG)) &&
+          (i == index_number_UP[index_language][(line - (1 + RANG_BLOCK_UP1)) % 3]))
+        {
+          p_name_signal[i] = 0x30 + ((line - (1 + RANG_BLOCK_UP1)) / 3 + 1);
+        }
+        else
+          p_name_signal[i] = input_signals[index_language][index_row][i];
       }
     }
   }
@@ -102,7 +126,7 @@ static inline void get_name_signal(int const index_language, int32_t const input
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
     static const uint8_t output_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL + (1 - N_IN_GOOSE) + (1 - N_IN_MMS) + (1 - N_OUT_LAN) + (1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL)][MAX_COL_LCD] =
 #else
-    static const uint8_t output_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL][MAX_COL_LCD] =
+    static const uint8_t output_signals[MAX_NAMBER_LANGUAGE][1 + NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL + (1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL)][MAX_COL_LCD] =
 #endif
       {
         {"     Пусто      ", NAME_RANG_SMALL_RU},
@@ -134,13 +158,29 @@ static inline void get_name_signal(int const index_language, int32_t const input
       index_row = line;
 #endif
     }
-    else
+    else if (line < (1 + RANG_SMALL_BLOCK_UP1))
     {
       index_row = line
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
                   + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
 #endif
         ;
+    }
+    else if (line < (1 + RANG_SMALL_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG_SMALL))
+    {
+      index_row = 1 + RANG_SMALL_BLOCK_UP1
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + ((line - (1 + RANG_SMALL_BLOCK_UP1)) % 1);
+    }
+    else
+    {
+      index_row = line
+#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
+                  + 1 - N_IN_GOOSE + 1 - N_IN_MMS + 1 - N_OUT_LAN
+#endif
+                  + 1 - NUMBER_UP_SIGNAL_FOR_RANG_SMALL;
     }
 
     for (size_t i = 0; i < MAX_COL_LCD; ++i)
@@ -185,7 +225,15 @@ static inline void get_name_signal(int const index_language, int32_t const input
       else
 #endif
       {
-        p_name_signal[i] = output_signals[index_language][index_row][i];
+        if (
+          (line >= (1 + RANG_SMALL_BLOCK_UP1)) &&
+          (line < (1 + RANG_SMALL_BLOCK_UP1 + NUMBER_UP_SIGNAL_FOR_RANG_SMALL)) &&
+          (i == index_number_UP[index_language][(line - (1 + RANG_SMALL_BLOCK_UP1)) % 1]))
+        {
+          p_name_signal[i] = 0x30 + ((line - (1 + RANG_SMALL_BLOCK_UP1)) / 1 + 1);
+        }
+        else
+          p_name_signal[i] = output_signals[index_language][index_row][i];
       }
     }
   }
