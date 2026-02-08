@@ -1612,7 +1612,7 @@ void min_settings(__SETTINGS *target_label)
   target_label->control_zskh = CONTROL_ZSKh_WORK;
   target_label->control_znkh = CONTROL_ZNKh_WORK;
   target_label->control_brp = CONTROL_BRP_WORK;
-  target_label->control_Umin = 0;
+  target_label->control_Umin = CONTROL_UMIN_WORK;
   target_label->control_Umax = CONTROL_UMAX_WORK;
   target_label->control_UP = 0;
 
@@ -1638,8 +1638,8 @@ void min_settings(__SETTINGS *target_label)
 
     target_label->setpoint_Umin1[i] = SETPOINT_UMIN1_WORK;
     target_label->setpoint_Umin2[i] = SETPOINT_UMIN2_WORK;
-    target_label->timeout_Umin1[i] = TIMEOUT_UMIN1_MIN;
-    target_label->timeout_Umin2[i] = TIMEOUT_UMIN2_MIN;
+    target_label->timeout_Umin1[i] = TIMEOUT_UMIN1_WORK;
+    target_label->timeout_Umin2[i] = TIMEOUT_UMIN2_WORK;
 
     target_label->setpoint_Umax1[i] = SETPOINT_UMAX1_WORK;
     target_label->setpoint_Umax2[i] = SETPOINT_UMAX2_WORK;

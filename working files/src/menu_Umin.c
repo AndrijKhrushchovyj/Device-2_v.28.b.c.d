@@ -140,15 +140,15 @@ void make_ekran_timeout_Umin(unsigned int group)
 {
   static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_UMIN][MAX_COL_LCD] =
     {
-      {"     Umin 1     ",
-       "     Umin 2     "},
-      {"     Umin 1     ",
-       "     Umin 2     "},
-      {"     UVP 1      ",
-       "     UVP 2      "},
-      {"     Umin 1     ",
-       "     Umin 2     "}};
-  int index_language = index_language_in_array(current_settings.language);
+      {" Выдержка ЗНмин1",
+       " Выдержка ЗНмин2"},
+      {" Витримка ЗНмін1",
+       " Витримка ЗНмін2"},
+      {"   UVP1 Delay   ",
+       "   UVP2 Delay   "},
+      {" Выдержка ЗНмин1",
+       " Выдержка ЗНмин2"}};
+  int const index_language = index_language_in_array(current_settings.language);
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -168,7 +168,7 @@ void make_ekran_timeout_Umin(unsigned int group)
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
           working_ekran[i][j] = name_string[index_language][index_of_ekran_tmp][j];
-        if (index_of_ekran_tmp == INDEX_ML_TMOUMIN1)
+        if (index_of_ekran_tmp == INDEX_ML_TMOUmin_Umin1)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки Umin1
           if (view == true)
@@ -176,7 +176,7 @@ void make_ekran_timeout_Umin(unsigned int group)
           else
             value = edition_settings.timeout_Umin1[group];
         }
-        else if (index_of_ekran_tmp == INDEX_ML_TMOUMIN2)
+        else if (index_of_ekran_tmp == INDEX_ML_TMOUmin_Umin2)
         {
           vaga = 10000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки Umin2
           if (view == true)
@@ -191,31 +191,31 @@ void make_ekran_timeout_Umin(unsigned int group)
         //У парному номері рядку виводимо значення уставки
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         {
-          if (index_of_ekran_tmp == INDEX_ML_TMOUMIN1)
+          if (index_of_ekran_tmp == INDEX_ML_TMOUmin_Umin1)
           {
             if (
-              ((j < COL_TMO_UMIN1_BEGIN) || (j > COL_TMO_UMIN1_END)) &&
-              (j != (COL_TMO_UMIN1_END + 2)))
+              ((j < COL_TMO_Umin_Umin1_BEGIN) || (j > COL_TMO_Umin_Umin1_END)) &&
+              (j != (COL_TMO_Umin_Umin1_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_UMIN1_COMMA)
+            else if (j == COL_TMO_Umin_Umin1_COMMA)
               working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_UMIN1_END + 2))
+            else if (j == (COL_TMO_Umin_Umin1_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_UMIN1_COMMA, view, 0);
+              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_Umin_Umin1_COMMA, view, 0);
           }
-          else if (index_of_ekran_tmp == INDEX_ML_TMOUMIN2)
+          else if (index_of_ekran_tmp == INDEX_ML_TMOUmin_Umin2)
           {
             if (
-              ((j < COL_TMO_UMIN2_BEGIN) || (j > COL_TMO_UMIN2_END)) &&
-              (j != (COL_TMO_UMIN2_END + 2)))
+              ((j < COL_TMO_Umin_Umin2_BEGIN) || (j > COL_TMO_Umin_Umin2_END)) &&
+              (j != (COL_TMO_Umin_Umin2_END + 2)))
               working_ekran[i][j] = ' ';
-            else if (j == COL_TMO_UMIN2_COMMA)
+            else if (j == COL_TMO_Umin_Umin2_COMMA)
               working_ekran[i][j] = ',';
-            else if (j == (COL_TMO_UMIN2_END + 2))
+            else if (j == (COL_TMO_Umin_Umin2_END + 2))
               working_ekran[i][j] = odynyci_vymirjuvannja[index_language][INDEX_SECOND];
             else
-              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_UMIN2_COMMA, view, 0);
+              calc_symbol_and_put_into_working_ekran((working_ekran[i] + j), &value, &vaga, &first_symbol, j, COL_TMO_Umin_Umin2_COMMA, view, 0);
           }
         }
       }
@@ -233,15 +233,15 @@ void make_ekran_timeout_Umin(unsigned int group)
   if (current_ekran.edition == 0)
   {
     int last_position_cursor_x = MAX_COL_LCD;
-    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
     {
-      current_ekran.position_cursor_x = COL_TMO_UMIN1_BEGIN;
-      last_position_cursor_x = COL_TMO_UMIN1_END;
+      current_ekran.position_cursor_x = COL_TMO_Umin_Umin1_BEGIN;
+      last_position_cursor_x = COL_TMO_Umin_Umin1_END;
     }
-    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
     {
-      current_ekran.position_cursor_x = COL_TMO_UMIN2_BEGIN;
-      last_position_cursor_x = COL_TMO_UMIN2_END;
+      current_ekran.position_cursor_x = COL_TMO_Umin_Umin2_BEGIN;
+      last_position_cursor_x = COL_TMO_Umin_Umin2_END;
     }
 
     //Підтягуємо курсор до першого символу
@@ -273,41 +273,15 @@ void make_ekran_control_Umin()
 {
   static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CONTROL_UMIN][MAX_COL_LCD] =
     {
-      {"     Umin 1     ",
-       "   ПО Umin 1    ",
-       "  Uблк.Umin 1   ",
-       "  Iблк.Umin 1   ",
-       "     Umin 2     ",
-       "   ПО Umin 2    ",
-       "  Uблк.Umin 2   ",
-       "  Iблк.Umin 2   "},
-      {"     Umin 1     ",
-       "   ПО Umin 1    ",
-       "  Uблк.Umin 1   ",
-       "  Iблк.Umin 1   ",
-       "     Umin 2     ",
-       "   ПО Umin 2    ",
-       "  Uблк.Umin 2   ",
-       "  Iблк.Umin 2   "},
-      {
-        "     UVP 1      ",
-        "  UVP 1 Start   ",
-        "   UVP 1 VBlk   ",
-        "   UVP 1 IBlk   ",
-        "     UVP 2      ",
-        "  UVP 2 Start   ",
-        "   UVP 2 VBlk   ",
-        "   UVP 2 IBlk   ",
-      },
-      {"     Umin 1     ",
-       "   ПО Umin 1    ",
-       "  Uблк.Umin 1   ",
-       "  Iблк.Umin 1   ",
-       "     Umin 2     ",
-       "   ПО Umin 2    ",
-       "  Uблк.Umin 2   ",
-       "  Iблк.Umin 2   "}};
-  int index_language = index_language_in_array(current_settings.language);
+      {"    ЗНмин1      ",
+       "    ЗНмин2      "},
+      {"    ЗНмін1      ",
+       "    ЗНмін2      "},
+      {"      UVP1      ",
+       "      UVP2      "},
+      {"    ЗНмин1      ",
+       "    ЗНмин2      "}};
+  int const index_language = index_language_in_array(current_settings.language);
 
   int position_temp = current_ekran.index_position;
   int index_of_ekran;
@@ -328,76 +302,6 @@ void make_ekran_control_Umin()
       }
       else
       {
-        //У парному номері рядку виводимо значення уставки
-        static const unsigned char information[MAX_ROW_FOR_CONTROL_UMIN][MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
-          {
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}},
-            {{"      ИЛИ       ", "       И        "},
-             {"      АБО       ", "       І        "},
-             {"       Or       ", "      And       "},
-             {"      ИЛИ       ", "       И        "}},
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}},
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}},
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}},
-            {{"      ИЛИ       ", "       И        "},
-             {"      АБО       ", "       І        "},
-             {"       Or       ", "      And       "},
-             {"      ИЛИ       ", "       И        "}},
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}},
-            {{"     Откл.      ", "      Вкл.      "},
-             {"     Вимк.      ", "     Увімк.     "},
-             {"      Off       ", "       On       "},
-             {"     Сљнд.      ", "     Косу.      "}}};
-        static const unsigned int cursor_x[MAX_ROW_FOR_CONTROL_UMIN][MAX_NAMBER_LANGUAGE][2] =
-          {
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}},
-            {{5, 6},
-             {5, 6},
-             {6, 5},
-             {5, 6}},
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}},
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}},
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}},
-            {{5, 6},
-             {5, 6},
-             {6, 5},
-             {5, 6}},
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}},
-            {{4, 5},
-             {4, 4},
-             {5, 6},
-             {4, 4}}};
-
         unsigned int index_ctr = index_of_ekran_tmp;
 
         unsigned int temp_data;
@@ -407,9 +311,9 @@ void make_ekran_control_Umin()
           temp_data = edition_settings.control_Umin;
 
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = information[index_ctr][index_language][(temp_data >> index_ctr) & 0x1][j];
+          working_ekran[i][j] = information_off_on[index_language][(temp_data >> index_ctr) & 0x1][j];
         if (position_temp == index_of_ekran_tmp)
-          current_ekran.position_cursor_x = cursor_x[index_ctr][index_language][(temp_data >> index_ctr) & 0x1];
+          current_ekran.position_cursor_x = cursor_x_off_on[index_language][(temp_data >> index_ctr) & 0x1];
       }
     }
     else

@@ -11,10 +11,7 @@
 #define EKRAN_TIMEOUT_UMIN_GROUP4 (EKRAN_TIMEOUT_UMIN_GROUP3 + 1)
 #define EKRAN_CONTROL_UMIN (EKRAN_CONTROL_ZNKh + 1)
 
-#define MAX_ROW_FOR_TIMEOUT_UMIN 2
-#define MAX_ROW_FOR_CONTROL_UMIN 8
-
-enum _index_ml_ctrl_Umin
+enum _index_ml_stp_Umin
 {
   INDEX_ML_STPUmin_Umin1 = 0,
   INDEX_ML_STPUmin_Umin2,
@@ -28,41 +25,30 @@ enum _index_ml_ctrl_Umin
 #define COL_SETPOINT_Umin_Umin2_BEGIN 5
 #define COL_SETPOINT_Umin_Umin2_END 7
 
-#define INDEX_ML_TMOUMIN1 0
-#define INDEX_ML_TMOUMIN2 1
+enum _index_ml_tmo_Umin
+{
+  INDEX_ML_TMOUmin_Umin1 = 0,
+  INDEX_ML_TMOUmin_Umin2,
 
-#define COL_TMO_UMIN1_BEGIN 4
-#define COL_TMO_UMIN1_COMMA 6
-#define COL_TMO_UMIN1_END 8
+  MAX_ROW_FOR_TIMEOUT_UMIN
+};
 
-#define COL_TMO_UMIN2_BEGIN 4
-#define COL_TMO_UMIN2_COMMA 6
-#define COL_TMO_UMIN2_END 8
+#define COL_TMO_Umin_Umin1_BEGIN 5
+#define COL_TMO_Umin_Umin1_COMMA 7
+#define COL_TMO_Umin_Umin1_END 8
 
-#define INDEX_CTR_UMIN1 0
-#define CTR_UMIN1 (1 << INDEX_CTR_UMIN1)
-#define INDEX_CTR_PO_UMIN1_OR_AND 1
-#define CTR_PO_UMIN1_OR_AND (1 << INDEX_CTR_PO_UMIN1_OR_AND)
-#define INDEX_CTR_UMIN1_UBLK 2
-#define CTR_UMIN1_UBLK (1 << INDEX_CTR_UMIN1_UBLK)
-#define INDEX_CTR_UMIN1_IBLK 3
-#define CTR_UMIN1_IBLK (1 << INDEX_CTR_UMIN1_IBLK)
-#define INDEX_CTR_UMIN2 4
-#define CTR_UMIN2 (1 << INDEX_CTR_UMIN2)
-#define INDEX_CTR_PO_UMIN2_OR_AND 5
-#define CTR_PO_UMIN2_OR_AND (1 << INDEX_CTR_PO_UMIN2_OR_AND)
-#define INDEX_CTR_UMIN2_UBLK 6
-#define CTR_UMIN2_UBLK (1 << INDEX_CTR_UMIN2_UBLK)
-#define INDEX_CTR_UMIN2_IBLK 7
-#define CTR_UMIN2_IBLK (1 << INDEX_CTR_UMIN2_IBLK)
+#define COL_TMO_Umin_Umin2_BEGIN 5
+#define COL_TMO_Umin_Umin2_COMMA 7
+#define COL_TMO_Umin_Umin2_END 8
 
-#define CTR_UMIN_MASKA (CTR_UMIN1 |           \
-                        CTR_PO_UMIN1_OR_AND | \
-                        CTR_UMIN1_UBLK |      \
-                        CTR_UMIN1_IBLK |      \
-                        CTR_UMIN2 |           \
-                        CTR_PO_UMIN2_OR_AND | \
-                        CTR_UMIN2_UBLK |      \
-                        CTR_UMIN2_IBLK)
+enum _index_ml_ctrl_Umin
+{
+  INDEX_ML_CTRUmin_STAGE_1 = 0,
+  INDEX_ML_CTRUmin_STAGE_2,
+
+  MAX_ROW_FOR_CONTROL_UMIN
+};
+
+#define CTR_UMIN_MASKA (MASKA_FOR_BIT(MAX_ROW_FOR_CONTROL_UMIN) - 1)
 
 #endif

@@ -940,8 +940,8 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи Umin зараз знято з конфігурації
     if ((target_label->configuration & (1 << Umin_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ступені ТЗНП
-      target_label->control_Umin &= 0;
+      //Виводим ступені Umin
+      target_label->control_Umin &= ~(MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_1) | MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_2));
 
       //Формуємо маки функцій Umin
       for (unsigned int i = 0; i < N_SMALL; i++)

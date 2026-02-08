@@ -6372,15 +6372,15 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_TIMEOUT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
                     {
                       edition_settings.timeout_Umin1[group] = current_settings.timeout_Umin1[group];
-                      current_ekran.position_cursor_x = COL_TMO_UMIN1_BEGIN;
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin1_BEGIN;
                     }
-                    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
                     {
                       edition_settings.timeout_Umin2[group] = current_settings.timeout_Umin2[group];
-                      current_ekran.position_cursor_x = COL_TMO_UMIN2_BEGIN;
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin2_BEGIN;
                     }
                   }
                   else if (current_ekran.current_level == EKRAN_CONTROL_UMIN)
@@ -6998,12 +6998,12 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_TIMEOUT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
                     {
                       if (edition_settings.timeout_Umin1[group] != current_settings.timeout_Umin1[group])
                         found_changes = 1;
                     }
-                    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
                     {
                       if (edition_settings.timeout_Umin2[group] != current_settings.timeout_Umin2[group])
                         found_changes = 1;
@@ -7820,7 +7820,7 @@ void main_manu_function(void)
                   {
                     int group = (current_ekran.current_level - EKRAN_TIMEOUT_UMIN_GROUP1);
 
-                    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+                    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
                     {
                       if (check_data_setpoint(edition_settings.timeout_Umin1[group], TIMEOUT_UMIN1_MIN, TIMEOUT_UMIN1_MAX) == 1)
                       {
@@ -7837,7 +7837,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+                    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
                     {
                       if (check_data_setpoint(edition_settings.timeout_Umin2[group], TIMEOUT_UMIN2_MIN, TIMEOUT_UMIN2_MAX) == 1)
                       {
@@ -9549,10 +9549,10 @@ void main_manu_function(void)
                   else
                   {
                     //Редагування числа
-                    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
-                      edition_settings.timeout_Umin1[group] = edit_setpoint(1, edition_settings.timeout_Umin1[group], 1, COL_TMO_UMIN1_COMMA, COL_TMO_UMIN1_END, 10);
-                    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
-                      edition_settings.timeout_Umin2[group] = edit_setpoint(1, edition_settings.timeout_Umin2[group], 1, COL_TMO_UMIN2_COMMA, COL_TMO_UMIN2_END, 10);
+                    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
+                      edition_settings.timeout_Umin1[group] = edit_setpoint(1, edition_settings.timeout_Umin1[group], 1, COL_TMO_Umin_Umin1_COMMA, COL_TMO_Umin_Umin1_END, 100);
+                    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
+                      edition_settings.timeout_Umin2[group] = edit_setpoint(1, edition_settings.timeout_Umin2[group], 1, COL_TMO_Umin_Umin2_COMMA, COL_TMO_Umin_Umin2_END, 100);
                   }
                   //Формуємо екран витримок Umin
                   make_ekran_timeout_Umin(group);
@@ -10530,10 +10530,10 @@ void main_manu_function(void)
                   else
                   {
                     //Редагування числа
-                    if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
-                      edition_settings.timeout_Umin1[group] = edit_setpoint(0, edition_settings.timeout_Umin1[group], 1, COL_TMO_UMIN1_COMMA, COL_TMO_UMIN1_END, 10);
-                    else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
-                      edition_settings.timeout_Umin2[group] = edit_setpoint(0, edition_settings.timeout_Umin2[group], 1, COL_TMO_UMIN2_COMMA, COL_TMO_UMIN2_END, 10);
+                    if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
+                      edition_settings.timeout_Umin1[group] = edit_setpoint(0, edition_settings.timeout_Umin1[group], 1, COL_TMO_Umin_Umin1_COMMA, COL_TMO_Umin_Umin1_END, 100);
+                    else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
+                      edition_settings.timeout_Umin2[group] = edit_setpoint(0, edition_settings.timeout_Umin2[group], 1, COL_TMO_Umin_Umin2_COMMA, COL_TMO_Umin_Umin2_END, 100);
                   }
                   //Формуємо екран витримок Umin
                   make_ekran_timeout_Umin(group);
@@ -11502,21 +11502,21 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_TIMEOUT_UMIN_GROUP1) &&
                   (current_ekran.current_level <= EKRAN_TIMEOUT_UMIN_GROUP4))
                 {
-                  if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+                  if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
                   {
-                    if (current_ekran.position_cursor_x == COL_TMO_UMIN1_COMMA)
+                    if (current_ekran.position_cursor_x == COL_TMO_Umin_Umin1_COMMA)
                       current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_UMIN1_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_UMIN1_END))
-                      current_ekran.position_cursor_x = COL_TMO_UMIN1_BEGIN;
+                    if ((current_ekran.position_cursor_x < COL_TMO_Umin_Umin1_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_TMO_Umin_Umin1_END))
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin1_BEGIN;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+                  else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
                   {
-                    if (current_ekran.position_cursor_x == COL_TMO_UMIN2_COMMA)
+                    if (current_ekran.position_cursor_x == COL_TMO_Umin_Umin2_COMMA)
                       current_ekran.position_cursor_x++;
-                    if ((current_ekran.position_cursor_x < COL_TMO_UMIN2_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_UMIN2_END))
-                      current_ekran.position_cursor_x = COL_TMO_UMIN2_BEGIN;
+                    if ((current_ekran.position_cursor_x < COL_TMO_Umin_Umin2_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_TMO_Umin_Umin2_END))
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin2_BEGIN;
                   }
 
                   //Формуємо екран витримок Umin
@@ -11528,22 +11528,10 @@ void main_manu_function(void)
                   unsigned int maska = 0;
 
                   //Виділяємо, який біт треба міняти
-                  if (current_ekran.index_position == INDEX_CTR_UMIN1)
-                    maska = CTR_UMIN1;
-                  else if (current_ekran.index_position == INDEX_CTR_PO_UMIN1_OR_AND)
-                    maska = CTR_PO_UMIN1_OR_AND;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN1_UBLK)
-                    maska = CTR_UMIN1_UBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN1_IBLK)
-                    maska = CTR_UMIN1_IBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2)
-                    maska = CTR_UMIN2;
-                  else if (current_ekran.index_position == INDEX_CTR_PO_UMIN2_OR_AND)
-                    maska = CTR_PO_UMIN2_OR_AND;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2_UBLK)
-                    maska = CTR_UMIN2_UBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2_IBLK)
-                    maska = CTR_UMIN2_IBLK;
+                  if (current_ekran.index_position == INDEX_ML_CTRUmin_STAGE_1)
+                    maska = MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_1);
+                  else if (current_ekran.index_position == INDEX_ML_CTRUmin_STAGE_2)
+                    maska = MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_2);
 
                   //Міняємо на протилежний відповідний біт для вибраної позиції
                   edition_settings.control_Umin ^= maska;
@@ -12532,21 +12520,21 @@ void main_manu_function(void)
                   (current_ekran.current_level >= EKRAN_TIMEOUT_UMIN_GROUP1) &&
                   (current_ekran.current_level <= EKRAN_TIMEOUT_UMIN_GROUP4))
                 {
-                  if (current_ekran.index_position == INDEX_ML_TMOUMIN1)
+                  if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin1)
                   {
-                    if (current_ekran.position_cursor_x == COL_TMO_UMIN1_COMMA)
+                    if (current_ekran.position_cursor_x == COL_TMO_Umin_Umin1_COMMA)
                       current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_UMIN1_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_UMIN1_END))
-                      current_ekran.position_cursor_x = COL_TMO_UMIN1_END;
+                    if ((current_ekran.position_cursor_x < COL_TMO_Umin_Umin1_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_TMO_Umin_Umin1_END))
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin1_END;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_TMOUMIN2)
+                  else if (current_ekran.index_position == INDEX_ML_TMOUmin_Umin2)
                   {
-                    if (current_ekran.position_cursor_x == COL_TMO_UMIN2_COMMA)
+                    if (current_ekran.position_cursor_x == COL_TMO_Umin_Umin2_COMMA)
                       current_ekran.position_cursor_x--;
-                    if ((current_ekran.position_cursor_x < COL_TMO_UMIN2_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_TMO_UMIN2_END))
-                      current_ekran.position_cursor_x = COL_TMO_UMIN2_END;
+                    if ((current_ekran.position_cursor_x < COL_TMO_Umin_Umin2_BEGIN) ||
+                        (current_ekran.position_cursor_x > COL_TMO_Umin_Umin2_END))
+                      current_ekran.position_cursor_x = COL_TMO_Umin_Umin2_END;
                   }
 
                   //Формуємо екран витримок Umin
@@ -12558,22 +12546,10 @@ void main_manu_function(void)
                   unsigned int maska = 0;
 
                   //Виділяємо, який біт треба міняти
-                  if (current_ekran.index_position == INDEX_CTR_UMIN1)
-                    maska = CTR_UMIN1;
-                  else if (current_ekran.index_position == INDEX_CTR_PO_UMIN1_OR_AND)
-                    maska = CTR_PO_UMIN1_OR_AND;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN1_UBLK)
-                    maska = CTR_UMIN1_UBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN1_IBLK)
-                    maska = CTR_UMIN1_IBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2)
-                    maska = CTR_UMIN2;
-                  else if (current_ekran.index_position == INDEX_CTR_PO_UMIN2_OR_AND)
-                    maska = CTR_PO_UMIN2_OR_AND;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2_UBLK)
-                    maska = CTR_UMIN2_UBLK;
-                  else if (current_ekran.index_position == INDEX_CTR_UMIN2_IBLK)
-                    maska = CTR_UMIN2_IBLK;
+                  if (current_ekran.index_position == INDEX_ML_CTRUmin_STAGE_1)
+                    maska = MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_1);
+                  else if (current_ekran.index_position == INDEX_ML_CTRUmin_STAGE_2)
+                    maska = MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_2);
 
                   //Міняємо на протилежний відповідний біт для вибраної позиції
                   edition_settings.control_Umin ^= maska;

@@ -40,7 +40,7 @@ __control_info const control_info[] =
 
     {&current_settings_prt.control_zop, CTR_ZOP_STATE_BIT},
 
-    {&current_settings_prt.control_Umin, INDEX_CTR_UMIN1},
+    {&current_settings_prt.control_Umin, INDEX_ML_CTRUmin_STAGE_1},
     {&current_settings_prt.control_Umin, INDEX_CTR_UMIN2},
 
     {&current_settings_prt.control_Umax, INDEX_ML_CTRUmax_STAGE_1},
