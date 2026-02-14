@@ -656,6 +656,8 @@ void main_manu_function(void)
                   current_ekran.index_position++;
                 if ((current_ekran.index_position == INDEX_ML1_Umin) && ((current_settings.configuration & (1 << Umin_BIT_CONFIGURATION)) == 0))
                   current_ekran.index_position++;
+                if ((current_ekran.index_position == INDEX_ML1_UP) && ((current_settings.configuration & (1 << UP_BIT_CONFIGURATION)) == 0))
+                  current_ekran.index_position++;
               } while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN);
               position_in_current_level_menu[EKRAN_MAIN] = current_ekran.index_position;
 
@@ -781,7 +783,8 @@ void main_manu_function(void)
                   (current_ekran.index_position == INDEX_ML1_ZNKh) ||
                   (current_ekran.index_position == INDEX_ML1_BRP) ||
                   (current_ekran.index_position == INDEX_ML1_Umax) ||
-                  (current_ekran.index_position == INDEX_ML1_Umin))
+                  (current_ekran.index_position == INDEX_ML1_Umin) ||
+                  (current_ekran.index_position == INDEX_ML1_UP))
                 {
                   //Переходимо на меню РПН
                   if (current_ekran.index_position == INDEX_ML1_RPN)
@@ -801,6 +804,9 @@ void main_manu_function(void)
                   //Переходимо на меню СЗНП
                   else if (current_ekran.index_position == INDEX_ML1_Umin)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UMIN;
+                  //Переходимо на меню Універсальний захист
+                  else if (current_ekran.index_position == INDEX_ML1_UP)
+                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UP;
 
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
@@ -826,6 +832,8 @@ void main_manu_function(void)
                   if (current_ekran.index_position < 0)
                     current_ekran.index_position = MAX_ROW_FOR_EKRAN_MAIN - 1;
 
+                  if ((current_ekran.index_position == INDEX_ML1_UP) && ((current_settings.configuration & (1 << UP_BIT_CONFIGURATION)) == 0))
+                    current_ekran.index_position--;
                   if ((current_ekran.index_position == INDEX_ML1_Umin) && ((current_settings.configuration & (1 << Umin_BIT_CONFIGURATION)) == 0))
                     current_ekran.index_position--;
                   if ((current_ekran.index_position == INDEX_ML1_Umax) && ((current_settings.configuration & (1 << Umax_BIT_CONFIGURATION)) == 0))
@@ -868,6 +876,8 @@ void main_manu_function(void)
                   if ((current_ekran.index_position == INDEX_ML1_Umax) && ((current_settings.configuration & (1 << Umax_BIT_CONFIGURATION)) == 0))
                     current_ekran.index_position++;
                   if ((current_ekran.index_position == INDEX_ML1_Umin) && ((current_settings.configuration & (1 << Umin_BIT_CONFIGURATION)) == 0))
+                    current_ekran.index_position++;
+                  if ((current_ekran.index_position == INDEX_ML1_UP) && ((current_settings.configuration & (1 << UP_BIT_CONFIGURATION)) == 0))
                     current_ekran.index_position++;
 
                 } while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_MAIN);
@@ -14150,6 +14160,13 @@ void main_manu_function(void)
                                                                       /*el_filter,*/
                                                                       1,
                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_RPN_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_BRP_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
+                                                                      NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
                                                                       NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                     //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -14490,6 +14507,13 @@ void main_manu_function(void)
                                                                       /*el_filter,*/
                                                                       1,
                                                                       NUMBER_GENERAL_SIGNAL_FOR_RANG,
+                                                                      NUMBER_RPN_SIGNAL_FOR_RANG,
+                                                                      NUMBER_SZKh_SIGNAL_FOR_RANG,
+                                                                      NUMBER_SNKh_SIGNAL_FOR_RANG,
+                                                                      NUMBER_BRP_SIGNAL_FOR_RANG,
+                                                                      NUMBER_UMAX_SIGNAL_FOR_RANG,
+                                                                      NUMBER_UMIN_SIGNAL_FOR_RANG,
+                                                                      NUMBER_UP_SIGNAL_FOR_RANG,
                                                                       NUMBER_EL_SIGNAL_FOR_RANG);
 
                     //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
@@ -16111,6 +16135,13 @@ void main_manu_function(void)
                                                                         /*el_filter,*/
                                                                         0,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_RPN_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_BRP_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                       //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -16457,6 +16488,13 @@ void main_manu_function(void)
                                                                         /*el_filter,*/
                                                                         0,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG,
+                                                                        NUMBER_RPN_SIGNAL_FOR_RANG,
+                                                                        NUMBER_SZKh_SIGNAL_FOR_RANG,
+                                                                        NUMBER_SNKh_SIGNAL_FOR_RANG,
+                                                                        NUMBER_BRP_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UP_SIGNAL_FOR_RANG,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG);
                       //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування
                       if (
@@ -16805,6 +16843,13 @@ void main_manu_function(void)
                                                                         /*el_filter,*/
                                                                         1,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_RPN_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_SZKh_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_SNKh_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_BRP_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL,
+                                                                        NUMBER_UP_SIGNAL_FOR_RANG_SMALL,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG_SMALL);
 
                       //Перевіряємо режим рооботи функціональної кнопки (якщо іде редагування ФК)
@@ -17151,6 +17196,13 @@ void main_manu_function(void)
                                                                         /*el_filter,*/
                                                                         1,
                                                                         NUMBER_GENERAL_SIGNAL_FOR_RANG,
+                                                                        NUMBER_RPN_SIGNAL_FOR_RANG,
+                                                                        NUMBER_SZKh_SIGNAL_FOR_RANG,
+                                                                        NUMBER_SNKh_SIGNAL_FOR_RANG,
+                                                                        NUMBER_BRP_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UMAX_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UMIN_SIGNAL_FOR_RANG,
+                                                                        NUMBER_UP_SIGNAL_FOR_RANG,
                                                                         NUMBER_EL_SIGNAL_FOR_RANG);
 
                       //Перевіряємо, чи ми не  на індексі функцій із списку загальних, яку треба викинути для даного типу ранжування

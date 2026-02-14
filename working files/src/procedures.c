@@ -84,6 +84,20 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       (current_ekran.current_level == EKRAN_CONTROL_UMIN))
       error_window |= (1 << Umin_BIT_CONFIGURATION);
   }
+  //Перевірка Універсальний Пристрій
+  if ((new_configuration & (1 << UP_BIT_CONFIGURATION)) == 0)
+  {
+    if (
+      (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_UP) ||
+      ((current_ekran.current_level >= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_UP) &&
+       (current_ekran.current_level <= EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UP)) ||
+      ((current_ekran.current_level >= EKRAN_SETPOINT_UP_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_SETPOINT_UP_GROUP4)) ||
+      ((current_ekran.current_level >= EKRAN_TIMEOUT_UP_GROUP1) &&
+       (current_ekran.current_level <= EKRAN_TIMEOUT_UP_GROUP4)) ||
+      (current_ekran.current_level == EKRAN_CONTROL_UP))
+      error_window |= (1 << UP_BIT_CONFIGURATION);
+  }
   //Перевірка "Розширеної логіки"
   if ((new_configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
   {
@@ -1305,6 +1319,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
             NUMBER_BRP_SIGNAL_FOR_RANG_SMALL +
             NUMBER_UMAX_SIGNAL_FOR_RANG_SMALL +
             NUMBER_UMIN_SIGNAL_FOR_RANG_SMALL +
+            NUMBER_UP_SIGNAL_FOR_RANG_SMALL +
             i));
 
       for (unsigned int i = 0; i < N_BIG; i++)
@@ -1320,6 +1335,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
             NUMBER_BRP_SIGNAL_FOR_RANG +
             NUMBER_UMAX_SIGNAL_FOR_RANG +
             NUMBER_UMIN_SIGNAL_FOR_RANG +
+            NUMBER_UP_SIGNAL_FOR_RANG +
             i));
 
       //Знімаємо всі функції для ранжування кнопок, які відповідають за Розширеної логіки

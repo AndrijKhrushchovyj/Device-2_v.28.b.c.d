@@ -116,7 +116,7 @@ void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned int *
 #endif
 );
 void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int, unsigned int *);
-void check_current_index_is_presented_in_configuration(unsigned int *, int *, /*EL_FILTER_STRUCT[],*/ int, int, int);
+void check_current_index_is_presented_in_configuration(unsigned int *, int *, /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int);
 void make_ekran_choose_CBOn_CBOff(void);
 void make_ekran_setpoint_switch(void);
 void make_ekran_timeout_switch(void);

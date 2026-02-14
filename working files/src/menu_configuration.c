@@ -15,6 +15,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ֱ׀ֿ       ",
        "ַֽלאךס    ",
        "ַֽלטם     ",
+       "׃ַ        ",
        "׀אסר.כמד. "
 #ifdef NUMBER_DS
        ,
@@ -27,6 +28,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ֱ׀ֿ       ",
        "ַֽלאךס    ",
        "ַֽל³ם     ",
+       "׃ַ        ",
        "׀מחר.כמד. "
 #ifdef NUMBER_DS
        ,
@@ -39,6 +41,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "BRP       ",
        "Umax      ",
        "Umin      ",
+       "FL        ",
        "UD-logic  "
 #ifdef NUMBER_DS
        ,
@@ -51,6 +54,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ֱ׀ֿ       ",
        "ַֽלאךס    ",
        "ַֽלטם     ",
+       "׃ַ        ",
        "׀אסר.כמד. "
 #ifdef NUMBER_DS
        ,

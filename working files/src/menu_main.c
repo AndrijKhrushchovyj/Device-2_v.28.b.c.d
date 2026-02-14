@@ -22,7 +22,8 @@ void make_ekran_main(void)
        " ЗНХ            ",
        " БРП            ",
        " ЗНмакс         ",
-       " ЗНмин          "},
+       " ЗНмин          ",
+       " УЗ             "},
       {" Годинник       ",
        " Вимірювання    ",
        " Т.обл.ел.енерг.",
@@ -38,7 +39,8 @@ void make_ekran_main(void)
        " ЗБХ            ",
        " БРП            ",
        " ЗНмакс         ",
-       " ЗНмін          "},
+       " ЗНмін          ",
+       " УЗ             "},
       {" Clock          ",
        " Measurement    ",
        " Energy calc    ",
@@ -54,7 +56,8 @@ void make_ekran_main(void)
        " CMP            ",
        " RBfO           ",
        " OVP            ",
-       " UVP            "},
+       " UVP            ",
+       " FL             "},
       {" Саfат          ",
        " Љлшем          ",
        " Т.уч.эл.энерг. ",
@@ -70,7 +73,8 @@ void make_ekran_main(void)
        " ЗНХ            ",
        " БРП            ",
        " ЗНмакс         ",
-       " ЗНмин          "}};
+       " ЗНмин          ",
+       " УЗ             "}};
 
   unsigned char name_string_tmp[MAX_ROW_FOR_EKRAN_MAIN][MAX_COL_LCD];
 

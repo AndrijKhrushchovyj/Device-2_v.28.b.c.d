@@ -6,7 +6,8 @@
                             MASKA_FOR_BIT(ZNKh_BIT_CONFIGURATION) | \
                             MASKA_FOR_BIT(BRP_BIT_CONFIGURATION) |  \
                             MASKA_FOR_BIT(Umax_BIT_CONFIGURATION) | \
-                            MASKA_FOR_BIT(Umin_BIT_CONFIGURATION))
+                            MASKA_FOR_BIT(Umin_BIT_CONFIGURATION) | \
+                            MASKA_FOR_BIT(UP_BIT_CONFIGURATION))
 
 #define KOEF_TO_MIN 1
 #define KOEF_TO_MAX 150

@@ -1622,6 +1622,13 @@ void check_current_index_is_presented_in_configuration(
   /*EL_FILTER_STRUCT el_filter[],*/
   int plus_minus,
   int number_general_function,
+  int number_rpn_function,
+  int number_zskh_function,
+  int number_znkh_function,
+  int number_brp_function,
+  int number_Umax_function,
+  int number_Umin_function,
+  int number_UP_function,
   int number_el_function)
 {
   UNUSED(add_filter_point);
@@ -1632,12 +1639,47 @@ void check_current_index_is_presented_in_configuration(
       *found_new_index_tmp = 1;
     else
     {
-      if (current_ekran.index_position < (number_general_function + number_el_function))
+      if (current_ekran.index_position < (number_general_function + number_rpn_function))
+      {
+        if ((current_settings.configuration & (1<<RPN_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function))
+      {
+        if ((current_settings.configuration & (1<<ZSKh_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function))
+      {
+        if ((current_settings.configuration & (1<<ZNKh_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function))
+      {
+        if ((current_settings.configuration & (1<<BRP_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function))
+      {
+        if ((current_settings.configuration & (1<<Umax_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function))
+      {
+        if ((current_settings.configuration & (1<<Umin_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function))
+      {
+        if ((current_settings.configuration & (1<<UP_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function + number_el_function))
       {
         if ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) != 0)
           *found_new_index_tmp = 1;
         else
-          current_ekran.index_position = number_general_function + number_el_function;
+          current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function + number_el_function;
       }
     }
   }
@@ -1647,12 +1689,47 @@ void check_current_index_is_presented_in_configuration(
       *found_new_index_tmp = 1;
     else
     {
-      if (current_ekran.index_position < (number_general_function + number_el_function))
+      if (current_ekran.index_position < (number_general_function + number_rpn_function))
+      {
+        if ((current_settings.configuration & (1<<RPN_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function))
+      {
+        if ((current_settings.configuration & (1<<ZSKh_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function))
+      {
+        if ((current_settings.configuration & (1<<ZNKh_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function))
+      {
+        if ((current_settings.configuration & (1<<BRP_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function))
+      {
+        if ((current_settings.configuration & (1<<Umax_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function))
+      {
+        if ((current_settings.configuration & (1<<Umin_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function))
+      {
+        if ((current_settings.configuration & (1<<UP_BIT_CONFIGURATION)) != 0) *found_new_index_tmp = 1;
+        else current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function - 1;
+      }
+      else if (current_ekran.index_position < (number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function + number_el_function))
       {
         if ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) != 0)
           *found_new_index_tmp = 1;
         else
-          current_ekran.index_position = number_general_function - 1;
+          current_ekran.index_position = number_general_function + number_rpn_function + number_zskh_function + number_znkh_function + number_brp_function + number_Umax_function + number_Umin_function + number_UP_function - 1;
       }
     }
   }

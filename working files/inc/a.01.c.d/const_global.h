@@ -442,18 +442,18 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                       \
   | (1u << (RANG_SMALL_DT2_SET - 32))                         \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                       \
-  | (1u << (RANG_SMALL_DT3_SET - 32))                         \
-  | (1u << (RANG_SMALL_DT3_RESET - 32))                       \
-  | (1u << (RANG_SMALL_DT4_SET - 32))                         \
-  | (1u << (RANG_SMALL_DT4_RESET - 32))                       \
-  | (1u << (RANG_SMALL_LF1 - 32))                             \
-  | (1u << (RANG_SMALL_LF2 - 32))                             \
-  | (1u << (RANG_SMALL_LF3 - 32))                             \
-  | (1u << (RANG_SMALL_LF4 - 32))                             \
 )
 
 #define COMMAND_SIGNALES_2 (                                  \
-    (1u << (RANG_SMALL_LF5 - 64))                             \
+    (1u << (RANG_SMALL_DT3_SET - 64))                         \
+  | (1u << (RANG_SMALL_DT3_RESET - 64))                       \
+  | (1u << (RANG_SMALL_DT4_SET - 64))                         \
+  | (1u << (RANG_SMALL_DT4_RESET - 64))                       \
+  | (1u << (RANG_SMALL_LF1 - 64))                             \
+  | (1u << (RANG_SMALL_LF2 - 64))                             \
+  | (1u << (RANG_SMALL_LF3 - 64))                             \
+  | (1u << (RANG_SMALL_LF4 - 64))                             \
+  | (1u << (RANG_SMALL_LF5 - 64))                             \
   | (1u << (RANG_SMALL_LF6 - 64))                             \
   | (1u << (RANG_SMALL_LF7 - 64))                             \
   | (1u << (RANG_SMALL_LF8 - 64))                             \
@@ -501,18 +501,18 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
-  | (1u << (RANG_SMALL_LF1 - 32))                              \
-  | (1u << (RANG_SMALL_LF2 - 32))                              \
-  | (1u << (RANG_SMALL_LF3 - 32))                              \
-  | (1u << (RANG_SMALL_LF4 - 32))                              \
 )
 
 #define MASKA_BUTTON_MODE_0_SIGNALS_2 (                        \
-    (1u << (RANG_SMALL_LF5 - 64))                              \
+    (1u << (RANG_SMALL_DT3_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
+  | (1u << (RANG_SMALL_LF1 - 64))                              \
+  | (1u << (RANG_SMALL_LF2 - 64))                              \
+  | (1u << (RANG_SMALL_LF3 - 64))                              \
+  | (1u << (RANG_SMALL_LF4 - 64))                              \
+  | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \
   | (1u << (RANG_SMALL_LF8 - 64))                              \
@@ -587,18 +587,18 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
-  | (1u << (RANG_SMALL_LF1 - 32))                              \
-  | (1u << (RANG_SMALL_LF2 - 32))                              \
-  | (1u << (RANG_SMALL_LF3 - 32))                              \
-  | (1u << (RANG_SMALL_LF4 - 32))                              \
 )
 
 #define MASKA_BUTTON_MODE_1_SIGNALS_2 (                        \
-    (1u << (RANG_SMALL_LF5 - 64))                              \
+    (1u << (RANG_SMALL_DT3_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
+  | (1u << (RANG_SMALL_LF1 - 64))                              \
+  | (1u << (RANG_SMALL_LF2 - 64))                              \
+  | (1u << (RANG_SMALL_LF3 - 64))                              \
+  | (1u << (RANG_SMALL_LF4 - 64))                              \
+  | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \
   | (1u << (RANG_SMALL_LF8 - 64))                              \
@@ -682,18 +682,18 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
-  | (1u << (RANG_SMALL_LF1 - 32))                              \
-  | (1u << (RANG_SMALL_LF2 - 32))                              \
-  | (1u << (RANG_SMALL_LF3 - 32))                              \
-  | (1u << (RANG_SMALL_LF4 - 32))                              \
 )
 
 #define MASKA_INPUT_SIGNALS_2 (                                \
-    (1u << (RANG_SMALL_LF5 - 64))                              \
+    (1u << (RANG_SMALL_DT3_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
+  | (1u << (RANG_SMALL_LF1 - 64))                              \
+  | (1u << (RANG_SMALL_LF2 - 64))                              \
+  | (1u << (RANG_SMALL_LF3 - 64))                              \
+  | (1u << (RANG_SMALL_LF4 - 64))                              \
+  | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \
   | (1u << (RANG_SMALL_LF8 - 64))                              \
@@ -762,51 +762,51 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_BLOCK_UP1 + 3*5 - 96))                         \
   | (1u << (RANG_BLOCK_UP1 + 3*6 - 96))                         \
   | (1u << (RANG_BLOCK_UP1 + 3*7 - 96))                         \
-  | (1u << (RANG_DF1_IN - 96))                                  \
-  | (1u << (RANG_DF1_R -  96))                                  \
-  | (1u << (RANG_DF2_IN -  96))                                 \
-  | (1u << (RANG_DF2_R -  96))                                  \
-  | (1u << (RANG_DF3_IN -  96))                                 \
-  | (1u << (RANG_DF3_R -  96))                                  \
-  | (1u << (RANG_DF4_IN -  96))                                 \
-  | (1u << (RANG_DF4_R -  96))                                  \
-  | (1u << (RANG_DF5_IN -  96))                                 \
-  | (1u << (RANG_DF5_R -  96))                                  \
-  | (1u << (RANG_DF6_IN -  96))                                 \
-  | (1u << (RANG_DF6_R -  96))                                  \
-  | (1u << (RANG_DF7_IN -  96))                                 \
-  | (1u << (RANG_DF7_R -  96))                                  \
-  | (1u << (RANG_DF8_IN -  96))                                 \
-  | (1u << (RANG_DF8_R -  96))                                  \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_4 (                            \
-    (1u << (RANG_DT1_SET -  128))                              \
+    (1u << (RANG_DF1_IN - 128))                                \
+  | (1u << (RANG_DF1_R -  128))                                \
+  | (1u << (RANG_DF2_IN -  128))                               \
+  | (1u << (RANG_DF2_R -  128))                                \
+  | (1u << (RANG_DF3_IN -  128))                               \
+  | (1u << (RANG_DF3_R -  128))                                \
+  | (1u << (RANG_DF4_IN -  128))                               \
+  | (1u << (RANG_DF4_R -  128))                                \
+  | (1u << (RANG_DF5_IN -  128))                               \
+  | (1u << (RANG_DF5_R -  128))                                \
+  | (1u << (RANG_DF6_IN -  128))                               \
+  | (1u << (RANG_DF6_R -  128))                                \
+  | (1u << (RANG_DF7_IN -  128))                               \
+  | (1u << (RANG_DF7_R -  128))                                \
+  | (1u << (RANG_DF8_IN -  128))                               \
+  | (1u << (RANG_DF8_R -  128))                                \
+  | (1u << (RANG_DT1_SET -  128))                              \
   | (1u << (RANG_DT1_RESET - 128))                             \
   | (1u << (RANG_DT2_SET - 128))                               \
   | (1u << (RANG_DT2_RESET - 128))                             \
   | (1u << (RANG_DT3_SET - 128))                               \
-  | (1u << (RANG_DT3_RESET - 128))                             \
-  | (1u << (RANG_DT4_SET - 128))                               \
-  | (1u << (RANG_DT4_RESET - 128))                             \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_5 (                            \
-    (1u << (RANG_LF1 -  160))                                  \
-  | (1u << (RANG_LF2 -  160))                                  \
-  | (1u << (RANG_LF3 -  160))                                  \
-  | (1u << (RANG_LF4 -  160))                                  \
-  | (1u << (RANG_LF5 -  160))                                  \
-  | (1u << (RANG_LF6 -  160))                                  \
-  | (1u << (RANG_LF7 -  160))                                  \
-  | (1u << (RANG_LF8 -  160))                                  \
-  | (1u << (RANG_LF9 -  160))                                  \
-  | (1u << (RANG_LF10 -  160))                                 \
-  | (1u << (RANG_LF11 -  160))                                 \
+    (1u << (RANG_DT3_RESET - 160))                             \
+  | (1u << (RANG_DT4_SET - 160))                               \
+  | (1u << (RANG_DT4_RESET - 160))                             \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_6 (                            \
-    (1u << (RANG_LF12 -  192))                                 \
+    (1u << (RANG_LF1 -  192))                                  \
+  | (1u << (RANG_LF2 -  192))                                  \
+  | (1u << (RANG_LF3 -  192))                                  \
+  | (1u << (RANG_LF4 -  192))                                  \
+  | (1u << (RANG_LF5 -  192))                                  \
+  | (1u << (RANG_LF6 -  192))                                  \
+  | (1u << (RANG_LF7 -  192))                                  \
+  | (1u << (RANG_LF8 -  192))                                  \
+  | (1u << (RANG_LF9 -  192))                                  \
+  | (1u << (RANG_LF10 -  192))                                 \
+  | (1u << (RANG_LF11 -  192))                                 \
+  | (1u << (RANG_LF12 -  192))                                 \
   | (1u << (RANG_LF13 -  192))                                 \
   | (1u << (RANG_LF14 -  192))                                 \
   | (1u << (RANG_LF15 -  192))                                 \
@@ -1028,35 +1028,33 @@ enum __rang_output_led_df_reg
 #define MASKA_EL_SIGNALS_0    0
 #define MASKA_EL_SIGNALS_1    0
 #define MASKA_EL_SIGNALS_2    0
-
-#define MASKA_EL_SIGNALS_3 (                                   \
-    (1u << (RANG_DF1_IN - 96))                                 \
-  | (1u << (RANG_DF1_R - 96))                                  \
-  | (1u << (RANG_DF1_OUT - 96))                                \
-  | (1u << (RANG_DF2_IN - 96))                                 \
-  | (1u << (RANG_DF2_R - 96))                                  \
-  | (1u << (RANG_DF2_OUT - 96))                                \
-  | (1u << (RANG_DF3_IN - 96))                                 \
-  | (1u << (RANG_DF3_R - 96))                                  \
-  | (1u << (RANG_DF3_OUT - 96))                                \
-  | (1u << (RANG_DF4_IN - 96))                                 \
-  | (1u << (RANG_DF4_R - 96))                                  \
-  | (1u << (RANG_DF4_OUT - 96))                                \
-  | (1u << (RANG_DF5_IN - 96))                                 \
-  | (1u << (RANG_DF5_R - 96))                                  \
-  | (1u << (RANG_DF5_OUT - 96))                                \
-  | (1u << (RANG_DF6_IN - 96))                                 \
-  | (1u << (RANG_DF6_R - 96))                                  \
-  | (1u << (RANG_DF6_OUT - 96))                                \
-  | (1u << (RANG_DF7_IN - 96))                                 \
-  | (1u << (RANG_DF7_R - 96))                                  \
-  | (1u << (RANG_DF7_OUT - 96))                                \
-  | (1u << (RANG_DF8_IN - 96))                                 \
-  | (1u << (RANG_DF8_R - 96))                                  \
-)
+#define MASKA_EL_SIGNALS_3    0
 
 #define MASKA_EL_SIGNALS_4 (                                   \
-    (1u << (RANG_DF8_OUT - 128))                               \
+    (1u << (RANG_DF1_IN - 128))                                \
+  | (1u << (RANG_DF1_R - 128))                                 \
+  | (1u << (RANG_DF1_OUT - 128))                               \
+  | (1u << (RANG_DF2_IN - 128))                                \
+  | (1u << (RANG_DF2_R - 128))                                 \
+  | (1u << (RANG_DF2_OUT - 128))                               \
+  | (1u << (RANG_DF3_IN - 128))                                \
+  | (1u << (RANG_DF3_R - 128))                                 \
+  | (1u << (RANG_DF3_OUT - 128))                               \
+  | (1u << (RANG_DF4_IN - 128))                                \
+  | (1u << (RANG_DF4_R - 128))                                 \
+  | (1u << (RANG_DF4_OUT - 128))                               \
+  | (1u << (RANG_DF5_IN - 128))                                \
+  | (1u << (RANG_DF5_R - 128))                                 \
+  | (1u << (RANG_DF5_OUT - 128))                               \
+  | (1u << (RANG_DF6_IN - 128))                                \
+  | (1u << (RANG_DF6_R - 128))                                 \
+  | (1u << (RANG_DF6_OUT - 128))                               \
+  | (1u << (RANG_DF7_IN - 128))                                \
+  | (1u << (RANG_DF7_R - 128))                                 \
+  | (1u << (RANG_DF7_OUT - 128))                               \
+  | (1u << (RANG_DF8_IN - 128))                                \
+  | (1u << (RANG_DF8_R - 128))                                 \
+  | (1u << (RANG_DF8_OUT - 128))                               \
   | (1u << (RANG_DT1_SET - 128))                               \
   | (1u << (RANG_DT1_RESET - 128))                             \
   | (1u << (RANG_DT1_OUT - 128))                               \
@@ -1064,34 +1062,34 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_DT2_RESET - 128))                             \
   | (1u << (RANG_DT2_OUT - 128))                               \
   | (1u << (RANG_DT3_SET - 128))                               \
-  | (1u << (RANG_DT3_RESET - 128))                             \
-  | (1u << (RANG_DT3_OUT - 128))                               \
-  | (1u << (RANG_DT4_SET - 128))                               \
-  | (1u << (RANG_DT4_RESET - 128))                             \
-  | (1u << (RANG_DT4_OUT - 128))                               \
-  | (1u << (RANG_D_AND1 - 128))                                \
-  | (1u << (RANG_D_AND2 - 128))                                \
-  | (1u << (RANG_D_AND3 - 128))                                \
-  | (1u << (RANG_D_AND4 - 128))                                \
-  | (1u << (RANG_D_AND5 - 128))                                \
-  | (1u << (RANG_D_AND6 - 128))                                \
-  | (1u << (RANG_D_AND7 - 128))                                \
-  | (1u << (RANG_D_AND8 - 128))                                \
-  | (1u << (RANG_D_OR1 - 128))                                 \
-  | (1u << (RANG_D_OR2 - 128))                                 \
-  | (1u << (RANG_D_OR3 - 128))                                 \
-  | (1u << (RANG_D_OR4 - 128))                                 \
-  | (1u << (RANG_D_OR5 - 128))                                 \
-  | (1u << (RANG_D_OR6 - 128))                                 \
-  | (1u << (RANG_D_OR7 - 128))                                 \
-  | (1u << (RANG_D_OR8 - 128))                                 \
-  | (1u << (RANG_D_XOR1 - 128))                                \
-  | (1u << (RANG_D_XOR2 - 128))                                \
-  | (1u << (RANG_D_XOR3 - 128))                                \
 )
 
 #define MASKA_EL_SIGNALS_5 (                                   \
-    (1u << (RANG_D_XOR4 - 160))                                 \
+    (1u << (RANG_DT3_RESET - 160))                             \
+  | (1u << (RANG_DT3_OUT - 160))                               \
+  | (1u << (RANG_DT4_SET - 160))                               \
+  | (1u << (RANG_DT4_RESET - 160))                             \
+  | (1u << (RANG_DT4_OUT - 160))                               \
+  | (1u << (RANG_D_AND1 - 160))                                \
+  | (1u << (RANG_D_AND2 - 160))                                \
+  | (1u << (RANG_D_AND3 - 160))                                \
+  | (1u << (RANG_D_AND4 - 160))                                \
+  | (1u << (RANG_D_AND5 - 160))                                \
+  | (1u << (RANG_D_AND6 - 160))                                \
+  | (1u << (RANG_D_AND7 - 160))                                \
+  | (1u << (RANG_D_AND8 - 160))                                \
+  | (1u << (RANG_D_OR1 - 160))                                 \
+  | (1u << (RANG_D_OR2 - 160))                                 \
+  | (1u << (RANG_D_OR3 - 160))                                 \
+  | (1u << (RANG_D_OR4 - 160))                                 \
+  | (1u << (RANG_D_OR5 - 160))                                 \
+  | (1u << (RANG_D_OR6 - 160))                                 \
+  | (1u << (RANG_D_OR7 - 160))                                 \
+  | (1u << (RANG_D_OR8 - 160))                                 \
+  | (1u << (RANG_D_XOR1 - 160))                                \
+  | (1u << (RANG_D_XOR2 - 160))                                \
+  | (1u << (RANG_D_XOR3 - 160))                                \
+  | (1u << (RANG_D_XOR4 - 160))                                 \
   | (1u << (RANG_D_XOR5 - 160))                                 \
   | (1u << (RANG_D_XOR6 - 160))                                 \
   | (1u << (RANG_D_XOR7 - 160))                                 \
@@ -1099,34 +1097,34 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_D_NOT1 - 160))                                 \
   | (1u << (RANG_D_NOT2 - 160))                                 \
   | (1u << (RANG_D_NOT3 - 160))                                 \
-  | (1u << (RANG_D_NOT4 - 160))                                 \
-  | (1u << (RANG_D_NOT5 - 160))                                 \
-  | (1u << (RANG_D_NOT6 - 160))                                 \
-  | (1u << (RANG_D_NOT7 - 160))                                 \
-  | (1u << (RANG_D_NOT8 - 160))                                 \
-  | (1u << (RANG_D_NOT9 - 160))                                 \
-  | (1u << (RANG_D_NOT10 - 160))                                \
-  | (1u << (RANG_D_NOT11 - 160))                                \
-  | (1u << (RANG_D_NOT12 - 160))                                \
-  | (1u << (RANG_D_NOT13 - 160))                                \
-  | (1u << (RANG_D_NOT14 - 160))                                \
-  | (1u << (RANG_D_NOT15 - 160))                                \
-  | (1u << (RANG_D_NOT16 - 160))                                \
-  | (1u << (RANG_LF1 - 160))                                    \
-  | (1u << (RANG_LF2 - 160))                                    \
-  | (1u << (RANG_LF3 - 160))                                    \
-  | (1u << (RANG_LF4 - 160))                                    \
-  | (1u << (RANG_LF5 - 160))                                    \
-  | (1u << (RANG_LF6 - 160))                                    \
-  | (1u << (RANG_LF7 - 160))                                    \
-  | (1u << (RANG_LF8 - 160))                                    \
-  | (1u << (RANG_LF9 - 160))                                    \
-  | (1u << (RANG_LF10 - 160))                                   \
-  | (1u << (RANG_LF11 - 160))                                   \
 )
 
 #define MASKA_EL_SIGNALS_6 (                                   \
-    (1u << (RANG_LF12 - 192))                                  \
+    (1u << (RANG_D_NOT4 - 192))                                 \
+  | (1u << (RANG_D_NOT5 - 192))                                 \
+  | (1u << (RANG_D_NOT6 - 192))                                 \
+  | (1u << (RANG_D_NOT7 - 192))                                 \
+  | (1u << (RANG_D_NOT8 - 192))                                 \
+  | (1u << (RANG_D_NOT9 - 192))                                 \
+  | (1u << (RANG_D_NOT10 - 192))                                \
+  | (1u << (RANG_D_NOT11 - 192))                                \
+  | (1u << (RANG_D_NOT12 - 192))                                \
+  | (1u << (RANG_D_NOT13 - 192))                                \
+  | (1u << (RANG_D_NOT14 - 192))                                \
+  | (1u << (RANG_D_NOT15 - 192))                                \
+  | (1u << (RANG_D_NOT16 - 192))                                \
+  | (1u << (RANG_LF1 - 192))                                    \
+  | (1u << (RANG_LF2 - 192))                                    \
+  | (1u << (RANG_LF3 - 192))                                    \
+  | (1u << (RANG_LF4 - 192))                                    \
+  | (1u << (RANG_LF5 - 192))                                    \
+  | (1u << (RANG_LF6 - 192))                                    \
+  | (1u << (RANG_LF7 - 192))                                    \
+  | (1u << (RANG_LF8 - 192))                                    \
+  | (1u << (RANG_LF9 - 192))                                    \
+  | (1u << (RANG_LF10 - 192))                                   \
+  | (1u << (RANG_LF11 - 192))                                   \
+  | (1u << (RANG_LF12 - 192))                                  \
   | (1u << (RANG_LF13 - 192))                                  \
   | (1u << (RANG_LF14 - 192))                                  \
   | (1u << (RANG_LF15 - 192))                                  \
@@ -1148,11 +1146,13 @@ enum __rang_output_led_df_reg
 #define MASKA_TRIGGER_SIGNALES_4 (                             \
      (1u << (RANG_DT1_OUT - 128))                              \
    | (1u << (RANG_DT2_OUT - 128))                              \
-   | (1u << (RANG_DT3_OUT - 128))                              \
-   | (1u << (RANG_DT4_OUT - 128))                              \
 )     
 
-#define MASKA_TRIGGER_SIGNALES_5                  0
+#define MASKA_TRIGGER_SIGNALES_5 (                             \
+     (1u << (RANG_DT3_OUT - 160))                              \
+   | (1u << (RANG_DT4_OUT - 160))                              \
+)     
+
 #define MASKA_TRIGGER_SIGNALES_6                  0
 /*****************************************/
 
