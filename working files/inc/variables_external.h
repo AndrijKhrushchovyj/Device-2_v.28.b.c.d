@@ -51,9 +51,8 @@ extern unsigned long long sqr_current_data_3I0[NUMBER_POINT];
 
 extern unsigned int changed_ustuvannja;
 extern unsigned char crc_ustuvannja;
-extern unsigned int ustuvannja_meas[NUMBER_ANALOG_CANALES], ustuvannja[NUMBER_ANALOG_CANALES], edit_ustuvannja[NUMBER_ANALOG_CANALES];
-extern int phi_ustuvannja_meas[NUMBER_ANALOG_CANALES], phi_ustuvannja[NUMBER_ANALOG_CANALES], phi_edit_ustuvannja[NUMBER_ANALOG_CANALES];
-extern float phi_ustuvannja_sin_cos_meas[2 * NUMBER_ANALOG_CANALES], phi_ustuvannja_sin_cos[2 * NUMBER_ANALOG_CANALES];
+extern unsigned int ustuvannja_meas[NUMBER_ANALOG_CANALES];
+extern unsigned int ustuvannja[NUMBER_ANALOG_CANALES];
 
 extern const float sin_data_f[NUMBER_POINT];
 extern const float cos_data_f[NUMBER_POINT];
@@ -85,81 +84,15 @@ extern unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high;
 extern unsigned int measurement_middle[_NUMBER_IM];
 extern unsigned int measurement_low[_NUMBER_IM];
 
-extern const unsigned int index_converter_Ib_p[NUMBER_ANALOG_CANALES];
-extern const unsigned int index_converter_I04_p[NUMBER_ANALOG_CANALES];
-extern const unsigned int index_converter_Ib_l[NUMBER_ANALOG_CANALES];
-extern const unsigned int index_converter_I04_l[NUMBER_ANALOG_CANALES];
+extern const unsigned int index_converter[NUMBER_ANALOG_CANALES];
 extern int ortogonal_calc[2 * FULL_ORT_MAX];
 extern int ortogonal_calc_low[2 * FULL_ORT_MAX];
 extern int phi_angle[2][FULL_ORT_MAX];
 extern uint32_t bank_for_calc_phi_angle, state_calc_phi_angle;
 extern int base_index_for_angle;
 
-extern int P_plus[2];
-extern int P_minus[2];
-extern int Q_1q[2];
-extern int Q_2q[2];
-extern int Q_3q[2];
-extern int Q_4q[2];
-extern unsigned int lichylnyk_1s_po_20ms;
-extern unsigned int bank_for_enegry;
-extern int P[2], Q[2], cos_phi_x1000[2];
-extern unsigned int S[2];
-extern uint32_t bank_for_calc_power, state_calc_power;
-extern double energy[2][MAX_NUMBER_INDEXES_ENERGY];
-extern uint32_t state_calc_energy;
-extern unsigned int clean_energy;
-extern unsigned int information_about_clean_energy;
-
-extern int resistance[MAX_NUMBER_INDEXES_RESISTANCE];
-extern int resistance_middle[MAX_NUMBER_INDEXES_RESISTANCE];
-extern int resistance_low[MAX_NUMBER_INDEXES_RESISTANCE];
-
-extern int sector_1_mtz_tznp[8];
-extern int sector_2_mtz_tznp[8];
-
 //Конвертація "короткої" таблиці ранжування у "довгу"
 extern const uint32_t small_big_rang[NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL];
-
-//Спрямований МCЗ
-extern unsigned int sector_directional_mtz[4][3];
-extern unsigned int Uxy_bilshe_porogu[3];
-extern unsigned int Ix_bilshe_porogu[3];
-extern unsigned int temp_states_for_mtz;
-
-//ЗНХ
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-extern uint32_t delta_time_test;
-extern uint32_t zdz_ovd_diagnostyka;
-extern uint32_t test_OVD;
-extern int32_t zdz_ovd_porig;
-#endif
-
-//СЗЗ
-extern int sector_1[8];
-extern int sector_2[8];
-extern unsigned int sector_i_minus_u_1;
-extern unsigned int sector_i_minus_u_2;
-extern unsigned int po_3I0;
-extern unsigned int po_3U0;
-extern unsigned int sector_NZZ;
-extern unsigned int Nzz_3U0_bilshe_porogu, Nzz_3I0_bilshe_porogu;
-
-//ТЗНП
-extern unsigned int TZNP_3U0_bilshe_porogu;
-extern unsigned int TZNP_3I0_r_bilshe_porogu;
-extern unsigned int sector_directional_tznp[3];
-
-extern unsigned int i1_bilshe_porogu, i2_bilshe_porogu;
 
 extern uint32_t TIM_PRT_write_tick;
 
@@ -303,9 +236,6 @@ extern unsigned int save_time_dat_l, save_time_dat_h;
 extern unsigned int changed_settings;
 extern unsigned char crc_settings;
 extern __SETTINGS current_settings_prt, current_settings;
-extern unsigned int settings_prt_Ib_I04;
-extern unsigned int T0_prt;
-extern unsigned int TCurrent_prt;
 extern unsigned int type_of_input_prt;
 extern unsigned int type_of_input_signal_prt;
 extern unsigned int dopusk_dv_prt[NUMBER_INPUTS];
@@ -320,7 +250,6 @@ extern uint32_t static_ocp04_dep_rez_bits;
 
 //Визначення періодів у хвилину і більше
 extern unsigned int number_seconds;
-extern unsigned int number_minutes;
 
 //Змінні для визначеня ресурсу процесора-програми
 extern unsigned int restart_resurs_count;
@@ -488,25 +417,6 @@ extern int current_language;
 
 extern const uint8_t information_off_on[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD];
 extern const uint32_t cursor_x_off_on[MAX_NAMBER_LANGUAGE][2];
-
-//Лічильник ресурсу
-extern unsigned int koef_resurs_changed;
-extern float K_resurs_prt, K_resurs;
-extern unsigned int resurs_vymykacha, resurs_vymykacha_ctrl;
-extern unsigned int resurs_vidkljuchennja, resurs_vidkljuchennja_ctrl;
-extern unsigned char crc_resurs, crc_resurs_ctrl;
-extern unsigned int restart_counter;
-
-//Визначення місця до пошкодження
-extern unsigned int vymknennja_vid_KZ_prt;
-extern unsigned int I_max_KZ_prt;
-extern unsigned int number_of_phases_KZ_prt;
-extern unsigned int X_min_KZ_prt;
-extern int R_KZ_prt;
-
-extern unsigned int number_of_phases_last_KZ;
-extern int VMP_last_KZ;
-extern unsigned int equal_more_KZ;
 
 //Перепрограмування приладу
 extern unsigned int reprogram_device;

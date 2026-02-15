@@ -2523,9 +2523,6 @@
                     <name>$PROJ_DIR$\..\..\working files\src\menu_dt.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_energy.c</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_extended_logic.c</name>
                 </file>
                 <file>
@@ -2548,9 +2545,6 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_registrators.c</name>
-                </file>
-                <file>
-                    <name>$PROJ_DIR$\..\..\working files\src\menu_resurs.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_rpn.c</name>

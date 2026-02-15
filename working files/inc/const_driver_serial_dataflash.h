@@ -37,40 +37,10 @@
 
 enum _index_meas_dr
 {
-  IDM_3I0 = 0,
-  IDM_3I0_other_g,
-  IDM_3I0_r,
-
-  IDM_IA,
-  IDM2_IA,
-  IDM_IB,
-  IDM2_IB,
-  IDM_IC,
-  IDM2_IC,
-
-  IDM_I2,
-  IDM_I1,
-
-  IDM_I04,
-
-  IDM_UA,
-  IDM_UB,
-  IDM_UC,
-
-  IDM_3U0,
-  IDM_U2,
-  IDM_U1,
-
-  IDM_UAB,
-  IDM_UBC,
-  IDM_UCA,
-
-  IDM_R_AB,
-  IDM_X_AB,
-  IDM_R_BC,
-  IDM_X_BC,
-  IDM_R_CA,
-  IDM_X_CA,
+  IDM_UAB_TN1,
+  IDM_IA_1,
+  IDM_UAB_TN2,
+  IDM_IA_2,
 
   _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP,
 

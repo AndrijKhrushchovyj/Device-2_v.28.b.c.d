@@ -716,16 +716,6 @@ void main_manu_function(void)
                   current_ekran.cursor_on = 1;
                   current_ekran.cursor_blinking_on = 0;
                 }
-                else if (current_ekran.index_position == INDEX_ML1_ENERGY)
-                {
-                  //Переходимо на меню відображення технічного обліку електроенергії
-                  current_ekran.current_level = EKRAN_ENERGY;
-
-                  //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення, які поступають на аналогові входи приладу
-                  pervynna_vtorynna = 0;
-
-                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                }
                 else if (current_ekran.index_position == INDEX_ML1_INPUTS_OUTPUTS)
                 {
                   //Переходимо на меню вибору відображення списку вибору входів-виходів для відображення їх миттєвого стану
@@ -1570,15 +1560,12 @@ void main_manu_function(void)
 
         /****************************************************************************************************************************************/
       case EKRAN_MEASURMENT:
-      case EKRAN_MEASURMENT_CURRENT:
-      case EKRAN_MEASURMENT_VOLTAGE_TYPE:
-      case EKRAN_MEASURMENT_VOLTAGE_PHASE:
-      case EKRAN_MEASURMENT_VOLTAGE_LINE:
+      case EKRAN_MEASURMENT_1:
+      case EKRAN_MEASURMENT_2:
+      case EKRAN_MEASURMENT_SELSYN:
+      case EKRAN_VOLTAGE_SELSYN:
+      case EKRAN_ANGLE_SELSYN:
       case EKRAN_MEASURMENT_FREQUENCY:
-      case EKRAN_MEASURMENT_ANGLE:
-      case EKRAN_MEASURMENT_POWER:
-      case EKRAN_ENERGY:
-      case EKRAN_MEASURMENT_RESISTANCE:
       case EKRAN_CHOOSE_SETTINGS_RPN:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_RPN:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_RPN:
@@ -1730,76 +1717,72 @@ void main_manu_function(void)
             {
               if (current_ekran.current_level == EKRAN_MEASURMENT)
               {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT)
-                  current_ekran.index_position = 0;
+                do
+                {
+                  if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT)
+                    current_ekran.index_position = 0;
+
+                  if (
+                    (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                    ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                    current_ekran.index_position++;
+
+                  if (
+                    (current_ekran.index_position == INDEX_ML_MEASURMENT_LOGOMETR) &&
+                    ((current_settings.type_control_location != 1)))
+                    current_ekran.index_position++;
+
+                  if (
+                    (current_ekran.index_position == INDEX_ML_MEASURMENT_SELSYN) &&
+                    ((current_settings.type_control_location != 2)))
+                    current_ekran.index_position++;
+                } while (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT);
+
                 position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
                 //Формуємо екран списку вимірювання
-                make_ekran_measurement();
+                make_ekran_measuremet();
               }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_TYPE)
+              else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
               {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_TYPE)
+                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FOR_SELSYN)
                   current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_TYPE] = current_ekran.index_position;
-                //Формуємо екран списку типів напруг
-                make_ekran_measurement_voltage_type();
+                position_in_current_level_menu[EKRAN_MEASURMENT_SELSYN] = current_ekran.index_position;
+                //Формуємо екран списку вимірювання для сельсина
+                make_ekran_measuremet_for_selsyn();
               }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
+              else if (
+                (current_ekran.current_level == EKRAN_MEASURMENT_1) ||
+                (current_ekran.current_level == EKRAN_MEASURMENT_2))
               {
-                static const unsigned int index_array[MAX_ROW_FOR_MEASURMENT_CURRENT] =
-                  {
-                    IM_3I0_i,
-                    IM_3I0,
-                    IM_3I0_other_g,
-                    IM_3I0_r,
-                    IM_IA,
-                    IM2_IA,
-                    IM_IB,
-                    IM2_IB,
-                    IM_IC,
-                    IM2_IC,
-                    IM_I2,
-                    IM_I1,
-                    IM_I04};
-
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT)
+                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_1_AND_2)
                   current_ekran.index_position = 0;
-                while (
-                  (
-                    ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                    (index_array[current_ekran.index_position] == IM_I04)) ||
-                  (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                   (index_array[current_ekran.index_position] == IM_3I0_r)))
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT)
-                    current_ekran.index_position = 0;
-                }
-
-                position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
-                //Формуємо екран вимірювання струмів
-                make_ekran_current(pervynna_vtorynna);
+                position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
+                //Формуємо екран вимірювання струмів і напруг ТН1 або ТН2
+                make_ekran_current_voltage((current_ekran.current_level == EKRAN_MEASURMENT_1) ? 0 : 1, pervynna_vtorynna);
               }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
+              else if (current_ekran.current_level == EKRAN_VOLTAGE_SELSYN)
               {
-                int max_row = 1;
-                if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) == 0)
-                  max_row += 3 + 2;
-
-                if (current_ekran.index_position >= max_row)
+                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN)
                   current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
-                //Формуємо екран вимірювання фазних напруг
-                make_ekran_voltage_phase(pervynna_vtorynna);
+                position_in_current_level_menu[EKRAN_VOLTAGE_SELSYN] = current_ekran.index_position;
+                //Формуємо екран вимірювання напруг для сельсина
+                make_ekran_voltage_for_selsyn();
               }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
+              else if (current_ekran.current_level == EKRAN_ANGLE_SELSYN)
               {
-                int max_row = 3;
-
-                if (current_ekran.index_position >= max_row)
+                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN)
                   current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
-                //Формуємо екран вимірювання лінійних напруг
-                make_ekran_voltage_line(pervynna_vtorynna);
+                position_in_current_level_menu[EKRAN_ANGLE_SELSYN] = current_ekran.index_position;
+                //Формуємо екран вимірювання кутів для сельсина
+                make_ekran_angle_for_selsyn();
+              }
+              else if (current_ekran.current_level == EKRAN_LOGOMETR)
+              {
+                if (current_ekran.index_position >= MAX_ROW_FOR_VOLTAGE_LOGOMETR)
+                  current_ekran.index_position = 0;
+                position_in_current_level_menu[EKRAN_LOGOMETR] = current_ekran.index_position;
+                //Формуємо екран вимірювання напруг логометра
+                make_ekran_logomentr_voltage();
               }
               else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
               {
@@ -1808,52 +1791,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                 //Формуємо екран відображення частоти
                 make_ekran_frequency();
-              }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_ANGLE)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE)
-                  current_ekran.index_position = 0;
-                while (
-                  (
-                    ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                    (current_ekran.index_position < FULL_ORT_Uab)) ||
-                  (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                   (current_ekran.index_position == FULL_ORT_I04)) ||
-                  (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                   (current_ekran.index_position == FULL_ORT_3I0_r)))
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE)
-                    current_ekran.index_position = 0;
-                }
-
-                position_in_current_level_menu[EKRAN_MEASURMENT_ANGLE] = current_ekran.index_position;
-                //Формуємо екран відображення кутів
-                make_ekran_angle();
-              }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_POWER)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_POWER)
-                  current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
-                //Формуємо екран відображення потужностей
-                make_ekran_power(pervynna_vtorynna);
-              }
-              else if (current_ekran.current_level == EKRAN_ENERGY)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ENERGY)
-                  current_ekran.index_position = 0;
-                current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-                //Формуємо екран відображення вікна технічного обліку електроенергії
-                make_ekran_energy(pervynna_vtorynna);
-              }
-              else if (current_ekran.current_level == EKRAN_MEASURMENT_RESISTANCE)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_RESISTANCE)
-                  current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_MEASURMENT_RESISTANCE] = current_ekran.index_position;
-                //Формуємо екран відображення опорів
-                make_ekran_resistance(pervynna_vtorynna);
               }
               else if (
                 (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
@@ -2572,90 +2509,69 @@ void main_manu_function(void)
                 if (current_ekran.current_level == EKRAN_MEASURMENT)
                 {
                   //Ми у вікні відображення списку вимірювань
-                  if (current_ekran.index_position == INDEX_ML_MEASURMENT_CURRENT)
+                  if (current_ekran.index_position == INDEX_ML_MEASURMENT_1)
                   {
-                    //Переходимо на меню вибору відображення вимірювань струмів
-                    current_ekran.current_level = EKRAN_MEASURMENT_CURRENT;
+                    //Переходимо на меню вибору відображення вимірювань ТН1
+                    current_ekran.current_level = EKRAN_MEASURMENT_1;
 
                     //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
                     pervynna_vtorynna = 0;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE)
+                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_2)
                   {
-                    //Переходимо на меню вибору відображення вимірювань напруг
-                    current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_TYPE;
+                    //Переходимо на меню вибору відображення вимірювань ТН2
+                    current_ekran.current_level = EKRAN_MEASURMENT_2;
 
                     //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
                     pervynna_vtorynna = 0;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_LOGOMETR)
+                  {
+                    //Переходимо на меню вибору відображення вимірювань напруг для логометра
+                    current_ekran.current_level = EKRAN_LOGOMETR;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_SELSYN)
+                  {
+                    //Переходимо на меню вибору відображення списку вимірювань для сельсина
+                    current_ekran.current_level = EKRAN_MEASURMENT_SELSYN;
                   }
                   else if (current_ekran.index_position == INDEX_ML_MEASURMENT_FREQUENCY)
                   {
-                    //Переходимо на меню вибору відображення вимірювань частот
+                    //Переходимо на меню вибору відображення списку вимірювань для сельсина
                     current_ekran.current_level = EKRAN_MEASURMENT_FREQUENCY;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_ANGLE)
-                  {
-                    //Переходимо на меню вибору відображення вимірювань кутів
-                    current_ekran.current_level = EKRAN_MEASURMENT_ANGLE;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_POWER)
-                  {
-                    //Переходимо на меню вибору відображення вимірювань потужностей
-                    current_ekran.current_level = EKRAN_MEASURMENT_POWER;
 
-                    //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення, які поступають на аналогові входи приладу
-                    pervynna_vtorynna = 0;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_RESISTANCE)
-                  {
-                    //Переходимо на меню вибору відображення опорів
-                    current_ekran.current_level = EKRAN_MEASURMENT_RESISTANCE;
-
-                    //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення, які поступають на аналогові входи приладу
-                    pervynna_vtorynna = 0;
-                  }
-                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                  current_ekran.edition = 0;
-                  current_ekran.cursor_on = 1;
-                  current_ekran.cursor_blinking_on = 0;
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_TYPE)
-                {
-                  //Ми у вікні відображення списку вимірювань
-                  if (current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE_PHASE)
-                  {
-                    //Переходимо на меню вибору відображення вимірювань фазних напруг
-                    current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_PHASE;
-
-                    //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                    pervynna_vtorynna = 0;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE_LINE)
-                  {
-                    //Переходимо на меню вибору відображення вимірювань лінійних напруг
-                    current_ekran.current_level = EKRAN_MEASURMENT_VOLTAGE_LINE;
-
-                    //Спочатку відображаємо інформацію на вторинній обмотці трансворматора - значення , які поступають на аналогові входи приладу
-                    pervynna_vtorynna = 0;
-                  }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
                   current_ekran.cursor_on = 1;
                   current_ekran.cursor_blinking_on = 0;
                 }
                 else if (
-                  (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT) ||
-                  (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE) ||
-                  (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE) ||
-                  (current_ekran.current_level == EKRAN_MEASURMENT_POWER) ||
-                  (current_ekran.current_level == EKRAN_ENERGY) ||
-                  (current_ekran.current_level == EKRAN_MEASURMENT_RESISTANCE) ||
-                  (current_ekran.current_level == EKRAN_MAX_VALUES))
+                  (current_ekran.current_level == EKRAN_MEASURMENT_1) ||
+                  (current_ekran.current_level == EKRAN_MEASURMENT_2))
                 {
-                  //Ми у вікні відображення або струмів, напруг, потужностей, опорів, енергій
+                  //Ми у вікні відображення або струмів, або напруг
 
                   //Переключаємося між відображенням для первинної обмотки і вторинної обмотки
                   pervynna_vtorynna ^= 0x1;
+                }
+                else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
+                {
+                  //Ми у вікні відображення списку вимірювань для сельсина
+                  if (current_ekran.index_position == INDEX_ML_MEASURMENT_VOLTAGE)
+                  {
+                    //Переходимо на меню вибору відображення списку вимірювань напруг для сельсина
+                    current_ekran.current_level = EKRAN_VOLTAGE_SELSYN;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_MEASURMENT_ANGLE)
+                  {
+                    //Переходимо на меню вибору відображення списку вимірювань кутів для сельсина
+                    current_ekran.current_level = EKRAN_ANGLE_SELSYN;
+                  }
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.edition = 0;
+                  current_ekran.cursor_on = 1;
+                  current_ekran.cursor_blinking_on = 0;
                 }
                 else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN)
                 {
@@ -3954,86 +3870,81 @@ void main_manu_function(void)
                 //Натиснута кнопка UP
                 if (current_ekran.current_level == EKRAN_MEASURMENT)
                 {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT - 1;
+                  current_ekran.index_position--;
+                  do
+                  {
+                    if (current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_MEASURMENT - 1;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_SELSYN) &&
+                      ((current_settings.type_control_location != 2)))
+                      current_ekran.index_position--;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_LOGOMETR) &&
+                      ((current_settings.type_control_location != 1)))
+                      current_ekran.index_position--;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                      ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                      current_ekran.index_position--;
+                  } while (current_ekran.index_position < 0);
+
                   position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
-                  //Формуємо екран списку вимірювань вікна
-                  make_ekran_measurement();
+                  //Формуємо екран списку вимірювання
+                  make_ekran_measuremet();
                 }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_TYPE)
+                else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
                 {
                   if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_VOLTAGE_TYPE - 1;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_TYPE] = current_ekran.index_position;
-                  //Формуємо екран списку типів напруг
-                  make_ekran_measurement_voltage_type();
+                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_FOR_SELSYN - 1;
+                  position_in_current_level_menu[EKRAN_MEASURMENT_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран списку вимірювання для сельсина
+                  make_ekran_measuremet_for_selsyn();
                 }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
+                else if (
+                  (current_ekran.current_level == EKRAN_MEASURMENT_1) ||
+                  (current_ekran.current_level == EKRAN_MEASURMENT_2))
                 {
-                  static const unsigned int index_array[MAX_ROW_FOR_MEASURMENT_CURRENT] =
-                    {
-                      IM_3I0_i,
-                      IM_3I0,
-                      IM_3I0_other_g,
-                      IM_3I0_r,
-                      IM_IA,
-                      IM2_IA,
-                      IM_IB,
-                      IM2_IB,
-                      IM_IC,
-                      IM2_IC,
-                      IM_I2,
-                      IM_I1,
-                      IM_I04};
-
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_CURRENT - 1;
-                  while (
-                    (
-                      ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                      (index_array[current_ekran.index_position] == IM_I04)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                     (index_array[current_ekran.index_position] == IM_3I0_r)))
-                  {
-                    if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_CURRENT - 1;
-                  }
-
-                  position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
-                  //Формуємо екран вимірювання струмів вікна
-                  make_ekran_current(pervynna_vtorynna);
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
-                {
-                  int max_row = 1;
-                  if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) == 0)
-                    max_row += 3 + 2;
-
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = max_row - 1;
+                  current_ekran.index_position = current_ekran.index_position - MAX_ROW_LCD;
                   if (current_ekran.index_position < 0)
-                  {
-                    //Цього не малоб ніколи бути - це просто перестраховка
-                    current_ekran.index_position = 0;
-                  }
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання напруг вікна
-                  make_ekran_voltage_phase(pervynna_vtorynna);
+                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_1_AND_2 - 1;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
+                  //Формуємо екран вимірювання струмів і напруг ТН1 або ТН2
+                  make_ekran_current_voltage((current_ekran.current_level == EKRAN_MEASURMENT_1) ? 0 : 1, pervynna_vtorynna);
                 }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
+                else if (current_ekran.current_level == EKRAN_VOLTAGE_SELSYN)
                 {
-                  int max_row = 3;
-
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = max_row - 1;
+                  current_ekran.index_position = current_ekran.index_position - MAX_ROW_LCD;
                   if (current_ekran.index_position < 0)
-                  {
-                    //Цього не малоб ніколи бути - це просто перестраховка
-                    current_ekran.index_position = 0;
-                  }
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання напруг вікна
-                  make_ekran_voltage_line(pervynna_vtorynna);
+                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN - 1;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_VOLTAGE_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран вимірювання напруг для сельсина
+                  make_ekran_voltage_for_selsyn();
+                }
+                else if (current_ekran.current_level == EKRAN_ANGLE_SELSYN)
+                {
+                  current_ekran.index_position = current_ekran.index_position - MAX_ROW_LCD;
+                  if (current_ekran.index_position < 0)
+                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN - 1;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_ANGLE_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран вимірювання кутів для сельсина
+                  make_ekran_angle_for_selsyn();
+                }
+                else if (current_ekran.current_level == EKRAN_LOGOMETR)
+                {
+                  current_ekran.index_position = current_ekran.index_position - MAX_ROW_LCD;
+                  if (current_ekran.index_position < 0)
+                    current_ekran.index_position = MAX_ROW_FOR_VOLTAGE_LOGOMETR - 1;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_LOGOMETR] = current_ekran.index_position;
+                  //Формуємо екран вимірювання напруг логометра
+                  make_ekran_logomentr_voltage();
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
                 {
@@ -4042,53 +3953,6 @@ void main_manu_function(void)
                   position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                   //Формуємо екран вимірювання частот вікна
                   make_ekran_frequency();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_ANGLE)
-                {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_ANGLE - 1;
-                  while (
-                    (
-                      ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                      (current_ekran.index_position < FULL_ORT_Uab)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                     (current_ekran.index_position == FULL_ORT_I04)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                     (current_ekran.index_position == FULL_ORT_3I0_r)))
-                  {
-                    if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_ANGLE - 1;
-                  }
-
-                  position_in_current_level_menu[EKRAN_MEASURMENT_ANGLE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання кутів
-                  make_ekran_angle();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_POWER)
-                {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_POWER - 1;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
-                  //Формуємо екран відображення вікна потужностей
-                  make_ekran_power(pervynna_vtorynna);
-                }
-                else if (current_ekran.current_level == EKRAN_ENERGY)
-                {
-                  current_ekran.index_position -= (MAX_ROW_LCD >> 1);
-                  if (current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_EKRAN_ENERGY - 1;
-                  current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                  position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-                  //Формуємо екран відображення вікна технічного обліку келектроенергії
-                  make_ekran_energy(pervynna_vtorynna);
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_RESISTANCE)
-                {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_RESISTANCE - 1;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_RESISTANCE] = current_ekran.index_position;
-                  //Формуємо екран відображення опорів
-                  make_ekran_resistance(pervynna_vtorynna);
                 }
                 else if (
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||
@@ -4801,76 +4665,81 @@ void main_manu_function(void)
                 //Натиснута кнопка DOWN
                 if (current_ekran.current_level == EKRAN_MEASURMENT)
                 {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
-                  //Формуємо екран списку вимірювань вікна
-                  make_ekran_measurement();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_TYPE)
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_TYPE)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_TYPE] = current_ekran.index_position;
-                  //Формуємо екран списку типів напруг
-                  make_ekran_measurement_voltage_type();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_CURRENT)
-                {
-                  static const unsigned int index_array[MAX_ROW_FOR_MEASURMENT_CURRENT] =
-                    {
-                      IM_3I0_i,
-                      IM_3I0,
-                      IM_3I0_other_g,
-                      IM_3I0_r,
-                      IM_IA,
-                      IM2_IA,
-                      IM_IB,
-                      IM2_IB,
-                      IM_IC,
-                      IM2_IC,
-                      IM_I2,
-                      IM_I1,
-                      IM_I04};
-
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT)
-                    current_ekran.index_position = 0;
-                  while (
-                    (
-                      ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                      (index_array[current_ekran.index_position] == IM_I04)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                     (index_array[current_ekran.index_position] == IM_3I0_r)))
+                  current_ekran.index_position++;
+                  do
                   {
-                    if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_CURRENT)
+                    if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT)
                       current_ekran.index_position = 0;
-                  }
 
-                  position_in_current_level_menu[EKRAN_MEASURMENT_CURRENT] = current_ekran.index_position;
-                  //Формуємо екран вимірювання струмів вікна
-                  make_ekran_current(pervynna_vtorynna);
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                      ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                      current_ekran.index_position++;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_LOGOMETR) &&
+                      ((current_settings.type_control_location != 1)))
+                      current_ekran.index_position++;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_MEASURMENT_SELSYN) &&
+                      ((current_settings.type_control_location != 2)))
+                      current_ekran.index_position++;
+                  } while (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT);
+
+                  position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
+                  //Формуємо екран списку вимірювання
+                  make_ekran_measuremet();
                 }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_PHASE)
+                else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
                 {
-                  int max_row = 1;
-                  if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) == 0)
-                    max_row += 3 + 2;
-
-                  if (++current_ekran.index_position >= max_row)
+                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FOR_SELSYN)
                     current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_PHASE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання напруг вікна
-                  make_ekran_voltage_phase(pervynna_vtorynna);
+                  position_in_current_level_menu[EKRAN_MEASURMENT_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран списку вимірювання для сельсина
+                  make_ekran_measuremet_for_selsyn();
                 }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_VOLTAGE_LINE)
+                else if (
+                  (current_ekran.current_level == EKRAN_MEASURMENT_1) ||
+                  (current_ekran.current_level == EKRAN_MEASURMENT_2))
                 {
-                  int max_row = 3;
-
-                  if (++current_ekran.index_position >= max_row)
+                  current_ekran.index_position = current_ekran.index_position + MAX_ROW_LCD;
+                  if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_1_AND_2)
                     current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_VOLTAGE_LINE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання напруг вікна
-                  make_ekran_voltage_line(pervynna_vtorynna);
+                  position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  //Формуємо екран вимірювання струмів і напруг ТН1 або ТН2
+                  make_ekran_current_voltage((current_ekran.current_level == EKRAN_MEASURMENT_1) ? 0 : 1, pervynna_vtorynna);
+                }
+                else if (current_ekran.current_level == EKRAN_VOLTAGE_SELSYN)
+                {
+                  current_ekran.index_position = current_ekran.index_position + MAX_ROW_LCD;
+                  if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN)
+                    current_ekran.index_position = 0;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_VOLTAGE_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран вимірювання напруг для сельсина
+                  make_ekran_voltage_for_selsyn();
+                }
+                else if (current_ekran.current_level == EKRAN_ANGLE_SELSYN)
+                {
+                  current_ekran.index_position = current_ekran.index_position + MAX_ROW_LCD;
+                  if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN)
+                    current_ekran.index_position = 0;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_ANGLE_SELSYN] = current_ekran.index_position;
+                  //Формуємо екран вимірювання кутів для сельсина
+                  make_ekran_angle_for_selsyn();
+                }
+                else if (current_ekran.current_level == EKRAN_LOGOMETR)
+                {
+                  current_ekran.index_position = current_ekran.index_position + MAX_ROW_LCD;
+                  if (current_ekran.index_position >= MAX_ROW_FOR_VOLTAGE_LOGOMETR)
+                    current_ekran.index_position = 0;
+                  current_ekran.index_position = (current_ekran.index_position >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+                  position_in_current_level_menu[EKRAN_LOGOMETR] = current_ekran.index_position;
+                  //Формуємо екран вимірювання напруг логометра
+                  make_ekran_logomentr_voltage();
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
                 {
@@ -4879,53 +4748,6 @@ void main_manu_function(void)
                   position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                   //Формуємо екран вимірювання частот вікна
                   make_ekran_frequency();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_ANGLE)
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE)
-                    current_ekran.index_position = 0;
-                  while (
-                    (
-                      ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                      (current_ekran.index_position < FULL_ORT_Uab)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                     (current_ekran.index_position == FULL_ORT_I04)) ||
-                    (((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                     (current_ekran.index_position == FULL_ORT_3I0_r)))
-                  {
-                    if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_ANGLE)
-                      current_ekran.index_position = 0;
-                  }
-
-                  position_in_current_level_menu[EKRAN_MEASURMENT_ANGLE] = current_ekran.index_position;
-                  //Формуємо екран вимірювання кутів
-                  make_ekran_angle();
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_POWER)
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_POWER)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_POWER] = current_ekran.index_position;
-                  //Формуємо екран відображення вікна потужностей
-                  make_ekran_power(pervynna_vtorynna);
-                }
-                else if (current_ekran.current_level == EKRAN_ENERGY)
-                {
-                  current_ekran.index_position += (MAX_ROW_LCD >> 1);
-                  if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ENERGY)
-                    current_ekran.index_position = 0;
-                  current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                  position_in_current_level_menu[EKRAN_ENERGY] = current_ekran.index_position;
-                  //Формуємо екран відображення вікна технічного обліку келектроенергії
-                  make_ekran_energy(pervynna_vtorynna);
-                }
-                else if (current_ekran.current_level == EKRAN_MEASURMENT_RESISTANCE)
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_RESISTANCE)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_MEASURMENT_RESISTANCE] = current_ekran.index_position;
-                  //Формуємо екран відображення опорів
-                  make_ekran_resistance(pervynna_vtorynna);
                 }
                 else if (
                   (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_RPN) ||

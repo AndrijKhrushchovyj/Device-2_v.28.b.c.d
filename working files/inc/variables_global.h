@@ -106,27 +106,7 @@ unsigned int ustuvannja[NUMBER_ANALOG_CANALES] = {
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE};
-SRAM1 unsigned int edit_ustuvannja[NUMBER_ANALOG_CANALES];
-int phi_ustuvannja_meas[NUMBER_ANALOG_CANALES], phi_ustuvannja[NUMBER_ANALOG_CANALES];
-SRAM1 int phi_edit_ustuvannja[NUMBER_ANALOG_CANALES];
-float phi_ustuvannja_sin_cos_meas[2 * NUMBER_ANALOG_CANALES] = {
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f};
-float phi_ustuvannja_sin_cos[2 * NUMBER_ANALOG_CANALES] = {
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f,
-  0.0f, 1.0f};
+
 const float sin_data_f[NUMBER_POINT] = {
   0.000000000000000000000000000000f,
   0.195090322016128000000000000000f,
@@ -222,38 +202,12 @@ unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high = 0;
 unsigned int measurement_middle[_NUMBER_IM];
 SRAM1 unsigned int measurement_low[_NUMBER_IM];
 
-const unsigned int index_converter_Ib_p[NUMBER_ANALOG_CANALES] = {FULL_ORT_3I0, FULL_ORT_Ia, FULL_ORT_Ib, FULL_ORT_Ic, FULL_ORT_Ua, FULL_ORT_Ub, FULL_ORT_Uc, FULL_ORT_3U0};
-const unsigned int index_converter_I04_p[NUMBER_ANALOG_CANALES] = {FULL_ORT_3I0, FULL_ORT_Ia, FULL_ORT_I04, FULL_ORT_Ic, FULL_ORT_Ua, FULL_ORT_Ub, FULL_ORT_Uc, FULL_ORT_3U0};
-const unsigned int index_converter_Ib_l[NUMBER_ANALOG_CANALES] = {FULL_ORT_3I0, FULL_ORT_Ia, FULL_ORT_Ib, FULL_ORT_Ic, FULL_ORT_Uab, FULL_ORT_Ubc, FULL_ORT_Uca, FULL_ORT_3U0};
-const unsigned int index_converter_I04_l[NUMBER_ANALOG_CANALES] = {FULL_ORT_3I0, FULL_ORT_Ia, FULL_ORT_I04, FULL_ORT_Ic, FULL_ORT_Uab, FULL_ORT_Ubc, FULL_ORT_Uca, FULL_ORT_3U0};
+const unsigned int index_converter[NUMBER_ANALOG_CANALES] = {FULL_ORT_UAB_TN1, FULL_ORT_UAB_TN2, FULL_ORT_UP1P2, FULL_ORT_UP2P3, FULL_ORT_UC1C2, FULL_ORT_IA_1, FULL_ORT_IA_2};
 int ortogonal_calc[2 * FULL_ORT_MAX];
 int ortogonal_calc_low[2 * FULL_ORT_MAX];
 int phi_angle[2][FULL_ORT_MAX];
 uint32_t bank_for_calc_phi_angle, state_calc_phi_angle;
 int base_index_for_angle = -1;
-
-int P_plus[2];
-int P_minus[2];
-int Q_1q[2];
-int Q_2q[2];
-int Q_3q[2];
-int Q_4q[2];
-unsigned int lichylnyk_1s_po_20ms;
-unsigned int bank_for_enegry;
-int P[2], Q[2], cos_phi_x1000[2];
-unsigned int S[2];
-uint32_t bank_for_calc_power, state_calc_power;
-double energy[2][MAX_NUMBER_INDEXES_ENERGY];
-uint32_t state_calc_energy;
-unsigned int clean_energy;
-unsigned int information_about_clean_energy;
-
-int resistance[MAX_NUMBER_INDEXES_RESISTANCE];
-int resistance_middle[MAX_NUMBER_INDEXES_RESISTANCE];
-SRAM1 int resistance_low[MAX_NUMBER_INDEXES_RESISTANCE];
-
-int sector_1_mtz_tznp[8];
-int sector_2_mtz_tznp[8];
 
 //Конвертація "короткої" таблиці ранжування у "довгу"
 const uint32_t small_big_rang[NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL] =
@@ -381,53 +335,6 @@ const uint32_t small_big_rang[NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL] =
     RANG_LF16
 
 };
-
-//Спрямований МСЗ
-unsigned int sector_directional_mtz[4][3];
-unsigned int Uxy_bilshe_porogu[3];
-unsigned int Ix_bilshe_porogu[3];
-unsigned int temp_states_for_mtz;
-
-//ЗНХ
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-uint32_t delta_time_test = PERIOD_ZDZ_TEST;
-uint32_t zdz_ovd_diagnostyka;
-uint32_t test_OVD;
-int32_t zdz_ovd_porig = 1;
-#endif
-
-//СЗЗ
-int sector_1[8];
-int sector_2[8];
-unsigned int sector_i_minus_u_1;
-unsigned int sector_i_minus_u_2;
-unsigned int po_3I0;     /*0 - зрівнювання з уставкою спрацювання, відмінне від нуля - зрівнювання з уставкою відпускання*/
-unsigned int po_3U0;     /*0 - зрівнювання з уставкою спрацювання, відмінне від нуля - зрівнювання з уставкою відпускання*/
-unsigned int sector_NZZ; /*0 - зрівнювання з сектором спрацювання, відмінне від нуля - зрівнювання з сектором відпускання*/
-/*
-0  - кут різниці векторів 3I0 і 3U0 у "сірій" області
-1  - кут різниці векторів 3I0 і 3U0 у 1-ому квадранті
-2  - кут різниці векторів 3I0 і 3U0 у 2-ому квадранті
-3  - кут різниці векторів 3I0 і 3U0 у 3-ому квадранті
-4  - кут різниці векторів 3I0 і 3U0 у 4-ому квадранті
-*/
-unsigned int Nzz_3U0_bilshe_porogu, Nzz_3I0_bilshe_porogu;
-
-//ТЗНП
-unsigned int TZNP_3U0_bilshe_porogu;
-unsigned int TZNP_3I0_r_bilshe_porogu;
-unsigned int sector_directional_tznp[3];
-
-unsigned int i1_bilshe_porogu, i2_bilshe_porogu;
 
 uint32_t TIM_PRT_write_tick;
 
@@ -731,9 +638,6 @@ unsigned int save_time_dat_l, save_time_dat_h;
 unsigned int changed_settings = CHANGED_ETAP_NONE;
 unsigned char crc_settings;
 __SETTINGS current_settings_prt;
-unsigned int settings_prt_Ib_I04;
-unsigned int T0_prt;
-unsigned int TCurrent_prt;
 unsigned int type_of_input_prt;
 unsigned int type_of_input_signal_prt;
 unsigned int dopusk_dv_prt[NUMBER_INPUTS];
@@ -753,7 +657,6 @@ uint32_t static_ocp04_dep_rez_bits;
 
 //Визначення періодів у хвилину і більше
 unsigned int number_seconds;
-unsigned int number_minutes;
 
 //Ресурс++
 unsigned int restart_resurs_count;
@@ -884,40 +787,10 @@ unsigned int part_reading_dr_from_dataflash_for_RS485;
 //unsigned int state_current_monitoring;
 const __meas_to_d_meas im_to_idm[_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP] =
   {
-    {measurement, IM_3I0},
-    {measurement, IM_3I0_other_g},
-    {measurement, IM_3I0_r},
-
-    {measurement, IM_IA},
-    {measurement, IM2_IA},
-    {measurement, IM_IB},
-    {measurement, IM2_IB},
-    {measurement, IM_IC},
-    {measurement, IM2_IC},
-
-    {measurement, IM_I2},
-    {measurement, IM_I1},
-
-    {measurement, IM_I04},
-
-    {measurement, IM_UA},
-    {measurement, IM_UB},
-    {measurement, IM_UC},
-
-    {measurement, IM_3U0},
-    {measurement, IM_U2},
-    {measurement, IM_U1},
-
-    {measurement, IM_UAB},
-    {measurement, IM_UBC},
-    {measurement, IM_UCA},
-
-    {(unsigned int const *) resistance, R_AB},
-    {(unsigned int const *) resistance, X_AB},
-    {(unsigned int const *) resistance, R_BC},
-    {(unsigned int const *) resistance, X_BC},
-    {(unsigned int const *) resistance, R_CA},
-    {(unsigned int const *) resistance, X_CA}};
+    {measurement, IM_UAB_TN1},
+    {measurement, IM_IA_1},
+    {measurement, IM_UAB_TN2},
+    {measurement, IM_IA_2}};
 
 unsigned int max_phase_current_dr; //максимальний фазний струм
 int max_I2g_to_I1g;                //пара (друга гармтоніка до першої гармоніки, яка має найбільше відношення)
@@ -951,25 +824,6 @@ unsigned int number_record_of_pr_err_into_RS485 = 0xffff;
 
 //Очистка інформації по реєстраторах
 unsigned int clean_rejestrators;
-
-//Лічильник ресурсу
-unsigned int koef_resurs_changed = CHANGED_ETAP_NONE;
-float K_resurs_prt, K_resurs;
-unsigned int resurs_vymykacha, resurs_vymykacha_ctrl;
-unsigned int resurs_vidkljuchennja, resurs_vidkljuchennja_ctrl;
-unsigned char crc_resurs, crc_resurs_ctrl;
-unsigned int restart_counter;
-
-//Визначення місця до пошкодження
-unsigned int vymknennja_vid_KZ_prt;
-unsigned int I_max_KZ_prt;
-unsigned int number_of_phases_KZ_prt;
-unsigned int X_min_KZ_prt = (unsigned int) UNDEF_RESISTANCE;
-int R_KZ_prt;
-
-unsigned int number_of_phases_last_KZ;
-int VMP_last_KZ = UNDEF_VMP;
-unsigned int equal_more_KZ;
 
 //Перепрограмування приладу
 unsigned int reprogram_device;

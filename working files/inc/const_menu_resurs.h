@@ -1,7 +1,7 @@
 #ifndef __CONST_MENU_RESURS__
 #define __CONST_MENU_RESURS__
 
-#define EKRAN_RESURS                        (EKRAN_ENERGY + 1)
+#define EKRAN_RESURS                        (EKRAN_MEASURMENT_FREQUENCY + 1)
 
 #define MAX_ROW_FOR_EKRAN_RESURS            2
 

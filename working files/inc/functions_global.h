@@ -67,7 +67,6 @@ void make_ekran_voltage_line(unsigned int);
 void make_ekran_frequency(void);
 void make_ekran_angle(void);
 void make_ekran_power(unsigned int);
-void make_ekran_resistance(unsigned int);
 void convert_and_insert_char_for_measurement(unsigned int, unsigned int, unsigned int, unsigned int, unsigned char *, unsigned int);
 void convert_and_insert_char_for_frequency(int, unsigned char *);
 void make_ekran_chose_settings_any_protection(void);
@@ -187,7 +186,6 @@ void make_ekran_settings_digital_registrators(void);
 
 void make_ekran_setting_language(void);
 void make_ekran_resurs(void);
-void make_ekran_energy(unsigned int);
 void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
 
@@ -245,9 +243,6 @@ void Fourier(void);
 void fapch(void);
 void calc_measurement(unsigned int);
 unsigned int sqrt_64(unsigned long long);
-
-void calc_angle(void);
-void calc_power_and_energy(void);
 
 void main_routines_for_spi1(void);
 void main_function_for_dataflash_resp(int);

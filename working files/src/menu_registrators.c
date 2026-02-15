@@ -1026,12 +1026,6 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
          " Uab  =         ",
          " Ubc  =         ",
          " Uca  =         ",
-         " Rab            ",
-         " Xab            ",
-         " Rbc            ",
-         " Xbc            ",
-         " Rca            ",
-         " Xca            ",
          " f  =           ",
          "                "},
         {" 3I0  =         ",
@@ -1055,12 +1049,6 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
          " Uab  =         ",
          " Ubc  =         ",
          " Uca  =         ",
-         " Rab            ",
-         " Xab            ",
-         " Rbc            ",
-         " Xbc            ",
-         " Rca            ",
-         " Xca            ",
          " f  =           ",
          "                "},
         {" 3I0  =         ",
@@ -1084,12 +1072,6 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
          " Vab  =         ",
          " Vbc  =         ",
          " Vca  =         ",
-         " Rab            ",
-         " Xab            ",
-         " Rbc            ",
-         " Xbc            ",
-         " Rca            ",
-         " Xca            ",
          " f  =           ",
          "                "},
         {" 3I0  =         ",
@@ -1113,12 +1095,6 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
          " Uab  =         ",
          " Ubc  =         ",
          " Uca  =         ",
-         " Rab            ",
-         " Xab            ",
-         " Rbc            ",
-         " Xbc            ",
-         " Rca            ",
-         " Xca            ",
          " f  =           ",
          "                "}};
     unsigned char name_string_tmp[MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR][MAX_COL_LCD];
@@ -1162,7 +1138,7 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
 
     for (unsigned int i = 0; i < MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR; i++)
     {
-      if (i < IDM_R_AB)
+      if (i < IDM_freq)
       {
         //Струми і напруги
 
@@ -1188,68 +1164,6 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
           name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
         else
           name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
-      }
-      else if (i < IDM_freq)
-      {
-        //Опори
-        static const unsigned int index_of_start_position_array[MAX_NAMBER_LANGUAGE] = {4, 4, 5, 4};
-
-#define SIZE_R_DIMENSION 2
-        static const unsigned int size_dimension_array[MAX_NAMBER_LANGUAGE] = {SIZE_R_DIMENSION, SIZE_R_DIMENSION, SIZE_R_DIMENSION - 1, SIZE_R_DIMENSION};
-        static const unsigned char resistance_dimension[MAX_NAMBER_LANGUAGE][SIZE_R_DIMENSION] = {"Ом", "Ом", "Ї ", "Ом"}; /*Ї тут іде як замінник великої букви Омега для англійської розкладки*/
-
-        unsigned int start_position = index_of_start_position_array[index_language];
-        unsigned int size_dimension = size_dimension_array[index_language];
-        for (unsigned int j = 0; j < size_dimension; j++)
-        {
-          name_string_tmp[i][MAX_COL_LCD - size_dimension + j] = resistance_dimension[index_language][j];
-        }
-        name_string_tmp[i][start_position] = '=';
-
-#undef SIZE_R_DIMENSION
-        start_position++;
-
-        int temp_measurement = *(point_unsigned_int + i);
-        if (((unsigned int) temp_measurement) != ((unsigned int) UNDEF_RESISTANCE))
-        {
-          /********************************/
-          //Вводимо вимірювальні значення
-          /********************************/
-          if (temp_measurement < 0)
-          {
-            temp_measurement = -temp_measurement;
-            name_string_tmp[i][start_position] = '-';
-          }
-          convert_and_insert_char_for_measurement(3, temp_measurement, TVoltage, TCurrent, name_string_tmp[i], (start_position + 1));
-
-          unsigned int shift = 0;
-          unsigned int start_position_to_shift = start_position + 1;
-          while (
-            (name_string_tmp[i][start_position_to_shift] == ' ') &&
-            ((start_position_to_shift + shift) < MAX_COL_LCD))
-          {
-            for (unsigned int j = start_position_to_shift; j < (MAX_COL_LCD - 1); j++)
-              name_string_tmp[i][j] = name_string_tmp[i][j + 1];
-            name_string_tmp[i][MAX_COL_LCD - 1] = ' ';
-            shift++;
-          }
-          /********************************/
-        }
-        else
-        {
-#define SIZE_UNDEF 9
-          static const unsigned char undefined[MAX_NAMBER_LANGUAGE][SIZE_UNDEF] =
-            {
-              "Неопред. ",
-              "Невизнач.",
-              "Undef    ",
-              "Неопред. "};
-          for (unsigned int j = 0; j < size_dimension; j++)
-            name_string_tmp[i][MAX_COL_LCD - size_dimension + j] = ' ';
-          for (unsigned int j = 0; j < SIZE_UNDEF; j++)
-            name_string_tmp[i][start_position + 1 + j] = undefined[index_language][j];
-#undef SIZE_UNDEF
-        }
       }
       else if (i == IDM_freq)
       {

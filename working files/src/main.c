@@ -5,8 +5,6 @@
 #include "variables_global.h"
 #include "functions_global.h"
 
-unsigned int before_full_start;
-
 __test_watchdog testWatchDogTmp =
   {
     .arrTimeout = {-1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -210,7 +208,7 @@ void watchdog_routine(unsigned int maska, unsigned int const label)
 // void decoderN_SMALLACMDArrayLoader(void);
 void periodical_operations(unsigned int full_actions)
 {
-  watchdog_routine((before_full_start == true) ? UNITED_BITS_WATCHDOG_SHORT : UNITED_BITS_WATCHDOG, 9);
+  watchdog_routine(UNITED_BITS_WATCHDOG, 9);
 
   //Обмін через SPI_1
   if (
@@ -258,7 +256,7 @@ void periodical_operations(unsigned int full_actions)
   }
 
   //Робота з Watchdog
-  watchdog_routine((before_full_start == true) ? UNITED_BITS_WATCHDOG_SHORT : UNITED_BITS_WATCHDOG, 10);
+  watchdog_routine(UNITED_BITS_WATCHDOG, 10);
   // decoderN_BIGACMDArrayLoader();
   // decoderN_SMALLACMDArrayLoader();
 
@@ -289,25 +287,7 @@ void periodical_operations(unsigned int full_actions)
   Щоб за один оберт виконувалася тільки одна перевірка, тобто щоб в одному оберті
   не було надто довга затримка на фонову перевірку, хоч і важливу.
   */
-  if (periodical_tasks_CALC_ENERGY_DATA != 0)
-  {
-    //Стоїть у черзі активна задача розразунку потужності і енергій
-
-    calc_power_and_energy();
-
-    //Скидаємо активну задачу розрахунку потужності і енергій
-    periodical_tasks_CALC_ENERGY_DATA = false;
-  }
-  else if (periodical_tasks_CALCULATION_ANGLE != 0)
-  {
-    //Стоїть у черзі активна задача розразунку кутів
-
-    calc_angle();
-
-    //Скидаємо активну задачу розрахунку кутів
-    periodical_tasks_CALCULATION_ANGLE = false;
-  }
-  else if (full_actions == true)
+  if (full_actions == true)
   {
     if (periodical_tasks_TEST_SETTINGS != 0)
     {
@@ -463,7 +443,7 @@ void periodical_operations(unsigned int full_actions)
     resurs_temp++;
 
   //Робота з Watchdog
-  watchdog_routine((before_full_start == true) ? UNITED_BITS_WATCHDOG_SHORT : UNITED_BITS_WATCHDOG, 11);
+  watchdog_routine(UNITED_BITS_WATCHDOG, 11);
 }
 /*************************************************************************/
 
@@ -649,11 +629,6 @@ int main(void)
       {
         //Копіюємо масив юстування у копію цього масиву але з яким працює (читає і змінює) тільки вимірювальна захистема
         ustuvannja_meas[k] = ustuvannja[k];
-
-        //Копіюємо масив юстування у копію цього масиву але з яким працює (читає і змінює) тільки вимірювальна захистема
-        phi_ustuvannja_meas[k] = phi_ustuvannja[k];
-        phi_ustuvannja_sin_cos_meas[2 * k] = phi_ustuvannja_sin_cos[2 * k];
-        phi_ustuvannja_sin_cos_meas[2 * k + 1] = phi_ustuvannja_sin_cos[2 * k + 1];
       }
       //Помічаємо, що зміни прийняті всіма системами
       changed_ustuvannja = CHANGED_ETAP_NONE;
@@ -663,9 +638,6 @@ int main(void)
     {
       //Копіюємо таблицю настройок у копію цієї таблиці але з якою працює (читає і змінює) тільки система захистів
       current_settings_prt = current_settings;
-      settings_prt_Ib_I04 = current_settings_prt.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04);
-      T0_prt = current_settings_prt.T0;
-      TCurrent_prt = current_settings_prt.TCurrent;
       type_of_input_prt = current_settings_prt.type_of_input;
       type_of_input_signal_prt = current_settings_prt.type_of_input_signal;
       for (size_t i = 0; i < NUMBER_INPUTS; ++i)
@@ -779,11 +751,6 @@ int main(void)
       {
         //Копіюємо масив юстування у копію цього масиву але з яким працює (читає і змінює) тільки вимірювальна захистема
         ustuvannja_meas[k] = ustuvannja[k];
-
-        //Копіюємо масив юстування у копію цього масиву але з яким працює (читає і змінює) тільки вимірювальна захистема
-        phi_ustuvannja_meas[k] = phi_ustuvannja[k];
-        phi_ustuvannja_sin_cos_meas[2 * k] = phi_ustuvannja_sin_cos[2 * k];
-        phi_ustuvannja_sin_cos_meas[2 * k + 1] = phi_ustuvannja_sin_cos[2 * k + 1];
       }
       //Помічаємо, що зміни прийняті всіма системами
       changed_ustuvannja = CHANGED_ETAP_NONE;
@@ -793,9 +760,6 @@ int main(void)
     {
       //Копіюємо таблицю настройок у копію цієї таблиці але з якою працює (читає і змінює) тільки система захистів
       current_settings_prt = current_settings;
-      settings_prt_Ib_I04 = current_settings_prt.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04);
-      T0_prt = current_settings_prt.T0;
-      TCurrent_prt = current_settings_prt.TCurrent;
       type_of_input_prt = current_settings_prt.type_of_input;
       type_of_input_signal_prt = current_settings_prt.type_of_input_signal;
       for (size_t i = 0; i < NUMBER_INPUTS; ++i)
@@ -867,28 +831,6 @@ int main(void)
   //Ініціалізація FATFs
   MX_FATFS_Init();
 
-  if ((POWER_CTRL->IDR & POWER_CTRL_PIN) == (uint32_t) Bit_RESET)
-  {
-    unsigned int number_seconds_tmp = (number_seconds + 2) % 60;
-    while (
-      ((POWER_CTRL->IDR & POWER_CTRL_PIN) == (uint32_t) Bit_RESET) &&
-      ((
-         (measurement[IM_IA] < POWEER_ISNOT_FROM_IA_IC) &&
-         (measurement[IM_IC] < POWEER_ISNOT_FROM_IA_IC)) ||
-       (number_seconds != number_seconds_tmp)))
-    {
-      before_full_start = true;
-      ar_routine_with_fatfs(true);
-      watchdog_routine(UNITED_BITS_WATCHDOG_SHORT, 24);
-      if (
-        (measurement[IM_IA] < POWEER_ISNOT_FROM_IA_IC) &&
-        (measurement[IM_IC] < POWEER_ISNOT_FROM_IA_IC))
-      {
-        number_seconds_tmp = (number_seconds + 2) % 60;
-      }
-    }
-    before_full_start = false;
-  }
   /**********************/
 
   /**********************/
@@ -958,7 +900,6 @@ int main(void)
   while (1)
   {
     //Немає активних операцій по Аналоговому реєстратору
-    before_full_start = false;
     if (periodical_tasks_TEST_FLASH_MEMORY != 0)
     {
       /************************************************************/

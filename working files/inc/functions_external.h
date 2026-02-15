@@ -67,7 +67,6 @@ extern void make_ekran_voltage_line(unsigned int);
 extern void make_ekran_frequency(void);
 extern void make_ekran_angle(void);
 extern void make_ekran_power(unsigned int);
-extern void make_ekran_resistance(unsigned int);
 extern void convert_and_insert_char_for_measurement(unsigned int, unsigned int, unsigned int, unsigned int, unsigned char *, unsigned int);
 extern void convert_and_insert_char_for_frequency(int, unsigned char *);
 extern void make_ekran_chose_settings_any_protection(void);
@@ -183,7 +182,6 @@ extern void make_ekran_list_titles_for_record_of_state_cmd_registrator(void);
 extern void make_ekran_changing_signals_statistica_registrator(void);
 extern void make_ekran_setting_language(void);
 extern void make_ekran_resurs(void);
-extern void make_ekran_energy(unsigned int);
 extern void make_ekran_grupa_ustavok(void);
 extern void make_ekran_vidkluchenja(void);
 extern void make_ekran_data_and_time_elem_stt_registrator(unsigned int type_of_registrator);
@@ -244,9 +242,6 @@ extern void Fourier(void);
 extern void fapch(void);
 extern void calc_measurement(unsigned int);
 extern unsigned int sqrt_64(unsigned long long);
-
-extern void calc_angle(void);
-extern void calc_power_and_energy(void);
 
 extern void main_routines_for_spi1(void);
 extern void main_function_for_dataflash_resp(int);

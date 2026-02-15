@@ -172,6 +172,13 @@ typedef struct
   uint32_t control_UP;                                         //Поля для управління
   int32_t ctrl_UP_input[NUMBER_UP];                            //Вибір входу Універсального захисту
 
+  unsigned int number_steps_rpn;        //Кількість ступенів РПН
+  unsigned int number_step_nominal_rpn; //Номер номінального положення РПН
+  //Тип контролю положення РПН
+  int type_control_location; // 0 - "Логічний"
+                             // 1 - "Логометр"
+                             // 2 - "Сельсин"
+
   unsigned int T0;                    //Коефіцієнт трансформації для трансформатора 3I0
   unsigned int TCurrent;              //Коефіцієнт трансформації для трансформатора струмів
   unsigned int TCurrent04;            //Коефіцієнт трансформації для трансформатора струмів сторони 0.4кВ

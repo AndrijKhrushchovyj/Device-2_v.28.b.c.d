@@ -3160,8 +3160,6 @@ inline void main_protection(void)
       measurement_high[bank_measurement_high_tmp][i] = measurement_middle[i] = measurement[i];
     }
     frequency_middle = frequency;
-    for (unsigned int i = 0; i < MAX_NUMBER_INDEXES_RESISTANCE; i++)
-      resistance_middle[i] = resistance[i];
   }
   else
   {

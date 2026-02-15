@@ -77,41 +77,6 @@ void global_vareiables_installation(void)
     data_for_oscylograph[i].state_ar_record = STATE_AR_NONE_M;
   }
 
-  sector_1[0] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (0 + SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[1] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (0 + SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[2] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (180 - SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[3] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (180 - SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[4] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (180 + SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[5] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (180 + SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[6] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (360 - SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_1[7] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (360 - SECTOR1 - POPRAVKA_NZZ)) / 180.0f)));
-
-  sector_2[0] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (0 + SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[1] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (0 + SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[2] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (180 - SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[3] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (180 - SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[4] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (180 + SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[5] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (180 + SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[6] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (360 - SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-  sector_2[7] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (360 - SECTOR2 - POPRAVKA_NZZ)) / 180.0f)));
-
-  sector_1_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (-90 - SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_1_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (-90 + SECTOR1_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-
-  sector_2_mtz_tznp[0] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[1] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[2] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[3] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[4] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[5] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (-90 - SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[6] = (int) (AMPLITUDA_SECTOR * /*cos*/ arm_cos_f32(/*(double)*/ (PI * ((float) (-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
-  sector_2_mtz_tznp[7] = (int) (AMPLITUDA_SECTOR * /*sin*/ arm_sin_f32(/*(double)*/ (PI * ((float) (-90 + SECTOR2_MTZ_TZNP - POPRAVKA_MTZ_TZNP)) / 180.0f)));
   /**************************/
 
   /**************************/
@@ -1138,24 +1103,6 @@ void start_settings_peripherals(void)
   /**********************/
 
   /**********************/
-  //Читаємо збережені дані енергій з EEPROM
-  /**********************/
-  comparison_writing &= (unsigned int) (~COMPARISON_WRITING_ENERGY); /*зчитування, а не порівняння*/
-  _SET_BIT(control_spi1_taskes, TASK_START_READ_ENERGY_EEPROM_BIT);
-  while (
-    (control_spi1_taskes[0] != 0) ||
-    (control_spi1_taskes[1] != 0) ||
-    (state_execution_spi1 > 0))
-  {
-    //Робота з watchdogs
-    watchdog_routine(WATCHDOG_KYYBOARD, 42);
-
-    main_routines_for_spi1();
-    changing_diagnostyka_state(); //Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
-  }
-  /**********************/
-
-  /**********************/
   //Читаємо збережені дані настройок з EEPROM
   /**********************/
   comparison_writing &= (unsigned int) (~COMPARISON_WRITING_SETTINGS); /*зчитування, а не порівняння*/
@@ -1287,24 +1234,6 @@ void start_settings_peripherals(void)
   {
     //Робота з watchdogs
     watchdog_routine(WATCHDOG_KYYBOARD, 49);
-
-    main_routines_for_spi1();
-    changing_diagnostyka_state(); //Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
-  }
-  /**********************/
-
-  /**********************/
-  //Читаємо збережені дані ресурсу вимикача
-  /**********************/
-  comparison_writing &= (unsigned int) (~COMPARISON_WRITING_RESURS); /*зчитування, а не порівняння*/
-  _SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
-  while (
-    (control_spi1_taskes[0] != 0) ||
-    (control_spi1_taskes[1] != 0) ||
-    (state_execution_spi1 > 0))
-  {
-    //Робота з watchdogs
-    watchdog_routine(WATCHDOG_KYYBOARD, 50);
 
     main_routines_for_spi1();
     changing_diagnostyka_state(); //Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
@@ -1650,6 +1579,11 @@ void min_settings(__SETTINGS *target_label)
       def_pickup_timeout_UP(target_label, j, i);
     }
   }
+
+  target_label->number_steps_rpn = NUMBER_STEPS_RPN_WORK;
+  target_label->number_step_nominal_rpn = LOCATION_RPN_WORK;
+  target_label->type_control_location = VALUE_TYPE_CONTROL_LOCATION_WORK;
+  current_step_logical = NUMBER_STEPS_RPN_UNDEFINED;
 
   target_label->setpoint_Inom = SETPOINT_Inom_MIN;
   target_label->setpoint_r_kom_st_Inom = SETPOINT_RKS_Inom_MIN;

@@ -2419,9 +2419,6 @@ void control_settings(void)
   if (
     (difference == 0) &&
     (crc_settings == crc_settings_tmp) &&
-    (settings_prt_Ib_I04 == (current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04))) &&
-    (T0_prt == current_settings.T0) &&
-    (TCurrent_prt == current_settings.TCurrent) &&
     (type_of_input_prt == current_settings.type_of_input) &&
     (type_of_input_signal_prt == current_settings.type_of_input_signal))
   {
@@ -2468,36 +2465,6 @@ void control_ustuvannja(void)
   point_2 = (unsigned char *) (&ustuvannja_meas);
   i = 0;
   while ((difference == 0) && (i < sizeof(ustuvannja)))
-  {
-    temp_value_1 = *(point_1);
-    temp_value_2 = *(point_2);
-    crc_ustuvannja_tmp += temp_value_1;
-    if (temp_value_1 != temp_value_2)
-      difference = 0xff;
-    point_1++;
-    point_2++;
-    i++;
-  }
-
-  point_1 = (unsigned char *) (&phi_ustuvannja);
-  point_2 = (unsigned char *) (&phi_ustuvannja_meas);
-  i = 0;
-  while ((difference == 0) && (i < sizeof(phi_ustuvannja)))
-  {
-    temp_value_1 = *(point_1);
-    temp_value_2 = *(point_2);
-    crc_ustuvannja_tmp += temp_value_1;
-    if (temp_value_1 != temp_value_2)
-      difference = 0xff;
-    point_1++;
-    point_2++;
-    i++;
-  }
-
-  point_1 = (unsigned char *) (&phi_ustuvannja_sin_cos);
-  point_2 = (unsigned char *) (&phi_ustuvannja_sin_cos_meas);
-  i = 0;
-  while ((difference == 0) && (i < sizeof(phi_ustuvannja_sin_cos)))
   {
     temp_value_1 = *(point_1);
     temp_value_2 = *(point_2);
@@ -2648,47 +2615,6 @@ unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *info_rejestrator
   }
 
   return result;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Контроль достовірності лічильника ресурсу
-/*****************************************************/
-void control_resurs(void)
-{
-  unsigned char crc_resurs_tmp = 0, temp_value;
-  unsigned char *point;
-
-  point = (unsigned char *) (&resurs_vymykacha_ctrl);
-  for (unsigned int i = 0; i < sizeof(resurs_vymykacha_ctrl); i++)
-  {
-    temp_value = *(point);
-    crc_resurs_tmp += temp_value;
-    point++;
-  }
-
-  point = (unsigned char *) (&resurs_vidkljuchennja_ctrl);
-  for (unsigned int i = 0; i < sizeof(resurs_vidkljuchennja_ctrl); i++)
-  {
-    temp_value = *(point);
-    crc_resurs_tmp += temp_value;
-    point++;
-  }
-
-  if (crc_resurs_ctrl == crc_resurs_tmp)
-  {
-    //Контроль достовірності ресурсу лічильника пройшов успішно
-
-    //Скидаємо повідомлення у слові діагностики
-    _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_CONTROL_BIT);
-  }
-  else
-  {
-    //Контроль достовірності юстування не пройшов
-
-    //Виствляємо повідомлення у слові діагностики
-    _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_CONTROL_BIT);
-  }
 }
 /*****************************************************/
 
