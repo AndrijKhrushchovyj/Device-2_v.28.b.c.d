@@ -849,7 +849,7 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
 
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
-  index_cell_into_array_for_min_max_measurement_dr = -1; //Помічаємо, що ми покищо не знайшли індекс комірки, який відповідає першому блоку, який визначений курсором
+  index_cell_into_array_for_integral_values_dr = -1; //Помічаємо, що ми покищо не знайшли індекс комірки, який відповідає першому блоку, який визначений курсором
   if (number_info_records == 0)
   {
     static const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
@@ -900,7 +900,7 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
         //Ми знайшли потрібний блок
         //Якщо у цьому рядку ще і знаходиться курсор, то треба запам'ятати індекс першого елементу найденого блоку
         if (position_temp == (index_of_ekran + k))
-          index_cell_into_array_for_min_max_measurement_dr = index_cell_into_array - (sizeof(unsigned int) * SIZE_ARRAY_FIX_MAX_MEASUREMENTS - 1);
+          index_cell_into_array_for_integral_values_dr = index_cell_into_array - (sizeof(unsigned int) * SIZE_ARRAY_FIX_MAX_MEASUREMENTS - 1);
 
         //Визначаємо час зрізу
         index_cell_into_array -= 3; //Переводимо індекс на початок часової мітки
@@ -994,9 +994,9 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення діючих значень при фіксації максимального струму 3I0/фази/ЗОП(КОФ) запису дискретного реєстратора
+//Формуємо екран відображення діючих значень при фіксації при фіксації конкретного типу моніторингу
 /*****************************************************/
-void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_vtorynna)
+void make_ekran_analog_value_records_digital_registrator(void)
 {
   int const index_language = index_language_in_array(current_settings.language);
 
@@ -1004,99 +1004,31 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
   {
     //Пеший байт сходиться із міткою початку запису - вважаємо, що у буфері достовірні дані
     static unsigned char const name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR][MAX_COL_LCD] =
-      {
-        {" 3I0  =         ",
-         " 3I0вг=         ",
-         " 3I0-1=         ",
-         " Ia   =         ",
-         " Ia 2г=         ",
-         " Ib   =         ",
-         " Ib 2г=         ",
-         " Ic   =         ",
-         " Ic 2г=         ",
-         " I2   =         ",
-         " I1   =         ",
-         " I0.4 =         ",
-         " Ua   =         ",
-         " Ub   =         ",
-         " Uc   =         ",
-         " 3U0  =         ",
-         " U2   =         ",
-         " U1   =         ",
-         " Uab  =         ",
-         " Ubc  =         ",
-         " Uca  =         ",
-         " f  =           ",
-         "                "},
-        {" 3I0  =         ",
-         " 3I0вг=         ",
-         " 3I0-1=         ",
-         " Ia   =         ",
-         " Ia 2г=         ",
-         " Ib   =         ",
-         " Ib 2г=         ",
-         " Ic   =         ",
-         " Ic 2г=         ",
-         " I2   =         ",
-         " I1   =         ",
-         " I0.4 =         ",
-         " Ua   =         ",
-         " Ub   =         ",
-         " Uc   =         ",
-         " 3U0  =         ",
-         " U2   =         ",
-         " U1   =         ",
-         " Uab  =         ",
-         " Ubc  =         ",
-         " Uca  =         ",
-         " f  =           ",
-         "                "},
-        {" 3I0  =         ",
-         " 3I0oh=         ",
-         " 3I0-1=         ",
-         " Ia   =         ",
-         " Ih2a =         ",
-         " Ib   =         ",
-         " Ih2b =         ",
-         " Ic   =         ",
-         " Ih2c =         ",
-         " I2   =         ",
-         " I1   =         ",
-         " I0.4 =         ",
-         " Va   =         ",
-         " Vb   =         ",
-         " Vc   =         ",
-         " 3V0  =         ",
-         " V2   =         ",
-         " V1   =         ",
-         " Vab  =         ",
-         " Vbc  =         ",
-         " Vca  =         ",
-         " f  =           ",
-         "                "},
-        {" 3I0  =         ",
-         " 3I0вг=         ",
-         " 3I0-1=         ",
-         " Ia   =         ",
-         " Ia 2г=         ",
-         " Ib   =         ",
-         " Ib 2г=         ",
-         " Ic   =         ",
-         " Ic 2г=         ",
-         " I2   =         ",
-         " I1   =         ",
-         " I0.4 =         ",
-         " Ua   =         ",
-         " Ub   =         ",
-         " Uc   =         ",
-         " 3U0  =         ",
-         " U2   =         ",
-         " U1   =         ",
-         " Uab  =         ",
-         " Ubc  =         ",
-         " Uca  =         ",
-         " f  =           ",
-         "                "}};
+      {{" Uab-1=         ",
+        " Ia -1=         ",
+        " Uab-2=         ",
+        " Ia -2=         ",
+        " f  =           ",
+        " Полож.         "},
+       {" Uab-1=         ",
+        " Ia -1=         ",
+        " Uab-2=         ",
+        " Ia -2=         ",
+        " f  =           ",
+        "Позиц.=         "},
+       {" Vab-1=         ",
+        " Ia -1=         ",
+        " Vab-2=         ",
+        " Ia -2=         ",
+        " f  =           ",
+        "Полож.=         "},
+       {" Uab-1=         ",
+        " Ia -1=         ",
+        " Uab-2=         ",
+        " Ia -2=         ",
+        " f  =           ",
+        "Полож.=         "}};
+
     unsigned char name_string_tmp[MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR][MAX_COL_LCD];
     for (size_t i = 0; (i < MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR); ++i)
     {
@@ -1106,182 +1038,151 @@ void make_ekran_analog_value_records_digital_registrator(unsigned int pervynna_v
         *ptr_target++ = *ptr_source++;
     }
 
-    unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_min_max_measurement_dr);
-    unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
-
-    unsigned int T0 = 1;
-    unsigned int TCurrent = 1;
-    unsigned int TCurrent04 = 1;
-    unsigned int TVoltage = 1;
-    if (pervynna_vtorynna != 0)
+    /******************************************
+    Заповнюємо масив відповідними числами, які є у буфері читання запису дискретного реєстратора
+    ******************************************/
+    unsigned int temp_measurement[SIZE_ARRAY_FIX_MAX_MEASUREMENTS];
+    unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
+    for (unsigned int i = 0; i < SIZE_ARRAY_FIX_MAX_MEASUREMENTS; ++i)
     {
-      unsigned char *ptr_target = (unsigned char *) &T0;
-      unsigned char *ptr_source = (unsigned char *) (buffer_for_manu_read_record + FIRST_INDEX_T0);
-      for (size_t i = 0; i < sizeof(T0); ++i)
-        *ptr_target++ = *ptr_source++;
-
-      ptr_target = (unsigned char *) &TCurrent;
-      ptr_source = (unsigned char *) (buffer_for_manu_read_record + FIRST_INDEX_TC);
-      for (size_t i = 0; i < sizeof(TCurrent); ++i)
-        *ptr_target++ = *ptr_source++;
-
-      ptr_target = (unsigned char *) &TCurrent04;
-      ptr_source = (unsigned char *) (buffer_for_manu_read_record + FIRST_INDEX_TC04);
-      for (size_t i = 0; i < sizeof(TCurrent04); ++i)
-        *ptr_target++ = *ptr_source++;
-
-      ptr_target = (unsigned char *) &TVoltage;
-      ptr_source = (unsigned char *) (buffer_for_manu_read_record + FIRST_INDEX_TV);
-      for (size_t i = 0; i < sizeof(TVoltage); ++i)
-        *ptr_target++ = *ptr_source++;
-    }
-
-    for (unsigned int i = 0; i < MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR; i++)
-    {
-      if (i < IDM_freq)
+      temp_measurement[i] = 0;
+      for (size_t j = 0; j < 4; ++j)
       {
-        //Струми і напруги
-
-        unsigned int koef_mul = 1;
-        if (i < IDM_3I0_r)
-          koef_mul = T0;
-        else if (i < IDM_I04)
-          koef_mul = TCurrent;
-        else if (i == IDM_I04)
-          koef_mul = TCurrent04;
-        else
-          koef_mul = TVoltage;
-
-        unsigned int temp_measurement = *(point_unsigned_int + i);
-        unsigned int start_number_digit_after_point;
-        if ((i == IDM_3I0) || (i == IDM_3I0_other_g))
-          start_number_digit_after_point = 2;
-        else
-          start_number_digit_after_point = 3;
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, temp_measurement, koef_mul, 1, name_string_tmp[i], 7);
-
-        if (i < IDM_UA)
-          name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
-        else
-          name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
-      }
-      else if (i == IDM_freq)
-      {
-        //Частота
-        int temp_measurement = *(((int *) point_unsigned_int) + i);
-        if (temp_measurement < 0)
-        {
-          if (temp_measurement == (-2 * 1000))
-          {
-            /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
-            name_string_tmp[i][4] = '<';
-            temp_measurement = MIN_FREQUENCY * 1000;
-          }
-          if (temp_measurement == (-3 * 1000))
-          {
-            /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
-            name_string_tmp[i][4] = '>';
-            temp_measurement = MAX_FREQUENCY * 1000;
-          }
-        }
-        convert_and_insert_char_for_frequency(temp_measurement, name_string_tmp[i]);
+        temp_measurement[i] |= (*point_unsigned_char++) << (8 * i);
       }
     }
 
+    unsigned int additional_current = 0;
     int position_temp = current_ekran.index_position;
-    unsigned int index_of_ekran;
 
+    unsigned int control_for_dr;
+    control_for_dr = temp_measurement[IDM_CONTROL];
     /******************************************/
-    //Виключаємо поля, які не треба відображати
-    /******************************************/
-    int additional_current = 0;
 
-    if ((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)
+    if ((control_for_dr & (1 << 0)) == 0)
     {
-      int shift_ind = IDM_I04 - additional_current;
+      //2-обмотковий трансформатор
 
-      if ((shift_ind + 1) <= position_temp)
-        position_temp--;
-      do
+      for (unsigned int k = 0; k < 2; k++)
       {
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        unsigned int i;
+
+        switch (k)
         {
-          if ((shift_ind + 1) < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current))
-            name_string_tmp[shift_ind][j] = name_string_tmp[shift_ind + 1][j];
-          else
-            name_string_tmp[shift_ind][j] = ' ';
+          case 0:
+            {
+              i = INDEX_ML_DR_U2 - additional_current;
+              break;
+            }
+          case 1:
+            {
+              i = INDEX_ML_DR_I2 - additional_current;
+              break;
+            }
+          default:
+            {
+              //Теоретично цього ніколи не мало б бути
+              total_error_sw_fixed();
+            }
         }
-        shift_ind++;
-      } while (shift_ind < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current));
-      additional_current++;
-    }
-    else
-    {
-      int shift_ind = IDM_3I0_r - additional_current;
 
-      if ((shift_ind + 1) <= position_temp)
-        position_temp--;
-      do
-      {
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        {
-          if ((shift_ind + 1) < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current))
-            name_string_tmp[shift_ind][j] = name_string_tmp[shift_ind + 1][j];
-          else
-            name_string_tmp[shift_ind][j] = ' ';
-        }
-        shift_ind++;
-      } while (shift_ind < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current));
-      additional_current++;
-    }
-
-    if ((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0)
-    {
-      int shift_ind_min = IDM_UA;
-      int shift_ind_max = IDM_UC;
-
-      for (int i = 0; i <= (shift_ind_max - shift_ind_min); i++)
-      {
-        int shift_ind = shift_ind_min - additional_current + i;
-
-        if ((shift_ind_max - additional_current + 1) <= position_temp)
+        if ((i + 1) <= position_temp)
           position_temp--;
         do
         {
           for (unsigned int j = 0; j < MAX_COL_LCD; j++)
           {
-            if ((shift_ind + 1) < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current))
-              name_string_tmp[shift_ind][j] = name_string_tmp[shift_ind + 1][j];
+            if ((i + 1) < MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR)
+            {
+              name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+              temp_measurement[i] = temp_measurement[i + 1];
+            }
             else
-              name_string_tmp[shift_ind][j] = ' ';
+            {
+              name_string_tmp[i][j] = ' ';
+              temp_measurement[i] = 0;
+            }
           }
-          shift_ind++;
-        } while (shift_ind < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current));
+          i++;
+        } while (i < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current));
         additional_current++;
       }
     }
-
-    // if (type_view_max_values_dr != IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE)
+    else
     {
-      int shift_ind = IDM_VMP_last_KZ - additional_current;
-      if ((shift_ind + 1) <= position_temp)
-        position_temp--;
-      do
+      //3-обмотковий трансформатор
+      if ((control_for_dr & (1 << 1)) == 0)
       {
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        {
-          if ((shift_ind + 1) < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current))
-            name_string_tmp[shift_ind][j] = name_string_tmp[shift_ind + 1][j];
-          else
-            name_string_tmp[shift_ind][j] = ' ';
-        }
-        shift_ind++;
-      } while (shift_ind < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current));
-      additional_current++;
+        //Основний трансформатор є ТН1
+        name_string_tmp[INDEX_ML_DR_U1][0] = '*';
+        name_string_tmp[INDEX_ML_DR_I1][0] = '*';
+      }
+      else
+      {
+        //Основний трансформатор є ТН2
+        name_string_tmp[INDEX_ML_DR_U2][0] = '*';
+        name_string_tmp[INDEX_ML_DR_I2][0] = '*';
+      }
     }
-    /******************************************/
 
-    index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+    for (unsigned int i = 0; i < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current); i++)
+    {
+      if (i < (IDM_freq - additional_current))
+      {
+        //Струми і напруги
+
+        unsigned int const start_number_digit_after_point = 3;
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, temp_measurement[i], 1, 1, name_string_tmp[i], 7);
+
+        if ((i == INDEX_ML_DR_U1) || (i == INDEX_ML_DR_U2))
+          name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
+        else
+          name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
+      }
+      else if (i == (IDM_freq - additional_current))
+      {
+        //Частота
+        if (temp_measurement[i] < 0)
+        {
+          if (temp_measurement[i] == (-2 * 1000))
+          {
+            /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
+            name_string_tmp[i][4] = '<';
+            temp_measurement[i] = MIN_FREQUENCY * 1000;
+          }
+          if (temp_measurement[i] == (-3 * 1000))
+          {
+            /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
+            name_string_tmp[i][4] = '>';
+            temp_measurement[i] = MAX_FREQUENCY * 1000;
+          }
+        }
+        convert_and_insert_char_for_frequency(temp_measurement[i], name_string_tmp[i]);
+      }
+      else if (i == (IDM_CONTROL - additional_current))
+      {
+        int current_step_tmp = (int) temp_measurement[i];
+        if (current_step_tmp < 0)
+        {
+          name_string_tmp[i][8] = '?';
+        }
+        else
+        {
+          unsigned int value = current_step_tmp;
+          unsigned int vaga = 10, first_symbol = 0, shift = 0;
+          for (unsigned int j = 8; j <= 9; j++)
+          {
+            calc_int_symbol_and_put_into_working_ekran((name_string_tmp[i] + j - shift), &value, &vaga, &first_symbol, true);
+
+            if (name_string_tmp[i][8] == ' ')
+              shift++;
+          }
+        }
+        /********************************/
+      }
+    }
+
+    unsigned int index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
     //Копіюємо  рядки у робочий екран
     for (unsigned int i = 0; i < MAX_ROW_LCD; i++)

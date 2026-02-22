@@ -1740,7 +1740,7 @@ void main_manu_function(void)
 
                 position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
                 //Формуємо екран списку вимірювання
-                make_ekran_measuremet();
+                make_ekran_measurement();
               }
               else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
               {
@@ -2447,24 +2447,26 @@ void main_manu_function(void)
               }
               else if (current_ekran.current_level == EKRAN_MAX_VALUES)
               {
+                unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
+                unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
+                unsigned int control_for_dr = *(point_unsigned_int + 5);
+
                 do
                 {
                   if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR)
                     current_ekran.index_position = 0;
 
                   while (
-                    (
-                      ((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                      (current_ekran.index_position >= IDM_UA) && (current_ekran.index_position <= IDM_UC)) ||
-                    (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                     (current_ekran.index_position == IDM_I04)) ||
-                    (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                     (current_ekran.index_position == IDM_3I0_r)))
+                    (buffer_for_manu_read_record[FIRST_INDEX_START_START_RECORD_DR] == LABEL_START_RECORD_DR) && /*якщо ця умова не виконується, то у функції make_ekran_analog_value_records_digital_registrator ми перейдемо на відображення інформації про недоступні дані, а не будемо виконувати фільтрацію*/
+                    ((control_for_dr & (1 << 0)) == 0) &&                                                        /*моніторинг вівся, коли був вибраний 2-обмотковий трансформатор*/
+                    (current_ekran.index_position >= INDEX_ML_DR_U2) &&
+                    (current_ekran.index_position <= INDEX_ML_DR_I2))
                     current_ekran.index_position++;
+
                 } while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR);
 
                 //Формуємо екран відображення аналогових значень з запису дискретного реєстратора
-                make_ekran_analog_value_records_digital_registrator(pervynna_vtorynna);
+                make_ekran_analog_value_records_digital_registrator();
               }
               else if (current_ekran.current_level == EKRAN_TITLES_STATE_CMD_REGISTRATOR)
               {
@@ -3737,7 +3739,7 @@ void main_manu_function(void)
                 else if (current_ekran.current_level == EKRAN_TITLE_MAX_VALUES)
                 {
                   //Натиснута кнопка Enter у вікні списку зафіксованих максимальних струмів
-                  if ((index_cell_into_array_for_min_max_measurement_dr >= FIRST_INDEX_FIRST_BLOCK_DR) && (index_cell_into_array_for_min_max_measurement_dr <= ((int) (FIRST_INDEX_FIRST_DATA_DR - sizeof(unsigned int) * SIZE_ARRAY_FIX_MAX_MEASUREMENTS))))
+                  if ((index_cell_into_array_for_integral_values_dr >= FIRST_INDEX_FIRST_BLOCK_DR) && (index_cell_into_array_for_integral_values_dr <= ((int) (FIRST_INDEX_FIRST_DATA_DR - sizeof(unsigned int) * SIZE_ARRAY_FIX_MAX_MEASUREMENTS))))
                   {
                     //Переходимо у нове вікно тільки у тому випадку, якщо ми попередньо зафіксували з якого місця розміщається блок, який визначений курсором
                     current_ekran.current_level = EKRAN_MAX_VALUES;
@@ -3894,7 +3896,7 @@ void main_manu_function(void)
 
                   position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
                   //Формуємо екран списку вимірювання
-                  make_ekran_measuremet();
+                  make_ekran_measurement();
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
                 {
@@ -4586,17 +4588,10 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_TITLE_MAX_VALUES)
                 {
-                  unsigned int number_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE];
+                  unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
+                  unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
+                  unsigned int control_for_dr = *(point_unsigned_int + 5);
 
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = number_records - 1;
-                  position_in_current_level_menu[EKRAN_TITLE_MAX_VALUES] = current_ekran.index_position;
-
-                  //Формуємо екран відображення міток часу записів міксації максимальних струмів
-                  make_ekran_title_analog_value_records_digital_registrator();
-                }
-                else if (current_ekran.current_level == EKRAN_MAX_VALUES)
-                {
                   current_ekran.index_position--;
                   do
                   {
@@ -4604,18 +4599,16 @@ void main_manu_function(void)
                       current_ekran.index_position = MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - 1;
 
                     while (
-                      (
-                        ((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                        (current_ekran.index_position >= IDM_UA) && (current_ekran.index_position <= IDM_UC)) ||
-                      (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                       (current_ekran.index_position == IDM_I04)) ||
-                      (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                       (current_ekran.index_position == IDM_3I0_r)))
+                      (buffer_for_manu_read_record[FIRST_INDEX_START_START_RECORD_DR] == LABEL_START_RECORD_DR) && /*якщо ця умова не виконується, то у функції make_ekran_analog_value_records_digital_registrator ми перейдемо на відображення інформації про недоступні дані, а не будемо виконувати фільтрацію*/
+                      ((control_for_dr & (1 << 0)) == 0) &&                                                        /*моніторинг вівся, коли був вибраний 2-обмотковий трансформатор*/
+                      (current_ekran.index_position >= INDEX_ML_DR_U2) &&
+                      (current_ekran.index_position <= INDEX_ML_DR_I2))
                       current_ekran.index_position--;
+
                   } while (current_ekran.index_position < 0);
 
                   //Формуємо екран відображення аналогових значень з запису дискретного реєстратора
-                  make_ekran_analog_value_records_digital_registrator(pervynna_vtorynna);
+                  make_ekran_analog_value_records_digital_registrator();
                 }
                 else if (current_ekran.current_level == EKRAN_TITLES_STATE_CMD_REGISTRATOR)
                 {
@@ -4689,7 +4682,7 @@ void main_manu_function(void)
 
                   position_in_current_level_menu[EKRAN_MEASURMENT] = current_ekran.index_position;
                   //Формуємо екран списку вимірювання
-                  make_ekran_measuremet();
+                  make_ekran_measurement();
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_SELSYN)
                 {
@@ -5396,6 +5389,10 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_MAX_VALUES)
                 {
+                  unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
+                  unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
+                  unsigned int control_for_dr = *(point_unsigned_int + 5);
+
                   current_ekran.index_position++;
                   do
                   {
@@ -5403,18 +5400,16 @@ void main_manu_function(void)
                       current_ekran.index_position = 0;
 
                     while (
-                      (
-                        ((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0) &&
-                        (current_ekran.index_position >= IDM_UA) && (current_ekran.index_position <= IDM_UC)) ||
-                      (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0) &&
-                       (current_ekran.index_position == IDM_I04)) ||
-                      (((control_extra_settings_1_dr_for_manu & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0) &&
-                       (current_ekran.index_position == IDM_3I0_r)))
+                      (buffer_for_manu_read_record[FIRST_INDEX_START_START_RECORD_DR] == LABEL_START_RECORD_DR) && /*якщо ця умова не виконується, то у функції make_ekran_analog_value_records_digital_registrator ми перейдемо на відображення інформації про недоступні дані, а не будемо виконувати фільтрацію*/
+                      ((control_for_dr & (1 << 0)) == 0) &&                                                        /*моніторинг вівся, коли був вибраний 2-обмотковий трансформатор*/
+                      (current_ekran.index_position >= INDEX_ML_DR_U2) &&
+                      (current_ekran.index_position <= INDEX_ML_DR_I2))
                       current_ekran.index_position++;
+
                   } while (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR);
 
                   //Формуємо екран відображення аналогових значень з запису дискретного реєстратора
-                  make_ekran_analog_value_records_digital_registrator(pervynna_vtorynna);
+                  make_ekran_analog_value_records_digital_registrator();
                 }
                 else if (current_ekran.current_level == EKRAN_LIST_STATE_CMD_REGISTRATOR_RECORDS)
                 {

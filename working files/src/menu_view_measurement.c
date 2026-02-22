@@ -332,27 +332,27 @@ void make_ekran_measurement(void)
 {
   static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT][MAX_COL_LCD] =
     {
-      {" Токи           ",
-       " Напряжения     ",
-       " Частоты        ",
-       " Углы           ",
-       " Мощность       "},
-      {" Струми         ",
-       " Напруги        ",
-       " Частоти        ",
-       " Кути           ",
-       " Потужність     "},
-      {" Currents       ",
-       " Voltages       ",
-       " Frequencies    ",
-       " Angles         ",
-       " Power          "},
-      {" Токи           ",
-       " Напряжения     ",
-       " Частоты        ",
-       " Углы           ",
-       " Мощность       "}};
-  int index_language = index_language_in_array(current_settings.language);
+      {" Измерения ТН1  ",
+       " Измерения ТН2  ",
+       " Логометр       ",
+       " Сельсин        ",
+       " Частоты        "},
+      {" Вимірювання ТН1",
+       " Вимірювання ТН2",
+       " Логометр       ",
+       " Сельсин        ",
+       " Частоти        "},
+      {" VT1 Measure    ",
+       " VT2 Measure    ",
+       " Logometer      ",
+       " Selsyn         ",
+       " Frequencies    "},
+      {" Измерения ТН1  ",
+       " Измерения ТН2  ",
+       " Логометр       ",
+       " Сельсин        ",
+       " Частоты        "}};
+  int const index_language = index_language_in_array(current_settings.language);
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -389,20 +389,21 @@ void make_ekran_measurement(void)
 /*****************************************************/
 //Формуємо екран відображення списків вимірювань
 /*****************************************************/
-void make_ekran_measurement_voltage_type(void)
+void make_ekran_measuremet_for_selsyn(void)
 {
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_VOLTAGE_TYPE][MAX_COL_LCD] =
+  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_FOR_SELSYN][MAX_COL_LCD] =
     {
-      {" Фазные         ",
-       " Линейные       "},
-      {" Фазні          ",
-       " Лінійні        "},
-      {" Ph-N           ",
-       " Ph-Ph          "},
-      {" Фазные         ",
-       " Линейные       "}};
+      {" Напряжения     ",
+       " Углы           "},
+      {" Напруги        ",
+       " Кути           "},
+      {" Voltages       ",
+       " Angles         "},
+      {" Напряжения     ",
+       " Углы           "}};
   int index_language = index_language_in_array(current_settings.language);
 
+  unsigned int additional_current = 0;
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
 
@@ -412,7 +413,7 @@ void make_ekran_measurement_voltage_type(void)
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій коффігурації
-    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_VOLTAGE_TYPE)
+    if (index_of_ekran < (MAX_ROW_FOR_MEASURMENT - additional_current))
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = name_string[index_language][index_of_ekran][j];
     else
@@ -436,299 +437,49 @@ void make_ekran_measurement_voltage_type(void)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення струмів
+//Формуємо екран відображення струмів і напруг для ТН1 або ТН2
 /*****************************************************/
-void make_ekran_current(unsigned int pervynna_vtorynna)
+void make_ekran_current_voltage(unsigned int tn1_tn2, unsigned int pervynna_vtorynna)
 {
-
-  static unsigned char const name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_CURRENT][MAX_COL_LCD] =
+  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_1_AND_2][MAX_COL_LCD] =
     {
-      {" 3I0 i=         ",
-       " 3I0  =         ",
-       " 3I0вг=         ",
-       " 3I0-1=         ",
-       " Ia   =         ",
-       " Ia 2г=         ",
-       " Ib   =         ",
-       " Ib 2г=         ",
-       " Ic   =         ",
-       " Ic 2г=         ",
-       " I2   =         ",
-       " I1   =         ",
-       " I0.4 =         "},
-      {" 3I0 i=         ",
-       " 3I0  =         ",
-       " 3I0вг=         ",
-       " 3I0-1=         ",
-       " Ia   =         ",
-       " Ia 2г=         ",
-       " Ib   =         ",
-       " Ib 2г=         ",
-       " Ic   =         ",
-       " Ic 2г=         ",
-       " I2   =         ",
-       " I1   =         ",
-       " I0.4 =         "},
-      {" 3I0 i=         ",
-       " 3I0  =         ",
-       " 3I0oh=         ",
-       " 3I0-1=         ",
-       " Ia   =         ",
-       " Ih2a =         ",
-       " Ib   =         ",
-       " Ih2b =         ",
-       " Ic   =         ",
-       " Ih2c =         ",
-       " I2   =         ",
-       " I1   =         ",
-       " I0.4 =         "},
-      {" 3I0 i=         ",
-       " 3I0  =         ",
-       " 3I0вг=         ",
-       " 3I0-1=         ",
-       " Ia   =         ",
-       " Ia 2г=         ",
-       " Ib   =         ",
-       " Ib 2г=         ",
-       " Ic   =         ",
-       " Ic 2г=         ",
-       " I2   =         ",
-       " I1   =         ",
-       " I0.4 =         "}};
-  int const index_language = index_language_in_array(current_settings.language);
-  unsigned int index_array[MAX_ROW_FOR_MEASURMENT_CURRENT] =
-    {
-      IM_3I0_i,
-      IM_3I0,
-      IM_3I0_other_g,
-      IM_3I0_r,
-      IM_IA,
-      IM2_IA,
-      IM_IB,
-      IM2_IB,
-      IM_IC,
-      IM2_IC,
-      IM_I2,
-      IM_I1,
-      IM_I04};
+      "*Ia-  =         ",
+      " Ia-  =         ",
+      "*Uab- =         ",
+      " Uab- =         "};
+  unsigned int measurement_tmp[MAX_ROW_FOR_MEASURMENT_1_AND_2];
+  unsigned int TCurrent, TVoltage;
 
-  unsigned char name_string_tmp[MAX_ROW_FOR_MEASURMENT_CURRENT][MAX_COL_LCD];
-  for (size_t i = 0; (i < MAX_ROW_FOR_MEASURMENT_CURRENT); ++i)
+  //Виврдимо номер ТН і відповідні вимірювання
+  name_string[0][4] = name_string[1][4] = (tn1_tn2 + 1) + 0x30;
+  name_string[2][5] = name_string[3][5] = (tn1_tn2 + 1) + 0x30;
+  if (tn1_tn2 == 0)
   {
-    unsigned char const *ptr_source = name_string[index_language][i];
-    unsigned char *ptr_target = name_string_tmp[i];
-    for (size_t j = 0; j < MAX_COL_LCD; j++)
-      *ptr_target++ = *ptr_source++;
+    measurement_tmp[0] = measurement[I_IA_1];
+    measurement_tmp[1] = measurement_i[I_IA_1];
+    measurement_tmp[2] = measurement[I_UABTH1];
+    measurement_tmp[3] = measurement_i[I_UABTH1];
+
+    TCurrent = current_settings.TCurrent1;
+    TVoltage = current_settings.TVoltage1;
+  }
+  else
+  {
+    measurement_tmp[0] = measurement[I_IA_2];
+    measurement_tmp[1] = measurement_i[I_IA_2];
+    measurement_tmp[2] = measurement[I_UABTH2];
+    measurement_tmp[3] = measurement_i[I_UABTH2];
+
+    TCurrent = current_settings.TCurrent2;
+    TVoltage = current_settings.TVoltage2;
   }
 
-  //Копіюємо вимірювання які потрібні для відображення
-  semaphore_measure_values_low1 = 1;
-  for (unsigned int i = 0; i < MAX_ROW_FOR_MEASURMENT_CURRENT; i++)
-  {
-    unsigned int index_to_copy = index_array[i];
-    measurement_low[index_to_copy] = measurement_middle[index_to_copy];
-  }
-  semaphore_measure_values_low1 = 0;
-
-  for (unsigned int i = 0; i < MAX_ROW_FOR_MEASURMENT_CURRENT; i++)
-  {
-    name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
-    if (
-      (index_array[i] == IM_IB) &&
-      ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0))
-    {
-      if (index_language == INDEX_LANGUAGE_EN)
-        name_string_tmp[i][4] = 'c';
-      else
-        name_string_tmp[i][4] = 'р';
-
-      name_string_tmp[i][5] = '.';
-    }
-  }
-
-  int additional_current = 0;
-  int position_temp = current_ekran.index_position;
-  int index_of_ekran;
-  /******************************************/
-  //Виключаємо, які вимірювання не треба відображати
-  /******************************************/
-  {
-    int delete_meas;
-    if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)
-      delete_meas = IM_I04;
-    else
-      delete_meas = IM_3I0_r;
-
-    int i = 0;
-    for (; i < (MAX_ROW_FOR_MEASURMENT_CURRENT - additional_current); ++i)
-    {
-      if (index_array[i + additional_current] == delete_meas)
-        break;
-    }
-    //    int i = delete_index - additional_current;
-    if ((i + 1) <= position_temp)
-      position_temp--;
-    do
-    {
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-      {
-        if ((i + 1) < (MAX_ROW_FOR_MEASURMENT_CURRENT - additional_current))
-          name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-        else
-          name_string_tmp[i][j] = ' ';
-      }
-
-      if ((i + 1) < (MAX_ROW_FOR_MEASURMENT_CURRENT - additional_current))
-        index_array[i] = index_array[i + 1];
-      else
-        index_array[i] = 255;
-
-      i++;
-    } while (i < (MAX_ROW_FOR_MEASURMENT_CURRENT - additional_current));
-    additional_current++;
-  }
-  /******************************************/
-
-  index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
-
-  //Копіюємо  рядки у робочий екран
-  for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
-  {
-    //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < (MAX_ROW_FOR_MEASURMENT_CURRENT - additional_current))
-    {
-      /********************************/
-      //Вводимо вимірювальні значення
-      unsigned int index = index_array[index_of_ekran];
-      if (index != 255)
-      {
-        unsigned int start_number_digit_after_point;
-        if (
-          (index == INDEX_ML_3I0_i) ||
-          (index == INDEX_ML_3I0) ||
-          (index == INDEX_ML_3I0_other_g))
-          start_number_digit_after_point = 2;
-        else
-          start_number_digit_after_point = 3;
-
-        unsigned int koef_mul = 1;
-        if (pervynna_vtorynna != 0)
-        {
-          if (index < IM_3I0_r)
-            koef_mul = current_settings.T0;
-          else if (index == IM_I04)
-            koef_mul = current_settings.TCurrent04;
-          else
-            koef_mul = current_settings.TCurrent;
-        }
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], koef_mul, 1, name_string_tmp[index_of_ekran], 7);
-      }
-      /********************************/
-
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
-    }
-    else
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = ' ';
-
-    index_of_ekran++;
-  }
-
-  //Курсор по горизонталі відображається на першій позиції
-  current_ekran.position_cursor_x = 0;
-  //Відображення курору по вертикалі
-  current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
-  //Курсор видимий
-  current_ekran.cursor_on = 1;
-  //Курсор не мигає
-  current_ekran.cursor_blinking_on = 0;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Формуємо екран відображення фазних напруг
-/*****************************************************/
-void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
-{
-  int const index_language = index_language_in_array(current_settings.language);
-  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE][MAX_COL_LCD] =
-    {
-      "                ",
-      "                ",
-      "                ",
-      "                ",
-      "                ",
-      "                "};
-  unsigned int index_array[MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE] = {255, 255, 255, 255, 255, 255};
-  unsigned int row = 0;
-
-  if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) == 0)
-  {
-    static const unsigned char name_phase[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE - 1][MAX_COL_LCD] =
-      {
-        {" Ua  =          ",
-         " Ub  =          ",
-         " Uc  =          ",
-         " U2  =          ",
-         " U1  =          "},
-        {" Ua  =          ",
-         " Ub  =          ",
-         " Uc  =          ",
-         " U2  =          ",
-         " U1  =          "},
-        {" Va  =          ",
-         " Vb  =          ",
-         " Vc  =          ",
-         " V2  =          ",
-         " V1  =          "},
-        {" Ua  =          ",
-         " Ub  =          ",
-         " Uc  =          ",
-         " U2  =          ",
-         " U1  =          "}};
-    static const unsigned int index_array_phase[MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE - 1] =
-      {
-        IM_UA,
-        IM_UB,
-        IM_UC,
-        IM_U2,
-        IM_U1};
-
-    for (unsigned int i = 0; i < (MAX_ROW_FOR_MEASURMENT_VOLTAGE_PHASE - 1); i++)
-    {
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        name_string[row][j] = name_phase[index_language][i][j];
-      index_array[row++] = index_array_phase[i];
-    }
-  }
-
-  static const unsigned char name_3U0[MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
-    {
-      " 3U0 =          ",
-      " 3U0 =          ",
-      " 3V0 =          ",
-      " 3U0 =          "};
-
-  for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-    name_string[row][j] = name_3U0[index_language][j];
-  index_array[row++] = IM_3U0;
-
-  //Копіюємо вимірювання які потрібні для відображення
-  semaphore_measure_values_low1 = 1;
-  for (unsigned int i = 0; i < row; i++)
-  {
-    unsigned int index_to_copy = index_array[i];
-    measurement_low[index_to_copy] = measurement_middle[index_to_copy];
-  }
-  semaphore_measure_values_low1 = 0;
-
-  for (unsigned int i = 0; i < row; i++)
-  {
-    name_string[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
-  }
+  int index_language = index_language_in_array(current_settings.language);
+  //Виврдимо одиниці вимірювань
+  name_string[0][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
+  name_string[1][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
+  name_string[2][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
+  name_string[3][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -738,25 +489,25 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
   //Копіюємо  рядки у робочий екран
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
-    //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < row)
+    /********************************/
+    //Вводимо вимірювальні значення
+    /********************************/
+    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_1_AND_2)
     {
-      /********************************/
-      //Вводимо вимірювальні значення
       unsigned int start_number_digit_after_point = 3;
 
-      unsigned int index = index_array[index_of_ekran];
-      if (index != 255)
+      if (pervynna_vtorynna == 0)
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, 1, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
+      else if ((index_of_ekran == INDEX_ML_I_) || (index_of_ekran == INDEX_ML_I))
       {
-        if (pervynna_vtorynna == 0)
-          convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string[index_of_ekran], 7);
-        else
-        {
-          //Фазні напруги
-          convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], current_settings.TVoltage, 1, name_string[index_of_ekran], 7);
-        }
+        //Струм Ia
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, TCurrent, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
       }
-      /********************************/
+      else
+      {
+        //Напруга Uab
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, TVoltage, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
+      }
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -764,6 +515,7 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
     else
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = ' ';
+    /********************************/
 
     index_of_ekran++;
   }
@@ -773,7 +525,7 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
   //Відображення курору по вертикалі
   current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
   //Курсор видимий
-  current_ekran.cursor_on = 1;
+  current_ekran.cursor_on = 0;
   //Курсор не мигає
   current_ekran.cursor_blinking_on = 0;
   //Обновити повністю весь екран
@@ -782,50 +534,34 @@ void make_ekran_voltage_phase(unsigned int pervynna_vtorynna)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран відображення лінійних напруг
+//Формуємо екран відображення напруг для сельсина
 /*****************************************************/
-void make_ekran_voltage_line(unsigned int pervynna_vtorynna)
+void make_ekran_voltage_for_selsyn(void)
 {
-  static unsigned char const name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE][MAX_COL_LCD] =
+  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN][MAX_COL_LCD] =
     {
-      {" Uab =          ",
-       " Ubc =          ",
-       " Uca =          "},
-      {" Uab =          ",
-       " Ubc =          ",
-       " Uca =          "},
-      {" Vab =          ",
-       " Vbc =          ",
-       " Vca =          "},
-      {" Uab =          ",
-       " Ubc =          ",
-       " Uca =          "}};
-  unsigned int index_array[MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE] = {IM_UAB, IM_UBC, IM_UCA};
-  unsigned int row = 3;
+      "*Uc1c2=         ",
+      " Uc1c2=         ",
+      "*Up1p2=         ",
+      " Up1p2=         ",
+      "*Up2p3=         ",
+      " Up2p3=         "};
+  unsigned int measurement_tmp[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN];
 
-  //Копіюємо вимірювання які потрібні для відображення
-  semaphore_measure_values_low1 = 1;
-  for (unsigned int i = 0; i < row; i++)
-  {
-    unsigned int index_to_copy = index_array[i];
-    measurement_low[index_to_copy] = measurement_middle[index_to_copy];
-  }
-  semaphore_measure_values_low1 = 0;
+  //Вибираємо відповідні вимірювання
+  measurement_tmp[0] = measurement[I_UC1C2];
+  measurement_tmp[1] = measurement_i[I_UC1C2];
+  measurement_tmp[2] = measurement[I_UP1P2];
+  measurement_tmp[3] = measurement_i[I_UP1P2];
+  measurement_tmp[4] = measurement[I_UP2P3];
+  measurement_tmp[5] = measurement_i[I_UP2P3];
 
-  int const index_language = index_language_in_array(current_settings.language);
-  unsigned char name_string_tmp[MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE][MAX_COL_LCD];
-  for (size_t i = 0; (i < MAX_ROW_FOR_MEASURMENT_VOLTAGE_LINE); ++i)
-  {
-    unsigned char const *ptr_source = name_string[index_language][i];
-    unsigned char *ptr_target = name_string_tmp[i];
-    for (size_t j = 0; j < MAX_COL_LCD; j++)
-      *ptr_target++ = *ptr_source++;
-  }
+  int index_language = index_language_in_array(current_settings.language);
 
-  for (unsigned int i = 0; i < row; i++)
-  {
-    name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
-  }
+  //Виврдимо одиниці вимірювань
+  name_string[0][MAX_COL_LCD - 1] = name_string[1][MAX_COL_LCD - 1] =
+    name_string[2][MAX_COL_LCD - 1] = name_string[3][MAX_COL_LCD - 1] =
+      name_string[4][MAX_COL_LCD - 1] = name_string[5][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -835,32 +571,22 @@ void make_ekran_voltage_line(unsigned int pervynna_vtorynna)
   //Копіюємо  рядки у робочий екран
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
-    //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < row)
+    /********************************/
+    //Вводимо вимірювальні значення
+    /********************************/
+    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN)
     {
-      /********************************/
-      //Вводимо вимірювальні значення
       unsigned int start_number_digit_after_point = 3;
 
-      unsigned int index = index_array[index_of_ekran];
-      if (index != 255)
-      {
-        if (pervynna_vtorynna == 0)
-          convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], 1, 1, name_string_tmp[index_of_ekran], 7);
-        else
-        {
-          //Лінійні напруги
-          convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_low[index], current_settings.TVoltage, 1, name_string_tmp[index_of_ekran], 7);
-        }
-      }
-      /********************************/
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, 1, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
+        working_ekran[i][j] = name_string[index_of_ekran][j];
     }
     else
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = ' ';
+    /********************************/
 
     index_of_ekran++;
   }
@@ -870,7 +596,269 @@ void make_ekran_voltage_line(unsigned int pervynna_vtorynna)
   //Відображення курору по вертикалі
   current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
   //Курсор видимий
-  current_ekran.cursor_on = 1;
+  current_ekran.cursor_on = 0;
+  //Курсор не мигає
+  current_ekran.cursor_blinking_on = 0;
+  //Обновити повністю весь екран
+  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+}
+/*****************************************************/
+
+/*****************************************************/
+//Формуємо екран відображення кутів для сельсина
+/*****************************************************/
+void make_ekran_angle_for_selsyn(void)
+{
+  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN][MAX_COL_LCD] =
+    {
+      " Phi1 =         ",
+      " Phi2 =         "};
+
+  unsigned int position_temp = current_ekran.index_position;
+  unsigned int index_of_ekran;
+
+  index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+
+  //Копіюємо  рядки у робочий екран
+  for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
+  {
+    /********************************/
+    //Вводимо вимірювальні значення
+    /********************************/
+    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN)
+    {
+      unsigned int meas_tmp_1, meas_tmp_2 = measurement[I_UC1C2], angle;
+
+      if (index_of_ekran == INDEX_ML_ANGLE1)
+      {
+        meas_tmp_1 = measurement[I_UP1P2];
+        angle = angle_UP1P2_UC1C2;
+      }
+      else
+      {
+        meas_tmp_1 = measurement[I_UP2P3];
+        angle = angle_UP2P3_UC1C2;
+      }
+
+#define FIRST_POSITION_OF_NUMBER 8
+      if (
+        (meas_tmp_1 > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+        (meas_tmp_2 > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
+      {
+        //Розраховуємо кут
+        int vaga = 100, first_symbol = 0, position = FIRST_POSITION_OF_NUMBER; /*позиція з якої поинається виведення значення - найзначуще число*/
+        ;
+
+        while (vaga > 0)
+        {
+          int temp_data;
+          temp_data = angle / vaga; //виділяємо число, яке треба перетворити у символ і помістити у дану позицію екрану
+          angle %= vaga;            //вираховуємо число без символа, який ми зараз будемо виводити на екран
+          vaga /= 10;               //зменшуємо ваговий коефіцієнт в 10 разів
+
+          //Нулі перед найстаршим значущим числом приховуємо
+          if ((temp_data != 0) || (first_symbol != 0))
+          {
+            name_string[index_of_ekran][position] = temp_data + 0x30;
+            if (first_symbol == 0)
+              first_symbol = 1;
+          }
+          else
+          {
+            //Нуль виводимо тільки у тому випадку, якщо це є символ одиниць числа (текуча вага числа рівна 1)
+            if (vaga >= 1)
+              name_string[index_of_ekran][position] = ' ';
+            else
+            {
+              name_string[index_of_ekran][position] = temp_data + 0x30;
+              if (first_symbol == 0)
+                first_symbol = 1;
+            }
+          }
+          position++;
+        }
+        name_string[index_of_ekran][position] = '°';
+      }
+      else
+      {
+        const unsigned char undefined[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - FIRST_POSITION_OF_NUMBER] =
+          {
+            "Неопред.",
+            "Невизнач",
+            "Undef.  ",
+            "Неопред."};
+        int index_language = index_language_in_array(current_settings.language);
+
+        for (int j = 0; j < (MAX_COL_LCD - FIRST_POSITION_OF_NUMBER); j++)
+          name_string[index_of_ekran][FIRST_POSITION_OF_NUMBER + j] = undefined[index_language][j];
+      }
+#undef FIRST_POSITION_OF_NUMBER
+
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = name_string[index_of_ekran][j];
+    }
+    else
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = ' ';
+    /********************************/
+
+    index_of_ekran++;
+  }
+
+  //Курсор по горизонталі відображається на першій позиції
+  current_ekran.position_cursor_x = 0;
+  //Відображення курору по вертикалі
+  current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
+  //Курсор видимий
+  current_ekran.cursor_on = 0;
+  //Курсор не мигає
+  current_ekran.cursor_blinking_on = 0;
+  //Обновити повністю весь екран
+  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
+}
+/*****************************************************/
+
+/*****************************************************/
+//Формуємо екран відображення напруг з логометра
+/*****************************************************/
+void make_ekran_logomentr_voltage(void)
+{
+  const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_VOLTAGE_LOGOMETR][MAX_COL_LCD] =
+    {
+      {"Uлог.0=        В",
+       "Uлог.1=        В"},
+      {"Uлог.0=        В",
+       "Uлог.1=        В"},
+      {" BZ U =        V",
+       " BO U =        V"},
+      {"Uлог.0=        В",
+       "Uлог.1=        В"}};
+  int index_language = index_language_in_array(current_settings.language);
+
+  unsigned char name_string_tmp[MAX_ROW_FOR_VOLTAGE_LOGOMETR][MAX_COL_LCD];
+  for (unsigned int i = 0; i < MAX_ROW_FOR_VOLTAGE_LOGOMETR; i++)
+  {
+    for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+      name_string_tmp[i][j] = name_string[index_language][i][j];
+  }
+
+  //Виводимо відповідні вимірювання
+  int measurement_tmp[MAX_ROW_FOR_VOLTAGE_LOGOMETR];
+  //#ifdef DEBUG_TEST
+  //  /***/
+  //  //Тільки для відладки
+  //  /***/
+  //  measurement_tmp[0] = temp_adc2_channel0_global_values;
+  //  measurement_tmp[1] = temp_adc2_channel1_global_values;
+  //  /***/
+  //#else
+  semaphore_measure_values2 = 1;
+  measurement_tmp[0] = adc2_channel0_global_values;
+  measurement_tmp[1] = adc2_channel1_global_values;
+  semaphore_measure_values2 = 0;
+  //#endif
+  /*
+  Переводимо це число у мВ
+   10000 (мВ) -  4095
+  -10000 (мВ) - -4095
+  
+  Тоді ціна поділуи одної одиниці АЦП 10000/4095(мВ)
+  */
+  measurement_tmp[0] = measurement_tmp[0] * 10000 / 4095;
+  measurement_tmp[1] = measurement_tmp[1] * 10000 / 4095;
+
+  unsigned int position_temp = current_ekran.index_position;
+  unsigned int index_of_ekran;
+
+  index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+
+  //Копіюємо  рядки у робочий екран
+  for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
+  {
+    /********************************/
+    //Вводимо вимірювальні значення
+    /********************************/
+    if (index_of_ekran < MAX_ROW_FOR_VOLTAGE_LOGOMETR)
+    {
+      int meas_tmp = measurement_tmp[index_of_ekran];
+
+#define FIRST_POSITION_OF_NUMBER 7
+      unsigned int position = FIRST_POSITION_OF_NUMBER; /*позиція з якої поинається виведення значення*/
+      ;
+      if (meas_tmp < 0)
+      {
+        name_string_tmp[index_of_ekran][position] = '-';
+        meas_tmp *= -1;
+      }
+      position++;
+
+      if (meas_tmp <= 99999)
+      {
+        //Розраховуємо кут
+        unsigned int vaga = 10000, first_symbol = 0;
+
+        while (vaga > 0)
+        {
+          int temp_data;
+          temp_data = meas_tmp / vaga; //виділяємо число, яке треба перетворити у символ і помістити у дану позицію екрану
+          meas_tmp %= vaga;            //вираховуємо число без символа, який ми зараз будемо виводити на екран
+          vaga /= 10;                  //зменшуємо ваговий коефіцієнт в 10 разів
+
+          //Нулі перед найстаршим значущим числом приховуємо
+          if ((temp_data != 0) || (first_symbol != 0))
+          {
+            name_string_tmp[index_of_ekran][position] = temp_data + 0x30;
+            if (first_symbol == 0)
+              first_symbol = 1;
+          }
+          else
+          {
+            //Нуль виводимо тільки у тому випадку, якщо це є символ одиниць цілої частини числа (текуча вага числа рівна 1000)
+            if (vaga >= 1000)
+              name_string_tmp[index_of_ekran][position] = ' ';
+            else
+            {
+              name_string_tmp[index_of_ekran][position] = temp_data + 0x30;
+              if (first_symbol == 0)
+                first_symbol = 1;
+            }
+          }
+
+          if (vaga == 100)
+          {
+            //Переходимо на дробову частину
+            name_string_tmp[index_of_ekran][++position] = '.';
+          }
+
+          position++;
+        }
+      }
+      else
+      {
+        const unsigned char undefined[MAX_COL_LCD - FIRST_POSITION_OF_NUMBER - 1 - 1 - 1] = "??.???";
+
+        for (int j = 0; j < (MAX_COL_LCD - FIRST_POSITION_OF_NUMBER - 1 - 1 - 1); j++)
+          name_string_tmp[index_of_ekran][FIRST_POSITION_OF_NUMBER + 1 + j] = undefined[j];
+      }
+#undef FIRST_POSITION_OF_NUMBER
+
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
+    }
+    else
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = ' ';
+    /********************************/
+
+    index_of_ekran++;
+  }
+
+  //Курсор по горизонталі відображається на першій позиції
+  current_ekran.position_cursor_x = 0;
+  //Відображення курору по вертикалі
+  current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
+  //Курсор видимий
+  current_ekran.cursor_on = 0;
   //Курсор не мигає
   current_ekran.cursor_blinking_on = 0;
   //Обновити повністю весь екран
@@ -920,510 +908,6 @@ void make_ekran_frequency(void)
       }
 
       convert_and_insert_char_for_frequency(measurement_fequency, name_string[index_of_ekran]);
-      /********************************/
-
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = name_string[index_of_ekran][j];
-    }
-    else
-      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = ' ';
-
-    index_of_ekran++;
-  }
-
-  //Курсор по горизонталі відображається на першій позиції
-  current_ekran.position_cursor_x = 0;
-  //Відображення курору по вертикалі
-  current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
-  //Курсор видимий
-  current_ekran.cursor_on = 1;
-  //Курсор не мигає
-  current_ekran.cursor_blinking_on = 0;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Формуємо екран відображення кутів
-/*****************************************************/
-void make_ekran_angle(void)
-{
-  int const index_language = index_language_in_array(current_settings.language);
-  if (base_index_for_angle < 0)
-  {
-    //Неможливо визначити кути
-    static const unsigned char information[MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
-      {
-        {"  Невозможно    ",
-         " определить углы"},
-        {"   Неможливо    ",
-         " визначити кути "},
-        {" Impossibility  ",
-         "to define angles"},
-        {"  Невозможно    ",
-         " определить углы"}};
-
-    for (int index_1 = 0; index_1 < MAX_ROW_LCD; index_1++)
-    {
-      for (int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
-        working_ekran[index_1][index_2] = (index_1 < 2) ? information[index_language][index_1][index_2] : ' ';
-    }
-
-    //Відображення курору по вертикалі
-    current_ekran.position_cursor_y = 0;
-    //Курсор не видимий
-    current_ekran.cursor_on = 0;
-  }
-  else
-  {
-    static unsigned char const name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_MEASURMENT_ANGLE][MAX_COL_LCD] =
-      {
-        {" Ua  -          ",
-         " Ub  -          ",
-         " Uc  -          ",
-         " Uab -          ",
-         " Ubc -          ",
-         " Uca -          ",
-         " 3U0 -          ",
-         " Ia  -          ",
-         " Ib  -          ",
-         " Ic  -          ",
-         " 3I0 -          ",
-         "3I0-1-          ",
-         "I0.4 -          "},
-        {" Ua  -          ",
-         " Ub  -          ",
-         " Uc  -          ",
-         " Uab -          ",
-         " Ubc -          ",
-         " Uca -          ",
-         " 3U0 -          ",
-         " Ia  -          ",
-         " Ib  -          ",
-         " Ic  -          ",
-         " 3I0 -          ",
-         "3I0-1-          ",
-         "I0.4 -          "},
-        {" Va  -          ",
-         " Vb  -          ",
-         " Vc  -          ",
-         " Vab -          ",
-         " Vbc -          ",
-         " Vca -          ",
-         " 3V0 -          ",
-         " Ia  -          ",
-         " Ib  -          ",
-         " Ic  -          ",
-         " 3I0 -          ",
-         "3I0-1-          ",
-         "I0.4 -          "},
-        {" Ua  -          ",
-         " Ub  -          ",
-         " Uc  -          ",
-         " Uab -          ",
-         " Ubc -          ",
-         " Uca -          ",
-         " 3U0 -          ",
-         " Ia  -          ",
-         " Ib  -          ",
-         " Ic  -          ",
-         " 3I0 -          ",
-         "3I0-1-          ",
-         "I0.4 -          "}};
-    unsigned char name_string_tmp[MAX_ROW_FOR_MEASURMENT_ANGLE][MAX_COL_LCD];
-    for (size_t i = 0; (i < MAX_ROW_FOR_MEASURMENT_ANGLE); ++i)
-    {
-      unsigned char const *ptr_source = name_string[index_language][i];
-      unsigned char *ptr_target = name_string_tmp[i];
-      for (size_t j = 0; j < MAX_COL_LCD; j++)
-        *ptr_target++ = *ptr_source++;
-    }
-
-#define SIZE_UNDEF 6
-    static const unsigned char undefined[MAX_NAMBER_LANGUAGE][SIZE_UNDEF] =
-      {
-        "Неопр.",
-        "Нев.  ",
-        "Undef.",
-        "Неопр."};
-    static const unsigned char number_chars_for_undef[MAX_NAMBER_LANGUAGE] = {SIZE_UNDEF, 4, SIZE_UNDEF, SIZE_UNDEF};
-#undef SIZE_UNDEF
-
-    int number_charts_for_undef_tmp = number_chars_for_undef[index_language];
-
-    /*************
-    Завершуємо формування назв кутів
-    *************/
-    //    if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)
-    //    {
-    //      if (index_language == INDEX_LANGUAGE_EN) name_string[FULL_ORT_3I0_r][3] = 'c';
-    //      else name_string[FULL_ORT_3I0_r][3] = 'р';
-    //    }
-
-#define SIZE_NAME_ANALOG_CANAL 5
-    for (int index_1 = 0; index_1 < MAX_ROW_FOR_MEASURMENT_ANGLE; index_1++)
-    {
-      for (int index_2 = 0; index_2 < SIZE_NAME_ANALOG_CANAL; index_2++)
-        name_string_tmp[index_1][SIZE_NAME_ANALOG_CANAL + 1 + index_2] = name_string_tmp[base_index_for_angle][index_2];
-    }
-#undef SIZE_NAME_ANALOG_CANAL
-    /*************/
-
-    unsigned int value_index_shift[MAX_ROW_FOR_MEASURMENT_ANGLE] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    unsigned int additional_current = 0;
-    unsigned int position_temp = current_ekran.index_position;
-    unsigned int index_of_ekran;
-
-    /******************************************/
-    //Виключаємо поля, які не треба відображати
-    /******************************************/
-    if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0)
-    {
-      for (__full_ort_index index_tmp = FULL_ORT_Ua; index_tmp <= FULL_ORT_Uc; index_tmp++)
-      {
-        unsigned int i = index_tmp - additional_current;
-        unsigned int additional_current_new = additional_current + 1;
-        if ((i + 1) <= position_temp)
-          position_temp--;
-        do
-        {
-          for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          {
-            if ((i + 1) < (MAX_ROW_FOR_MEASURMENT_ANGLE - additional_current))
-              name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-            else
-              name_string_tmp[i][j] = ' ';
-          }
-          value_index_shift[i] = additional_current_new;
-          i++;
-        } while (i < (MAX_ROW_FOR_MEASURMENT_ANGLE - additional_current));
-        additional_current = additional_current_new;
-      }
-    }
-
-    {
-      int delete_index;
-      if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)
-        delete_index = FULL_ORT_I04;
-      else
-        delete_index = FULL_ORT_3I0_r;
-
-      unsigned int i = delete_index - additional_current;
-      unsigned int additional_current_new = additional_current + 1;
-      if ((i + 1) <= position_temp)
-        position_temp--;
-      do
-      {
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        {
-          if ((i + 1) < (MAX_ROW_FOR_MEASURMENT_ANGLE - additional_current))
-            name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-          else
-            name_string_tmp[i][j] = ' ';
-        }
-        value_index_shift[i] = additional_current_new;
-        i++;
-      } while (i < (MAX_ROW_FOR_MEASURMENT_ANGLE - additional_current));
-      additional_current = additional_current_new;
-    }
-    /******************************************/
-
-    index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
-
-    //Копіюємо  рядки у робочий екран
-    for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
-    {
-      //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-      if (index_of_ekran < (MAX_ROW_FOR_MEASURMENT_ANGLE - additional_current))
-      {
-        int value = phi_angle[bank_for_calc_phi_angle][index_of_ekran + value_index_shift[index_of_ekran]];
-
-#define LAST_POSITION_OF_TITLE 10
-
-        //Видаляємо зайві пробіли і по можливості звільняємо першу позицю по горизонталі для курсору
-        int shift = 0;
-        for (int index_1 = 1; index_1 <= LAST_POSITION_OF_TITLE; index_1++)
-        {
-          if (name_string_tmp[index_of_ekran][index_1 - shift] == ' ')
-          {
-            //Підтягуємо символи, щоб не було багато пробілів
-            for (int index_2 = (index_1 - shift); index_2 <= (LAST_POSITION_OF_TITLE - shift); index_2++)
-            {
-              name_string_tmp[index_of_ekran][index_2] = name_string_tmp[index_of_ekran][index_2 + 1];
-            }
-            shift++;
-          }
-        }
-        if (
-          (name_string_tmp[index_of_ekran][0] != ' ') &&
-          (shift > 0) &&
-          (((value >= 0 /*0.0°*/) && (value <= 999 /*99.9°*/)) ||
-           ((value < 0) &&
-            (number_charts_for_undef_tmp < (MAX_COL_LCD - LAST_POSITION_OF_TITLE - 1 - 1)))))
-        {
-          for (int index_1 = (LAST_POSITION_OF_TITLE - shift); index_1 >= 0; index_1--)
-            name_string_tmp[index_of_ekran][index_1 + 1] = name_string_tmp[index_of_ekran][index_1];
-          name_string_tmp[index_of_ekran][0] = ' ';
-          shift--;
-        }
-
-        int position = LAST_POSITION_OF_TITLE - shift + 1;
-
-#undef LAST_POSITION_OF_TITLE
-
-        if (value >= 0)
-        {
-          int number_charts_for_value = 4; /*число до коми, десяткова кома, десті і знак "°"*/
-          if (value > 999 /*99.9°*/)
-            number_charts_for_value += 2;
-          else if (value > 99 /*9.9°*/)
-            number_charts_for_value += 1;
-
-          int free_position = MAX_COL_LCD - position - number_charts_for_value;
-          if (free_position >= 3)
-          {
-            name_string_tmp[index_of_ekran][position] = ' ';
-            name_string_tmp[index_of_ekran][position + 1] = '=';
-            name_string_tmp[index_of_ekran][position + 2] = ' ';
-            position += 3;
-          }
-          else if (free_position == 2)
-          {
-            name_string_tmp[index_of_ekran][position] = ' ';
-            name_string_tmp[index_of_ekran][position + 1] = '=';
-            position += 2;
-          }
-          else
-          {
-            name_string_tmp[index_of_ekran][position] = '=';
-            position += 1;
-          }
-
-          //Кут між лінійною напругою і фазним струмом (з точністю до десятих)
-          int vaga = 1000, first_symbol = 0;
-
-          while (vaga > 0)
-          {
-            int temp_data;
-            temp_data = value / vaga; //виділяємо число, яке треба перетворити у символ і помістити у дану позицію екрану
-            value %= vaga;            //вираховуємо число без символа, який ми зараз будемо виводити на екран
-            vaga /= 10;               //зменшуємо ваговий коефіцієнт в 10 разів
-
-            if (vaga == 0)
-              name_string_tmp[index_of_ekran][position++] = '.'; //десяткова кома
-
-            //У випадку, якщо ми не у режимі редагування, то нулі перед найстаршим значущим числом приховуємо
-            if ((temp_data != 0) || (first_symbol != 0))
-            {
-              name_string_tmp[index_of_ekran][position] = temp_data + 0x30;
-              if (first_symbol == 0)
-                first_symbol = 1;
-            }
-            else
-            {
-              //Нуль виводимо тільки у тому випадку, якщо це є символ одиниць числа (текуча вага числа рівна 1)
-              if (vaga > 1)
-                name_string_tmp[index_of_ekran][position] = ' ';
-              else
-              {
-                name_string_tmp[index_of_ekran][position] = temp_data + 0x30;
-                if (first_symbol == 0)
-                  first_symbol = 1;
-              }
-            }
-            if (name_string_tmp[index_of_ekran][position] != ' ')
-              position++;
-          }
-          name_string_tmp[index_of_ekran][position] = '°';
-        }
-        else
-        {
-          int free_position = MAX_COL_LCD - position - number_charts_for_undef_tmp;
-          if (free_position >= 3)
-          {
-            name_string_tmp[index_of_ekran][position] = ' ';
-            name_string_tmp[index_of_ekran][position + 1] = '=';
-            name_string_tmp[index_of_ekran][position + 2] = ' ';
-            position += 3;
-          }
-          else if (free_position == 2)
-          {
-            name_string_tmp[index_of_ekran][position] = ' ';
-            name_string_tmp[index_of_ekran][position + 1] = '=';
-            position += 2;
-          }
-          else
-          {
-            name_string_tmp[index_of_ekran][position] = '=';
-            position += 1;
-          }
-
-          for (int j = 0; j < number_charts_for_undef_tmp; j++)
-            name_string_tmp[index_of_ekran][position + j] = undefined[index_language][j];
-        }
-
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
-      }
-      else
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = ' ';
-
-      index_of_ekran++;
-    }
-
-    //Відображення курору по вертикалі
-    current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
-    //Курсор видимий
-    current_ekran.cursor_on = 1;
-  }
-
-  //Курсор по горизонталі відображається на першій позиції
-  current_ekran.position_cursor_x = 0;
-  //Курсор не мигає
-  current_ekran.cursor_blinking_on = 0;
-  //Обновити повністю весь екран
-  current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Формуємо екран відображення потужностей
-/*****************************************************/
-void make_ekran_power(unsigned int pervynna_vtorynna)
-{
-
-  unsigned char name_string[MAX_ROW_FOR_MEASURMENT_POWER][MAX_COL_LCD] =
-    {
-      " P =            ",
-      " Q =            ",
-      " S =            ",
-      " cos(§) =       "};
-  static const unsigned int index_of_start_position[MAX_ROW_FOR_MEASURMENT_POWER] = {5, 5, 5, 10};
-
-#define SIZE_POWER_DIMENSION 3
-  static const unsigned char power_dimension[MAX_ROW_FOR_MEASURMENT_POWER - 1][MAX_NAMBER_LANGUAGE][SIZE_POWER_DIMENSION] =
-    {
-      {"Вт ", "Вт ", "W  ", "Вт "},
-      {"ВАр", "ВАр", "VAr", "ВАр"},
-      {"ВА ", "ВА ", "VA ", "ВА "}};
-
-  int index_language = index_language_in_array(current_settings.language);
-
-  for (unsigned int i = 0; i < (MAX_ROW_FOR_MEASURMENT_POWER - 1); i++)
-  {
-    for (unsigned int j = 0; j < SIZE_POWER_DIMENSION; j++)
-      name_string[i][MAX_COL_LCD - SIZE_POWER_DIMENSION + j] = power_dimension[i][index_language][j];
-  }
-#undef SIZE_POWER_DIMENSION
-
-  unsigned int position_temp = current_ekran.index_position;
-  unsigned int index_of_ekran;
-
-  index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
-
-  //Копіюємо  рядки у робочий екран
-  for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
-  {
-    //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_POWER)
-    {
-      unsigned int start_position = index_of_start_position[index_of_ekran];
-      /********************************/
-      //Вводимо вимірювальні значення
-      int temp_value = 0;
-      switch (index_of_ekran)
-      {
-        case INDEX_ML_P:
-          {
-            temp_value = P[bank_for_calc_power];
-            break;
-          }
-        case INDEX_ML_Q:
-          {
-            temp_value = Q[bank_for_calc_power];
-            break;
-          }
-        case INDEX_ML_S:
-          {
-            temp_value = S[bank_for_calc_power];
-            break;
-          }
-        case INDEX_ML_COS_PHI:
-          {
-            temp_value = cos_phi_x1000[bank_for_calc_power];
-            break;
-          }
-        default:
-          {
-            //Теоретично цього ніколи не мало б бути
-            total_error_sw_fixed();
-          }
-      }
-
-      if (temp_value < 0)
-      {
-        temp_value = -temp_value;
-        name_string[index_of_ekran][start_position - 1] = '-';
-      }
-
-      if (index_of_ekran != INDEX_ML_COS_PHI)
-      {
-        if (pervynna_vtorynna == 0)
-          convert_and_insert_char_for_measurement(3, (unsigned int) temp_value, 1, 1, name_string[index_of_ekran], start_position);
-        else
-          convert_and_insert_char_for_measurement(3, (unsigned int) temp_value, current_settings.TVoltage * current_settings.TCurrent, 1, name_string[index_of_ekran], start_position);
-      }
-      else
-      {
-        unsigned int position = start_position;
-        if (S[bank_for_calc_power] != 0)
-        {
-          unsigned int dilnyk = 1000;
-          for (unsigned int j = 0; j < 4; j++)
-          {
-            int value;
-
-            value = temp_value / dilnyk;
-            temp_value %= dilnyk;
-            name_string[index_of_ekran][position++] = value + 0x30;
-            if (j == 0)
-            {
-              //Десяткова "кома"
-              name_string[index_of_ekran][position++] = '.';
-            }
-            dilnyk /= 10;
-          }
-        }
-        else
-        {
-#define SIZE_UNDEF 6
-          static const unsigned char undefined[MAX_NAMBER_LANGUAGE][SIZE_UNDEF] =
-            {
-              "Неопр.",
-              "Нев.  ",
-              "Undef.",
-              "Неопр."};
-
-          position -= 1;
-          for (unsigned int j = 0; j < SIZE_UNDEF; j++)
-            name_string[index_of_ekran][position + j] = undefined[index_language][j];
-#undef SIZE_UNDEF
-        }
-      }
-
-      unsigned int shift = 0;
-      while (
-        (name_string[index_of_ekran][start_position] == ' ') &&
-        ((start_position + shift) < MAX_COL_LCD))
-      {
-        for (unsigned int j = start_position; j < (MAX_COL_LCD - 1); j++)
-          name_string[index_of_ekran][j] = name_string[index_of_ekran][j + 1];
-        name_string[index_of_ekran][MAX_COL_LCD - 1] = ' ';
-        shift++;
-      }
       /********************************/
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)

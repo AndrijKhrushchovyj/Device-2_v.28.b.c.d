@@ -649,11 +649,8 @@ __SETTINGS current_settings;
 #endif
 SRAM1 __SETTINGS edition_settings, current_settings_interfaces;
 
-//МСЗ 0.4кВ
-unsigned int ocp04_general_bits;
-uint32_t static_ocp04_tmp_bits;
-//uint32_t static_ocp04_dep_tmp_bits;
-uint32_t static_ocp04_dep_rez_bits;
+int current_step_logical = NUMBER_STEPS_RPN_UNDEFINED, edition_current_step_logical;
+int current_step = NUMBER_STEPS_RPN_UNDEFINED;
 
 //Визначення періодів у хвилину і більше
 unsigned int number_seconds;
@@ -799,7 +796,7 @@ unsigned int max_voltage_dr;       //максимальна фазна/лінійна напруга
 unsigned int number_min_U_dr;
 unsigned int number_max_U_dr;
 unsigned int type_view_max_values_dr;
-int index_cell_into_array_for_min_max_measurement_dr;
+int index_cell_into_array_for_integral_values_dr;
 unsigned int control_extra_settings_1_dr_for_manu;
 
 enum _fix_date_time_avar drDateTimeState = AVAR_DATE_TIME_NONE;

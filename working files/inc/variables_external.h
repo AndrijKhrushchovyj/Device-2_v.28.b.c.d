@@ -242,11 +242,8 @@ extern unsigned int dopusk_dv_prt[NUMBER_INPUTS];
 
 extern __SETTINGS edition_settings, current_settings_interfaces;
 
-//ћ—« 0.4к¬
-extern unsigned int ocp04_general_bits;
-extern uint32_t static_ocp04_tmp_bits;
-//extern uint32_t static_ocp04_dep_tmp_bits;
-extern uint32_t static_ocp04_dep_rez_bits;
+extern int current_step_logical, edition_current_step_logical;
+extern int current_step;
 
 //¬изначенн€ пер≥од≥в у хвилину ≥ б≥льше
 extern unsigned int number_seconds;
@@ -384,7 +381,7 @@ extern unsigned int max_voltage_dr;
 extern unsigned int number_min_U_dr;
 extern unsigned int number_max_U_dr;
 extern unsigned int type_view_max_values_dr;
-extern int index_cell_into_array_for_min_max_measurement_dr;
+extern int index_cell_into_array_for_integral_values_dr;
 extern unsigned int control_extra_settings_1_dr_for_manu;
 
 extern enum _fix_date_time_avar drDateTimeState;
