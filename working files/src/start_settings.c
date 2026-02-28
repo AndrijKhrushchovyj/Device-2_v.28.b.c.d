@@ -1240,6 +1240,56 @@ void start_settings_peripherals(void)
   }
   /**********************/
 
+  /**********************/
+  //Читаємо збережені дані про кутах сельсинового контролю
+  /**********************/
+  comparison_writing &= (unsigned int) (~COMPARISON_WRITING_ANGLE); /*зчитування, а не порівняння*/
+  _SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT);
+  while (
+    (control_spi1_taskes[0] != 0) ||
+    (control_spi1_taskes[1] != 0) ||
+    (state_execution_spi1 > 0))
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+        GPIO_EXTERNAL_WATCHDOG,
+        GPIO_PIN_EXTERNAL_WATCHDOG,
+        (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG)));
+    }
+
+    main_routines_for_spi1();
+    changing_diagnostyka_state(); //Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+  }
+  /**********************/
+
+  /**********************/
+  //Читаємо збережені дані про лічильнику ресурсу
+  /**********************/
+  comparison_writing &= (unsigned int) (~COMPARISON_WRITING_RESURS); /*зчитування, а не порівняння*/
+  _SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
+  while (
+    (control_spi1_taskes[0] != 0) ||
+    (control_spi1_taskes[1] != 0) ||
+    (state_execution_spi1 > 0))
+  {
+    //Робота з watchdogs
+    if ((control_word_of_watchdog & WATCHDOG_KYYBOARD) == WATCHDOG_KYYBOARD)
+    {
+      //Змінюємо стан біту зовнішнього Watchdog на протилежний
+      GPIO_WriteBit(
+        GPIO_EXTERNAL_WATCHDOG,
+        GPIO_PIN_EXTERNAL_WATCHDOG,
+        (BitAction)(1 - GPIO_ReadOutputDataBit(GPIO_EXTERNAL_WATCHDOG, GPIO_PIN_EXTERNAL_WATCHDOG)));
+    }
+
+    main_routines_for_spi1();
+    changing_diagnostyka_state(); //Підготовлюємо новий потенційно можливий запис для реєстратора програмних подій
+  }
+  /**********************/
+
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   /**********************/
   //Ініціалізація CANAL1_MO і CANAL2_MO: 6.75Мбіт/с, контроль парності, один стоп біт

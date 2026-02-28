@@ -2152,7 +2152,6 @@ inline void main_protection(void)
         trigger_functions_USB[i] = 0;
 
       information_about_restart_counter &= (unsigned int) (~(1 << USB_RECUEST));
-      information_about_clean_energy &= (unsigned int) (~(1 << USB_RECUEST));
     }
     if ((reset_trigger_function_from_interface & (1 << RS485_RECUEST)) != 0)
     {
@@ -2160,7 +2159,6 @@ inline void main_protection(void)
         trigger_functions_RS485[i] = 0;
 
       information_about_restart_counter &= (unsigned int) (~(1 << RS485_RECUEST));
-      information_about_clean_energy &= (unsigned int) (~(1 << RS485_RECUEST));
     }
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
     if ((reset_trigger_function_from_interface & (1 << LAN_RECUEST)) != 0)
@@ -3285,11 +3283,6 @@ inline void main_protection(void)
 
     //Переводимо у початковий стан деякі глобальні змінні
 
-    ocp04_general_bits = 0;
-    static_ocp04_tmp_bits = 0;
-    //		static_ocp04_dep_tmp_bits = 0;
-    static_ocp04_dep_rez_bits = 0;
-
     static_logic_APV_0 = 0;
     previous_states_APV_0 = 0;
     trigger_APV_0 = 0;
@@ -4209,15 +4202,6 @@ void TIM2_IRQHandler(void)
       //Помічаємо, що зміни прийняті системою захистів, але ще треба прийняти вимірювальною системою
       changed_settings = CHANGED_ETAP_ENDED_EXTRA_ETAP;
     }
-
-    if (koef_resurs_changed == CHANGED_ETAP_ENDED)
-    {
-      //Коефіцієнти для підрахунку ресурсу вимикача
-      K_resurs_prt = K_resurs;
-
-      //Помічаємо, що зміни прийняті системою захистів
-      koef_resurs_changed = CHANGED_ETAP_NONE;
-    }
     /***********************************************************/
 
     /***********************************************************/
@@ -4540,9 +4524,10 @@ void TIM2_IRQHandler(void)
           (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT) == 0) &&
           (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT) == 0))
         {
-          //На даний моммент не іде читання-запис ресурсу вимикача, тому можна здійснити копіювання
-          resurs_vymykacha_ctrl = resurs_vymykacha;
-          resurs_vidkljuchennja_ctrl = resurs_vidkljuchennja;
+          //На даний моммент не іде читання-запис структури інформації реєстратора, тому можна здійснити копіювання
+          counter_today_ctrl = counter_today;
+          counter_previous_day_ctrl = counter_previous_day;
+          counter_total_ctrl = counter_total;
           crc_resurs_ctrl = crc_resurs;
 
           //Скидаємо активну задачу формування резервної копії

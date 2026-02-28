@@ -1052,7 +1052,7 @@ void make_ekran_analog_value_records_digital_registrator(void)
       }
     }
 
-    unsigned int additional_current = 0;
+    int additional_current = 0;
     int position_temp = current_ekran.index_position;
 
     unsigned int control_for_dr;
@@ -1065,7 +1065,7 @@ void make_ekran_analog_value_records_digital_registrator(void)
 
       for (unsigned int k = 0; k < 2; k++)
       {
-        unsigned int i;
+        int i = 0;
 
         switch (k)
         {
@@ -1125,7 +1125,7 @@ void make_ekran_analog_value_records_digital_registrator(void)
       }
     }
 
-    for (unsigned int i = 0; i < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current); i++)
+    for (int i = 0; i < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current); i++)
     {
       if (i < (IDM_freq - additional_current))
       {
@@ -1142,15 +1142,15 @@ void make_ekran_analog_value_records_digital_registrator(void)
       else if (i == (IDM_freq - additional_current))
       {
         //Частота
-        if (temp_measurement[i] < 0)
+        if ((int) temp_measurement[i] < 0)
         {
-          if (temp_measurement[i] == (-2 * 1000))
+          if ((int) temp_measurement[i] == (-2 * 1000))
           {
             /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
             name_string_tmp[i][4] = '<';
             temp_measurement[i] = MIN_FREQUENCY * 1000;
           }
-          if (temp_measurement[i] == (-3 * 1000))
+          if ((int) temp_measurement[i] == (-3 * 1000))
           {
             /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
             name_string_tmp[i][4] = '>';

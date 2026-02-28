@@ -261,6 +261,7 @@ extern void control_ustuvannja(void);
 extern void control_trg_func(void);
 extern unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
 extern unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
+extern void control_angle(void);
 extern void control_resurs(void);
 
 extern void watchdog_routine(unsigned int, unsigned int const);

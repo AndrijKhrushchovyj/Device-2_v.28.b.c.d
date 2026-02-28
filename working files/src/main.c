@@ -425,6 +425,33 @@ void periodical_operations(unsigned int full_actions)
       //Скидаємо активну задачу самоконтролю по резервній копії для аналогового реєстратора
       periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK = false;
     }
+    else if (periodical_tasks_TEST_ANGLE != 0)
+    {
+      //Стоїть у черзі активна задача самоконтролю юстування (і щоб не ускладнювати задачу і серійного номеру пристрою)
+      if (
+        ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
+        (current_settings_prt.type_control_location == 2))
+      {
+        //Перевірку здійснюємо тільки тоді, коли юстування було успішно прочитане
+        if (
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT) == 0))
+        {
+          //На даний моммент не іде читання-запис юстування, тому можна здійснити контроль достовірності
+          control_angle();
+
+          //Скидаємо активну задачу самоконтролю юстування
+          periodical_tasks_TEST_ANGLE = false;
+        }
+      }
+      else
+      {
+        //Скидаємо активну задачу самоконтролю
+        periodical_tasks_TEST_ANGLE = false;
+      }
+    }
     else if (periodical_tasks_TEST_RESURS_LOCK != 0)
     {
       //Стоїть у черзі активна задача самоконтролю по резервній копії для ресурсу лічильника

@@ -360,6 +360,12 @@ typedef struct
   unsigned int cur_active_sources[N_BIG];
 } __HEADER_AR;
 
+typedef struct
+{
+  unsigned char date[3];
+  unsigned int count;
+} __COUNTER_RESURS;
+
 typedef enum __STATE_READING_ADCs
 {
   STATE_READING_ADCs_NONE = 0,

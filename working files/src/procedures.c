@@ -2650,6 +2650,111 @@ int str_to_int_DATE_Mmm(void)
 /*****************************************************/
 
 /*****************************************************/
+//Контроль достовірності кутів для сельсинового контролю
+/*****************************************************/
+void control_angle(void)
+{
+  unsigned char crc_angle_tmp = 0, temp_value;
+  unsigned int sum_phi_tmp = sum_phi_begin;
+  unsigned char *point;
+
+  for (unsigned int num_phi = 0; num_phi < 2; num_phi++)
+  {
+    switch (num_phi)
+    {
+      case 0:
+        {
+          sum_phi_tmp = sum_phi_begin;
+          break;
+        }
+      case 1:
+        {
+          sum_phi_tmp = sum_phi_end;
+          break;
+        }
+      default:
+        {
+          //Теоретично цього ніколи не мало б бути
+          total_error_sw_fixed();
+          break;
+        }
+    }
+
+    point = (unsigned char *) (&sum_phi_tmp);
+    for (unsigned int i = 0; i < sizeof(sum_phi_tmp); i++)
+    {
+      temp_value = *(point + i);
+      crc_angle_tmp += temp_value;
+    }
+  }
+
+  if (crc_angle == crc_angle_tmp)
+  {
+    //Контроль достовірності юстування пройшов успішно
+
+    //Скидаємо повідомлення у слові діагностики
+    _SET_BIT(clear_diagnostyka, ERROR_ANGLE_EEPROM_CONTROL_BIT);
+  }
+  else
+  {
+    //Контроль достовірності юстування не пройшов
+
+    //Виствляємо повідомлення у слові діагностики
+    _SET_BIT(set_diagnostyka, ERROR_ANGLE_EEPROM_CONTROL_BIT);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Контроль достовірності лічильника ресурсу
+/*****************************************************/
+void control_resurs(void)
+{
+  unsigned char crc_resurs_tmp = 0, temp_value;
+  unsigned char *point;
+
+  point = (unsigned char *) (&counter_today_ctrl);
+  for (unsigned int i = 0; i < sizeof(counter_today_ctrl); i++)
+  {
+    temp_value = *(point);
+    crc_resurs_tmp += temp_value;
+    point++;
+  }
+
+  point = (unsigned char *) (&counter_previous_day_ctrl);
+  for (unsigned int i = 0; i < sizeof(counter_previous_day_ctrl); i++)
+  {
+    temp_value = *(point);
+    crc_resurs_tmp += temp_value;
+    point++;
+  }
+
+  point = (unsigned char *) (&counter_total_ctrl);
+  for (unsigned int i = 0; i < sizeof(counter_total_ctrl); i++)
+  {
+    temp_value = *(point);
+    crc_resurs_tmp += temp_value;
+    point++;
+  }
+
+  if (crc_resurs_ctrl == crc_resurs_tmp)
+  {
+    //Контроль достовірності ресурсу лічильника пройшов успішно
+
+    //Скидаємо повідомлення у слові діагностики
+    _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_CONTROL_BIT);
+  }
+  else
+  {
+    //Контроль достовірності юстування не пройшов
+
+    //Виствляємо повідомлення у слові діагностики
+    _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_CONTROL_BIT);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
 //Функція обновлення змінних при зміні типу реле 33/3I0
 /*****************************************************/
 void action_after_changing_resurs_pickup(__SETTINGS *const target_label)

@@ -84,6 +84,12 @@ extern unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high;
 extern unsigned int measurement_middle[_NUMBER_IM];
 extern unsigned int measurement_low[_NUMBER_IM];
 
+extern int angle_UP1P2_UC1C2;
+extern int angle_UP2P3_UC1C2;
+extern unsigned int sum_phi_begin;
+extern unsigned int sum_phi_end;
+extern unsigned char crc_angle;
+
 extern const unsigned int index_converter[NUMBER_ANALOG_CANALES];
 extern int ortogonal_calc[2 * FULL_ORT_MAX];
 extern int ortogonal_calc_low[2 * FULL_ORT_MAX];
@@ -202,6 +208,7 @@ extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
+extern volatile unsigned int periodical_tasks_TEST_ANGLE;
 extern unsigned int periodical_tasks_TEST_RESURS;
 extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;
@@ -406,6 +413,15 @@ extern unsigned int number_record_of_pr_err_into_RS485;
 
 //Очистка інформації по реєстраторах
 extern unsigned int clean_rejestrators;
+
+//Лічильник ресурсу
+extern __COUNTER_RESURS counter_today, counter_previous_day;
+extern unsigned int counter_total;
+extern unsigned char crc_resurs;
+extern __COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
+extern unsigned int counter_total_ctrl;
+extern unsigned char crc_resurs_ctrl;
+extern unsigned int restart_counter, previous_state_perekluchennya, perekluchennya_unrecorded;
 
 extern const unsigned char letters[69][2];
 extern const unsigned char extra_letters[13][1 + MAX_NAMBER_LANGUAGE];

@@ -1620,9 +1620,16 @@ void TIM4_IRQHandler(void)
       }
 
       //Запусаємо раз у секунду самоконтроль важливих змінних
-      periodical_tasks_TEST_SETTINGS = periodical_tasks_TEST_USTUVANNJA = periodical_tasks_TEST_TRG_FUNC =
-        periodical_tasks_TEST_INFO_REJESTRATOR_AR = periodical_tasks_TEST_INFO_REJESTRATOR_DR = periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR =
-          periodical_tasks_TEST_RESURS = periodical_tasks_TEST_FLASH_MEMORY = periodical_tasks_CALCULATION_ANGLE = true;
+      periodical_tasks_TEST_SETTINGS =
+        periodical_tasks_TEST_USTUVANNJA =
+          periodical_tasks_TEST_TRG_FUNC =
+            periodical_tasks_TEST_INFO_REJESTRATOR_AR =
+              periodical_tasks_TEST_INFO_REJESTRATOR_DR =
+                periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR =
+                  periodical_tasks_TEST_ANGLE =
+                    periodical_tasks_TEST_RESURS =
+                      periodical_tasks_TEST_FLASH_MEMORY =
+                        periodical_tasks_CALCULATION_ANGLE = true;
 
       number_inputs_for_fix_one_second = 0;
 

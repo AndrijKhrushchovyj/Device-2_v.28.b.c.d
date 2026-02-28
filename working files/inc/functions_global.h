@@ -262,6 +262,7 @@ void control_ustuvannja(void);
 void control_trg_func(void);
 unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
 unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
+void control_angle(void);
 void control_resurs(void);
 
 void watchdog_routine(unsigned int, unsigned int const);

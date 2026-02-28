@@ -20,6 +20,10 @@ void main_routines_for_spi1(void)
   //Статична змінна, яка вказує який блок інформації по реєстраторі програмних подій треба записувати у EEPROM
   static unsigned int number_block_info_rejestrator_pr_err_write_to_eeprom;
   //Статична змінна, яка вказує який блок інформації по ресурсу вимикача треба записувати у EEPROM
+  //Статична змінна, яка вказує який блок кутів  треба записувати у EEPROM
+  static unsigned int number_block_angle_write_to_eeprom;
+  //Статична змінна, яка вказує який блок лічильника кутів треба записувати у EEPROM
+  static unsigned int number_block_resurs_write_to_eeprom;
 
   //Статичні змінні для контролю коректності запису
   static __SETTINGS current_settings_comp;
@@ -31,6 +35,9 @@ void main_routines_for_spi1(void)
   static __INFO_AR_REJESTRATOR info_rejestrator_ar_comp;
   static __INFO_REJESTRATOR info_rejestrator_dr_comp;
   static __INFO_REJESTRATOR info_rejestrator_pr_err_comp;
+  static unsigned int sum_phi_begin_comp, sum_phi_end_comp;
+  static __COUNTER_RESURS counter_today_comp, counter_previous_day_comp;
+  static unsigned int counter_total_comp;
 
   if (state_execution_spi1 < 0)
   {
@@ -384,6 +391,98 @@ void main_routines_for_spi1(void)
         _CLEAR_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
       }
     }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT) != 0)
+    {
+      //Стоїть умова запису блоку у EEPROM кутів
+
+      int size_to_end;
+      unsigned int number, offset_from_start;
+
+      //Визначаємо з якого місця треба почати записувати
+      offset_from_start = number_block_angle_write_to_eeprom * SIZE_PAGE_EEPROM;
+
+      //Кількість байт до кінця буферу
+      size_to_end = (2 * sizeof(unsigned int) + 1) - offset_from_start;
+
+      if (size_to_end > 0)
+      {
+        TxBuffer_SPI_EDF[0] = OPCODE_WRITE;
+        TxBuffer_SPI_EDF[1] = ((START_ADDRESS_ANGLE_IN_EEPROM + offset_from_start) >> 8) & 0xff; //старша  адреса початку зберігання кутів у EEPROM
+        TxBuffer_SPI_EDF[2] = ((START_ADDRESS_ANGLE_IN_EEPROM + offset_from_start)) & 0xff;      //молодша адреса початку зберігання кутів у EEPROM
+
+        if (size_to_end < SIZE_PAGE_EEPROM)
+          number = size_to_end;
+        else
+          number = SIZE_PAGE_EEPROM;
+
+        if (offset_from_start != 0)
+        {
+          //Переміщаємо дані для запису до опкоду з адресою початку запису для того, щоб сформувати цілий масив для передачі по DMA
+          for (unsigned int i = 0; i < number; i++)
+            TxBuffer_SPI_EDF[3 + i] = TxBuffer_SPI_EDF[3 + offset_from_start + i];
+        }
+
+        //Запускаємо процес запису в EEPROM
+        start_exchange_via_spi(INDEX_EEPROM, (3 + number));
+      }
+      else
+      {
+        //Весь масив кутів вже записаний
+
+        //Виставляємо команду контрольного читання для перевідрки достовірності записаної інформації
+        comparison_writing |= COMPARISON_WRITING_ANGLE;
+        _SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT);
+
+        //Скидаємо умову запису кутів у EEPROM
+        _CLEAR_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT);
+      }
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT) != 0)
+    {
+      //Стоїть умова запису блоку у EEPROM ресурсу лічильника
+
+      int size_to_end;
+      unsigned int number, offset_from_start;
+
+      //Визначаємо з якого місця треба почати записувати
+      offset_from_start = number_block_resurs_write_to_eeprom * SIZE_PAGE_EEPROM;
+
+      //Кількість байт до кінця буферу
+      size_to_end = (2 * sizeof(__COUNTER_RESURS) + sizeof(unsigned int) + 1) - offset_from_start;
+
+      if (size_to_end > 0)
+      {
+        TxBuffer_SPI_EDF[0] = OPCODE_WRITE;
+        TxBuffer_SPI_EDF[1] = ((START_ADDRESS_RESURS_IN_EEPROM + offset_from_start) >> 8) & 0xff; //старша  адреса початку зберігання лічильників ресурсу у EEPROM
+        TxBuffer_SPI_EDF[2] = ((START_ADDRESS_RESURS_IN_EEPROM + offset_from_start)) & 0xff;      //молодша адреса початку зберігання лічильників ресурсу у EEPROM
+
+        if (size_to_end < SIZE_PAGE_EEPROM)
+          number = size_to_end;
+        else
+          number = SIZE_PAGE_EEPROM;
+
+        if (offset_from_start != 0)
+        {
+          //Переміщаємо дані для запису до опкоду з адресою початку запису для того, щоб сформувати цілий масив для передачі по DMA
+          for (unsigned int i = 0; i < number; i++)
+            TxBuffer_SPI_EDF[3 + i] = TxBuffer_SPI_EDF[3 + offset_from_start + i];
+        }
+
+        //Запускаємо процес запису в EEPROM
+        start_exchange_via_spi(INDEX_EEPROM, (3 + number));
+      }
+      else
+      {
+        //Весь масив лічильника ресурсу вже записаний
+
+        //Виставляємо команду контрольного читання для перевідрки достовірності записаної інформації
+        comparison_writing |= COMPARISON_WRITING_RESURS;
+        _SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
+
+        //Скидаємо умову запису кутів у EEPROM
+        _CLEAR_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT);
+      }
+    }
     else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_SETTINGS_EEPROM_BIT) != 0)
     {
       //Запускаємо процес читання настройок - формуємо буфер для передавання в EEPROM щоб прочитати настройки
@@ -447,6 +546,24 @@ void main_routines_for_spi1(void)
                                                                                   //дальше значення байт не має значення
       start_exchange_via_spi(INDEX_EEPROM, ((sizeof(info_rejestrator_pr_err) + 1) + 3));
     }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT) != 0)
+    {
+
+      TxBuffer_SPI_EDF[0] = OPCODE_READ;
+      TxBuffer_SPI_EDF[1] = (START_ADDRESS_ANGLE_IN_EEPROM >> 8) & 0xff; //старша  адреса початку зберігання даних  у EEPROM
+      TxBuffer_SPI_EDF[2] = (START_ADDRESS_ANGLE_IN_EEPROM) &0xff;       //молодша адреса початку зберігання даних  у EEPROM
+                                                                         //дальше значення байт не має значення
+      start_exchange_via_spi(INDEX_EEPROM, ((2 * sizeof(unsigned int) + 1) + 3));
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT) != 0)
+    {
+
+      TxBuffer_SPI_EDF[0] = OPCODE_READ;
+      TxBuffer_SPI_EDF[1] = (START_ADDRESS_RESURS_IN_EEPROM >> 8) & 0xff; //старша  адреса початку зберігання даних  у EEPROM
+      TxBuffer_SPI_EDF[2] = (START_ADDRESS_RESURS_IN_EEPROM) &0xff;       //молодша адреса початку зберігання даних  у EEPROM
+                                                                          //дальше значення байт не має значення
+      start_exchange_via_spi(INDEX_EEPROM, ((2 * sizeof(__COUNTER_RESURS) + sizeof(unsigned int) + 1) + 3));
+    }
     else if (
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_SETTINGS_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_USTUVANNJA_EEPROM_BIT) != 0) ||
@@ -454,7 +571,9 @@ void main_routines_for_spi1(void)
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_TRG_FUNC_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_AR_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_DR_EEPROM_BIT) != 0) ||
-      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0))
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT) != 0))
     {
       //Запускаємо процес читання
 
@@ -742,6 +861,95 @@ void main_routines_for_spi1(void)
       //Виставляємо перший блок запису у EEPROM
       number_block_info_rejestrator_pr_err_write_to_eeprom = 0;
     }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT) != 0)
+    {
+
+      //Стоїть умова початку нового запису у EEPROM кутів для сельсинового контролю
+
+      //Готуємо буфер для запису
+      unsigned char crc_eeprom_angle = 0, temp_value;
+      unsigned char *point;
+      unsigned int offset = 3;
+
+      sum_phi_begin_comp = sum_phi_begin;
+      point = (unsigned char *) (&sum_phi_begin);
+      for (unsigned int i = 0; i < sizeof(sum_phi_begin); i++)
+      {
+        temp_value = *(point++);
+        TxBuffer_SPI_EDF[offset + i] = temp_value;
+        crc_eeprom_angle += temp_value;
+      }
+      offset += sizeof(sum_phi_begin);
+
+      sum_phi_end_comp = sum_phi_end;
+      point = (unsigned char *) (&sum_phi_end);
+      for (unsigned int i = 0; i < sizeof(sum_phi_end); i++)
+      {
+        temp_value = *(point++);
+        TxBuffer_SPI_EDF[offset + i] = temp_value;
+        crc_eeprom_angle += temp_value;
+      }
+      offset += sizeof(sum_phi_end);
+
+      TxBuffer_SPI_EDF[offset] = (unsigned char) ((~(unsigned int) crc_eeprom_angle) & 0xff);
+
+      //Скидаємо біт запуску нового запису і виставляємо біт запису блоків у EEPROM з бітом встановлення дозволу на запис
+      _SET_BIT(control_spi1_taskes, TASK_EEPROM_WRITE_PREPARATION_BIT);
+      _SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT);
+      _CLEAR_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT);
+
+      //Виставляємо перший блок стану виходів-світлоіндикаторів запису у EEPROM
+      number_block_angle_write_to_eeprom = 0;
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_WRITE_RESURS_EEPROM_BIT) != 0)
+    {
+      //Стоїть умова початку нового запису у EEPROM кількості переключень для лічильника ресурсу
+
+      //Готуємо буфер для запису
+      unsigned char crc_eeprom_resurs = 0, temp_value;
+      unsigned char *point;
+      unsigned int offset = 3;
+
+      counter_today_comp = counter_today;
+      point = (unsigned char *) (&counter_today);
+      for (unsigned int i = 0; i < sizeof(counter_today); i++)
+      {
+        temp_value = *(point++);
+        TxBuffer_SPI_EDF[offset + i] = temp_value;
+        crc_eeprom_resurs += temp_value;
+      }
+      offset += sizeof(counter_today);
+
+      counter_previous_day_comp = counter_previous_day;
+      point = (unsigned char *) (&counter_previous_day);
+      for (unsigned int i = 0; i < sizeof(counter_previous_day); i++)
+      {
+        temp_value = *(point++);
+        TxBuffer_SPI_EDF[offset + i] = temp_value;
+        crc_eeprom_resurs += temp_value;
+      }
+      offset += sizeof(counter_previous_day);
+
+      counter_total_comp = counter_total;
+      point = (unsigned char *) (&counter_total);
+      for (unsigned int i = 0; i < sizeof(counter_total); i++)
+      {
+        temp_value = *(point++);
+        TxBuffer_SPI_EDF[offset + i] = temp_value;
+        crc_eeprom_resurs += temp_value;
+      }
+      offset += sizeof(counter_total);
+
+      TxBuffer_SPI_EDF[offset] = (unsigned char) ((~(unsigned int) crc_eeprom_resurs) & 0xff);
+
+      //Скидаємо біт запуску нового запису і виставляємо біт запису блоків у EEPROM з бітом встановлення дозволу на запис
+      _SET_BIT(control_spi1_taskes, TASK_EEPROM_WRITE_PREPARATION_BIT);
+      _SET_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT);
+      _CLEAR_BIT(control_spi1_taskes, TASK_START_WRITE_RESURS_EEPROM_BIT);
+
+      //Виставляємо перший блок лічильників ресурсу запису у EEPROM
+      number_block_resurs_write_to_eeprom = 0;
+    }
     /*************************************************/
   }
   else if (state_execution_spi1 == 1)
@@ -883,7 +1091,9 @@ void main_routines_for_spi1(void)
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_AR_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_DR_EEPROM_BIT) != 0) ||
-      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0))
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT) != 0))
     {
       //Стоїть умова запису блоку у EEPROM
 
@@ -922,6 +1132,16 @@ void main_routines_for_spi1(void)
         //Виставляємо наступний блок інформації по реєстраторах запису у EEPROM
         number_block_info_rejestrator_pr_err_write_to_eeprom++;
       }
+      else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT) != 0)
+      {
+        //Виставляємо що кути для сельсинового контролю вже записані - треба тільки коректно завершити цю операцію з витримкою часу на саму процедуру запису у мікросхемі
+        number_block_angle_write_to_eeprom++;
+      }
+      else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT) != 0)
+      {
+        //Виставляємо наступний блок інформації по лічильниках запису у EEPROM
+        number_block_resurs_write_to_eeprom++;
+      }
       else
       {
         //Сюди програма не мала б теоретично ніколи заходити
@@ -939,7 +1159,9 @@ void main_routines_for_spi1(void)
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_TRG_FUNC_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_AR_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_DR_EEPROM_BIT) != 0) ||
-      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0))
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT) != 0))
     {
       //Прочитано ресістр статусу
       if ((RxBuffer_SPI_EDF[1 + 0] & (1 << 0)) == 0)
@@ -986,6 +1208,18 @@ void main_routines_for_spi1(void)
           //Скидаємо біт запуску читання інформації по дискретному реєстратору і виставляємо біт процесу читання інформації по дискретному реєстратору
           _SET_BIT(control_spi1_taskes, TASK_READING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
           _CLEAR_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
+        }
+        else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT) != 0)
+        {
+          //Скидаємо біт запуску читання інформації і виставляємо біт процесу читання інформації
+          _SET_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT);
+          _CLEAR_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT);
+        }
+        else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT) != 0)
+        {
+          //Скидаємо біт запуску читання інформації і виставляємо біт процесу читання інформації
+          _SET_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT);
+          _CLEAR_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
         }
         else
         {
@@ -2427,6 +2661,296 @@ void main_routines_for_spi1(void)
       //Скидаємо повідомлення про читання даних
       _CLEAR_BIT(control_spi1_taskes, TASK_READING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
     }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT) != 0)
+    {
+      //Аналізуємо прочитані дані
+      //Спочатку аналізуємо, чи прояитаний блок є пустим, чи вже попередньо записаним
+      unsigned int empty_block = 1, i = 0;
+      unsigned int sum_phi_begin_tmp = 0, sum_phi_end_tmp = 0;
+
+      while ((empty_block != 0) && (i < (sizeof(sum_phi_begin) + sizeof(sum_phi_end) + 1)))
+      {
+        if (TxBuffer_SPI_EDF[3 + i] != 0xff)
+          empty_block = 0;
+        i++;
+      }
+
+      if (empty_block == 0)
+      {
+        //Помічаємо, що блок не є пустим
+        state_spi1_task &= (unsigned int) (~STATE_ANGLE_EEPROM_EMPTY);
+        //Скидаємо повідомлення у слові діагностики
+        _SET_BIT(clear_diagnostyka, ERROR_ANGLE_EEPROM_EMPTY_BIT);
+
+        //Перевіряємо контрольну суму
+        unsigned char crc_eeprom_angle = 0, temp_value;
+        unsigned char *point;
+        unsigned int offset = 3;
+
+        point = (unsigned char *) (&sum_phi_begin_tmp);
+        for (i = 0; i < sizeof(sum_phi_begin_tmp); i++)
+        {
+          temp_value = TxBuffer_SPI_EDF[offset + i];
+          *(point) = temp_value;
+          crc_eeprom_angle += temp_value;
+          point++;
+        }
+        offset += sizeof(sum_phi_begin_tmp);
+
+        point = (unsigned char *) (&sum_phi_end_tmp);
+        for (i = 0; i < sizeof(sum_phi_end_tmp); i++)
+        {
+          temp_value = TxBuffer_SPI_EDF[offset + i];
+          *(point) = temp_value;
+          crc_eeprom_angle += temp_value;
+          point++;
+        }
+        offset += sizeof(sum_phi_end_tmp);
+
+        if (TxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_angle) & 0xff)))
+        {
+          //Контролдьна сума сходиться
+
+          //Скидаємо повідомлення у слові діагностики
+          _SET_BIT(clear_diagnostyka, ERROR_ANGLE_EEPROM_BIT);
+
+          crc_angle = crc_eeprom_angle;
+
+          if ((comparison_writing & COMPARISON_WRITING_ANGLE) == 0)
+          {
+            sum_phi_begin = sum_phi_begin_tmp;
+            sum_phi_end = sum_phi_end_tmp;
+          }
+          else
+          {
+            //Виконувалося контроль достовірності записаної інформації у EEPROM з записуваною
+            if ((sum_phi_begin_comp == sum_phi_begin_tmp) && (sum_phi_end_comp == sum_phi_end_tmp))
+            {
+              //Контроль порівнняння пройшов успішно
+
+              //Скидаємо повідомлення у слові діагностики
+              _SET_BIT(clear_diagnostyka, ERROR_ANGLE_EEPROM_COMPARISON_BIT);
+            }
+            else
+            {
+              //Контроль порівнняння зафіксував розбіжності між записаною і записуваною інформацією
+
+              //Виствляємо повідомлення у слові діагностики
+              _SET_BIT(set_diagnostyka, ERROR_ANGLE_EEPROM_COMPARISON_BIT);
+            }
+          }
+
+          state_spi1_task &= (unsigned int) (~STATE_ANGLE_EEPROM_FAIL);
+          state_spi1_task |= STATE_ANGLE_EEPROM_GOOD;
+        }
+        else
+        {
+          //Контрольна сума не сходиться
+          state_spi1_task &= (unsigned int) (~STATE_ANGLE_EEPROM_GOOD);
+          state_spi1_task |= STATE_ANGLE_EEPROM_FAIL;
+
+          //Виствляємо повідомлення у слові діагностики
+          _SET_BIT(set_diagnostyka, ERROR_ANGLE_EEPROM_BIT);
+        }
+      }
+      else
+      {
+        //Помічаємо, що прочитаний блок є пустим
+        state_spi1_task &= (unsigned int) (~STATE_ANGLE_EEPROM_FAIL);
+        state_spi1_task &= (unsigned int) (~STATE_ANGLE_EEPROM_GOOD);
+        state_spi1_task |= STATE_ANGLE_EEPROM_EMPTY;
+
+        //Виствляємо повідомлення у слові діагностики
+        _SET_BIT(clear_diagnostyka, ERROR_ANGLE_EEPROM_BIT);
+        _SET_BIT(set_diagnostyka, ERROR_ANGLE_EEPROM_EMPTY_BIT);
+      }
+
+      //Знімаємо можливу сигналізацію, що виконувалося порівнняння
+      comparison_writing &= (unsigned int) (~COMPARISON_WRITING_ANGLE);
+      //Скидаємо повідомлення про читання даних
+      _CLEAR_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT);
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT) != 0)
+    {
+      //Аналізуємо прочитані дані
+      //Спочатку аналізуємо, чи прояитаний блок є пустим, чи вже попередньо записаним
+      unsigned int empty_block = 1, i = 0;
+      __COUNTER_RESURS counter_today_tmp = {
+        .date = {0, 0, 0},
+        .count = 0};
+      __COUNTER_RESURS counter_previous_day_tmp = {
+        .date = {0, 0, 0},
+        .count = 0};
+      unsigned int counter_total_tmp = 0;
+
+      while ((empty_block != 0) && (i < (sizeof(counter_today) + sizeof(counter_previous_day) + sizeof(counter_total) + 1)))
+      {
+        if (TxBuffer_SPI_EDF[3 + i] != 0xff)
+          empty_block = 0;
+        i++;
+      }
+
+      if (empty_block == 0)
+      {
+        //Помічаємо, що блок не є пустим
+        state_spi1_task &= (unsigned int) (~STATE_RESURS_EEPROM_EMPTY);
+        //Скидаємо повідомлення у слові діагностики
+        _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_EMPTY_BIT);
+
+        //Перевіряємо контрольну суму
+        unsigned char crc_eeprom_resurs = 0, temp_value;
+        unsigned char *point;
+        unsigned int offset = 3;
+
+        point = (unsigned char *) (&counter_today_tmp);
+        for (i = 0; i < sizeof(counter_today_tmp); i++)
+        {
+          temp_value = TxBuffer_SPI_EDF[offset + i];
+          *(point) = temp_value;
+          crc_eeprom_resurs += temp_value;
+          point++;
+        }
+        offset += sizeof(counter_today_tmp);
+
+        point = (unsigned char *) (&counter_previous_day_tmp);
+        for (i = 0; i < sizeof(counter_previous_day_tmp); i++)
+        {
+          temp_value = TxBuffer_SPI_EDF[offset + i];
+          *(point) = temp_value;
+          crc_eeprom_resurs += temp_value;
+          point++;
+        }
+        offset += sizeof(counter_previous_day_tmp);
+
+        point = (unsigned char *) (&counter_total_tmp);
+        for (i = 0; i < sizeof(counter_total_tmp); i++)
+        {
+          temp_value = TxBuffer_SPI_EDF[offset + i];
+          *(point) = temp_value;
+          crc_eeprom_resurs += temp_value;
+          point++;
+        }
+        offset += sizeof(counter_total_tmp);
+
+        if (TxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_resurs) & 0xff)))
+        {
+          //Контролдьна сума сходиться
+
+          //Скидаємо повідомлення у слові діагностики
+          _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_BIT);
+
+          crc_resurs = crc_eeprom_resurs;
+
+          if ((comparison_writing & COMPARISON_WRITING_RESURS) == 0)
+          {
+            counter_today = counter_today_tmp;
+            counter_previous_day = counter_previous_day_tmp;
+            counter_total = counter_total_tmp;
+          }
+          else
+          {
+            //Виконувалося контроль достовірності записаної інформації у EEPROM з записуваною
+            unsigned int target = 0;
+            unsigned int difference = 0;
+            while ((target < 3) && (difference == 0))
+            {
+              unsigned char *point_to_read = NULL;
+              unsigned char *point_to_write = NULL;
+              unsigned int size_of_target = 0;
+
+              switch (target)
+              {
+                case 0:
+                  {
+                    point_to_read = (unsigned char *) (&counter_today_tmp);
+                    point_to_write = (unsigned char *) (&counter_today_comp);
+                    size_of_target = sizeof(counter_today);
+                    break;
+                  }
+                case 1:
+                  {
+                    point_to_read = (unsigned char *) (&counter_previous_day_tmp);
+                    point_to_write = (unsigned char *) (&counter_previous_day_comp);
+                    size_of_target = sizeof(counter_previous_day);
+                    break;
+                  }
+                case 2:
+                  {
+                    point_to_read = (unsigned char *) (&counter_total_tmp);
+                    point_to_write = (unsigned char *) (&counter_total_comp);
+                    size_of_target = sizeof(counter_total);
+                    break;
+                  }
+                default:
+                  {
+                    //Теоретично цього ніколи не мало б бути
+                    total_error_sw_fixed();
+                  }
+              }
+
+              i = 0;
+              while ((difference == 0) && (i < size_of_target))
+              {
+                if (*point_to_write != *point_to_read)
+                  difference = 0xff;
+                else
+                {
+                  point_to_write++;
+                  point_to_read++;
+                  i++;
+                }
+              }
+
+              if (difference == 0)
+                target++;
+            }
+
+            if (difference == 0)
+            {
+              //Контроль порівнняння пройшов успішно
+
+              //Скидаємо повідомлення у слові діагностики
+              _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_COMPARISON_BIT);
+            }
+            else
+            {
+              //Контроль порівнняння зафіксував розбіжності між записаною і записуваною інформацією
+
+              //Виствляємо повідомлення у слові діагностики
+              _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_COMPARISON_BIT);
+            }
+          }
+
+          state_spi1_task &= (unsigned int) (~STATE_RESURS_EEPROM_FAIL);
+          state_spi1_task |= STATE_RESURS_EEPROM_GOOD;
+        }
+        else
+        {
+          //Контрольна сума не сходиться
+          state_spi1_task &= (unsigned int) (~STATE_RESURS_EEPROM_GOOD);
+          state_spi1_task |= STATE_RESURS_EEPROM_FAIL;
+
+          //Виствляємо повідомлення у слові діагностики
+          _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_BIT);
+        }
+      }
+      else
+      {
+        //Помічаємо, що прочитаний блок є пустим
+        state_spi1_task &= (unsigned int) (~STATE_RESURS_EEPROM_FAIL);
+        state_spi1_task &= (unsigned int) (~STATE_RESURS_EEPROM_GOOD);
+        state_spi1_task |= STATE_RESURS_EEPROM_EMPTY;
+
+        //Виствляємо повідомлення у слові діагностики
+        _SET_BIT(clear_diagnostyka, ERROR_RESURS_EEPROM_BIT);
+        _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_EMPTY_BIT);
+      }
+
+      //Знімаємо можливу сигналізацію, що виконувалося порівнняння
+      comparison_writing &= (unsigned int) (~COMPARISON_WRITING_RESURS);
+      //Скидаємо повідомлення про читання даних
+      _CLEAR_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT);
+    }
     else
     {
       //Сюди, теоретично, ніколи не мала б дійти
@@ -2456,7 +2980,9 @@ void main_routines_for_spi1(void)
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_TRG_FUNC_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_AR_EEPROM_BIT) != 0) ||
       (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_DR_EEPROM_BIT) != 0) ||
-      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0))
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_ANGLE_EEPROM_BIT) != 0) ||
+      (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_RESURS_EEPROM_BIT) != 0))
     {
       //Стоїть умова запису блоку у EEPROM
       //Залишаємо номер блоку для запису в EEPROM той самий, бо немає підтвердження, що він записався
@@ -2518,6 +3044,16 @@ void main_routines_for_spi1(void)
       //Повторно запускаємо процес читання
       _SET_BIT(control_spi1_taskes, TASK_START_READ_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
       _CLEAR_BIT(control_spi1_taskes, TASK_READING_INFO_REJESTRATOR_PR_ERR_EEPROM_BIT);
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT) != 0)
+    {
+      _SET_BIT(control_spi1_taskes, TASK_START_READ_ANGLE_EEPROM_BIT);
+      _CLEAR_BIT(control_spi1_taskes, TASK_READING_ANGLE_EEPROM_BIT);
+    }
+    else if (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT) != 0)
+    {
+      _SET_BIT(control_spi1_taskes, TASK_START_READ_RESURS_EEPROM_BIT);
+      _CLEAR_BIT(control_spi1_taskes, TASK_READING_RESURS_EEPROM_BIT);
     }
     else
     {

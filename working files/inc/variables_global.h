@@ -202,6 +202,12 @@ unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high = 0;
 unsigned int measurement_middle[_NUMBER_IM];
 SRAM1 unsigned int measurement_low[_NUMBER_IM];
 
+int angle_UP1P2_UC1C2;
+int angle_UP2P3_UC1C2;
+unsigned int sum_phi_begin = 0;
+unsigned int sum_phi_end = 360;
+unsigned char crc_angle;
+
 const unsigned int index_converter[NUMBER_ANALOG_CANALES] = {FULL_ORT_UAB_TN1, FULL_ORT_UAB_TN2, FULL_ORT_UP1P2, FULL_ORT_UP2P3, FULL_ORT_UC1C2, FULL_ORT_IA_1, FULL_ORT_IA_2};
 int ortogonal_calc[2 * FULL_ORT_MAX];
 int ortogonal_calc_low[2 * FULL_ORT_MAX];
@@ -580,6 +586,7 @@ unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
+volatile unsigned int periodical_tasks_TEST_ANGLE;
 unsigned int periodical_tasks_TEST_RESURS;
 unsigned int periodical_tasks_TEST_RESURS_LOCK;
 unsigned int periodical_tasks_TEST_FLASH_MEMORY;
@@ -820,7 +827,16 @@ unsigned int number_record_of_pr_err_into_USB = 0xffff;
 unsigned int number_record_of_pr_err_into_RS485 = 0xffff;
 
 //Очистка інформації по реєстраторах
-unsigned int clean_rejestrators;
+unsigned int clean_rejestrators = 0;
+
+//Лічильник ресурсу
+__COUNTER_RESURS counter_today = {{0, 0, 0}, 0}, counter_previous_day = {{0, 0, 0}, 0};
+unsigned int counter_total = 0;
+unsigned char crc_resurs;
+__COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
+unsigned int counter_total_ctrl;
+unsigned char crc_resurs_ctrl;
+unsigned int restart_counter = 0, previous_state_perekluchennya = 0, perekluchennya_unrecorded = 0;
 
 //Перепрограмування приладу
 unsigned int reprogram_device;
