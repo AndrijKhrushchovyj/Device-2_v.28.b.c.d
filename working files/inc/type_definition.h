@@ -179,11 +179,10 @@ typedef struct
                              // 1 - "Логометр"
                              // 2 - "Сельсин"
 
-  unsigned int T0;                    //Коефіцієнт трансформації для трансформатора 3I0
-  unsigned int TCurrent;              //Коефіцієнт трансформації для трансформатора струмів
-  unsigned int TCurrent04;            //Коефіцієнт трансформації для трансформатора струмів сторони 0.4кВ
-  unsigned int TVoltage;              //Коефіцієнт трансформації для трансформатора напруг
-  unsigned int control_transformator; //налаштування для меню "Трансформатор"
+  unsigned int TCurrent1; //Коефіцієнт трансформації для трансформатора струмів 1
+  unsigned int TCurrent2; //Коефіцієнт трансформації для трансформатора струмів 2
+  unsigned int TVoltage1; //Коефіцієнт трансформації для трансформатора напруг  1
+  unsigned int TVoltage2; //Коефіцієнт трансформації для трансформатора напруг  2
 
   unsigned int password1;                                     //Пароль для редагування з меню
   unsigned int password2;                                     //Пароль для очистки лічилчників енегії і ресурсу вимикача
@@ -350,10 +349,10 @@ typedef struct
   unsigned char label_start_record;
   time_t time_dat;
   int32_t time_ms;
-  unsigned int T0;
-  unsigned int TCurrent;
-  unsigned int TCurrent04;
-  unsigned int TVoltage;
+  unsigned int TCurrent1;
+  unsigned int TCurrent2;
+  unsigned int TVoltage1;
+  unsigned int TVoltage2;
   unsigned int control_extra_settings_1;
   unsigned int prefault_number_periods;
   unsigned char name_of_cell[MAX_CHAR_IN_NAME_OF_CELL];

@@ -195,6 +195,16 @@ int ortogonal2[2 * NUMBER_I2G_CANALES][2];
 
 unsigned int semaphore_measure_values_low1;
 
+int adc2_channel0_moment_value[NUMBER_POINT];
+int adc2_channel0_averange_sum = 0;
+int adc2_channel0_averange = 0;
+int adc2_channel1_moment_value[NUMBER_POINT];
+int adc2_channel1_averange_sum = 0;
+int adc2_channel1_averange = 0;
+
+int adc2_channel0_global_values = 0;
+int adc2_channel1_global_values = 0;
+
 unsigned int number_inputs_for_fix_one_second;
 unsigned int number_inputs_for_fix_one_period;
 unsigned int measurement[_NUMBER_IM];

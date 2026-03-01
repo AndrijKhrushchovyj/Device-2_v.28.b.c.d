@@ -72,7 +72,6 @@ extern void make_ekran_chose_settings_any_protection(void);
 extern void make_ekran_chose_settings_protection_with_groups(void);
 extern void make_ekran_chose_setpoint_and_timeout(void);
 extern void make_ekran_chose_timeout_control(void);
-extern void make_ekran_chose_setpoint_control_transformator(void);
 extern void make_ekran_chose_settings_vmp(void);
 extern void make_ekran_chose_setpoint(void);
 extern void make_ekran_chose_timeout(void);

@@ -9,17 +9,15 @@
                             MASKA_FOR_BIT(Umin_BIT_CONFIGURATION) | \
                             MASKA_FOR_BIT(UP_BIT_CONFIGURATION))
 
-#define KOEF_TO_MIN 1
-#define KOEF_TO_MAX 150
-
 #define KOEF_TT_MIN 1
-#define KOEF_TT_MAX 2000
+#define KOEF_TT_MAX 600
+#define KOEF_TT1_WORK 40
+#define KOEF_TT2_WORK 30
 
-#define KOEF_TT04_MIN 1
-#define KOEF_TT04_MAX 2000
-
-#define KOEF_TN_MIN 50
-#define KOEF_TN_MAX 1800
+#define KOEF_TN_MIN 30
+#define KOEF_TN_MAX 350
+#define KOEF_TN1_WORK 100
+#define KOEF_TN2_WORK 350
 
 #define SETPOINT_GRUPA_USTAVOK_MIN 1
 #define SETPOINT_GRUPA_USTAVOK_MAX 4

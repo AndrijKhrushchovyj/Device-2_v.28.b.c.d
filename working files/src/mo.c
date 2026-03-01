@@ -511,25 +511,25 @@ void start_transmint_data_via_CANAL1_MO(void)
           &current_settings_prt.T0,
           &current_settings_prt.T0,
           &current_settings_prt.T0,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
           &current_settings_prt.TCurrent04,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TVoltage,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent,
-          &current_settings_prt.TCurrent};
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TVoltage1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1,
+          &current_settings_prt.TCurrent1};
 
       float const meas_tmp = ((float) (*p_koef[i])) * ((float) measurement[i]) / 1000.0f;
       uint8_t const *p = (uint8_t const *) (&meas_tmp);
@@ -550,8 +550,8 @@ void start_transmint_data_via_CANAL1_MO(void)
 
     //Вимірювання, які одночасно залежні від коефіцієнта трансормації струму і напруги
     {
-      static unsigned int const *const p_koef_U = &current_settings_prt.TVoltage;
-      static unsigned int const *const p_koef_I = &current_settings_prt.TCurrent;
+      static unsigned int const *const p_koef_U = &current_settings_prt.TVoltage1;
+      static unsigned int const *const p_koef_I = &current_settings_prt.TCurrent1;
 
       //Опори (Ом)
       float const div_tmp = ((float) (*p_koef_U)) / ((float) (*p_koef_I));

@@ -443,43 +443,35 @@ void make_ekran_current_voltage(unsigned int tn1_tn2, unsigned int pervynna_vtor
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_1_AND_2][MAX_COL_LCD] =
     {
-      "*Ia-  =         ",
       " Ia-  =         ",
-      "*Uab- =         ",
       " Uab- =         "};
   unsigned int measurement_tmp[MAX_ROW_FOR_MEASURMENT_1_AND_2];
-  unsigned int TCurrent, TVoltage;
+  unsigned int TCurrent1, TVoltage1;
 
   //Виврдимо номер ТН і відповідні вимірювання
-  name_string[0][4] = name_string[1][4] = (tn1_tn2 + 1) + 0x30;
-  name_string[2][5] = name_string[3][5] = (tn1_tn2 + 1) + 0x30;
+  name_string[0][4] = (tn1_tn2 + 1) + 0x30;
+  name_string[1][5] = (tn1_tn2 + 1) + 0x30;
   if (tn1_tn2 == 0)
   {
-    measurement_tmp[0] = measurement[I_IA_1];
-    measurement_tmp[1] = measurement_i[I_IA_1];
-    measurement_tmp[2] = measurement[I_UABTH1];
-    measurement_tmp[3] = measurement_i[I_UABTH1];
+    measurement_tmp[0] = measurement[IM_IA_1];
+    measurement_tmp[1] = measurement[IM_UAB_TN1];
 
-    TCurrent = current_settings.TCurrent1;
-    TVoltage = current_settings.TVoltage1;
+    TCurrent1 = current_settings.TCurrent1;
+    TVoltage1 = current_settings.TVoltage1;
   }
   else
   {
-    measurement_tmp[0] = measurement[I_IA_2];
-    measurement_tmp[1] = measurement_i[I_IA_2];
-    measurement_tmp[2] = measurement[I_UABTH2];
-    measurement_tmp[3] = measurement_i[I_UABTH2];
+    measurement_tmp[0] = measurement[IM_IA_2];
+    measurement_tmp[1] = measurement[IM_UAB_TN2];
 
-    TCurrent = current_settings.TCurrent2;
-    TVoltage = current_settings.TVoltage2;
+    TCurrent1 = current_settings.TCurrent2;
+    TVoltage1 = current_settings.TVoltage2;
   }
 
-  int index_language = index_language_in_array(current_settings.language);
+  int const index_language = index_language_in_array(current_settings.language);
   //Виврдимо одиниці вимірювань
   name_string[0][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
-  name_string[1][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
-  name_string[2][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
-  name_string[3][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
+  name_string[1][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -497,16 +489,18 @@ void make_ekran_current_voltage(unsigned int tn1_tn2, unsigned int pervynna_vtor
       unsigned int start_number_digit_after_point = 3;
 
       if (pervynna_vtorynna == 0)
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, 1, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
-      else if ((index_of_ekran == INDEX_ML_I_) || (index_of_ekran == INDEX_ML_I))
+      {
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_tmp[index_of_ekran], 1, 1, name_string[index_of_ekran], 7);
+      }
+      else if (index_of_ekran == INDEX_ML_I)
       {
         //Струм Ia
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, TCurrent, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_tmp[index_of_ekran], TCurrent1, 1, name_string[index_of_ekran], 7);
       }
       else
       {
         //Напруга Uab
-        convert_and_insert_char_for_measurement(start_number_digit_after_point, TVoltage, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
+        convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_tmp[index_of_ekran], TVoltage1, 1, name_string[index_of_ekran], 7);
       }
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
@@ -540,28 +534,22 @@ void make_ekran_voltage_for_selsyn(void)
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN][MAX_COL_LCD] =
     {
-      "*Uc1c2=         ",
       " Uc1c2=         ",
-      "*Up1p2=         ",
       " Up1p2=         ",
-      "*Up2p3=         ",
       " Up2p3=         "};
   unsigned int measurement_tmp[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN];
 
   //Вибираємо відповідні вимірювання
-  measurement_tmp[0] = measurement[I_UC1C2];
-  measurement_tmp[1] = measurement_i[I_UC1C2];
-  measurement_tmp[2] = measurement[I_UP1P2];
-  measurement_tmp[3] = measurement_i[I_UP1P2];
-  measurement_tmp[4] = measurement[I_UP2P3];
-  measurement_tmp[5] = measurement_i[I_UP2P3];
+  measurement_tmp[0] = measurement[IM_UC1C2];
+  measurement_tmp[1] = measurement[IM_UP1P2];
+  measurement_tmp[2] = measurement[IM_UP2P3];
 
-  int index_language = index_language_in_array(current_settings.language);
+  int const index_language = index_language_in_array(current_settings.language);
 
   //Виврдимо одиниці вимірювань
-  name_string[0][MAX_COL_LCD - 1] = name_string[1][MAX_COL_LCD - 1] =
-    name_string[2][MAX_COL_LCD - 1] = name_string[3][MAX_COL_LCD - 1] =
-      name_string[4][MAX_COL_LCD - 1] = name_string[5][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
+  name_string[0][MAX_COL_LCD - 1] =
+    name_string[1][MAX_COL_LCD - 1] =
+      name_string[2][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_V];
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -578,7 +566,7 @@ void make_ekran_voltage_for_selsyn(void)
     {
       unsigned int start_number_digit_after_point = 3;
 
-      convert_and_insert_char_for_measurement(start_number_digit_after_point, 1, measurement_tmp[index_of_ekran], name_string[index_of_ekran], 7);
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_tmp[index_of_ekran], 1, 1, name_string[index_of_ekran], 7);
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -752,10 +740,10 @@ void make_ekran_logomentr_voltage(void)
   //  measurement_tmp[1] = temp_adc2_channel1_global_values;
   //  /***/
   //#else
-  semaphore_measure_values2 = 1;
+  semaphore_measure_values_low1 = 1;
   measurement_tmp[0] = adc2_channel0_global_values;
   measurement_tmp[1] = adc2_channel1_global_values;
-  semaphore_measure_values2 = 0;
+  semaphore_measure_values_low1 = 0;
   //#endif
   /*
   Переводимо це число у мВ

@@ -75,6 +75,16 @@ extern unsigned int index_data_sin2_cos2_array;
 extern int ortogonal2_irq[2 * NUMBER_I2G_CANALES];
 extern int ortogonal2[2 * NUMBER_I2G_CANALES][2];
 
+extern int adc2_channel0_moment_value[NUMBER_POINT];
+extern int adc2_channel0_averange_sum;
+extern int adc2_channel0_averange;
+extern int adc2_channel1_moment_value[NUMBER_POINT];
+extern int adc2_channel1_averange_sum;
+extern int adc2_channel1_averange;
+
+extern int adc2_channel0_global_values;
+extern int adc2_channel1_global_values;
+
 extern unsigned int semaphore_measure_values_low1;
 
 extern unsigned int number_inputs_for_fix_one_second;

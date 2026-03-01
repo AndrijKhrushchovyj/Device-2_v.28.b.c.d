@@ -1075,24 +1075,24 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
 
             //Коефіцієнти трансформації
             {
-              unsigned char *ptr_target = buffer_for_save_dr_record + FIRST_INDEX_T0;
-              unsigned char *ptr_source = (unsigned char *) (&current_settings_prt.T0);
-              for (size_t i = 0; i < sizeof(current_settings_prt.T0); ++i)
+              unsigned char *ptr_target = buffer_for_save_dr_record + FIRST_INDEX_C1;
+              unsigned char *ptr_source = (unsigned char *) (&current_settings_prt.TCurrent1);
+              for (size_t i = 0; i < sizeof(current_settings_prt.TCurrent1); ++i)
                 *ptr_target++ = *ptr_source++;
 
-              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TC;
-              ptr_source = (unsigned char *) (&current_settings_prt.TCurrent);
-              for (size_t i = 0; i < sizeof(current_settings_prt.TCurrent); ++i)
+              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TC2;
+              ptr_source = (unsigned char *) (&current_settings_prt.TCurrent2);
+              for (size_t i = 0; i < sizeof(current_settings_prt.TCurrent2); ++i)
                 *ptr_target++ = *ptr_source++;
 
-              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TC04;
-              ptr_source = (unsigned char *) (&current_settings_prt.TCurrent04);
-              for (size_t i = 0; i < sizeof(current_settings_prt.TCurrent04); ++i)
+              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TV1;
+              ptr_source = (unsigned char *) (&current_settings_prt.TVoltage1);
+              for (size_t i = 0; i < sizeof(current_settings_prt.TVoltage1); ++i)
                 *ptr_target++ = *ptr_source++;
 
-              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TV;
-              ptr_source = (unsigned char *) (&current_settings_prt.TVoltage);
-              for (size_t i = 0; i < sizeof(current_settings_prt.TVoltage); ++i)
+              ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TV2;
+              ptr_source = (unsigned char *) (&current_settings_prt.TVoltage2);
+              for (size_t i = 0; i < sizeof(current_settings_prt.TVoltage2); ++i)
                 *ptr_target++ = *ptr_source++;
             }
 
@@ -1391,14 +1391,14 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
               header_ar.time_dat = time_dat;
               header_ar.time_ms = time_ms;
 
-              //Коефіцієнт трансформації T0
-              header_ar.T0 = current_settings_prt.T0;
-              //Коефіцієнт трансформації TT
-              header_ar.TCurrent = current_settings_prt.TCurrent;
-              //Коефіцієнт трансформації TT сторони 0.4кВ
-              header_ar.TCurrent04 = current_settings_prt.TCurrent04;
-              //Коефіцієнт трансформації TН
-              header_ar.TVoltage = current_settings_prt.TVoltage;
+              //Коефіцієнт трансформації TCurrent1
+              header_ar.TCurrent1 = current_settings_prt.TCurrent1;
+              //Коефіцієнт трансформації TCurrent2
+              header_ar.TCurrent2 = current_settings_prt.TCurrent2;
+              //Коефіцієнт трансформації TVoltage1
+              header_ar.TVoltage1 = current_settings_prt.TVoltage1;
+              //Коефіцієнт трансформації TVoltage2
+              header_ar.TVoltage2 = current_settings_prt.TVoltage2;
 
               //Додаткові налаштування при яких було запущено аналоговий реєстратор
               header_ar.control_extra_settings_1 = current_settings_prt.control_extra_settings_1 & (MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04) | (MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)));
