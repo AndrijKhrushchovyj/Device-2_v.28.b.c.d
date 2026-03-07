@@ -4,7 +4,7 @@
 //Вимірювальна система
 unsigned int semaphore_adc_irq;
 unsigned int adc_DATA_VAL_read;
-//unsigned int adc_TEST_VAL_read;
+unsigned int adc_TEST_VAL_read;
 unsigned int status_adc_read_work;
 const unsigned int input_adc[NUMBER_INPUTs_ADCs][2] = {
   {1, 0x8370},
@@ -57,31 +57,6 @@ float sum_freq_arr;
 float frequency_min = 50, frequency_max = 50;
 unsigned int command_restart_monitoring_frequency;
 
-unsigned int vref_adc_averange_sum[NUMBER_ANALOG_CANALES];
-uint32_t vref_adc_averange_sum_1s[NUMBER_ANALOG_CANALES] =
-  {
-    VREF_NORMAL_VALUE * MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY,
-    VREF_NORMAL_VALUE *MAIN_FREQUENCY};
-uint32_t vref_adc_moment_value_1s[NUMBER_ANALOG_CANALES][MAIN_FREQUENCY];
-uint32_t vref_adc[NUMBER_ANALOG_CANALES] =
-  {
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE,
-    VREF_NORMAL_VALUE};
-
-unsigned int index_array_of_one_value_fourier;
-
 EXTENDED_SAMPLE ADCs_data_raw[NUMBER_ANALOG_CANALES];
 int ADCs_data[NUMBER_ANALOG_CANALES];
 unsigned long long sqr_current_data_3I0[NUMBER_POINT];
@@ -95,10 +70,8 @@ unsigned int ustuvannja_meas[NUMBER_ANALOG_CANALES] = {
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
-  DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE};
 unsigned int ustuvannja[NUMBER_ANALOG_CANALES] = {
-  DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
   DEFAULT_USTUVANNJA_VALUE,
@@ -182,18 +155,19 @@ int data_cos[NUMBER_POINT * NUMBER_ANALOG_CANALES];
 int ortogonal_irq[2 * NUMBER_ANALOG_CANALES];
 int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
 unsigned int bank_ortogonal;
-unsigned long long sum_sqr_data_3I0_irq;
-unsigned long long sum_sqr_data_3I0[2];
-//unsigned int semaphore_measure_values;
 unsigned int semaphore_measure_values_low;
 
-int data_sin2[NUMBER_POINT * NUMBER_I2G_CANALES];
-int data_cos2[NUMBER_POINT * NUMBER_I2G_CANALES];
-unsigned int index_data_sin2_cos2_array;
-int ortogonal2_irq[2 * NUMBER_I2G_CANALES];
-int ortogonal2[2 * NUMBER_I2G_CANALES][2];
-
 unsigned int semaphore_measure_values_low1;
+
+unsigned int vref_moment_value[NUMBER_POINT];
+unsigned int vref_averange_sum = VREF_NORMAL_VALUE * NUMBER_POINT;
+volatile unsigned int vref_averange = VREF_NORMAL_VALUE;
+unsigned int v_k_3_3_moment_value[NUMBER_POINT];
+unsigned int v_k_3_3_averange_sum = V_K_3_3_NORMAL_VALUE * NUMBER_POINT;
+unsigned int v_k_3_3_averange = V_K_3_3_NORMAL_VALUE;
+int index_array_of_one_value = 0;
+//Змінна відповідає за признак завершення перших 32-ти зчитувань з АЦП
+unsigned int completion_of_first_period = 0;
 
 int adc2_channel0_moment_value[NUMBER_POINT];
 int adc2_channel0_averange_sum = 0;

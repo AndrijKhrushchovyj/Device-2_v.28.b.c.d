@@ -55,8 +55,11 @@ enum _error_id
   RTC_WORK_FIELD_NOT_SET_BIT,
 
   ERROR_VREF_ADC_TEST_BIT,
-
-  ERROR_SPI_ADC_BIT,
+  ERROR_V_K_3_3_ADC_TEST_BIT,
+  ERROR_VREF_ADC_TEST_COARSE_BIT,
+  ERROR_V_K_3_3_ADC_TEST_COARSE_BIT,
+  ERROR_SPI_ADC1_BIT,
+  ERROR_SPI_ADC2_BIT,
 
   ERROR_OSCYLOJRAPH_OVERFLOW,
 
@@ -151,7 +154,10 @@ enum _error_id
 
 #define MASKA_AVAR_ERROR_1        (unsigned int)(               \
     (1 << (ERROR_VREF_ADC_TEST_BIT - 32))                       \
-  | (1 << (ERROR_SPI_ADC_BIT - 32))                             \
+  | (1 << (ERROR_V_K_3_3_ADC_TEST_BIT - 32))                    \
+  | (1 << (ERROR_VREF_ADC_TEST_COARSE_BIT - 32))                \
+  | (1 << (ERROR_V_K_3_3_ADC_TEST_COARSE_BIT - 32))             \
+  | (1 << (ERROR_SPI_ADC1_BIT - 32))                            \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  0 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  1 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  2 - 32))               \
@@ -163,14 +169,14 @@ enum _error_id
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  8 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  9 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 10 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 13 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 14 - 32))               \
 )
 
 #define MASKA_AVAR_ERROR_2        (unsigned int)(               \
-    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 15 - 64))               \
+    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 13 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 14 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 15 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 16 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 17 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 18 - 64))               \
@@ -258,7 +264,11 @@ enum _error_id
     " Îñò.îáíîâë.RTC ", \
     " Íå óñò.ïîëÿ RTC", \
     " Òåñò VREF ÀÖÏ  ", \
-    " Îø. SPI ÀÖÏ    ", \
+    " Òåñò VDD ÀÖÏ   ", \
+    "Òåñò VREF ÀÖÏ ãð", \
+    " Òåñò VDD ÀÖÏ ãð", \
+    " Îø.SPI ÀÖÏ1    ", \
+    " Îø.SPI ÀÖÏ2    ", \
     "Ïåðåï.áóô.ö.îñö.", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
@@ -382,7 +392,11 @@ enum _error_id
     " Çóï.îáíîâë.RTC ", \
     " Íå âñò.ïîëÿ RTC", \
     " Òåñò VREF ÀÖÏ  ", \
-    " Ïîì.SPI ÀÖÏ    ", \
+    " Òåñò VDD ÀÖÏ   ", \
+    "Òåñò VREF ÀÖÏ ãð", \
+    " Òåñò VDD ÀÖÏ ãð", \
+    " Ïîì.SPI ÀÖÏ1   ", \
+    " Ïîì.SPI ÀÖÏ2   ", \
     "Ïåðåï.áóô.ö.îñö.", \
     " Ïîì.âèõ.ðåëå?.?", \
     " Ïîì.âèõ.ðåëå?.?", \
@@ -506,7 +520,11 @@ enum _error_id
     " RTC:Halt update", \
     "RTC:No def sett ", \
     " ADC:VREF fail  ", \
-    " ADC SPI Er     ", \
+    " ADC:VDD fail   ", \
+    "ADC:VREF fail R.", \
+    " ADC:VDD fail R.", \
+    " ADC1 SPI Err.  ", \
+    " ADC2 SPI Err.  ", \
     "UnAp D Buf Ovrfl", \
     " BO?.? Ctl Er   ", \
     " BO?.? Ctl Er   ", \
@@ -630,7 +648,11 @@ enum _error_id
     " Îñò.îáíîâë.RTC ", \
     " Íå óñò.ïîëÿ RTC", \
     " Òåñò VREF ÀÖÏ  ", \
-    " Îø.SPI ÀÖÏ     ", \
+    " Òåñò VDD ÀÖÏ   ", \
+    "Òåñò VREF ÀÖÏ ãð", \
+    " Òåñò VDD ÀÖÏ ãð", \
+    " Îø.SPI ÀÖÏ1    ", \
+    " Îø.SPI ÀÖÏ2    ", \
     "Ïåðåï.áóô.ö.îñö.", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \

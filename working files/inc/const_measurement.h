@@ -97,49 +97,48 @@ R2-change to 86,6
 
 #define MAX_INDEX_DATA_FOR_OSCYLOGRAPH 10
 
-#define GND_NORMAL_VALUE 0x0
 #define VREF_NORMAL_VALUE 0x800
-#define VDD_NORMAL_VALUE 0xb00
+#define V_K_3_3_NORMAL_VALUE 0xb00
 
 #define NUMBER_I2G_CANALES 3
 
 //Канали
-#define VREF1 0
+#define C_VREF1 0
 #define C_IA_1_16 1
 #define C_IA_1 2
-#define UAB_TN2_16 3
-#define UAB_TN2 4
-#define UAB_TN1_16 5
-#define UAB_TN1 6
-#define UP1_P2_C_16 7
-#define UP1_P2_C 8
-#define UP2_P3_C_16 9
-#define UP2_P3_C 10
-#define UC1_C2_C_16 11
-#define UC1_C2_C 12
-#define V_K_3_3 13
+#define C_UAB_TN2_16 3
+#define C_UAB_TN2 4
+#define C_UAB_TN1_16 5
+#define C_UAB_TN1 6
+#define C_UP1_P2_16 7
+#define C_UP1_P2_1 8
+#define C_UP2_P3_16 9
+#define C_UP2_P3_1 10
+#define C_UC1_C2_16 11
+#define C_UC1_C2_1 12
+#define C_V_K_3_3 13
 #define C_IA_2 14
 #define C_IA_2_16 15
 
-#define READ_UP1_P2_C ( \
-  (1 << UP1_P2_C) |     \
-  (1 << UP1_P2_C_16))
+#define READ_UP1_P2 ( \
+  (1 << C_UP1_P2_1) | \
+  (1 << C_UP1_P2_16))
 
-#define READ_UP2_P3_C ( \
-  (1 << UP2_P3_C) |     \
-  (1 << UP2_P3_C_16))
+#define READ_UP2_P3 ( \
+  (1 << C_UP2_P3_1) | \
+  (1 << C_UP2_P3_16))
 
-#define READ_UC1_C2_C ( \
-  (1 << UC1_C2_C) |     \
-  (1 << UC1_C2_C_16))
+#define READ_UC1_C2 ( \
+  (1 << C_UC1_C2_1) | \
+  (1 << C_UC1_C2_16))
 
 #define READ_UAB_TN1 ( \
-  (1 << UAB_TN1) |     \
-  (1 << UAB_TN1_16))
+  (1 << C_UAB_TN1) |   \
+  (1 << C_UAB_TN1_16))
 
 #define READ_UAB_TN2 ( \
-  (1 << UAB_TN2) |     \
-  (1 << UAB_TN2_16))
+  (1 << C_UAB_TN2) |   \
+  (1 << C_UAB_TN2_16))
 
 #define READ_I (     \
   (1 << C_IA_1) |    \
@@ -151,13 +150,13 @@ R2-change to 86,6
   READ_I |              \
   READ_UAB_TN1 |        \
   READ_UAB_TN2 |        \
-  READ_UP1_P2_C |       \
-  READ_UP2_P3_C |       \
-  READ_UC1_C2_C)
+  READ_UP1_P2 |         \
+  READ_UP2_P3 |         \
+  READ_UC1_C2)
 
 #define READ_TEST_VAL ( \
-  (1 << VREF1) |        \
-  (1 << V_K_3_3))
+  (1 << C_VREF1) |      \
+  (1 << C_V_K_3_3))
 
 #define DATA_VAL_READ_BIT 0
 #define DATA_VAL_READ (1 << DATA_VAL_READ_BIT)
@@ -172,13 +171,18 @@ R2-change to 86,6
 
 #define N_VAL_1 0
 
-#define I_UC1C2 0
-#define I_UP1P2 1
-#define I_IA_2 2
-#define I_IA_1 3
-#define I_UAB_TN2 4
-#define I_UAB_TN1 5
-#define I_UP2P3 6
+enum
+{
+  I_UC1C2 = 0,
+  I_UP1P2,
+  I_IA_2,
+  I_IA_1,
+  I_UAB_TN2,
+  I_UAB_TN1,
+  I_UP2P3,
+
+  NUMBER_ANALOG_CANALES
+};
 
 enum _index_meas
 {

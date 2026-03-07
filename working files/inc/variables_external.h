@@ -3,7 +3,7 @@
 
 extern unsigned int semaphore_adc_irq;
 extern unsigned int adc_DATA_VAL_read;
-//extern unsigned int adc_TEST_VAL_read;
+extern unsigned int adc_TEST_VAL_read;
 extern unsigned int status_adc_read_work;
 extern const unsigned int input_adc[NUMBER_INPUTs_ADCs][2];
 extern EXTENDED_OUTPUT_DATA output_adc[NUMBER_INPUTs_ADCs];
@@ -38,13 +38,6 @@ extern float sum_freq_arr;
 extern float frequency_min, frequency_max;
 extern unsigned int command_restart_monitoring_frequency;
 
-extern unsigned int vref_adc_averange_sum[NUMBER_ANALOG_CANALES];
-extern uint32_t vref_adc_averange_sum_1s[NUMBER_ANALOG_CANALES];
-extern uint32_t vref_adc_moment_value_1s[NUMBER_ANALOG_CANALES][MAIN_FREQUENCY];
-extern uint32_t vref_adc[NUMBER_ANALOG_CANALES];
-
-extern unsigned int index_array_of_one_value_fourier;
-
 extern EXTENDED_SAMPLE ADCs_data_raw[NUMBER_ANALOG_CANALES];
 extern int ADCs_data[NUMBER_ANALOG_CANALES];
 extern unsigned long long sqr_current_data_3I0[NUMBER_POINT];
@@ -63,17 +56,17 @@ extern int data_cos[NUMBER_POINT * NUMBER_ANALOG_CANALES];
 extern unsigned int index_data_sin_and_cos_array;
 extern int ortogonal_irq[2 * NUMBER_ANALOG_CANALES];
 extern int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
-extern unsigned long long sum_sqr_data_3I0_irq;
-extern unsigned long long sum_sqr_data_3I0[2];
-//extern unsigned int semaphore_measure_values;
 extern unsigned int semaphore_measure_values_low;
 extern unsigned int bank_ortogonal;
 
-extern int data_sin2[NUMBER_POINT * NUMBER_I2G_CANALES];
-extern int data_cos2[NUMBER_POINT * NUMBER_I2G_CANALES];
-extern unsigned int index_data_sin2_cos2_array;
-extern int ortogonal2_irq[2 * NUMBER_I2G_CANALES];
-extern int ortogonal2[2 * NUMBER_I2G_CANALES][2];
+extern unsigned int vref_moment_value[NUMBER_POINT];
+extern unsigned int vref_averange_sum;
+extern unsigned int vref_averange;
+extern unsigned int v_k_3_3_moment_value[NUMBER_POINT];
+extern unsigned int v_k_3_3_averange_sum;
+extern unsigned int v_k_3_3_averange;
+extern int index_array_of_one_value;
+extern unsigned int completion_of_first_period;
 
 extern int adc2_channel0_moment_value[NUMBER_POINT];
 extern int adc2_channel0_averange_sum;

@@ -236,6 +236,7 @@ extern void error_start_i2c(void);
 
 extern void find_new_ADC_canal_to_read(unsigned int, unsigned int *);
 extern void control_reading_ADCs(void);
+extern void operate_integral_values_ADCs(void);
 extern void Fourier(void);
 extern void fapch(void);
 extern void calc_measurement(unsigned int);
