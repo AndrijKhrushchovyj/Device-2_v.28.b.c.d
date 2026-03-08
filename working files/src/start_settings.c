@@ -1652,21 +1652,6 @@ void min_settings(__SETTINGS *target_label)
   target_label->timeout_pryvoda_VV = TIMEOUT_PRYVODA_VV_MIN;
   target_label->control_switch = 0;
 
-  for (unsigned int i = 0; i < 2; i++)
-  {
-    if (i == 0)
-      target_label->lines[0] = NUMBER_LINES_FORWARD_MIN;
-    else
-      target_label->lines[i] = NUMBER_LINES_BACKWARD_MIN;
-
-    for (unsigned int j = 0; j < MAX_NUMBER_LINES_VMP; j++)
-    {
-      target_label->dovgyna[i][j] = SETPOINT_DOVGYNA_VMP_MIN;
-      target_label->opir[i][j] = SETPOINT_OPIR_VMP_MIN;
-    }
-  }
-  target_label->control_vmp = 0;
-
   target_label->prefault_number_periods = TIMEOUT_PREFAULT_MIN / 20;
   target_label->postfault_number_periods = TIMEOUT_POSTFAULT_MIN / 20;
   target_label->control_ar = 0;

@@ -1694,7 +1694,6 @@ void main_manu_function(void)
       case EKRAN_TITLES_STATE_CMD_REGISTRATOR:
       case EKRAN_DATA_LABEL_STATE_CMD:
       case EKRAN_STATE_CMD_REG:
-      case EKRAN_CHOOSE_SETTINGS_VMP:
         {
           //Очищаємо всі біти краім упралінських
           new_state_keyboard &= (1u << BIT_KEY_ENTER) |
@@ -1867,16 +1866,6 @@ void main_manu_function(void)
 
                 //Формуємо екран БВимк./БУвімк.
                 make_ekran_choose_CBOn_CBOff();
-              }
-              else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_VMP)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_VMP)
-                  current_ekran.index_position = 0;
-
-                position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_VMP] = current_ekran.index_position;
-
-                //Формуємо екран налаштувань вперед-назад
-                make_ekran_chose_settings_vmp();
               }
               else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
               {
@@ -2855,32 +2844,6 @@ void main_manu_function(void)
                     current_ekran.current_level = EKRAN_RANGUVANNJA_ON_CB;
                     //Для того, щоб при першому входженні завжди список починався із першої ранжованої функції обнуляємо цю позицію
                     position_in_current_level_menu[current_ekran.current_level] = 0;
-                  }
-                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                  current_ekran.edition = 0;
-                  current_ekran.cursor_on = 1;
-                  current_ekran.cursor_blinking_on = 0;
-                }
-                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_VMP)
-                {
-                  //Натисну кнопка Enter у вікні вибору настройок для ВМП
-                  if (current_ekran.index_position == INDEX_ML_FORWARD_SETTINGS_VMP)
-                  {
-                    //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення уставок для напрямку ВПЕРЕД
-                    current_ekran.current_level = EKRAN_SETPOINT_VMP_FORWARD;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_BACKWARD_SETTINGS_VMP)
-                  {
-                    //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення витримок для напрямку НАЗАД
-                    current_ekran.current_level = EKRAN_SETPOINT_VMP_BACKWARD;
-                  }
-                  else if (current_ekran.index_position == INDEX_ML_CONTROL_SETTINGS_VMP)
-                  {
-                    //Запам'ятовуємо поперердній екран
-                    //Переходимо на меню відображення управлінської інформації для ВМП
-                    current_ekran.current_level = EKRAN_CONTROL_VMP;
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
@@ -3997,16 +3960,6 @@ void main_manu_function(void)
                   //Формуємо екран БВимк./БУвімк.
                   make_ekran_choose_CBOn_CBOff();
                 }
-                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_VMP)
-                {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS_VMP - 1;
-
-                  position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_VMP] = current_ekran.index_position;
-
-                  //Формуємо екран налаштувань вперед-назад
-                  make_ekran_chose_settings_vmp();
-                }
                 else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
                 {
                   if (--current_ekran.index_position < 0)
@@ -4767,16 +4720,6 @@ void main_manu_function(void)
                   //Формуємо екран БВимк./БУвімк.
                   make_ekran_choose_CBOn_CBOff();
                 }
-                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_VMP)
-                {
-                  //Натиснута кнопка DOWN
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_VMP)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_VMP] = current_ekran.index_position;
-
-                  //Формуємо екран налаштувань вперед-назад
-                  make_ekran_chose_settings_vmp();
-                }
                 else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
                 {
                   //Натиснута кнопка DOWN
@@ -5473,9 +5416,6 @@ void main_manu_function(void)
       case EKRAN_VIEW_SETTING_LANGUAGE:
       case EKRAN_CHOSE_EXTRA_SETTINGS:
       case EKRAN_VIEW_GRUPA_USTAVOK:
-      case EKRAN_SETPOINT_VMP_FORWARD:
-      case EKRAN_SETPOINT_VMP_BACKWARD:
-      case EKRAN_CONTROL_VMP:
       case (EKRAN_LIST_SOURCE_TF1 + 0):
       case (EKRAN_LIST_SOURCE_TF1 + 1):
       case (EKRAN_LIST_SOURCE_TF1 + 2):
@@ -5750,30 +5690,6 @@ void main_manu_function(void)
                 position_in_current_level_menu[EKRAN_CONTROL_SWITCH] = current_ekran.index_position;
                 //Формуємо екран управлінської інформації для вимикача
                 make_ekran_control_switch();
-              }
-              else if (
-                (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-              {
-                int lines, forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-                if (current_ekran.edition == 0)
-                  lines = current_settings.lines[forward_backward];
-                else
-                  lines = edition_settings.lines[forward_backward];
-
-                if (current_ekran.index_position >= (1 + 2 * lines))
-                  current_ekran.index_position = 0;
-                position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                //Формуємо екран уставок для ВМП
-                make_ekran_setpoint_VMP(forward_backward);
-              }
-              else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-              {
-                if (current_ekran.index_position >= MAX_ROW_FOR_CONTROL_VMP)
-                  current_ekran.index_position = 0;
-                position_in_current_level_menu[EKRAN_CONTROL_VMP] = current_ekran.index_position;
-                //Формуємо екран управлінської інформації для ВМП
-                make_ekran_control_VMP();
               }
               else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
               {
@@ -6341,38 +6257,6 @@ void main_manu_function(void)
                   {
                     edition_settings.control_switch = current_settings.control_switch;
                   }
-                  else if (
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                  {
-                    int forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-                    edition_settings.lines[forward_backward] = current_settings.lines[forward_backward]; //Цю операцію треба виконати для того, щоб правильно визначати кількість рядків для відображення у режимі редагування
-
-                    if (current_ekran.index_position == INDEX_ML_LINES)
-                    {
-                      //edition_settings.lines[forward_backward] = current_settings.lines[forward_backward]; //(!!!) Ця операція вже є фактично виконаною при вході у else if {}, тому я її закоментував (!!!)
-                      current_ekran.position_cursor_x = COL_SETPOINT_LINES_BEGIN;
-                    }
-                    else
-                    {
-                      int _tmp = current_ekran.index_position - 1;
-                      int dilanka = _tmp >> 1;
-                      if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                      {
-                        edition_settings.dovgyna[forward_backward][dilanka] = current_settings.dovgyna[forward_backward][dilanka];
-                        current_ekran.position_cursor_x = COL_SETPOINT_DOVGYNA_BEGIN;
-                      }
-                      else
-                      {
-                        edition_settings.opir[forward_backward][dilanka] = current_settings.opir[forward_backward][dilanka];
-                        current_ekran.position_cursor_x = COL_SETPOINT_OPIR_BEGIN;
-                      }
-                    }
-                  }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                  {
-                    edition_settings.control_vmp = current_settings.control_vmp;
-                  }
                   else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                   {
                     edition_settings.dopusk_dv[current_ekran.index_position] = current_settings.dopusk_dv[current_ekran.index_position];
@@ -6920,38 +6804,6 @@ void main_manu_function(void)
                   else if (current_ekran.current_level == EKRAN_CONTROL_SWITCH)
                   {
                     if (edition_settings.control_switch != current_settings.control_switch)
-                      found_changes = 1;
-                  }
-                  else if (
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                  {
-                    int forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-
-                    if (current_ekran.index_position == INDEX_ML_LINES)
-                    {
-                      if (edition_settings.lines[forward_backward] != current_settings.lines[forward_backward])
-                        found_changes = 1;
-                    }
-                    else
-                    {
-                      int _tmp = current_ekran.index_position - 1;
-                      int dilanka = _tmp >> 1;
-                      if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                      {
-                        if (edition_settings.dovgyna[forward_backward][dilanka] != current_settings.dovgyna[forward_backward][dilanka])
-                          found_changes = 1;
-                      }
-                      else
-                      {
-                        if (edition_settings.opir[forward_backward][dilanka] != current_settings.opir[forward_backward][dilanka])
-                          found_changes = 1;
-                      }
-                    }
-                  }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                  {
-                    if (edition_settings.control_vmp != current_settings.control_vmp)
                       found_changes = 1;
                   }
                   else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
@@ -8156,86 +8008,6 @@ void main_manu_function(void)
                         changed_settings = CHANGED_ETAP_EXECUTION;
 
                         current_settings.control_switch = edition_settings.control_switch;
-                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                        fix_change_settings(0, 1);
-                      }
-                      //Виходимо з режиму редагування
-                      current_ekran.edition = 0;
-                    }
-                  }
-                  else if (
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                    (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                  {
-                    int forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-
-                    if (current_ekran.index_position == INDEX_ML_LINES)
-                    {
-                      if (check_data_setpoint(edition_settings.lines[forward_backward], ((forward_backward == 0) ? NUMBER_LINES_FORWARD_MIN : NUMBER_LINES_BACKWARD_MIN), NUMBER_LINES_MAX) == 1)
-                      {
-                        if (edition_settings.lines[forward_backward] != current_settings.lines[forward_backward])
-                        {
-                          //Помічаємо, що поле структури зараз буде змінене
-                          changed_settings = CHANGED_ETAP_EXECUTION;
-
-                          current_settings.lines[forward_backward] = edition_settings.lines[forward_backward];
-                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                          fix_change_settings(0, 1);
-                        }
-                        //Виходимо з режиму редагування
-                        current_ekran.edition = 0;
-                      }
-                    }
-                    else
-                    {
-                      int _tmp = current_ekran.index_position - 1;
-                      int dilanka = _tmp >> 1;
-                      if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                      {
-                        if (check_data_setpoint(edition_settings.dovgyna[forward_backward][dilanka], SETPOINT_DOVGYNA_VMP_MIN, SETPOINT_DOVGYNA_VMP_MAX) == 1)
-                        {
-                          if (edition_settings.dovgyna[forward_backward][dilanka] != current_settings.dovgyna[forward_backward][dilanka])
-                          {
-                            //Помічаємо, що поле структури зараз буде змінене
-                            changed_settings = CHANGED_ETAP_EXECUTION;
-
-                            current_settings.dovgyna[forward_backward][dilanka] = edition_settings.dovgyna[forward_backward][dilanka];
-                            //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                            fix_change_settings(0, 1);
-                          }
-                          //Виходимо з режиму редагування
-                          current_ekran.edition = 0;
-                        }
-                      }
-                      else
-                      {
-                        if (check_data_setpoint(edition_settings.opir[forward_backward][dilanka], SETPOINT_OPIR_VMP_MIN, SETPOINT_OPIR_VMP_MAX) == 1)
-                        {
-                          if (edition_settings.opir[forward_backward][dilanka] != current_settings.opir[forward_backward][dilanka])
-                          {
-                            //Помічаємо, що поле структури зараз буде змінене
-                            changed_settings = CHANGED_ETAP_EXECUTION;
-
-                            current_settings.opir[forward_backward][dilanka] = edition_settings.opir[forward_backward][dilanka];
-                            //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
-                            fix_change_settings(0, 1);
-                          }
-                          //Виходимо з режиму редагування
-                          current_ekran.edition = 0;
-                        }
-                      }
-                    }
-                  }
-                  else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                  {
-                    if ((edition_settings.control_vmp & ((unsigned int) (~CTR_VMP_MASKA))) == 0)
-                    {
-                      if (edition_settings.control_vmp != current_settings.control_vmp)
-                      {
-                        //Помічаємо, що поле структури зараз буде змінене
-                        changed_settings = CHANGED_ETAP_EXECUTION;
-
-                        current_settings.control_vmp = edition_settings.control_vmp;
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
                       }
@@ -9584,50 +9356,6 @@ void main_manu_function(void)
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
                 }
-                else if (
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                {
-                  int forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-                  if (current_ekran.edition == 0)
-                  {
-                    int lines = current_settings.lines[forward_backward];
-                    if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = (1 + 2 * lines) - 1;
-                    position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                  }
-                  else
-                  {
-                    if (current_ekran.index_position == INDEX_ML_LINES)
-                    {
-                      edition_settings.lines[forward_backward] = edit_setpoint(1, edition_settings.lines[forward_backward], 0, 0, COL_SETPOINT_LINES_END, 1);
-                    }
-                    else
-                    {
-                      int _tmp = current_ekran.index_position - 1;
-                      int dilanka = _tmp >> 1;
-                      if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                      {
-                        edition_settings.dovgyna[forward_backward][dilanka] = edit_setpoint(1, edition_settings.dovgyna[forward_backward][dilanka], 1, COL_SETPOINT_DOVGYNA_COMMA, COL_SETPOINT_DOVGYNA_END, 1);
-                      }
-                      else
-                      {
-                        edition_settings.opir[forward_backward][dilanka] = edit_setpoint(1, edition_settings.opir[forward_backward][dilanka], 1, COL_SETPOINT_OPIR_COMMA, COL_SETPOINT_OPIR_END, 1);
-                      }
-                    }
-                  }
-
-                  //Формуємо екран уставок для ВМП
-                  make_ekran_setpoint_VMP(forward_backward);
-                }
-                else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_CONTROL_VMP - 1;
-                  position_in_current_level_menu[EKRAN_CONTROL_VMP] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для ВМП
-                  make_ekran_control_VMP();
-                }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
                   if (current_ekran.edition == 0)
@@ -10560,49 +10288,6 @@ void main_manu_function(void)
                   position_in_current_level_menu[EKRAN_CONTROL_SWITCH] = current_ekran.index_position;
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
-                }
-                else if (
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                {
-                  int forward_backward = current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD;
-                  if (current_ekran.edition == 0)
-                  {
-                    int lines = current_settings.lines[forward_backward];
-                    if (++current_ekran.index_position >= (1 + 2 * lines))
-                      current_ekran.index_position = 0;
-                    position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
-                  }
-                  else
-                  {
-                    if (current_ekran.index_position == INDEX_ML_LINES)
-                    {
-                      edition_settings.lines[forward_backward] = edit_setpoint(0, edition_settings.lines[forward_backward], 0, 0, COL_SETPOINT_LINES_END, 1);
-                    }
-                    else
-                    {
-                      int _tmp = current_ekran.index_position - 1;
-                      int dilanka = _tmp >> 1;
-                      if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                      {
-                        edition_settings.dovgyna[forward_backward][dilanka] = edit_setpoint(0, edition_settings.dovgyna[forward_backward][dilanka], 1, COL_SETPOINT_DOVGYNA_COMMA, COL_SETPOINT_DOVGYNA_END, 1);
-                      }
-                      else
-                      {
-                        edition_settings.opir[forward_backward][dilanka] = edit_setpoint(0, edition_settings.opir[forward_backward][dilanka], 1, COL_SETPOINT_OPIR_COMMA, COL_SETPOINT_OPIR_END, 1);
-                      }
-                    }
-                  }
-                  //Формуємо екран уставок для ВМП
-                  make_ekran_setpoint_VMP(forward_backward);
-                }
-                else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_CONTROL_VMP)
-                    current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_CONTROL_VMP] = current_ekran.index_position;
-                  //Формуємо екран управлінської інформації для ВМП
-                  make_ekran_control_VMP();
                 }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
@@ -11579,53 +11264,6 @@ void main_manu_function(void)
                   //Формуємо екран управлінської інформації длявимикача
                   make_ekran_control_switch();
                 }
-                else if (
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                {
-                  if (current_ekran.index_position == INDEX_ML_LINES)
-                  {
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_LINES_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_LINES_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_LINES_BEGIN;
-                  }
-                  else
-                  {
-                    int _tmp = current_ekran.index_position - 1;
-                    if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                    {
-                      if (current_ekran.position_cursor_x == COL_SETPOINT_DOVGYNA_COMMA)
-                        current_ekran.position_cursor_x++;
-                      if ((current_ekran.position_cursor_x < COL_SETPOINT_DOVGYNA_BEGIN) ||
-                          (current_ekran.position_cursor_x > COL_SETPOINT_DOVGYNA_END))
-                        current_ekran.position_cursor_x = COL_SETPOINT_DOVGYNA_BEGIN;
-                    }
-                    else
-                    {
-                      if (current_ekran.position_cursor_x == COL_SETPOINT_OPIR_COMMA)
-                        current_ekran.position_cursor_x++;
-                      if ((current_ekran.position_cursor_x < COL_SETPOINT_OPIR_BEGIN) ||
-                          (current_ekran.position_cursor_x > COL_SETPOINT_OPIR_END))
-                        current_ekran.position_cursor_x = COL_SETPOINT_OPIR_BEGIN;
-                    }
-                  }
-
-                  //Формуємо екран уставок для ВМП
-                  make_ekran_setpoint_VMP(current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD);
-                }
-                else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                {
-                  unsigned int maska;
-
-                  //Виділяємо, який біт треба міняти
-                  maska = CTR_VMP_STATE;
-
-                  //Міняємо на протилежний відповідний біт для вибраної позиції
-                  edition_settings.control_vmp ^= maska;
-
-                  //Формуємо екран управлінської інформації для ВМП
-                  make_ekran_control_VMP();
-                }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
                   if (
@@ -12575,53 +12213,6 @@ void main_manu_function(void)
 
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
-                }
-                else if (
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_FORWARD) ||
-                  (current_ekran.current_level == EKRAN_SETPOINT_VMP_BACKWARD))
-                {
-                  if (current_ekran.index_position == INDEX_ML_LINES)
-                  {
-                    if ((current_ekran.position_cursor_x < COL_SETPOINT_LINES_BEGIN) ||
-                        (current_ekran.position_cursor_x > COL_SETPOINT_LINES_END))
-                      current_ekran.position_cursor_x = COL_SETPOINT_LINES_END;
-                  }
-                  else
-                  {
-                    int _tmp = current_ekran.index_position - 1;
-                    if ((_tmp & 0x1) == (INDEX_ML_DOVGYNA - 1))
-                    {
-                      if (current_ekran.position_cursor_x == COL_SETPOINT_DOVGYNA_COMMA)
-                        current_ekran.position_cursor_x--;
-                      if ((current_ekran.position_cursor_x < COL_SETPOINT_DOVGYNA_BEGIN) ||
-                          (current_ekran.position_cursor_x > COL_SETPOINT_DOVGYNA_END))
-                        current_ekran.position_cursor_x = COL_SETPOINT_DOVGYNA_END;
-                    }
-                    else
-                    {
-                      if (current_ekran.position_cursor_x == COL_SETPOINT_OPIR_COMMA)
-                        current_ekran.position_cursor_x--;
-                      if ((current_ekran.position_cursor_x < COL_SETPOINT_OPIR_BEGIN) ||
-                          (current_ekran.position_cursor_x > COL_SETPOINT_OPIR_END))
-                        current_ekran.position_cursor_x = COL_SETPOINT_OPIR_END;
-                    }
-                  }
-
-                  //Формуємо екран уставок для ВМП
-                  make_ekran_setpoint_VMP(current_ekran.current_level - EKRAN_SETPOINT_VMP_FORWARD);
-                }
-                else if (current_ekran.current_level == EKRAN_CONTROL_VMP)
-                {
-                  unsigned int maska;
-
-                  //Виділяємо, який біт треба міняти
-                  maska = CTR_VMP_STATE;
-
-                  //Міняємо на протилежний відповідний біт для вибраної позиції
-                  edition_settings.control_vmp ^= maska;
-
-                  //Формуємо екран управлінської інформації для ВМП
-                  make_ekran_control_VMP();
                 }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {

@@ -213,12 +213,6 @@ typedef struct
   int timeout_pryvoda_VV;                   //Витримка T "Привіода ВВ"
   unsigned int control_switch;              //Поле для управління вимикачем
 
-  //Визначення місця пошкодження
-  unsigned int lines[2];                         //Кількість ділянок
-  unsigned int dovgyna[2][MAX_NUMBER_LINES_VMP]; //Довжина ліній
-  unsigned int opir[2][MAX_NUMBER_LINES_VMP];    //Питомий опір ліній
-  unsigned int control_vmp;                      //Поле для управління ВМП
-
   //Аналоговий реєстратор
   unsigned int prefault_number_periods;  //Час доаварійного масиву (кількість періодів промислової частоти)
   unsigned int postfault_number_periods; //Час післяарійного масиву (кількість періодів промислової частоти)
