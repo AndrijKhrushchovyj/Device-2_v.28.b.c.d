@@ -422,21 +422,15 @@ typedef struct
 
 typedef struct
 {
-  unsigned int Ua_x1;
-  int Ua_y1;
-  unsigned int Ua_x2;
-  int Ua_y2;
+  unsigned int Uab_TN1_x1;
+  int Uab_TN1_y1;
+  unsigned int Uab_TN1_x2;
+  int Uab_TN1_y2;
 
-  unsigned int Ub_x1;
-  int Ub_y1;
-  unsigned int Ub_x2;
-  int Ub_y2;
-
-  unsigned int Uc_x1;
-  int Uc_y1;
-  unsigned int Uc_x2;
-  int Uc_y2;
-
+  unsigned int Uab_TN2_x1;
+  int Uab_TN2_y1;
+  unsigned int Uab_TN2_x2;
+  int Uab_TN2_y2;
 } POPEREDNJY_PERECHID;
 
 //typedef struct

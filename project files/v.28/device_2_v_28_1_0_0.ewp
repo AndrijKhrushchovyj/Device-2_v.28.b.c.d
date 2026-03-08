@@ -5590,9 +5590,6 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_reprogram.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_resurs.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_rpn.h</name>
                 </file>
                 <file>

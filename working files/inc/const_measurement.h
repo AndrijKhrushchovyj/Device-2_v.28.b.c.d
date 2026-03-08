@@ -110,27 +110,27 @@ R2-change to 86,6
 #define C_UAB_TN2 4
 #define C_UAB_TN1_16 5
 #define C_UAB_TN1 6
-#define C_UP1_P2_16 7
-#define C_UP1_P2_1 8
-#define C_UP2_P3_16 9
-#define C_UP2_P3_1 10
-#define C_UC1_C2_16 11
-#define C_UC1_C2_1 12
+#define C_UP1P2_16 7
+#define C_UP1P2_1 8
+#define C_UP2P3_16 9
+#define C_UP2P3_1 10
+#define C_UC1C2_16 11
+#define C_UC1C2_1 12
 #define C_V_K_3_3 13
 #define C_IA_2 14
 #define C_IA_2_16 15
 
-#define READ_UP1_P2 ( \
-  (1 << C_UP1_P2_1) | \
-  (1 << C_UP1_P2_16))
+#define READ_UP1P2 ( \
+  (1 << C_UP1P2_1) | \
+  (1 << C_UP1P2_16))
 
-#define READ_UP2_P3 ( \
-  (1 << C_UP2_P3_1) | \
-  (1 << C_UP2_P3_16))
+#define READ_UP2P3 ( \
+  (1 << C_UP2P3_1) | \
+  (1 << C_UP2P3_16))
 
-#define READ_UC1_C2 ( \
-  (1 << C_UC1_C2_1) | \
-  (1 << C_UC1_C2_16))
+#define READ_UC1C2 ( \
+  (1 << C_UC1C2_1) | \
+  (1 << C_UC1C2_16))
 
 #define READ_UAB_TN1 ( \
   (1 << C_UAB_TN1) |   \
@@ -150,9 +150,9 @@ R2-change to 86,6
   READ_I |              \
   READ_UAB_TN1 |        \
   READ_UAB_TN2 |        \
-  READ_UP1_P2 |         \
-  READ_UP2_P3 |         \
-  READ_UC1_C2)
+  READ_UP1P2 |          \
+  READ_UP2P3 |          \
+  READ_UC1C2)
 
 #define READ_TEST_VAL ( \
   (1 << C_VREF1) |      \
@@ -171,14 +171,14 @@ R2-change to 86,6
 
 #define N_VAL_1 0
 
-enum
+enum _index_channel
 {
-  I_UC1C2 = 0,
-  I_UP1P2,
+  I_IA_1 = 0,
   I_IA_2,
-  I_IA_1,
-  I_UAB_TN2,
   I_UAB_TN1,
+  I_UAB_TN2,
+  I_UC1C2,
+  I_UP1P2,
   I_UP2P3,
 
   NUMBER_ANALOG_CANALES

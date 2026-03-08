@@ -722,12 +722,6 @@ void main_manu_function(void)
                   current_ekran.current_level = EKRAN_LIST_INPUTS_OUTPUTS;
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                 }
-                else if (current_ekran.index_position == INDEX_ML1_RESURS)
-                {
-                  //Переходимо на меню відображення ресурсу вимикача
-                  current_ekran.current_level = EKRAN_RESURS;
-                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
-                }
                 else if (current_ekran.index_position == INDEX_ML1_REGISTRATORS)
                 {
                   //Переходимо на меню вибору відображення списку реєстраторів
@@ -13031,15 +13025,12 @@ void main_manu_function(void)
         /******************************************************************************************************************************************/
 
         /******************************************************************************************************************************************/
-      case EKRAN_RESURS:
       case EKRAN_REPROGRAM:
         {
           //Очищаємо всі біти краім упралінських
           unsigned int maska_keyboard_bits = (1u << BIT_KEY_ENTER) |
                                              (1u << BIT_KEY_ESC) |
                                              (1u << BIT_REWRITE);
-          if (current_ekran.current_level == EKRAN_RESURS)
-            maska_keyboard_bits |= (1u << BIT_KEY_UP) | (1u << BIT_KEY_DOWN);
 
           new_state_keyboard &= maska_keyboard_bits;
           //Дальше виконуємо дії, якщо натиснута кнопка на яку треба реагувати, або стоїть команда обновити екран
@@ -13050,37 +13041,14 @@ void main_manu_function(void)
             {
               if (current_ekran.edition == 0)
               {
-                if (current_ekran.current_level == EKRAN_RESURS)
-                {
-                  if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS)
-                    current_ekran.index_position = 0;
-                  current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                  position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                  //Формуємо екран відображення лічильників ресурсу
-                  make_ekran_resurs();
-                }
-                else
-                {
-                  //Теоретично цього ніколи не мало б бути
-                  total_error_sw_fixed();
-                }
+                //Теоретично цього ніколи не мало б бути
+                total_error_sw_fixed();
               }
               else if ((current_ekran.edition == 1) || (current_ekran.edition == 2))
               {
                 current_ekran.cursor_on = 0;
                 current_ekran.cursor_blinking_on = 0;
-                if (current_ekran.current_level == EKRAN_RESURS)
-                {
-                  unsigned char information_about_reset_counter[1][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
-                    {
-                      " Очистить ресурс",
-                      " Очистити ресурс",
-                      " Reset Res Coun ",
-                      " Очистить ресурс"};
-
-                  make_ekran_about_activation_command(0, information_about_reset_counter);
-                }
-                else if (current_ekran.current_level == EKRAN_REPROGRAM)
+                if (current_ekran.current_level == EKRAN_REPROGRAM)
                 {
                   unsigned char information_about_reprogram[1][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
                     {
@@ -13115,11 +13083,7 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.edition == 2)
                 {
-                  if (current_ekran.current_level == EKRAN_RESURS)
-                  {
-                    restart_counter = 0xff; /*Сигнал про очищення ресурсу лічильників з системи зазистів*/
-                  }
-                  else if (current_ekran.current_level == EKRAN_REPROGRAM)
+                  if (current_ekran.current_level == EKRAN_REPROGRAM)
                   {
                     //Подаємо команду на перехід у режим перепрограмування
                     _SET_STATE(reprogram_device, REPROGRAM_COMMAND);
@@ -13153,62 +13117,14 @@ void main_manu_function(void)
                 }
                 else
                 {
-                  if (current_ekran.current_level == EKRAN_RESURS)
-                  {
-                    //Вихід у режимі редагування без введення змін
-                    current_ekran.edition = 0;
-                  }
-                  else
-                  {
-                    //Теоретично цього ніколи не мало б бути
-                    total_error_sw_fixed();
-                  }
+                  //Теоретично цього ніколи не мало б бути
+                  total_error_sw_fixed();
                 }
 
                 //Виставляємо команду на обновлекння нового екрану
                 new_state_keyboard |= (1u << BIT_REWRITE);
                 //Очистити сигналізацію, що натиснута кнопка
                 new_state_keyboard &= ~(1u << BIT_KEY_ESC);
-              }
-              else if (new_state_keyboard == (1u << BIT_KEY_UP))
-              {
-                //Натиснута кнопка UP
-                if (current_ekran.edition == 0)
-                {
-                  if (current_ekran.current_level == EKRAN_RESURS)
-                  {
-                    current_ekran.index_position -= (MAX_ROW_LCD >> 1);
-                    if (current_ekran.index_position < 0)
-                      current_ekran.index_position = MAX_ROW_FOR_EKRAN_RESURS - 1;
-                    current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                    position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                    //Формуємо екран відображення лічильників ресурсу
-                    make_ekran_resurs();
-                  }
-                }
-
-                //Очистити сигналізацію, що натиснута кнопка
-                new_state_keyboard &= ~(1u << BIT_KEY_UP);
-              }
-              else if (new_state_keyboard == (1u << BIT_KEY_DOWN))
-              {
-                //Натиснута кнопка DOWN
-                if (current_ekran.edition == 0)
-                {
-                  if (current_ekran.current_level == EKRAN_RESURS)
-                  {
-                    current_ekran.index_position += (MAX_ROW_LCD >> 1);
-                    if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS)
-                      current_ekran.index_position = 0;
-                    current_ekran.index_position = (current_ekran.index_position >> (POWER_MAX_ROW_LCD - 1)) << (POWER_MAX_ROW_LCD - 1);
-                    position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
-                    //Формуємо екран відображення лічильників ресурсу
-                    make_ekran_resurs();
-                  }
-                }
-
-                //Очистити сигналізацію, що натиснута кнопка
-                new_state_keyboard &= ~(1u << BIT_KEY_DOWN);
               }
               else
               {

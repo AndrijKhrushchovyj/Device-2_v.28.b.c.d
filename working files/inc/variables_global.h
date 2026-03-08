@@ -570,12 +570,11 @@ unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
-volatile unsigned int periodical_tasks_TEST_ANGLE;
+unsigned int periodical_tasks_CALC_INTEGRAL_MEASUREMENTS;
+unsigned int periodical_tasks_TEST_ANGLE;
 unsigned int periodical_tasks_TEST_RESURS;
 unsigned int periodical_tasks_TEST_RESURS_LOCK;
 unsigned int periodical_tasks_TEST_FLASH_MEMORY;
-unsigned int periodical_tasks_CALCULATION_ANGLE;
-unsigned int periodical_tasks_CALC_ENERGY_DATA;
 
 const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA] =
   {
@@ -820,7 +819,6 @@ unsigned char crc_resurs;
 __COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
 unsigned int counter_total_ctrl;
 unsigned char crc_resurs_ctrl;
-unsigned int restart_counter = 0, previous_state_perekluchennya = 0, perekluchennya_unrecorded = 0;
 
 //Перепрограмування приладу
 unsigned int reprogram_device;

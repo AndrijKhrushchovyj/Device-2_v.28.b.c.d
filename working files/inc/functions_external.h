@@ -240,6 +240,7 @@ extern void operate_integral_values_ADCs(void);
 extern void Fourier(void);
 extern void fapch(void);
 extern void calc_measurement(unsigned int);
+extern void angle_determination(void);
 extern unsigned int sqrt_64(unsigned long long);
 
 extern void main_routines_for_spi1(void);

@@ -211,12 +211,11 @@ extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_DR_LOCK;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
-extern volatile unsigned int periodical_tasks_TEST_ANGLE;
+extern unsigned int periodical_tasks_CALC_INTEGRAL_MEASUREMENTS;
+extern unsigned int periodical_tasks_TEST_ANGLE;
 extern unsigned int periodical_tasks_TEST_RESURS;
 extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;
-extern unsigned int periodical_tasks_CALCULATION_ANGLE;
-extern unsigned int periodical_tasks_CALC_ENERGY_DATA;
 
 extern const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA];
 
@@ -424,7 +423,6 @@ extern unsigned char crc_resurs;
 extern __COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
 extern unsigned int counter_total_ctrl;
 extern unsigned char crc_resurs_ctrl;
-extern unsigned int restart_counter, previous_state_perekluchennya, perekluchennya_unrecorded;
 
 extern const unsigned char letters[69][2];
 extern const unsigned char extra_letters[13][1 + MAX_NAMBER_LANGUAGE];

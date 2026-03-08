@@ -65,11 +65,12 @@ void global_vareiables_installation(void)
   /**************************/
   //Вимірювальна система
   /**************************/
-
-  for (size_t i = 0; i < NUMBER_ANALOG_CANALES; i++)
+  for (unsigned int i = 0; i < NUMBER_POINT; i++)
   {
-    for (unsigned int j = 0; j < MAIN_FREQUENCY; j++)
-      vref_adc_moment_value_1s[i][j] = VREF_NORMAL_VALUE;
+    vref_moment_value[i] = VREF_NORMAL_VALUE;
+    v_k_3_3_moment_value[i] = V_K_3_3_NORMAL_VALUE;
+    adc2_channel0_moment_value[i] = 0;
+    adc2_channel1_moment_value[i] = 0;
   }
 
   for (unsigned int i = 0; i < MAX_INDEX_DATA_FOR_OSCYLOGRAPH; i++)

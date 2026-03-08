@@ -232,6 +232,19 @@ void periodical_operations(unsigned int full_actions)
     (save_time_dat_h == 2))
     main_routines_for_i2c();
 
+  /*****/
+  //Періодичний розрахунок діючих значень
+  /*****/
+  if (periodical_tasks_CALC_INTEGRAL_MEASUREMENTS != 0)
+  {
+    angle_determination();
+
+    periodical_tasks_CALC_INTEGRAL_MEASUREMENTS = false;
+  }
+  /*****/
+
+  watchdog_routine(UNITED_BITS_WATCHDOG, 62);
+
   //Обробка дій системи меню
   if ((reinit_LCD) && (full_actions == true))
   {

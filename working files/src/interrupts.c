@@ -1580,7 +1580,6 @@ void TIM4_IRQHandler(void)
         (current_ekran.current_level == EKRAN_STATE_INPUTS) ||
         (current_ekran.current_level == EKRAN_STATE_OUTPUTS) ||
         (current_ekran.current_level == EKRAN_DIAGNOSTYKA) ||
-        (current_ekran.current_level == EKRAN_RESURS) ||
         (current_ekran.current_level == EKRAN_VIDKLUCHENNJA))
     {
       if (++time_rewrite > MAX_TIME_REWRITE_EKRAN)
@@ -1626,10 +1625,10 @@ void TIM4_IRQHandler(void)
             periodical_tasks_TEST_INFO_REJESTRATOR_AR =
               periodical_tasks_TEST_INFO_REJESTRATOR_DR =
                 periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR =
-                  periodical_tasks_TEST_ANGLE =
-                    periodical_tasks_TEST_RESURS =
-                      periodical_tasks_TEST_FLASH_MEMORY =
-                        periodical_tasks_CALCULATION_ANGLE = true;
+                  periodical_tasks_CALC_INTEGRAL_MEASUREMENTS =
+                    periodical_tasks_TEST_ANGLE =
+                      periodical_tasks_TEST_RESURS =
+                        periodical_tasks_TEST_FLASH_MEMORY = true;
 
       number_inputs_for_fix_one_second = 0;
 

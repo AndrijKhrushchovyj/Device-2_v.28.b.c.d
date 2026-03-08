@@ -241,6 +241,7 @@ void operate_integral_values_ADCs(void);
 void Fourier(void);
 void fapch(void);
 void calc_measurement(unsigned int);
+void angle_determination(void);
 unsigned int sqrt_64(unsigned long long);
 
 void main_routines_for_spi1(void);
