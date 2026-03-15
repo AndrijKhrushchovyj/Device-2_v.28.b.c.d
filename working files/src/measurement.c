@@ -65,7 +65,7 @@ void control_reading_ADCs(void)
     adc_TEST_VAL_read = false;
     status_adc_read_work |= TEST_VAL_READ;
 
-    command_word_adc |= READ_TEST_VAL;
+    command_word_adc |= (READ_TEST_VAL | READ_ADC2_VAL);
   }
 
   unsigned int command_word_adc_diff = command_word_adc ^ command_word_adc_work;
@@ -151,7 +151,14 @@ void control_reading_ADCs(void)
     SPI_ADC->DR = (uint16_t) command_word; //Відправляємо командне число
 
     channel_answer = channel_request;
-    channel_request = (active_adc_new - 1) * NUMBER_CANALs_ADC + ((command_word >> 10) & 0xf);
+    if (active_adc_new == 1)
+    {
+      channel_request = (command_word >> 10) & 0xf;
+    }
+    else
+    {
+      channel_request = NUMBER_CANALs_ADC1 + ((command_word >> 10) & 0x1);
+    }
   }
   else
   {
@@ -194,6 +201,47 @@ void operate_integral_values_ADCs(void)
   //Всі масиви одної величини ми вже опрацювали  
   *******************************************************/
 
+  /*******************************************************/
+  //Вираховування середнього значення контрольних точок
+  /*******************************************************/
+  //VREF1 (Опорна напруга на вході АЦП)
+  int temp = output_adc[C_VREF1].value;
+  vref_averange_sum += temp;
+  vref_averange_sum -= vref_moment_value[index_array_of_one_value];
+  vref_moment_value[index_array_of_one_value] = temp;
+  if ((temp < 0x614) || (temp > 0x9EB))
+    _SET_BIT(set_diagnostyka, ERROR_VREF_ADC_TEST_COARSE_BIT);
+  else
+    _SET_BIT(clear_diagnostyka, ERROR_VREF_ADC_TEST_COARSE_BIT);
+
+  //V_K_3_3 (Контроль напруги живлення АЦП)
+  temp = output_adc[C_V_K_3_3].value;
+  v_k_3_3_averange_sum += temp;
+  v_k_3_3_averange_sum -= v_k_3_3_moment_value[index_array_of_one_value];
+  v_k_3_3_moment_value[index_array_of_one_value] = temp;
+  if ((temp < 0x6F2) || (temp > 0xD48))
+    _SET_BIT(set_diagnostyka, ERROR_V_K_3_3_ADC_TEST_COARSE_BIT);
+  else
+    _SET_BIT(clear_diagnostyka, ERROR_V_K_3_3_ADC_TEST_COARSE_BIT);
+
+  //adc2_channel0 (Напруга на логометрі)
+  adc2_channel0 = output_adc[C_ADC2_Ch0].value;
+  adc2_channel0_averange_sum += adc2_channel0;
+  if (completion_of_first_period == 1)
+  {
+    adc2_channel0_averange_sum -= adc2_channel0_moment_value[index_array_of_one_value];
+  }
+  adc2_channel0_moment_value[index_array_of_one_value] = adc2_channel0;
+
+  //adc2_channel1 (Напруга з выходу логометра)
+  adc2_channel1 = output_adc[C_ADC2_Ch1].value;
+  adc2_channel1_averange_sum += adc2_channel1;
+  if (completion_of_first_period == 1)
+  {
+    adc2_channel1_averange_sum -= adc2_channel1_moment_value[index_array_of_one_value];
+  }
+  adc2_channel1_moment_value[index_array_of_one_value] = adc2_channel1;
+
   if ((++index_array_of_one_value) == NUMBER_POINT)
   {
     index_array_of_one_value = 0;
@@ -204,8 +252,8 @@ void operate_integral_values_ADCs(void)
     //Вираховуємо значення контрольних точок АЦП
     vref_averange = vref_averange_sum >> VAGA_NUMBER_POINT;
     v_k_3_3_averange = v_k_3_3_averange_sum >> VAGA_NUMBER_POINT;
-    adc2_channel0_averange = adc2_channel0_averange_sum >> VAGA_NUMBER_POINT;
-    adc2_channel1_averange = adc2_channel1_averange_sum >> VAGA_NUMBER_POINT;
+    adc2_channel0_averange_irq = adc2_channel0_averange_sum >> VAGA_NUMBER_POINT;
+    adc2_channel1_averange_irq = adc2_channel1_averange_sum >> VAGA_NUMBER_POINT;
   }
   else if ((index_array_of_one_value > 1) &&
            (index_array_of_one_value < NUMBER_POINT) &&
@@ -213,39 +261,39 @@ void operate_integral_values_ADCs(void)
   {
     if (index_array_of_one_value == 2)
     {
-      adc2_channel0_averange = adc2_channel0_averange_sum >> 1;
-      adc2_channel1_averange = adc2_channel1_averange_sum >> 1;
+      adc2_channel0_averange_irq = adc2_channel0_averange_sum >> 1;
+      adc2_channel1_averange_irq = adc2_channel1_averange_sum >> 1;
     }
     else if (index_array_of_one_value == 4)
     {
-      adc2_channel0_averange = adc2_channel0_averange_sum >> 2;
-      adc2_channel1_averange = adc2_channel1_averange_sum >> 2;
+      adc2_channel0_averange_irq = adc2_channel0_averange_sum >> 2;
+      adc2_channel1_averange_irq = adc2_channel1_averange_sum >> 2;
     }
     else if (index_array_of_one_value == 8)
     {
-      adc2_channel0_averange = adc2_channel0_averange_sum >> 3;
-      adc2_channel1_averange = adc2_channel1_averange_sum >> 3;
+      adc2_channel0_averange_irq = adc2_channel0_averange_sum >> 3;
+      adc2_channel1_averange_irq = adc2_channel1_averange_sum >> 3;
     }
     else if (index_array_of_one_value == 16)
     {
-      adc2_channel0_averange = adc2_channel0_averange_sum >> 4;
-      adc2_channel1_averange = adc2_channel1_averange_sum >> 4;
+      adc2_channel0_averange_irq = adc2_channel0_averange_sum >> 4;
+      adc2_channel1_averange_irq = adc2_channel1_averange_sum >> 4;
     }
     else
     {
-      adc2_channel0_averange = adc2_channel0_averange_sum / index_array_of_one_value;
-      adc2_channel1_averange = adc2_channel1_averange_sum / index_array_of_one_value;
+      adc2_channel0_averange_irq = adc2_channel0_averange_sum / index_array_of_one_value;
+      adc2_channel1_averange_irq = adc2_channel1_averange_sum / index_array_of_one_value;
     }
   }
   else if ((index_array_of_one_value == 1) && (completion_of_first_period == 0))
   {
-    adc2_channel0_averange = adc2_channel0_averange_sum;
-    adc2_channel1_averange = adc2_channel1_averange_sum;
+    adc2_channel0_averange_irq = adc2_channel0_averange_sum;
+    adc2_channel1_averange_irq = adc2_channel1_averange_sum;
   }
   else if ((index_array_of_one_value < NUMBER_POINT) && (completion_of_first_period == 1))
   {
-    adc2_channel0_averange = adc2_channel0_averange_sum >> VAGA_NUMBER_POINT;
-    adc2_channel1_averange = adc2_channel1_averange_sum >> VAGA_NUMBER_POINT;
+    adc2_channel0_averange_irq = adc2_channel0_averange_sum >> VAGA_NUMBER_POINT;
+    adc2_channel1_averange_irq = adc2_channel1_averange_sum >> VAGA_NUMBER_POINT;
   }
   else if (index_array_of_one_value > NUMBER_POINT)
   {
@@ -263,6 +311,11 @@ void operate_integral_values_ADCs(void)
     _SET_BIT(set_diagnostyka, ERROR_V_K_3_3_ADC_TEST_BIT);
   else
     _SET_BIT(clear_diagnostyka, ERROR_V_K_3_3_ADC_TEST_BIT);
+
+  //Копіювання для інших систем
+  unsigned int bank_ortogonal_tmp = bank_ortogonal;
+  adc2_channel0_averange[bank_ortogonal_tmp] = adc2_channel0_averange_irq;
+  adc2_channel1_averange[bank_ortogonal_tmp] = adc2_channel1_averange_irq;
 }
 /*************************************************************************/
 
@@ -557,25 +610,33 @@ void SPI_ADC_IRQHandler(void)
     (state_reading_ADCs == STATE_READING_WRITE_READ) ||
     (state_reading_ADCs == STATE_READING_READ))
   {
-    unsigned int shift = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) == 0) ? 0 : NUMBER_CANALs_ADC;
-    unsigned int number_canal = shift + ((read_value >> 12) & 0xf);
+    int const adc_number = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) != 0); // 0 = 0!=0; 1 = 1!=0
+    unsigned int const number_canal = (adc_number == 0) ? ((read_value >> 12) & 0xf) : (NUMBER_CANALs_ADC1 + ((read_value >> 13) & 0x1));
 
     output_adc[number_canal].tick = tick_output_adc_p;
 
-    static uint32_t error_spi_adc;
+    static uint32_t error_spi_adc[2] = {0, 0};
     if (channel_answer != number_canal)
     {
-      if (error_spi_adc < 3)
-        error_spi_adc++;
-      if (error_spi_adc >= 3)
-        _SET_BIT(set_diagnostyka, ERROR_SPI_ADC1_BIT);
+      if (error_spi_adc[adc_number] < 3)
+        error_spi_adc[adc_number]++;
+      if (error_spi_adc[adc_number] >= 3)
+        _SET_BIT(set_diagnostyka, ((adc_number == 0) ? ERROR_SPI_ADC1_BIT : ERROR_SPI_ADC2_BIT));
     }
     else
     {
-      error_spi_adc = 0;
+      error_spi_adc[adc_number] = 0;
 
-      _SET_BIT(clear_diagnostyka, ERROR_SPI_ADC1_BIT);
-      output_adc[number_canal].value = read_value & 0xfff;
+      _SET_BIT(clear_diagnostyka, ((adc_number == 0) ? ERROR_SPI_ADC1_BIT : ERROR_SPI_ADC2_BIT));
+      if (adc_number == 0)
+      {
+        output_adc[number_canal].value = read_value & 0xfff;
+      }
+      else
+      {
+        output_adc[number_canal].value =
+          ((int32_t)((uint32_t) read_value << (32 - 13))) >> (32 - 13);
+      }
     }
   }
   /***/
@@ -1706,7 +1767,10 @@ void calc_measurement(unsigned int number_group_stp)
   {
     ortogonal_local[i] = ortogonal[i][bank_ortogonal_tmp];
   }
+  adc2_channel0_averange_prt = adc2_channel0_averange[bank_ortogonal_tmp];
+  adc2_channel1_averange_prt = adc2_channel0_averange[bank_ortogonal_tmp];
   bank_ortogonal = bank_ortogonal_tmp;
+  adc2_read_after_start = true;
 
   freq_mutex = true;
   frequency = frequency_high;
@@ -1731,6 +1795,11 @@ void calc_measurement(unsigned int number_group_stp)
       ortogonal_calc_low[2 * new_index] = ortogonal_sin;
       ortogonal_calc_low[2 * new_index + 1] = ortogonal_cos;
     }
+  }
+  if (copy_to_low_tasks == true)
+  {
+    adc2_channel0_averange_low = adc2_channel0_averange_prt;
+    adc2_channel1_averange_low = adc2_channel1_averange_prt;
   }
   /***/
 

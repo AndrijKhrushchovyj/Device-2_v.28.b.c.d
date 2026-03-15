@@ -3151,7 +3151,7 @@ inline void main_protection(void)
 
   //Копіюємо вимірювання для низькопріоритетних і високопріоритетних завдань
   unsigned int bank_measurement_high_tmp = (bank_measurement_high ^ 0x1) & 0x1;
-  if (semaphore_measure_values_low1 == 0)
+  if (semaphore_measure_values_low == 0)
   {
     for (unsigned int i = 0; i < _NUMBER_IM; i++)
     {

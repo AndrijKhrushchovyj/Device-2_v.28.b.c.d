@@ -68,17 +68,21 @@ extern unsigned int v_k_3_3_averange;
 extern int index_array_of_one_value;
 extern unsigned int completion_of_first_period;
 
+extern int adc2_channel0;
 extern int adc2_channel0_moment_value[NUMBER_POINT];
 extern int adc2_channel0_averange_sum;
-extern int adc2_channel0_averange;
+extern int adc2_channel0_averange_irq;
+extern int adc2_channel0_averange[2];
+extern int adc2_channel0_averange_prt;
+extern int adc2_channel0_averange_low;
+extern int adc2_channel1;
 extern int adc2_channel1_moment_value[NUMBER_POINT];
 extern int adc2_channel1_averange_sum;
-extern int adc2_channel1_averange;
-
-extern int adc2_channel0_global_values;
-extern int adc2_channel1_global_values;
-
-extern unsigned int semaphore_measure_values_low1;
+extern int adc2_channel1_averange_irq;
+extern int adc2_channel1_averange[2];
+extern int adc2_channel1_averange_prt;
+extern int adc2_channel1_averange_low;
+extern unsigned int adc2_read_after_start;
 
 extern unsigned int number_inputs_for_fix_one_second;
 extern unsigned int number_inputs_for_fix_one_period;

@@ -740,10 +740,10 @@ void make_ekran_logomentr_voltage(void)
   //  measurement_tmp[1] = temp_adc2_channel1_global_values;
   //  /***/
   //#else
-  semaphore_measure_values_low1 = 1;
-  measurement_tmp[0] = adc2_channel0_global_values;
-  measurement_tmp[1] = adc2_channel1_global_values;
-  semaphore_measure_values_low1 = 0;
+  semaphore_measure_values_low = 1;
+  measurement_tmp[0] = adc2_channel0_averange_low;
+  measurement_tmp[1] = adc2_channel1_averange_low;
+  semaphore_measure_values_low = 0;
   //#endif
   /*
   Переводимо це число у мВ
@@ -862,9 +862,9 @@ void make_ekran_frequency(void)
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_FREQUENCY][MAX_COL_LCD] =
     {
       " f =            "};
-  semaphore_measure_values_low1 = 1;
+  semaphore_measure_values_low = 1;
   int measurement_fequency = (int) (frequency_middle * 1000);
-  semaphore_measure_values_low1 = 0;
+  semaphore_measure_values_low = 0;
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;

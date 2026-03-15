@@ -1004,12 +1004,8 @@ void start_settings_peripherals(void)
   while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_OVR) == SET)
     SPI_I2S_ReceiveData(SPI_ADC);
 
-  for (unsigned int i = 0; i < NUMBER_ADCs; i++)
   {
-    if (i == 0)
-      GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
-    else
-      GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC;
+    GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
 
     //Посилаємо перше слово 0xffff
     while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET)
@@ -1032,6 +1028,23 @@ void start_settings_peripherals(void)
       ;                                          //Очікуємо завершення трансакції по прийнятті даних по MISO
     GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC); //Знімаємо chip_select
     SPI_I2S_ReceiveData(SPI_ADC);                //Читаємо прийняті дані
+  }
+
+  {
+    GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; //Підключаємо другий АЦП2
+
+    //Відправляємо число 0xa000 (+-10V)
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET)
+      ;                                            //Очікуємо, поки SPI стане вільним
+    tick_output_adc_p = TIM5->CNT;                 //Фіксуємо час початку оцифровки
+    GPIO_ResetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC); //Виставляємо chip_select
+    SPI_I2S_SendData(SPI_ADC, 0xA000);             //Відправляємо число 0xffff
+    while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_RXNE) == RESET)
+      ;                                          //Очікуємо завершення трансакції по прийнятті даних по MISO
+    GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC); //Знімаємо chip_select
+    SPI_I2S_ReceiveData(SPI_ADC);                //Читаємо прийняті дані
+
+    GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC; //Підключаємо перший АЦП1
   }
 
   //Дозволяємо переривання від прийнятого байту по SPI

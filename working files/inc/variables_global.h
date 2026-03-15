@@ -22,7 +22,9 @@ const unsigned int input_adc[NUMBER_INPUTs_ADCs][2] = {
   {1, 0xb370},
   {1, 0xb770},
   {1, 0xbb70},
-  {1, 0xbf70}};
+  {1, 0xbf70},
+  {2, 0x8010},
+  {2, 0x8410}};
 EXTENDED_OUTPUT_DATA output_adc[NUMBER_INPUTs_ADCs];
 ROZSHYRENA_VYBORKA rozshyrena_vyborka;
 //12345
@@ -157,8 +159,6 @@ int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
 unsigned int bank_ortogonal;
 unsigned int semaphore_measure_values_low;
 
-unsigned int semaphore_measure_values_low1;
-
 unsigned int vref_moment_value[NUMBER_POINT];
 unsigned int vref_averange_sum = VREF_NORMAL_VALUE * NUMBER_POINT;
 volatile unsigned int vref_averange = VREF_NORMAL_VALUE;
@@ -169,15 +169,21 @@ int index_array_of_one_value = 0;
 //Змінна відповідає за признак завершення перших 32-ти зчитувань з АЦП
 unsigned int completion_of_first_period = 0;
 
+int adc2_channel0 = 0; //Напруга на логометрі
 int adc2_channel0_moment_value[NUMBER_POINT];
 int adc2_channel0_averange_sum = 0;
-int adc2_channel0_averange = 0;
+int adc2_channel0_averange_irq = 0;
+int adc2_channel0_averange[2] = {0, 0};
+int adc2_channel0_averange_prt = 0;
+int adc2_channel0_averange_low = 0;
+int adc2_channel1 = 0; //Напруга з виході логометра
 int adc2_channel1_moment_value[NUMBER_POINT];
 int adc2_channel1_averange_sum = 0;
-int adc2_channel1_averange = 0;
-
-int adc2_channel0_global_values = 0;
-int adc2_channel1_global_values = 0;
+int adc2_channel1_averange_irq = 0;
+int adc2_channel1_averange[2] = {0, 0};
+int adc2_channel1_averange_prt = 0;
+int adc2_channel1_averange_low = 0;
+unsigned int adc2_read_after_start = false;
 
 unsigned int number_inputs_for_fix_one_second;
 unsigned int number_inputs_for_fix_one_period;

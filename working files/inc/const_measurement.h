@@ -13,9 +13,9 @@
 #define MIN_TICK_PERIOD (MEASUREMENT_TIM_FREQUENCY / MAX_FREQUENCY - 1)
 #define MAX_TICK_PERIOD (MEASUREMENT_TIM_FREQUENCY / MIN_FREQUENCY + 1)
 
-#define NUMBER_ADCs 1
-#define NUMBER_CANALs_ADC 16
-#define NUMBER_INPUTs_ADCs (NUMBER_ADCs * NUMBER_CANALs_ADC)
+#define NUMBER_CANALs_ADC1 16
+#define NUMBER_CANALs_ADC2 2
+#define NUMBER_INPUTs_ADCs (NUMBER_CANALs_ADC1 + NUMBER_CANALs_ADC2)
 
 #define VAGA_NUMBER_POINT 5
 #define NUMBER_POINT (1 << VAGA_NUMBER_POINT)
@@ -119,6 +119,8 @@ R2-change to 86,6
 #define C_V_K_3_3 13
 #define C_IA_2 14
 #define C_IA_2_16 15
+#define C_ADC2_Ch0 (0 + NUMBER_CANALs_ADC1)
+#define C_ADC2_Ch1 (1 + NUMBER_CANALs_ADC1)
 
 #define READ_UP1P2 ( \
   (1 << C_UP1P2_1) | \
@@ -153,6 +155,10 @@ R2-change to 86,6
   READ_UP1P2 |          \
   READ_UP2P3 |          \
   READ_UC1C2)
+
+#define READ_ADC2_VAL ( \
+  (1 << C_ADC2_Ch0) |   \
+  (1 << C_ADC2_Ch1))
 
 #define READ_TEST_VAL ( \
   (1 << C_VREF1) |      \

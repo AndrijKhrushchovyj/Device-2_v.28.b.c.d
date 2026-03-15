@@ -373,7 +373,7 @@ typedef enum _index_energy __index_energy;
 typedef struct
 {
   uint32_t tick;
-  unsigned int value;
+  int32_t value;
 
 } EXTENDED_OUTPUT_DATA;
 
