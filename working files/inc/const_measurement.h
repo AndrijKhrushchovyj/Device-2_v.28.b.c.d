@@ -100,8 +100,6 @@ R2-change to 86,6
 #define VREF_NORMAL_VALUE 0x800
 #define V_K_3_3_NORMAL_VALUE 0xb00
 
-#define NUMBER_I2G_CANALES 3
-
 //Канали
 #define C_VREF1 0
 #define C_IA_1_16 1

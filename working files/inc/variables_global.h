@@ -377,25 +377,35 @@ unsigned int timer_prt_signal_output_mode_2;
 unsigned int output_timer_prt_signal_output_mode_2;
 unsigned int static_logic_df;
 
-unsigned int i1g_bilshe_porogu[NUMBER_I2G_CANALES];
-unsigned int i2g_bilshe_porogu[NUMBER_I2G_CANALES];
+unsigned int trigger_ZNKh_0 = 0;
+unsigned int trigger_C_inputs_ZNKh_0 = 0;
 
-unsigned int static_logic_APV_0;
-unsigned int previous_states_APV_0;
-unsigned int trigger_APV_0;
+unsigned int trigger_ZSKh_0 = 0;
+unsigned int trigger_C_inputs_ZSKh_0 = 0;
 
-_Bool previous_state_po_achr_chapv_uaf1;
-_Bool previous_state_po_achr_chapv_ubf1;
-_Bool previous_state_po_achr_chapv_ucf1;
-_Bool previous_states_CHAPV1;
-_Bool previous_states_CHAPV2;
-_Bool trigger_CHAPV1;
-_Bool trigger_CHAPV2;
+unsigned int trigger_TM_0 = 0, trigger_TM_0_for_save = 0, trigger_TM_0_for_save_ctrl;
+unsigned int previous_states_TM_0 = 0;
+
+unsigned int trigger_RPN_0 = 0;
+unsigned int previous_states_RPN_0 = 0;
+unsigned int exchange_RPN_0 = 0;
+unsigned int count_RPN_1 = 0;
+int timer_rpn_ub_pryb_low = -1;
+int timer_rpn_ub_pryb_prysk_low = -1;
+int timer_rpn_prysk_vid_Umax_low = -1;
+unsigned int znyzyty_bulo_pered_perecluchennjam = false;
+unsigned int pidvyshchyty_bulo_pered_perecluchennjam = false;
+
+unsigned int trigger_ctrl_pol_0 = 0;
+unsigned int trigger_C_inputs_ctrl_pol_0 = 0;
 
 _Bool previous_states_ready_tu;
 _Bool trigger_ready_tu;
 
 unsigned int start_restart = 0xff;
+
+int current_step_logical = NUMBER_STEPS_RPN_UNDEFINED, edition_current_step_logical;
+int current_step = NUMBER_STEPS_RPN_UNDEFINED;
 
 SRAM1 unsigned char working_ekran[MAX_ROW_LCD][MAX_COL_LCD];
 SRAM1 unsigned int rewrite_ekran_once_more;
@@ -645,9 +655,6 @@ __SETTINGS current_settings;
 #endif
 SRAM1 __SETTINGS edition_settings, current_settings_interfaces;
 
-int current_step_logical = NUMBER_STEPS_RPN_UNDEFINED, edition_current_step_logical;
-int current_step = NUMBER_STEPS_RPN_UNDEFINED;
-
 //Визначення періодів у хвилину і більше
 unsigned int number_seconds;
 
@@ -825,6 +832,7 @@ unsigned char crc_resurs;
 __COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
 unsigned int counter_total_ctrl;
 unsigned char crc_resurs_ctrl;
+unsigned int restart_counter = 0, previous_state_perekluchennya = 0, perekluchennya_unrecorded = 0;
 
 //Перепрограмування приладу
 unsigned int reprogram_device;

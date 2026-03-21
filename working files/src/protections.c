@@ -711,6 +711,1461 @@ inline void ready_tu(unsigned int *p_active_functions)
 /*****************************************************/
 
 /*****************************************************/
+//ЗСХ
+/*****************************************************/
+inline void ZSKh_handler(unsigned int *p_active_functions)
+{
+  unsigned int logic_ZSKh_0 = 0;
+
+  /*******************************/
+
+  //Формуємо вхідні сигнали для схеми
+  /***/
+  //Перемикання
+  logic_ZSKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0) << 0;
+  //Контроль ком. Убавить
+  logic_ZSKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_KONTROL_UBAVYTY_ZSKh) != 0) << 1;
+  //Контроль ком. Прибавить
+  logic_ZSKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_KONTROL_PRYBAVYTY_ZSKh) != 0) << 2;
+  //ЗСХ
+  logic_ZSKh_0 |= ((current_settings_prt.control_zskh & MASKA_FOR_BIT(INDEX_ML_CTRZSKh_STATE)) != 0) << 12;
+  //На вхід синхровходу тріґер виставляємо його попереднє значення (щоб не фіксувати неправдивого імпульсу)
+  logic_ZSKh_0 |= (_GET_STATE(trigger_C_inputs_ZSKh_0, 0) != 0) << 8;
+  /***/
+
+  _AND2(exchange_RPN_0, 3, logic_ZSKh_0, 12, logic_ZSKh_0, 3);
+
+  _OR2(logic_ZSKh_0, 1, logic_ZSKh_0, 2, logic_ZSKh_0, 5);
+  _AND3(logic_ZSKh_0, 5, logic_ZSKh_0, 3, exchange_RPN_0, 9, logic_ZSKh_0, 6);
+
+  _INVERTOR(logic_ZSKh_0, 3, logic_ZSKh_0, 11);
+  _OR3(logic_ZSKh_0, 11, exchange_RPN_0, 8, exchange_RPN_0, 10, logic_ZSKh_0, 7);
+
+  do
+  {
+    _D_TRIGGER(0, _GET_STATE(logic_ZSKh_0, 6), _GET_STATE(logic_ZSKh_0, 7), trigger_C_inputs_ZSKh_0, 0, logic_ZSKh_0, 8, trigger_ZSKh_0, 0);
+    _INVERTOR(trigger_ZSKh_0, 0, logic_ZSKh_0, 9);
+
+    _AND4(exchange_RPN_0, 9, logic_ZSKh_0, 0, logic_ZSKh_0, 9, logic_ZSKh_0, 3, logic_ZSKh_0, 10);
+    _AND3_INVERTOR(logic_ZSKh_0, 0, trigger_ZSKh_0, 0, logic_ZSKh_0, 3, logic_ZSKh_0, 8);
+  } while (_GET_STATE(trigger_C_inputs_ZSKh_0, 0) != _GET_STATE(logic_ZSKh_0, 8));
+
+  //Вихід схеми ЗСХ
+  /***/
+  p_active_functions[RANG_ZSKh >> 5] |= (_GET_STATE(logic_ZSKh_0, 10) << (RANG_ZSKh & 0x1f));
+  /***/
+}
+/*****************************************************/
+
+/*****************************************************/
+//ЗНХ
+/*****************************************************/
+inline void ZNKh_handler(unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  unsigned int logic_ZNKh_0 = 0;
+
+  /*******************************/
+
+  //Формуємо вхідні сигнали для схеми
+  /***/
+
+  //Перемикання
+  logic_ZNKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0) << 9;
+  //ЗНХ
+  logic_ZNKh_0 |= ((current_settings_prt.control_znkh & MASKA_FOR_BIT(INDEX_ML_CTRZNKh_STATE)) != 0) << 14;
+  //Контроль ком. Убавить
+  logic_ZNKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_KONTROL_UBAVYTY_ZSKh) != 0) << 15;
+  //Контроль ком. Прибавить
+  logic_ZNKh_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_KONTROL_PRYBAVYTY_ZSKh) != 0) << 16;
+  /***/
+
+  _INVERTOR(logic_ZNKh_0, 15, logic_ZNKh_0, 17);
+  _INVERTOR(logic_ZNKh_0, 16, logic_ZNKh_0, 18);
+  _AND2(logic_ZNKh_0, 17, logic_ZNKh_0, 18, logic_ZNKh_0, 19);
+  _AND5(logic_ZNKh_0, 14, exchange_RPN_0, 6, logic_ZNKh_0, 9, logic_ZNKh_0, 19, exchange_RPN_0, 9, logic_ZNKh_0, 20);
+
+  _AND2_INVERTOR(exchange_RPN_0, 6, logic_ZNKh_0, 14, logic_ZNKh_0, 23);
+  _OR3(logic_ZNKh_0, 23, exchange_RPN_0, 0, exchange_RPN_0, 10, logic_ZNKh_0, 25);
+
+  _AND2(logic_ZNKh_0, 14, exchange_RPN_0, 3, logic_ZNKh_0, 10);
+
+  _AND2(logic_ZNKh_0, 9, logic_ZNKh_0, 10, logic_ZNKh_0, 0);
+  _INVERTOR(logic_ZNKh_0, 0, logic_ZNKh_0, 13);
+  _TIMER_T_0(INDEX_TIMER_ZNKh_TMP2, 1, logic_ZNKh_0, 13, logic_ZNKh_0, 8);
+
+  _INVERTOR(logic_ZNKh_0, 10, logic_ZNKh_0, 5);
+  _OR3(logic_ZNKh_0, 5, exchange_RPN_0, 8, exchange_RPN_0, 10, logic_ZNKh_0, 2);
+
+  _TIMER_T_0(INDEX_TIMER_ZNKh_TMP1, 1, logic_ZNKh_0, 0, logic_ZNKh_0, 6);
+  _OR2(logic_ZNKh_0, 6, logic_ZNKh_0, 2, logic_ZNKh_0, 4);
+
+  _D_TRIGGER(1, 0, _GET_STATE(logic_ZNKh_0, 4), trigger_C_inputs_ZNKh_0, 1, logic_ZNKh_0, 8, trigger_ZNKh_0, 1);
+  _AND2(exchange_RPN_0, 3, trigger_ZNKh_0, 1, logic_ZNKh_0, 21);
+  _OR2(logic_ZNKh_0, 20, logic_ZNKh_0, 21, logic_ZNKh_0, 22);
+
+  _TIMER_T_0(INDEX_TIMER_ZNKh_PEREKL, current_settings_prt.timeout_znkh_perekl[number_group_stp], logic_ZNKh_0, 22, logic_ZNKh_0, 3);
+  _AND2_INVERTOR(logic_ZNKh_0, 3, exchange_RPN_0, 3, logic_ZNKh_0, 1);
+  _AND2(logic_ZNKh_0, 3, exchange_RPN_0, 6, logic_ZNKh_0, 26);
+
+  _AND2(trigger_ZNKh_0, 1, logic_ZNKh_0, 0, logic_ZNKh_0, 7);
+
+  _D_TRIGGER(_GET_STATE(logic_ZNKh_0, 1), 0, _GET_STATE(logic_ZNKh_0, 2), trigger_C_inputs_ZNKh_0, 0, logic_ZNKh_0, 7, trigger_ZNKh_0, 0);
+  _AND2(logic_ZNKh_0, 0, trigger_ZNKh_0, 0, logic_ZNKh_0, 12);
+
+  _D_TRIGGER(1, 0, _GET_STATE(logic_ZNKh_0, 25), trigger_C_inputs_ZNKh_0, 3, logic_ZNKh_0, 26, trigger_ZNKh_0, 3);
+
+  _OR2(trigger_ZNKh_0, 3, logic_ZNKh_0, 12, logic_ZNKh_0, 27);
+
+  //Вихідні сигнали ЗНХ
+  /***/
+  p_active_functions[RANG_ZNKh_IR >> 5] |= (_GET_STATE(logic_ZNKh_0, 12) << (RANG_ZNKh_IR & 0x1f));
+  p_active_functions[RANG_ZNKh_BR >> 5] |= (_GET_STATE(trigger_ZNKh_0, 3) << (RANG_ZNKh_BR & 0x1f));
+  p_active_functions[RANG_ZNKh >> 5] |= (_GET_STATE(logic_ZNKh_0, 27) << (RANG_ZNKh & 0x1f));
+  /***/
+}
+/*****************************************************/
+
+/*****************************************************/
+// БРП
+/*****************************************************/
+inline void BRP_handler(unsigned int number_main_canal, unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  /*******************************/
+  //Визначаємо максимальний фазний струм
+  /*******************************/
+  unsigned int max_faze_current = 0;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        max_faze_current = measurement[IM_IA_1];
+        break;
+      }
+    case 2:
+      {
+        max_faze_current = measurement[IM_IA_2];
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
+  /*******************************/
+  //Блокування регулювання при перегрузці
+  /*******************************/
+  if ((current_settings_prt.control_brp & MASKA_FOR_BIT(INDEX_ML_CTRBRP_STATE)) != 0)
+  {
+    unsigned int setpoint;              //уставка - з якою зрівнюється вимірювальна величина
+    unsigned int previous_state_po_BRP; /*Для даного захисту без витримки часу "ПО Iблк." співпадає з сигналом "Сраб. БРП"*/
+
+    //Копіюємо попередні значення сигналів БРП у тимчавовий масив, щоб потім мати можливість їх скидати або встановлювати
+    //Це потрібно для того, щоб коли є умова, що сигнал не має ні встановлюватися ні скидатися - щоб він приймав своє попереднє значення
+    unsigned int maska[N_BIG] = {0, 0, 0, 0};
+    _SET_BIT(maska, RANG_BRP);
+    p_active_functions[0] |= active_functions[0] & maska[0];
+    p_active_functions[1] |= active_functions[1] & maska[1];
+    p_active_functions[2] |= active_functions[2] & maska[2];
+    p_active_functions[3] |= active_functions[3] & maska[3];
+
+    //Якщо БРП ще не активне, то треба працювати по устаці спацювання - уставці, яка вводиться як основна з системи меню чи верхнього рівня
+    //Якщо БРП вже спрацювало, то треба працювати по уставці відпускання - береться процент від основної утанки по коефіцієнту повернення
+    previous_state_po_BRP = (_CHECK_SET_BIT(p_active_functions, RANG_BRP) != 0);
+    if (previous_state_po_BRP == 0)
+    {
+      //Працюємо по утавці спрацювання
+      setpoint = current_settings_prt.setpoint_brp_I_blk[number_group_stp];
+    }
+    else
+    {
+      //Працюємо по утавці відпускання
+      setpoint = current_settings_prt.setpoint_brp_I_blk[number_group_stp] * KOEF_POVERNENNJA_I / DILNYK_KOEF_POVERNENNJA_I;
+    }
+
+    //Виставляємо, або скидаємо сигнал "Сраб. БРП"
+    if (
+      (max_faze_current >= setpoint) &&
+      (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_BRP) == 0))
+    {
+      //Максимальний фазний струм більший своєї уставки і блокування БРП немає
+      if (previous_state_po_BRP == 0)
+      {
+        //Встановлюємо сигнал "Сраб. БРП"
+        _SET_BIT(p_active_functions, RANG_BRP);
+      }
+    }
+    else
+    {
+      //Максимальний фазний струм нище уставки або є блокування
+      if (previous_state_po_BRP != 0)
+      {
+        //Скидаємо сигнал "Сраб. БРП"
+        _CLEAR_BIT(p_active_functions, RANG_BRP);
+      }
+    }
+  }
+  else
+  {
+    //Якщо БРП не встановлено, то треба скинути всі сигнали, які за нього відповідають
+    _CLEAR_BIT(p_active_functions, RANG_BRP);
+  }
+  /*******************************/
+
+  /*******************************/
+  //
+  /*******************************/
+  /*******************************/
+}
+/*****************************************************/
+
+/*****************************************************/
+// ЗНмакс
+/*****************************************************/
+inline void Umax_handler(unsigned int number_main_canal, unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  /*******************************/
+  //Визначаємо максимальну фазну напругу
+  /*******************************/
+  unsigned int max_faze_voltage = 0;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        max_faze_voltage = measurement[IM_UAB_TN1];
+        break;
+      }
+    case 2:
+      {
+        max_faze_voltage = measurement[IM_UAB_TN2];
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
+  /*******************************/
+  //1 ступінь ЗНмакс
+  /*******************************/
+  if ((current_settings_prt.control_Umax & MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_1)) != 0)
+  {
+    //1 ступінь ЗНмакс включена
+    unsigned int setpoint; //уставка - з якою зрівнюється вимірювальна величина
+    unsigned int previous_state_po_Umax1;
+
+    //Копіюємо попередні значення сигналів ЗНмакс1 у тимчавовий масив, щоб потім мати можливість їх скидати або встановлювати
+    //Це потрібно для того, щоб коли є умова, що сигнал не має ні встановлюватися ні скидатися - щоб він приймав своє попереднє значення
+    unsigned int maska[N_BIG] = {0, 0, 0};
+    _SET_BIT(maska, RANG_PO_UMAX1);
+    _SET_BIT(maska, RANG_PRYSK_UBAVYTY_VID_UMAX1);
+    _SET_BIT(maska, RANG_BLOCK_PRYBAVYTY_VID_UMAX1);
+    p_active_functions[0] |= active_functions[0] & maska[0];
+    p_active_functions[1] |= active_functions[1] & maska[1];
+    p_active_functions[2] |= active_functions[2] & maska[2];
+    p_active_functions[3] |= active_functions[3] & maska[3];
+
+    //Якщо ПО ЗНмакс1 ще не активне, то треба працювати по устаці спацювання - уставці, яка вводиться як основна з системи меню чи верхнього рівня
+    //Якщо ПО ЗНмакс1 вже спрацювало, то треба працювати по уставці відпускання - береться процент від основної утанки по коефіцієнту повернення
+    previous_state_po_Umax1 = (_CHECK_SET_BIT(p_active_functions, RANG_PO_UMAX1) != 0);
+    if (previous_state_po_Umax1 == 0)
+    {
+      //Працюємо по утавці спрацювання
+      setpoint = current_settings_prt.setpoint_Umax1[number_group_stp];
+    }
+    else
+    {
+      //Працюємо по утавці відпускання
+      setpoint = current_settings_prt.setpoint_Umax1[number_group_stp] * KOEF_POVERNENNJA_U_DOWN_MAX_MIN / DILNYK_KOEF_POVERNENNJA_U_MAX_MIN;
+    }
+
+    //Виставляємо, або скидаємо сигнал "ПО ЗНмакс1"
+    if (max_faze_voltage >= setpoint)
+    {
+      //Максимальна фазна напруга більша своєї уставки
+
+      if (previous_state_po_Umax1 == 0)
+      {
+        //Встановлюємо сигнал "ПО ЗНмакс1"
+        _SET_BIT(p_active_functions, RANG_PO_UMAX1);
+        //Встановлюємо сигнал "Уск.Убав.ЗНмакс1"
+        _SET_BIT(p_active_functions, RANG_PRYSK_UBAVYTY_VID_UMAX1);
+        //Встановлюємо сигнал "Бл.Приб.ЗНмакс1"
+        _SET_BIT(p_active_functions, RANG_BLOCK_PRYBAVYTY_VID_UMAX1);
+      }
+    }
+    else
+    {
+      //Максимальний фазна напруга менша уставки
+      if (previous_state_po_Umax1 != 0)
+      {
+        //Скидаємо сигнал "ПО ЗНмакс1"
+        _CLEAR_BIT(p_active_functions, RANG_PO_UMAX1);
+        //Це є умовою також скидання сигналу "Уск.Убав.Нмакс1"
+        _CLEAR_BIT(p_active_functions, RANG_PRYSK_UBAVYTY_VID_UMAX1);
+        //Це є умовою також скидання сигналу "Бл.Приб.ЗНмакс1"
+        _CLEAR_BIT(p_active_functions, RANG_BLOCK_PRYBAVYTY_VID_UMAX1);
+      }
+    }
+  }
+  else
+  {
+    //Якщо 1 ступінь ЗНмакс не встановлена, то треба скинути всі сигнали, які за неї відповідають
+    if ((_CHECK_SET_BIT(active_functions, RANG_PO_UMAX1)) != 0)
+    {
+      _CLEAR_BIT(p_active_functions, RANG_PO_UMAX1);
+    }
+    _CLEAR_BIT(p_active_functions, RANG_PRYSK_UBAVYTY_VID_UMAX1);
+    _CLEAR_BIT(p_active_functions, RANG_BLOCK_PRYBAVYTY_VID_UMAX1);
+  }
+  /*******************************/
+
+  /*******************************/
+  //2 ступінь ЗНмакс
+  /*******************************/
+  if ((current_settings_prt.control_Umax & MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_2)) != 0)
+  {
+    //2 ступінь ЗНмакс включена
+    unsigned int setpoint; //уставка - з якою зрівнюється вимірювальна величина
+    unsigned int previous_state_po_Umax2;
+
+    //Копіюємо попередні значення сигналів ЗНмакс2 у тимчавовий масив, щоб потім мати можливість їх скидати або встановлювати
+    //Це потрібно для того, щоб коли є умова, що сигнал не має ні встановлюватися ні скидатися - щоб він приймав своє попереднє значення
+    unsigned int maska[N_BIG] = {0, 0, 0, 0};
+    _SET_BIT(maska, RANG_PO_UMAX2);
+    _SET_BIT(maska, RANG_UMAX2);
+    p_active_functions[0] |= active_functions[0] & maska[0];
+    p_active_functions[1] |= active_functions[1] & maska[1];
+    p_active_functions[2] |= active_functions[2] & maska[2];
+    p_active_functions[3] |= active_functions[3] & maska[3];
+
+    //Якщо ПО ЗНмакс2 ще не активне, то треба працювати по устаці спацювання - уставці, яка вводиться як основна з системи меню чи верхнього рівня
+    //Якщо ПО ЗНмакс2 вже спрацювало, то треба працювати по уставці відпускання - береться процент від основної утанки по коефіцієнту повернення
+    previous_state_po_Umax2 = (_CHECK_SET_BIT(p_active_functions, RANG_PO_UMAX2) != 0);
+    if (previous_state_po_Umax2 == 0)
+    {
+      //Працюємо по утавці спрацювання
+      setpoint = current_settings_prt.setpoint_Umax2[number_group_stp];
+    }
+    else
+    {
+      //Працюємо по утавці відпускання
+      setpoint = current_settings_prt.setpoint_Umax2[number_group_stp] * KOEF_POVERNENNJA_U_DOWN_MAX_MIN / DILNYK_KOEF_POVERNENNJA_U_MAX_MIN;
+    }
+
+    //Виставляємо, або скидаємо сигнал "ПО ЗНмакс2"
+    if (
+      (max_faze_voltage >= setpoint) &&
+      (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_UMAX2) == 0))
+    {
+      //Максимальна фазна напруга більша своєї уставки і блокування ЗНмакс2 немає
+      if (previous_state_po_Umax2 == 0)
+      {
+        //Встановлюємо сигнал "ПО ЗНмакс2"
+        _SET_BIT(p_active_functions, RANG_PO_UMAX2);
+
+        //Запускаємо таймер ПО ЗНмакс2, якщо він ще не запущений
+        global_timers[INDEX_TIMER_UMAX2] = 0;
+      }
+    }
+    else
+    {
+      //Максимальний фазна напруга нище уставки або є блокування
+      if (previous_state_po_Umax2 != 0)
+      {
+        //Скидаємо сигнал "ПО ЗНмакс2"
+        _CLEAR_BIT(p_active_functions, RANG_PO_UMAX2);
+        //Це є умовою також скидання сигналу "Сраб. ЗНмакс2"
+        _CLEAR_BIT(p_active_functions, RANG_UMAX2);
+        //Якщо таймер ще не скинутий, то скидаємо його
+        if (global_timers[INDEX_TIMER_UMAX2] >= 0)
+          global_timers[INDEX_TIMER_UMAX2] = -1;
+      }
+    }
+
+    if (global_timers[INDEX_TIMER_UMAX2] >= current_settings_prt.timeout_Umax2[number_group_stp])
+    {
+      //Якщо витримана Витримка "Витримка ЗНмакс2" то встановлюємо сигнал "Сраб. ЗНмакс2"
+      _SET_BIT(p_active_functions, RANG_UMAX2);
+
+      //Скидаємо таймер ПО ЗНмін2
+      global_timers[INDEX_TIMER_UMAX2] = -1;
+    }
+  }
+  else
+  {
+    //Якщо 2 ступінь ЗНмакс не встановлена, то треба скинути всі таймери і сигнали, які за неї відповідають
+    if ((_CHECK_SET_BIT(active_functions, RANG_PO_UMAX2)) != 0)
+    {
+      _CLEAR_BIT(p_active_functions, RANG_PO_UMAX2);
+      global_timers[INDEX_TIMER_UMAX2] = -1;
+    }
+    _CLEAR_BIT(p_active_functions, RANG_UMAX2);
+  }
+  /*******************************/
+
+  /*******************************/
+  //
+  /*******************************/
+  /*******************************/
+}
+/*****************************************************/
+
+/*****************************************************/
+// ЗНмін
+/*****************************************************/
+inline void Umin_handler(unsigned int number_main_canal, unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  /*******************************/
+  //Визначаємо мінімальну фазну напругу
+  /*******************************/
+  unsigned int min_faze_voltage = 0;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        min_faze_voltage = measurement[IM_UAB_TN1];
+        break;
+      }
+    case 2:
+      {
+        min_faze_voltage = measurement[IM_UAB_TN2];
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
+  /*******************************/
+  //1 ступінь ЗНмін
+  /*******************************/
+  if ((current_settings_prt.control_Umin & MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_1)) != 0)
+  {
+    //1 ступінь ЗНмін включена
+    unsigned int setpoint; //уставка - з якою зрівнюється вимірювальна величина
+    unsigned int previous_state_po_Umin1;
+
+    //Копіюємо попередні значення сигналів ЗНмін1 у тимчавовий масив, щоб потім мати можливість їх скидати або встановлювати
+    //Це потрібно для того, щоб коли є умова, що сигнал не має ні встановлюватися ні скидатися - щоб він приймав своє попереднє значення
+    unsigned int maska[N_BIG] = {0, 0, 0, 0};
+    _SET_BIT(maska, RANG_PO_UMIN1);
+    _SET_BIT(maska, RANG_UMIN1);
+    p_active_functions[0] |= active_functions[0] & maska[0];
+    p_active_functions[1] |= active_functions[1] & maska[1];
+    p_active_functions[2] |= active_functions[2] & maska[2];
+    p_active_functions[3] |= active_functions[3] & maska[3];
+
+    //Якщо ПО ЗНмін1 ще не активне, то треба працювати по устаці спацювання - уставці, яка вводиться як основна з системи меню чи верхнього рівня
+    //Якщо ПО ЗНмін1 вже спрацювало, то треба працювати по уставці відпускання - береться процент від основної утанки по коефіцієнту повернення
+    previous_state_po_Umin1 = (_CHECK_SET_BIT(p_active_functions, RANG_PO_UMIN1) != 0);
+    if (previous_state_po_Umin1 == 0)
+    {
+      //Працюємо по утавці спрацювання
+      setpoint = current_settings_prt.setpoint_Umin1[number_group_stp];
+    }
+    else
+    {
+      //Працюємо по утавці відпускання
+      setpoint = current_settings_prt.setpoint_Umin1[number_group_stp] * KOEF_POVERNENNJA_U_UP_MAX_MIN / DILNYK_KOEF_POVERNENNJA_U_MAX_MIN;
+    }
+
+    //Виставляємо, або скидаємо сигнал "ПО ЗНмін1"
+    if (
+      (min_faze_voltage <= setpoint) &&
+      (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_UMIN1) == 0))
+    {
+      //Мінімальна фазна напруга менша своєї уставки
+
+      if (previous_state_po_Umin1 == 0)
+      {
+        //Встановлюємо сигнал "ПО ЗНмін1"
+        _SET_BIT(p_active_functions, RANG_PO_UMIN1);
+
+        //Запускаємо таймер ПО ЗНмін1, якщо він ще не запущений
+        global_timers[INDEX_TIMER_UMIN1] = 0;
+      }
+    }
+    else
+    {
+      //Максимальний фазна напруга вище уставки
+      if (previous_state_po_Umin1 != 0)
+      {
+        //Скидаємо сигнал "ПО ЗНмін1"
+        _CLEAR_BIT(p_active_functions, RANG_PO_UMIN1);
+        //Це є умовою також скидання сигналу "Сраб. ЗНмін1"
+        _CLEAR_BIT(p_active_functions, RANG_UMIN1);
+        //Якщо таймер ще не скинутий, то скидаємо його
+        if (global_timers[INDEX_TIMER_UMIN1] >= 0)
+          global_timers[INDEX_TIMER_UMIN1] = -1;
+      }
+    }
+
+    if (global_timers[INDEX_TIMER_UMIN1] >= current_settings_prt.timeout_Umin1[number_group_stp])
+    {
+      //Якщо витримана Витримка "Витримка ЗНмін1" то встановлюємо сигнал "Сраб. ЗНмін1"
+      _SET_BIT(p_active_functions, RANG_UMIN1);
+
+      //Скидаємо таймер ПО ЗНмін1
+      global_timers[INDEX_TIMER_UMIN1] = -1;
+    }
+  }
+  else
+  {
+    //Якщо 1 ступінь ЗНмін не встановлена, то треба скинути всі таймери і сигнали, які за неї відповідають
+    if ((_CHECK_SET_BIT(active_functions, RANG_PO_UMIN1)) != 0)
+    {
+      _CLEAR_BIT(p_active_functions, RANG_PO_UMIN1);
+      global_timers[INDEX_TIMER_UMIN1] = -1;
+    }
+    _CLEAR_BIT(p_active_functions, RANG_UMIN1);
+  }
+  /*******************************/
+
+  /*******************************/
+  //2 ступінь ЗНмін
+  /*******************************/
+  if ((current_settings_prt.control_Umin & MASKA_FOR_BIT(INDEX_ML_CTRUmin_STAGE_2)) != 0)
+  {
+    //2 ступінь ЗНмін включена
+    unsigned int setpoint; //уставка - з якою зрівнюється вимірювальна величина
+    unsigned int previous_state_po_Umin2;
+
+    //Копіюємо попередні значення сигналів ЗНмін2 у тимчавовий масив, щоб потім мати можливість їх скидати або встановлювати
+    //Це потрібно для того, щоб коли є умова, що сигнал не має ні встановлюватися ні скидатися - щоб він приймав своє попереднє значення
+    unsigned int maska[N_BIG] = {0, 0, 0, 0};
+    _SET_BIT(maska, RANG_PO_UMIN2);
+    _SET_BIT(maska, RANG_UMIN2);
+    p_active_functions[0] |= active_functions[0] & maska[0];
+    p_active_functions[1] |= active_functions[1] & maska[1];
+    p_active_functions[2] |= active_functions[2] & maska[2];
+    p_active_functions[3] |= active_functions[3] & maska[3];
+
+    //Якщо ПО ЗНмін2 ще не активне, то треба працювати по устаці спацювання - уставці, яка вводиться як основна з системи меню чи верхнього рівня
+    //Якщо ПО ЗНмін2 вже спрацювало, то треба працювати по уставці відпускання - береться процент від основної утанки по коефіцієнту повернення
+    previous_state_po_Umin2 = (_CHECK_SET_BIT(p_active_functions, RANG_PO_UMIN2) != 0);
+    if (previous_state_po_Umin2 == 0)
+    {
+      //Працюємо по утавці спрацювання
+      setpoint = current_settings_prt.setpoint_Umin2[number_group_stp];
+    }
+    else
+    {
+      //Працюємо по утавці відпускання
+      setpoint = current_settings_prt.setpoint_Umin2[number_group_stp] * KOEF_POVERNENNJA_U_UP_MAX_MIN / DILNYK_KOEF_POVERNENNJA_U_MAX_MIN;
+    }
+
+    //Виставляємо, або скидаємо сигнал "ПО ЗНмін2"
+    if (
+      (min_faze_voltage <= setpoint) &&
+      (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_UMIN2) == 0))
+    {
+      //Мінімальна фазна напруга менша своєї уставки
+
+      if (previous_state_po_Umin2 == 0)
+      {
+        //Встановлюємо сигнал "ПО ЗНмін2"
+        _SET_BIT(p_active_functions, RANG_PO_UMIN2);
+
+        //Запускаємо таймер ПО ЗНмін2, якщо він ще не запущений
+        global_timers[INDEX_TIMER_UMIN2] = 0;
+      }
+    }
+    else
+    {
+      //Максимальний фазна напруга вище уставки
+      if (previous_state_po_Umin2 != 0)
+      {
+        //Скидаємо сигнал "ПО ЗНмін2"
+        _CLEAR_BIT(p_active_functions, RANG_PO_UMIN2);
+        //Це є умовою також скидання сигналу "Сраб. ЗНмін2"
+        _CLEAR_BIT(p_active_functions, RANG_UMIN2);
+        //Якщо таймер ще не скинутий, то скидаємо його
+        if (global_timers[INDEX_TIMER_UMIN2] >= 0)
+          global_timers[INDEX_TIMER_UMIN2] = -1;
+      }
+    }
+
+    if (global_timers[INDEX_TIMER_UMIN2] >= current_settings_prt.timeout_Umin2[number_group_stp])
+    {
+      //Якщо витримана Витримка "Витримка ЗНмін2" то встановлюємо сигнал "Сраб. ЗНмін2"
+      _SET_BIT(p_active_functions, RANG_UMIN2);
+
+      //Скидаємо таймер ПО ЗНмін2
+      global_timers[INDEX_TIMER_UMIN2] = -1;
+    }
+  }
+  else
+  {
+    //Якщо 2 ступінь ЗНмін не встановлена, то треба скинути всі таймери і сигнали, які за неї відповідають
+    if ((_CHECK_SET_BIT(active_functions, RANG_PO_UMIN2)) != 0)
+    {
+      _CLEAR_BIT(p_active_functions, RANG_PO_UMIN2);
+      global_timers[INDEX_TIMER_UMIN2] = -1;
+    }
+    _CLEAR_BIT(p_active_functions, RANG_UMIN2);
+  }
+  /*******************************/
+
+  /*******************************/
+  //
+  /*******************************/
+  /*******************************/
+}
+/*****************************************************/
+
+/*****************************************************/
+// РПН
+/*****************************************************/
+inline void RPN_handler(unsigned int triple_wound, unsigned int number_main_canal, unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  //1-група = 0; 2-група = 1
+  /*
+  У масиві p_active_functions вже враховано, перед викликом цієї функції, що
+  друга група уставок може бути активована не тільки з зискретного входу, але і
+  з налаштувань меню
+  */
+  unsigned int logic_RPN_0 = 0;
+  unsigned int logic_RPN_1 = 0;
+  unsigned int logic_RPN_2 = 0;
+
+  /*******************************/
+  //Визначаємо струм-напругу основного і допоміжного каналів
+  /*******************************/
+  unsigned int base_faze_current = 0 /*, second_faze_current = 0*/;
+  unsigned int base_faze_voltage = 0, second_faze_voltage = 0;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        base_faze_current = measurement[IM_IA_1];
+        base_faze_voltage = measurement[IM_UAB_TN1];
+
+        if (triple_wound)
+        {
+          //        second_faze_current = measurement[IM_IA_2];
+          second_faze_voltage = measurement[IM_UAB_TN2];
+        }
+
+        break;
+      }
+    case 2:
+      {
+        base_faze_current = measurement[IM_IA_2];
+        base_faze_voltage = measurement[IM_UAB_TN2];
+
+        if (triple_wound)
+        {
+          //        second_faze_current = measurement[IM_IA_1];
+          second_faze_voltage = measurement[IM_UAB_TN1];
+        }
+
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
+  /*******************************/
+  //РПН
+  /*******************************/
+  unsigned int signal_tmp;
+  unsigned int setpoint_rpn_osn = current_settings_prt.setpoint_rpn_osn[number_group_stp];
+  unsigned int pivshyryna_zony = setpoint_rpn_osn * current_settings_prt.setpoint_rpn_zony[number_group_stp] / (100 * 100 * 2);
+  unsigned int setpoint_rpn_compensaciji = setpoint_rpn_osn + current_settings_prt.setpoint_rpn_K[number_group_stp] * base_faze_current / 100;
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO1_U_OSN_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage >= (setpoint_rpn_osn + pivshyryna_zony))) << 6;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage >= (setpoint_rpn_osn + pivshyryna_zony) * KOEF_POVERNENNJA_U_DOWN / DILNYK_KOEF_POVERNENNJA_U)) << 6;
+  p_active_functions[RANG_PO1_U_OSN_RPN >> 5] |= (signal_tmp << (RANG_PO1_U_OSN_RPN & 0x1f));
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO1_U_OSN_KOMP_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage >= (setpoint_rpn_compensaciji + pivshyryna_zony))) << 7;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage >= (setpoint_rpn_compensaciji + pivshyryna_zony) * KOEF_POVERNENNJA_U_DOWN / DILNYK_KOEF_POVERNENNJA_U)) << 7;
+  p_active_functions[RANG_PO1_U_OSN_KOMP_RPN >> 5] |= (signal_tmp << (RANG_PO1_U_OSN_KOMP_RPN & 0x1f));
+
+  //Блокування струмової компенсації
+  logic_RPN_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_STRUM_KOMP_RPN) != 0) << 8;
+  _INVERTOR(logic_RPN_0, 8, logic_RPN_0, 9);
+
+  //Струмова компенсація
+  logic_RPN_0 |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_STRUMOVA_COMP)) != 0) << 10;
+
+  _AND2(logic_RPN_0, 9, logic_RPN_0, 10, logic_RPN_0, 11);
+
+  //Додатковий контур по U
+  logic_RPN_0 |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_DOD_KONTUR)) != 0) << 12;
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO1_U_VSPOM_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (second_faze_voltage >= current_settings_prt.setpoint_rpn_dod[number_group_stp])) << 13;
+  else
+    logic_RPN_0 |= (signal_tmp = (second_faze_voltage >= current_settings_prt.setpoint_rpn_dod[number_group_stp] * KOEF_POVERNENNJA_U_DOWN / DILNYK_KOEF_POVERNENNJA_U)) << 13;
+  p_active_functions[RANG_PO1_U_VSPOM_RPN >> 5] |= (signal_tmp << (RANG_PO1_U_VSPOM_RPN & 0x1f));
+
+  _AND2_INVERTOR(logic_RPN_0, 12, logic_RPN_0, 13, logic_RPN_0, 14);
+
+  //Блокування РПН
+  _INVERTOR(exchange_RPN_0, 7, logic_RPN_0, 16);
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO2_U_OSN_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage <= (setpoint_rpn_osn - pivshyryna_zony))) << 17;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage <= (setpoint_rpn_osn - pivshyryna_zony) * KOEF_POVERNENNJA_U_UP / DILNYK_KOEF_POVERNENNJA_U)) << 17;
+  p_active_functions[RANG_PO2_U_OSN_RPN >> 5] |= (signal_tmp << (RANG_PO2_U_OSN_RPN & 0x1f));
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO2_U_OSN_KOMP_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage <= (setpoint_rpn_compensaciji - pivshyryna_zony))) << 18;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage <= (setpoint_rpn_compensaciji - pivshyryna_zony) * KOEF_POVERNENNJA_U_UP / DILNYK_KOEF_POVERNENNJA_U)) << 18;
+  p_active_functions[RANG_PO2_U_OSN_KOMP_RPN >> 5] |= (signal_tmp << (RANG_PO2_U_OSN_KOMP_RPN & 0x1f));
+
+  _MULTIPLEXER(1, _GET_STATE(logic_RPN_0, 11), logic_RPN_0, 6, logic_RPN_0, 7, logic_RPN_0, 19);
+  p_active_functions[RANG_VYJCHE_ZONY_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 19) << (RANG_VYJCHE_ZONY_RPN & 0x1f));
+
+  _MULTIPLEXER(1, _GET_STATE(logic_RPN_0, 11), logic_RPN_0, 17, logic_RPN_0, 18, logic_RPN_0, 20);
+  p_active_functions[RANG_NYJCHE_ZONY_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 20) << (RANG_NYJCHE_ZONY_RPN & 0x1f));
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO3_U_OSN_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage > V_1_15_U_nom)) << 23;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage > V_1_15_U_nom * KOEF_POVERNENNJA_U_DOWN / DILNYK_KOEF_POVERNENNJA_U)) << 23;
+  p_active_functions[RANG_PO3_U_OSN_RPN >> 5] |= (signal_tmp << (RANG_PO3_U_OSN_RPN & 0x1f));
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO3_U_VSPOM_RPN) == 0)
+    logic_RPN_1 |= (signal_tmp = (second_faze_voltage > V_1_15_U_nom)) << 1;
+  else
+    logic_RPN_1 |= (signal_tmp = (second_faze_voltage > V_1_15_U_nom * KOEF_POVERNENNJA_U_DOWN / DILNYK_KOEF_POVERNENNJA_U)) << 1;
+  p_active_functions[RANG_PO3_U_VSPOM_RPN >> 5] |= (signal_tmp << (RANG_PO3_U_VSPOM_RPN & 0x1f));
+
+  _OR2_INVERTOR(logic_RPN_0, 23, logic_RPN_1, 1, logic_RPN_0, 24);
+
+  if (_CHECK_SET_BIT(active_functions, RANG_PO4_U_OSN_RPN) == 0)
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage < V_0_80_U_nom)) << 25;
+  else
+    logic_RPN_0 |= (signal_tmp = (base_faze_voltage < V_0_80_U_nom * KOEF_POVERNENNJA_U_UP / DILNYK_KOEF_POVERNENNJA_U)) << 25;
+  p_active_functions[RANG_PO4_U_OSN_RPN >> 5] |= (signal_tmp << (RANG_PO4_U_OSN_RPN & 0x1f));
+  _INVERTOR(logic_RPN_0, 25, logic_RPN_0, 29);
+
+  //Перемикання РПН
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0) << 7;
+  _INVERTOR(logic_RPN_1, 7, logic_RPN_0, 28);
+  _AND3(logic_RPN_1, 7, exchange_RPN_0, 3, logic_RPN_0, 16, logic_RPN_1, 8);
+  _OR2_INVERTOR(exchange_RPN_0, 6, logic_RPN_1, 8, logic_RPN_1, 9);
+
+  _TIMER_T_0(INDEX_TIMER_RPN_PEREKL, current_settings_prt.timeout_rpn_perekl[number_group_stp], logic_RPN_1, 8, logic_RPN_1, 14);
+  p_active_functions[RANG_ZASTRJAVANNJA_RPN >> 5] |= (_GET_STATE(logic_RPN_1, 14) << (RANG_ZASTRJAVANNJA_RPN & 0x1f));
+
+  //"Блок. Прибавить от Umax1"
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_PRYBAVYTY_VID_UMAX1) != 0) << 12;
+  _INVERTOR(logic_RPN_1, 12, logic_RPN_0, 27);
+
+  //"Ускор. Убавить от Umax1"
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_PRYSK_UBAVYTY_VID_UMAX1) != 0) << 13;
+  _INVERTOR(logic_RPN_1, 13, logic_RPN_1, 5);
+  //Сраб. БРП
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_BRP) != 0) << 0;
+  //Пол.1 кон.вих.
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0) << 2;
+  //Пол.N кон.вих.
+  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_N_POLOGENNJA_RPN) != 0) << 4;
+  //ЗСХ
+  logic_RPN_2 |= (_CHECK_SET_BIT(p_active_functions, RANG_ZSKh) != 0) << 2;
+  //ЗНХ
+  logic_RPN_2 |= (_CHECK_SET_BIT(p_active_functions, RANG_ZNKh) != 0) << 3;
+
+  _AND2(exchange_RPN_0, 4, exchange_RPN_0, 3, logic_RPN_2, 19);
+
+  /*
+  Ітераційний процес для формування сигналів "Кл Убавить" і "Кл Прибавить" не дасть
+  бажаного ефекту, який закладено при розробці логічної схеми, бо при одночасні
+  появі на вході сигналів, які мали б активувати ці сигнали ітераційний процес їх
+  двох і заблокує.
+  
+  Тому я вирішив "Кл Убавить" дати більший пріоритет. Топту спочатку формується сигнал 
+  "Кл Убавить", а по його стану вже і буде формуватися сигнал "Кл Прибавить"
+  */
+  //Знизити від Кл.Вх.
+  logic_RPN_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_UBAVYTY_FROM_KB_RPN) != 0) << 3;
+  _INVERTOR(exchange_RPN_0, 11, logic_RPN_0, 4);
+  _AND2(logic_RPN_0, 3, logic_RPN_0, 4, exchange_RPN_0, 12);
+
+  //Підвищити від Кл.Вх.
+  logic_RPN_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PRYBAVYTY_FROM_KB_RPN) != 0) << 2;
+  _INVERTOR(exchange_RPN_0, 12, logic_RPN_0, 5);
+  _AND2(logic_RPN_0, 2, logic_RPN_0, 5, exchange_RPN_0, 11);
+
+  //М: Дозволити тест
+  logic_RPN_2 |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_PERMIT_TEST)) != 0) << 15;
+  _INVERTOR(logic_RPN_2, 15, logic_RPN_2, 26);
+  _AND2(exchange_RPN_0, 5, logic_RPN_2, 26, logic_RPN_2, 27);
+
+  unsigned int previous_state_output_trigger_for_defect_rpn;
+  do
+  {
+    _OR2(logic_RPN_1, 8, trigger_RPN_0, 2, logic_RPN_1, 29);
+
+    _OR4_INVERTOR(trigger_RPN_0, 2, exchange_RPN_0, 10, logic_RPN_1, 0, logic_RPN_1, 2, logic_RPN_2, 7);
+    _OR4_INVERTOR(trigger_RPN_0, 2, exchange_RPN_0, 10, logic_RPN_1, 0, logic_RPN_1, 4, logic_RPN_2, 8);
+
+    _AND2(logic_RPN_2, 7, logic_RPN_0, 16, logic_RPN_0, 21);
+    _AND2(logic_RPN_2, 8, logic_RPN_0, 16, logic_RPN_0, 22);
+
+    _AND3(exchange_RPN_0, 5, logic_RPN_0, 29, logic_RPN_0, 21, logic_RPN_2, 20);
+    _AND6(exchange_RPN_0, 5, logic_RPN_0, 14, logic_RPN_0, 24, logic_RPN_0, 29, logic_RPN_0, 27, logic_RPN_0, 22, logic_RPN_2, 21);
+
+    _OR4(trigger_RPN_0, 2, exchange_RPN_0, 10, logic_RPN_1, 7, logic_RPN_2, 27, logic_RPN_2, 18);
+
+    /*****/
+    //Формуування сигналів "Підвищити Т", "Знизити Т"
+    /*****/
+    _INVERTOR(trigger_RPN_0, 5, logic_RPN_0, 15);
+    _AND4(logic_RPN_0, 15, exchange_RPN_0, 3, exchange_RPN_0, 12, logic_RPN_0, 21, logic_RPN_1, 27);
+    _D_TRIGGER(_GET_STATE(exchange_RPN_0, 3), 0, _GET_STATE(logic_RPN_2, 18), previous_states_RPN_0, 7, logic_RPN_1, 27, trigger_RPN_0, 6);
+
+    _INVERTOR(trigger_RPN_0, 6, logic_RPN_1, 10);
+    _AND4(logic_RPN_1, 10, exchange_RPN_0, 3, exchange_RPN_0, 11, logic_RPN_0, 22, logic_RPN_1, 3);
+    _D_TRIGGER(_GET_STATE(exchange_RPN_0, 3), 0, _GET_STATE(logic_RPN_2, 18), previous_states_RPN_0, 6, logic_RPN_1, 3, trigger_RPN_0, 5);
+
+    _OR2(trigger_RPN_0, 5, trigger_RPN_0, 6, logic_RPN_0, 26);
+    _INVERTOR(logic_RPN_0, 26, logic_RPN_2, 28);
+    /*****/
+
+    /*****/
+    //Формуування сигналів "Підвищити ДИ", "Знизити ДИ"
+    /*****/
+    /*
+    Ітераційний процес для формування сигналів "Знизити ДИ" і "Підвищити ДИ" не дасть
+    бажаного ефекту, який закладено при розробці логічної схеми, бо при одночасні
+    появі на вході сигналів, які мали б активувати ці сигнали ітераційний процес їх
+    двох і заблокує.
+  
+    Тому я вирішив "Знизити ДИ" дати більший пріоритет. Топто спочатку формується сигнал 
+    "Знизити ДИ", а по його стану вже і буде формуватися сигнал "Р Прибавить"
+  */
+    _OR4(trigger_RPN_0, 2, exchange_RPN_0, 10, logic_RPN_1, 7, logic_RPN_0, 26, logic_RPN_2, 14);
+
+    _INVERTOR(trigger_RPN_0, 7, logic_RPN_0, 1);
+    _AND4(logic_RPN_0, 1, logic_RPN_0, 21, exchange_RPN_0, 1, exchange_RPN_0, 3, logic_RPN_1, 31);
+    _D_TRIGGER(_GET_STATE(logic_RPN_2, 19), 0, _GET_STATE(logic_RPN_2, 14), previous_states_RPN_0, 9, logic_RPN_1, 31, trigger_RPN_0, 8);
+
+    _INVERTOR(trigger_RPN_0, 8, logic_RPN_0, 0);
+    _AND4(logic_RPN_0, 0, logic_RPN_0, 22, exchange_RPN_0, 2, exchange_RPN_0, 3, logic_RPN_1, 30);
+    _D_TRIGGER(_GET_STATE(logic_RPN_2, 19), 0, _GET_STATE(logic_RPN_2, 14), previous_states_RPN_0, 8, logic_RPN_1, 30, trigger_RPN_0, 7);
+    /*****/
+
+    _AND4(logic_RPN_0, 19, exchange_RPN_0, 3, logic_RPN_2, 28, logic_RPN_2, 20, logic_RPN_0, 30);
+    _AND4(logic_RPN_0, 20, exchange_RPN_0, 3, logic_RPN_2, 28, logic_RPN_2, 21, logic_RPN_0, 31);
+
+    _OR2(logic_RPN_0, 30, logic_RPN_0, 31, logic_RPN_1, 11);
+
+    _AND2(logic_RPN_1, 8, logic_RPN_0, 30, logic_RPN_1, 15);
+    _AND2(logic_RPN_1, 8, logic_RPN_0, 31, logic_RPN_1, 16);
+    _OR2(logic_RPN_1, 15, logic_RPN_1, 16, logic_RPN_1, 17);
+
+    _XOR_INVERTOR(logic_RPN_0, 30, logic_RPN_0, 31, logic_RPN_1, 18);
+    _OR2(logic_RPN_1, 18, exchange_RPN_0, 8, logic_RPN_1, 19);
+
+    _D_TRIGGER(1, 0, _GET_STATE(logic_RPN_1, 19), previous_states_RPN_0, 0, logic_RPN_1, 17, trigger_RPN_0, 0);
+    _INVERTOR(trigger_RPN_0, 0, logic_RPN_2, 9);
+
+    _COUNTER(_GET_STATE(logic_RPN_1, 19), previous_states_RPN_0, 1, logic_RPN_1, 17, count_RPN_1, current_settings_prt.setpoint_rpn_per[number_group_stp], logic_RPN_2, 10);
+    _D_TRIGGER(1, 0, _GET_STATE(exchange_RPN_0, 8), previous_states_RPN_0, 10, logic_RPN_2, 10, trigger_RPN_0, 9);
+
+    _AND4(logic_RPN_1, 11, logic_RPN_1, 9, logic_RPN_1, 5, logic_RPN_2, 9, logic_RPN_1, 20);
+    _AND4(logic_RPN_1, 11, logic_RPN_1, 9, logic_RPN_1, 5, trigger_RPN_0, 0, logic_RPN_1, 21);
+    _AND3(logic_RPN_0, 30, logic_RPN_1, 9, logic_RPN_1, 13, logic_RPN_1, 22);
+
+    _TIMER_T_0(INDEX_TIMER_RPN_UB_PRYB, current_settings_prt.timeout_rpn_ub_pryb[number_group_stp], logic_RPN_1, 20, logic_RPN_1, 23);
+    _TIMER_T_0(INDEX_TIMER_RPN_UB_PRYB_PRYSK, current_settings_prt.timeout_rpn_ub_pryb_prysk[number_group_stp], logic_RPN_1, 21, logic_RPN_1, 24);
+    _TIMER_T_0(INDEX_TIMER_RPN_PRYSK_VID_UMAX, current_settings_prt.timeout_rpn_prysk_vid_Umax[number_group_stp], logic_RPN_1, 22, logic_RPN_1, 25);
+    _OR3(logic_RPN_1, 23, logic_RPN_1, 24, logic_RPN_1, 25, logic_RPN_1, 26);
+
+    _D_TRIGGER(_GET_STATE(logic_RPN_0, 30), 0, _GET_STATE(logic_RPN_1, 29), previous_states_RPN_0, 4, logic_RPN_1, 26, trigger_RPN_0, 3);
+    _D_TRIGGER(_GET_STATE(logic_RPN_0, 31), 0, _GET_STATE(logic_RPN_1, 29), previous_states_RPN_0, 2, logic_RPN_1, 26, trigger_RPN_0, 1);
+
+    _AND3(logic_RPN_0, 19, logic_RPN_2, 20, exchange_RPN_0, 6, logic_RPN_2, 22);
+    _AND3(logic_RPN_2, 21, exchange_RPN_0, 6, logic_RPN_0, 20, logic_RPN_2, 23);
+
+    _AND4(logic_RPN_0, 21, exchange_RPN_0, 1, exchange_RPN_0, 6, exchange_RPN_0, 4, logic_RPN_2, 16);
+    _AND4(logic_RPN_0, 22, exchange_RPN_0, 2, exchange_RPN_0, 6, exchange_RPN_0, 4, logic_RPN_2, 17);
+
+    _OR4(trigger_RPN_0, 8, trigger_RPN_0, 6, logic_RPN_2, 16, logic_RPN_2, 22, logic_RPN_1, 6);
+    _OR4(logic_RPN_2, 23, logic_RPN_2, 17, trigger_RPN_0, 7, trigger_RPN_0, 5, logic_RPN_1, 28);
+
+    _AND2(logic_RPN_0, 28, logic_RPN_1, 6, logic_RPN_2, 24);
+    _AND2(logic_RPN_1, 28, logic_RPN_0, 28, logic_RPN_2, 25);
+
+    _OR4(logic_RPN_2, 24, trigger_RPN_0, 3, trigger_RPN_0, 1, logic_RPN_2, 25, logic_RPN_2, 0);
+
+    _TIMER_T_0(INDEX_TIMER_RPN_NESPR, current_settings_prt.timeout_rpn_nespr[number_group_stp], logic_RPN_2, 0, logic_RPN_2, 1);
+    _D_TRIGGER(1, 0, _GET_STATE(exchange_RPN_0, 0), previous_states_RPN_0, 5, logic_RPN_2, 1, trigger_RPN_0, 4);
+
+    _OR5(logic_RPN_2, 1, logic_RPN_1, 14, logic_RPN_2, 10, logic_RPN_2, 2, logic_RPN_2, 3, logic_RPN_2, 4);
+
+    _INVERTOR(trigger_RPN_0, 2, logic_RPN_2, 11);
+    _TIMER_T_0(INDEX_TIMER_RPN_TMP1, 1, logic_RPN_2, 11, logic_RPN_2, 13);
+    _AND2(logic_RPN_2, 13, logic_RPN_2, 4, logic_RPN_2, 12);
+
+    //Запам'ятовуємо попередній стан триґера, щоб потім перевірити, чи він змінився
+    previous_state_output_trigger_for_defect_rpn = _GET_STATE(trigger_RPN_0, 2);
+    _D_TRIGGER(1, 0, _GET_STATE(exchange_RPN_0, 0), previous_states_RPN_0, 3, logic_RPN_2, 12, trigger_RPN_0, 2);
+  } while (previous_state_output_trigger_for_defect_rpn != _GET_STATE(trigger_RPN_0, 2));
+
+  //Несправність РПН
+  /*
+  Яещо ми вийши з циклу, то (previous_state_output_trigger_for_defect_rpn = _GET_STATE(trigger_RPN_0, 2))
+  */
+  p_active_functions[RANG_NESPRAVNIST_RPN >> 5] |= (previous_state_output_trigger_for_defect_rpn << (RANG_NESPRAVNIST_RPN & 0x1f));
+
+  //"Дозвіл Знизити"
+  p_active_functions[RANG_DOZVIL_UBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 21) << (RANG_DOZVIL_UBAVYTY_RPN & 0x1f));
+  //"Дозвіл авт.Знизити"
+  p_active_functions[RANG_DOZVIL_AVTO_UBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_2, 20) << (RANG_DOZVIL_AVTO_UBAVYTY_RPN & 0x1f));
+  //"Знизити Т"
+  p_active_functions[RANG_UBAVYTY_T_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 6) << (RANG_UBAVYTY_T_RPN & 0x1f));
+  //"Знизити ДИ"
+  p_active_functions[RANG_UBAVYTY_DI_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 8) << (RANG_UBAVYTY_DI_RPN & 0x1f));
+  //"ПО Знизити"
+  p_active_functions[RANG_UBAVYTY_1_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 30) << (RANG_UBAVYTY_1_RPN & 0x1f));
+
+  //"Дозвіл Підвищити"
+  p_active_functions[RANG_DOZVIL_PRYBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 22) << (RANG_DOZVIL_PRYBAVYTY_RPN & 0x1f));
+  //"Дозвіл авт.Підвищити"
+  p_active_functions[RANG_DOZVIL_AVTO_PRYBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_2, 21) << (RANG_DOZVIL_AVTO_PRYBAVYTY_RPN & 0x1f));
+  //"Підвищити Т"
+  p_active_functions[RANG_PRYBAVYTY_T_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 5) << (RANG_PRYBAVYTY_T_RPN & 0x1f));
+  //"Підвищити ДИ"
+  p_active_functions[RANG_PRYBAVYTY_DI_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 7) << (RANG_PRYBAVYTY_DI_RPN & 0x1f));
+  //"ПО Підвищити"
+  p_active_functions[RANG_PRYBAVYTY_1_RPN >> 5] |= (_GET_STATE(logic_RPN_0, 31) << (RANG_PRYBAVYTY_1_RPN & 0x1f));
+
+  //"N пер. = N пер.уст."
+  p_active_functions[RANG_N_PER_RIVNE_N_PER_USTAVKY_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 9) << (RANG_N_PER_RIVNE_N_PER_USTAVKY_RPN & 0x1f));
+
+  //"Привід не пішов"
+  p_active_functions[RANG_PRYVID_NE_PISHOV_RPN >> 5] |= (_GET_STATE(trigger_RPN_0, 4) << (RANG_PRYVID_NE_PISHOV_RPN & 0x1f));
+
+  //Знизити
+  _OR2(logic_RPN_1, 6, trigger_RPN_0, 3, logic_RPN_2, 5);
+  p_active_functions[RANG_UBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_2, 5) << (RANG_UBAVYTY_RPN & 0x1f));
+
+  //Підвищити
+  _OR2(trigger_RPN_0, 1, logic_RPN_1, 28, logic_RPN_2, 6);
+  p_active_functions[RANG_PRYBAVYTY_RPN >> 5] |= (_GET_STATE(logic_RPN_2, 6) << (RANG_PRYBAVYTY_RPN & 0x1f));
+  /*******************************/
+
+  /*******************************/
+  //Фіксація яка команда ЗНИЗИТИ/ПІДВИЩИТИ була останньо
+  /*******************************/
+  if (_GET_STATE(logic_RPN_2, 6))
+    pidvyshchyty_bulo_pered_perecluchennjam = true;
+  if (_GET_STATE(logic_RPN_2, 5))
+    znyzyty_bulo_pered_perecluchennjam = true;
+  if (
+    (_CHECK_SET_BIT(active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0) &&
+    (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) == 0))
+  {
+    pidvyshchyty_bulo_pered_perecluchennjam = znyzyty_bulo_pered_perecluchennjam = false;
+  }
+  /*******************************/
+}
+/*****************************************************/
+
+/*****************************************************/
+// ТМ
+/*****************************************************/
+inline void TM_handler(unsigned int *p_active_functions)
+{
+  //Імпульсний
+  if ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_REGYM)) == 0)
+    exchange_RPN_0 |= (1 << 3);
+  else
+    exchange_RPN_0 &= (unsigned int) (~(1 << 3));
+
+  //Безперервний
+  _INVERTOR(exchange_RPN_0, 3, exchange_RPN_0, 6);
+
+  //ДВ:МРЗС/Місцевий
+  if (_CHECK_SET_BIT(p_active_functions, RANG_MRZS_OR_LOCAL_MODE_RPN) != 0)
+    exchange_RPN_0 |= (1 << 9);
+  else
+    exchange_RPN_0 &= (unsigned int) (~(1 << 9));
+
+  _INVERTOR(exchange_RPN_0, 9, exchange_RPN_0, 10);
+
+  unsigned int logic_TM_0 = 0;
+  /*******************************/
+  //ТМ
+  /*******************************/
+  //М:Режим ТМ
+  logic_TM_0 |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TM_MODE)) != 0) << 0;
+  //ДВ:Режим ТМ від ДВ
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_TM_MODE_VID_DV_RPN) != 0) << 1;
+
+  //ТМ
+  _OR2(logic_TM_0, 0, logic_TM_0, 1, logic_TM_0, 2);
+  _INVERTOR(logic_TM_0, 2, logic_TM_0, 3);
+  p_active_functions[RANG_TM_MODE_RPN >> 5] |= (_GET_STATE(logic_TM_0, 2) << (RANG_TM_MODE_RPN & 0x1f));
+
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_REMOTE_MODE_FROM_UPPER_LEVEL_RPN) != 0) << 4;
+  _INVERTOR(logic_TM_0, 4, logic_TM_0, 5);
+
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_AUTO_MODE_FROM_UPPER_LEVEL_RPN) != 0) << 6;
+  _INVERTOR(logic_TM_0, 6, logic_TM_0, 7);
+
+  _OR2(logic_TM_0, 4, logic_TM_0, 6, logic_TM_0, 8);
+  _AND2(logic_TM_0, 8, logic_TM_0, 2, logic_TM_0, 9);
+
+  _D_TRIGGER(_GET_STATE(logic_TM_0, 4), 0, _GET_STATE(logic_TM_0, 3), previous_states_TM_0, 0, logic_TM_0, 9, trigger_TM_0, 0);
+  _D_TRIGGER(_GET_STATE(logic_TM_0, 6), 0, _GET_STATE(logic_TM_0, 3), previous_states_TM_0, 1, logic_TM_0, 9, trigger_TM_0, 1);
+
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_AUTO_MODE_FROM_DV_RPN) != 0) << 10;
+  _INVERTOR(logic_TM_0, 10, logic_TM_0, 11);
+  _AND2(logic_TM_0, 3, logic_TM_0, 11, logic_TM_0, 12);
+  _AND2(logic_TM_0, 3, logic_TM_0, 10, logic_TM_0, 13);
+  _OR2(logic_TM_0, 13, logic_TM_0, 9, logic_TM_0, 14);
+  _OR2(logic_TM_0, 12, logic_TM_0, 9, logic_TM_0, 15);
+  _RS_TRIGGER(_GET_STATE(logic_TM_0, 12), _GET_STATE(logic_TM_0, 14), trigger_TM_0, 2);
+  _RS_TRIGGER(_GET_STATE(logic_TM_0, 13), _GET_STATE(logic_TM_0, 15), trigger_TM_0, 3);
+
+  _OR2(trigger_TM_0, 2, trigger_TM_0, 0, logic_TM_0, 28);
+  _OR2(trigger_TM_0, 1, trigger_TM_0, 3, logic_TM_0, 29);
+  _AND2(logic_TM_0, 28, exchange_RPN_0, 9, exchange_RPN_0, 4);
+  _AND2(logic_TM_0, 29, exchange_RPN_0, 9, exchange_RPN_0, 5);
+  p_active_functions[RANG_REMOTE_MODE_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 4) << (RANG_REMOTE_MODE_RPN & 0x1f));
+  p_active_functions[RANG_AUTO_MODE_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 5) << (RANG_AUTO_MODE_RPN & 0x1f));
+
+  //Знизити від ВР
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_UBAVYTY_FROM_UPPER_LEVEL_RPN) != 0) << 16;
+  //Підвищити від ВР
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PRYBAVYTY_FROM_UPPER_LEVEL_RPN) != 0) << 17;
+  //Знизити від ДВ
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_UBAVYTY_FROM_DV_RPN) != 0) << 18;
+  //Підвищити від ДВ
+  logic_TM_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PRYBAVYTY_FROM_DV_RPN) != 0) << 19;
+
+  _AND2(logic_TM_0, 16, logic_TM_0, 2, logic_TM_0, 20);
+  _AND2(logic_TM_0, 18, logic_TM_0, 3, logic_TM_0, 21);
+  _AND2(logic_TM_0, 17, logic_TM_0, 2, logic_TM_0, 22);
+  _AND2(logic_TM_0, 19, logic_TM_0, 3, logic_TM_0, 23);
+  _OR2(logic_TM_0, 20, logic_TM_0, 21, logic_TM_0, 24);
+  _OR2(logic_TM_0, 22, logic_TM_0, 23, logic_TM_0, 25);
+
+  /*
+  Ітераційний процес для формування сигналів "Р Убавить" і "Р Прибавить" не дасть
+  бажаного ефекту, який закладено при розробці логічної схеми, бо при одночасні
+  появі на вході сигналів, які мали б активувати ці сигнали ітераційний процес їх
+  двох і заблокує.
+  
+  Тому я вирішив "Р Убавить" дати більший пріоритет. Топту спочатку формується сигнал 
+  "Р Убавить", а по його стану вже і буде формуватися сигнал "Р Прибавить"
+  */
+  _INVERTOR(exchange_RPN_0, 2, logic_TM_0, 26);
+  _AND2(logic_TM_0, 24, logic_TM_0, 26, exchange_RPN_0, 1);
+  p_active_functions[RANG_UBAVYTY_R_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 1) << (RANG_UBAVYTY_R_RPN & 0x1f));
+
+  _INVERTOR(exchange_RPN_0, 1, logic_TM_0, 27);
+  _AND2(logic_TM_0, 25, logic_TM_0, 27, exchange_RPN_0, 2);
+  p_active_functions[RANG_PRYBAVYTY_R_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 2) << (RANG_PRYBAVYTY_R_RPN & 0x1f));
+  /*******************************/
+}
+/*****************************************************/
+
+/*****************************************************/
+//Формування сигналу "Сброс Неисправности РПН"
+/*****************************************************/
+inline void Reset_Defect_RPN_handler(unsigned int *p_active_functions)
+{
+  unsigned int logic_Reset_Defect_RPN_0 = 0;
+
+  //Зовнішнє блокування
+  logic_Reset_Defect_RPN_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_ZOVNISHNJE_BLOCKUVANNJA_RPN) != 0) << 0;
+
+  _INVERTOR(exchange_RPN_0, 4, logic_Reset_Defect_RPN_0, 3);
+  _AND2(logic_Reset_Defect_RPN_0, 0, logic_Reset_Defect_RPN_0, 3, logic_Reset_Defect_RPN_0, 4);
+
+  //РПН: Вкл.
+  logic_Reset_Defect_RPN_0 |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_STATE)) != 0) << 1;
+  _INVERTOR(logic_Reset_Defect_RPN_0, 1, logic_Reset_Defect_RPN_0, 2);
+  //Блокування РПН
+  _OR2(logic_Reset_Defect_RPN_0, 4, logic_Reset_Defect_RPN_0, 2, exchange_RPN_0, 7);
+  p_active_functions[RANG_BLOCKUVANNJA_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 7) << (RANG_BLOCKUVANNJA_RPN & 0x1f));
+
+  //Скидання блокування РПН
+  logic_Reset_Defect_RPN_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_CLEAR_BLK_RPN) != 0) << 5;
+  //Рестарт пристрою
+  logic_Reset_Defect_RPN_0 |= (start_restart != 0) << 6;
+  //Очищаємо повідомлення про рестрат пристрою
+  start_restart = 0;
+
+  _OR3(exchange_RPN_0, 7, logic_Reset_Defect_RPN_0, 5, logic_Reset_Defect_RPN_0, 6, exchange_RPN_0, 0);
+  _OR2(exchange_RPN_0, 6, exchange_RPN_0, 0, exchange_RPN_0, 8);
+  p_active_functions[RANG_RESET_DEFECT_RPN >> 5] |= (_GET_STATE(exchange_RPN_0, 0) << (RANG_RESET_DEFECT_RPN & 0x1f));
+}
+/*****************************************************/
+
+/*****************************************************/
+//Контроль положення
+/*****************************************************/
+inline void control_pologennja(unsigned int *p_active_functions)
+{
+  //Мінімальна перевірка можливості роботи контролю положення по сельсинових датчиках
+  if ((sum_phi_end - sum_phi_begin) == 0)
+    _SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN);
+  else
+    _SET_BIT(clear_diagnostyka, ERROR_CALIBRATION_SELSYN);
+
+  //Вимірювання для логометра
+  int measurement_tmp[MAX_ROW_FOR_VOLTAGE_LOGOMETR];
+  unsigned int adc2_read_after_start_tmp;
+  //#ifdef DEBUG_TEST
+  /***/
+  //Тільки для відладки
+  /***/
+  //      measurement_tmp[0] = temp_adc2_channel0_global_values;
+  //      measurement_tmp[1] = temp_adc2_channel1_global_values;
+  /***/
+  //#else
+  adc2_read_after_start_tmp = adc2_read_after_start;
+  measurement_tmp[0] = adc2_channel0_averange_prt;
+  measurement_tmp[1] = adc2_channel1_averange_prt;
+  //#endif
+
+  if (adc2_read_after_start_tmp != false)
+  {
+    if ((measurement_tmp[0] - measurement_tmp[1]) == 0)
+      _SET_BIT(set_diagnostyka, ERROR_LOGOMETR_VOLTAGE);
+    else
+      _SET_BIT(clear_diagnostyka, ERROR_LOGOMETR_VOLTAGE);
+  }
+
+  //Діагностика достовірності значення номінального положення
+  if (current_settings_prt.number_step_nominal_rpn > current_settings_prt.number_steps_rpn)
+    _SET_BIT(set_diagnostyka, ERROR_NUMBER_STEP_NOMINAL);
+  else
+    _SET_BIT(clear_diagnostyka, ERROR_NUMBER_STEP_NOMINAL);
+
+  if (
+    (current_settings_prt.type_control_location == 1) &&
+    (adc2_read_after_start_tmp != false) &&
+    (_CHECK_SET_BIT(diagnostyka, ERROR_LOGOMETR_VOLTAGE) == 0) &&
+    (_CHECK_SET_BIT(set_diagnostyka, ERROR_LOGOMETR_VOLTAGE) == 0))
+  {
+    //Логометр
+    int a, b;
+    a = measurement_tmp[1] * (current_settings_prt.number_steps_rpn - 1);
+    b = measurement_tmp[0] - measurement_tmp[1];
+    if (a < 0)
+      a *= -1;
+    if (b < 0)
+      b *= -1;
+    int current_step_tmp = a / b;
+
+    //Усереднення до найближчого цілого
+    if ((a - current_step_tmp * b) > ((current_step_tmp + 1) * b - a))
+      current_step_tmp += 1;
+
+    current_step = current_step_tmp + 1;
+    current_step_logical = current_step;
+  }
+  else if (
+    (current_settings.type_control_location == 2) &&
+    ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
+    (_CHECK_SET_BIT(diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
+    (_CHECK_SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
+    (measurement[I_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+    (measurement[I_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+    (measurement[I_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
+  {
+    //Сельсин
+    int a, b;
+    a = ((angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2) - sum_phi_begin) * (current_settings_prt.number_steps_rpn - 1);
+    b = sum_phi_end - sum_phi_begin;
+    if (a < 0)
+      a *= -1;
+    if (b < 0)
+      b *= -1;
+    int current_step_tmp = a / b;
+
+    //Усереднення до найближчого цілого
+    if ((a - current_step_tmp * b) > ((current_step_tmp + 1) * b - a))
+      current_step_tmp += 1;
+
+    current_step = current_step_tmp + 1;
+    current_step_logical = current_step;
+  }
+  else
+  {
+    //Логічний
+    unsigned int pologennya_1 = (_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0);
+    unsigned int pologennya_N = (_CHECK_SET_BIT(p_active_functions, RANG_N_POLOGENNJA_RPN) != 0);
+
+    unsigned int pologennya_nominalne = (_CHECK_SET_BIT(p_active_functions, RANG_NOMINALNA_POZYCIJA_RPN) != 0);
+    if (
+      (_CHECK_SET_BIT(diagnostyka, ERROR_NUMBER_STEP_NOMINAL) != 0) ||
+      (_CHECK_SET_BIT(set_diagnostyka, ERROR_NUMBER_STEP_NOMINAL) != 0))
+      pologennya_nominalne = 0; //Оскільки значення номінального положення є недостовірним, то ми вважаємо, що ми не знаходимося у номінальному положенні
+
+    if (current_step_logical >= 0)
+    {
+      //      if ((current_settings_prt.control_rpn & CTR_RPN_REGYM) == 0)
+      //      {
+      //Імпульсний режим роботи
+      unsigned int logic_ctrl_pol_0 = 0;
+
+      unsigned int current_state, previous_state = _GET_STATE(trigger_C_inputs_ctrl_pol_0, 2);
+
+      logic_ctrl_pol_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_NESPRAVNIST_RPN) != 0) << 0;
+      _INVERTOR(logic_ctrl_pol_0, 0, logic_ctrl_pol_0, 1);
+
+      logic_ctrl_pol_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_PRYBAVYTY_RPN) != 0) << 2;
+      _AND2(logic_ctrl_pol_0, 2, logic_ctrl_pol_0, 1, logic_ctrl_pol_0, 3);
+
+      logic_ctrl_pol_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_UBAVYTY_RPN) != 0) << 4;
+      _AND2(logic_ctrl_pol_0, 4, logic_ctrl_pol_0, 1, logic_ctrl_pol_0, 5);
+
+      logic_ctrl_pol_0 |= (current_state = (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0)) << 6;
+      _INVERTOR(logic_ctrl_pol_0, 6, logic_ctrl_pol_0, 7);
+
+      _D_TRIGGER(0, _GET_STATE(logic_ctrl_pol_0, 3), _GET_STATE(logic_ctrl_pol_0, 0), trigger_C_inputs_ctrl_pol_0, 0, logic_ctrl_pol_0, 7, trigger_ctrl_pol_0, 0);
+      _D_TRIGGER(0, _GET_STATE(logic_ctrl_pol_0, 5), _GET_STATE(logic_ctrl_pol_0, 0), trigger_C_inputs_ctrl_pol_0, 1, logic_ctrl_pol_0, 7, trigger_ctrl_pol_0, 1);
+
+      if (current_state != previous_state)
+      {
+        if (current_state)
+        {
+          trigger_C_inputs_ctrl_pol_0 |= (unsigned int) (1 << 2);
+
+          unsigned int plus = _GET_STATE(trigger_ctrl_pol_0, 0);
+          unsigned int minus = _GET_STATE(trigger_ctrl_pol_0, 1);
+
+          if (plus != minus)
+          {
+            if (plus)
+              current_step_logical++;
+            else if (minus)
+              current_step_logical--;
+
+            if (
+              (current_step_logical < 0) ||
+              ((unsigned int) current_step_logical > current_settings_prt.number_steps_rpn))
+              current_step_logical = NUMBER_STEPS_RPN_UNDEFINED;
+          }
+          else
+          {
+            //Теоретично такого ніколи не мало б бути (хоч при ЗСХ таке могло б бути)
+            current_step_logical = NUMBER_STEPS_RPN_UNDEFINED;
+          }
+        }
+        else
+          trigger_C_inputs_ctrl_pol_0 &= (unsigned int) (~(1 << 2));
+      }
+      //      }
+      //      else
+      //      {
+      //        //У всіх інших випадках ми не можемо логічними методами визначити положення РПН
+      //        current_step_logical = NUMBER_STEPS_RPN_UNDEFINED;
+      //      }
+    }
+
+    //Розглядаємо випадок, коли крім логічного контролю ми точно знаємо де знаходиться зараз повзунок
+    if (
+      (
+        ((pologennya_1 != 0)) ||
+        ((pologennya_N != 0)) ||
+        ((pologennya_nominalne != 0))) /*Зафіксовано, що положення РПН у першому або останньому, або у номінальному положенні*/
+      &&
+      (
+        //         (
+        //          ((current_settings_prt.control_rpn & CTR_RPN_REGYM) == 0)  &&
+        (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) == 0)
+        //         ) /*Імпульсний режим і зараз не відбувається перемикання*/
+        //         ||
+        //         ((current_settings_prt.control_rpn & CTR_RPN_REGYM) != 0)
+        ) /*Безперервний режим*/
+    )
+    {
+      if (pologennya_1 != 0)
+        current_step_logical = 1;
+      else if (pologennya_N != 0)
+        current_step_logical = current_settings_prt.number_steps_rpn;
+      else if (pologennya_nominalne != 0)
+        current_step_logical = current_settings_prt.number_step_nominal_rpn;
+    }
+
+    current_step = current_step_logical;
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Льчильник ресурсу
+/*****************************************************/
+inline void lichylnyk_perekluchen(unsigned int *p_active_functions)
+{
+  unsigned int date_do_not_read = 0;
+  /*****
+  Контроль зміни дати
+  *****/
+  if (
+    (_CHECK_SET_BIT(diagnostyka, EVENT_START_SYSTEM_BIT) != 0) ||
+    (_CHECK_SET_BIT(set_diagnostyka, EVENT_START_SYSTEM_BIT) != 0) ||
+    (_CHECK_SET_BIT(diagnostyka, EVENT_RESTART_SYSTEM_BIT) != 0) ||
+    (_CHECK_SET_BIT(set_diagnostyka, EVENT_RESTART_SYSTEM_BIT) != 0))
+  {
+    //До цього часу ще не зчитано першої реальної часової мітки
+
+    date_do_not_read = 0xff; //Ненульове чисо означає, що дата ще не зчитана з RTC після ввімкнення приладу
+  }
+  else
+  {
+    //Зчитуємо текучу дату і годину
+    // unsigned char *label_to_time_array;
+    // if (copying_time == 0)
+    //   label_to_time_array = time;
+    // else
+    //   label_to_time_array = time_copy;
+    // for (unsigned int i = 0; i < 8; i++)
+    //   date_and_time[i] = *(label_to_time_array + i);
+
+    struct tm *p;
+    p = localtime(&time_dat);
+
+    if (
+      (p->tm_mday != counter_today.date[0]) || /*День місяця*/
+      (p->tm_mon != counter_today.date[1]) ||  /*Місяць*/
+      (p->tm_year != counter_today.date[2]) || /*Рік*/
+      (restart_counter != 0)                   /*Очищення ресурсу лічильника*/
+    )
+    {
+      //Відбулася зміна доби після попередніх обновлень лічильників
+
+      //Фіксуємо значення попереднього дня
+      if (restart_counter == 0)
+      {
+        counter_previous_day.date[0] = counter_today.date[0];
+        counter_previous_day.date[1] = counter_today.date[1];
+        counter_previous_day.date[2] = counter_today.date[2];
+        counter_previous_day.count = counter_today.count;
+      }
+      else
+      {
+        //Дата 00-00-00 в counter_previous_day означає, щоб було обнулення лічильників
+        counter_previous_day.date[0] = 0;
+        counter_previous_day.date[1] = 0;
+        counter_previous_day.date[2] = 0;
+        counter_previous_day.count = 0;
+
+        counter_total = 0;
+
+        restart_counter = 0;
+      }
+
+      //Обнулюємо значення поточного дня
+      counter_today.date[0] = p->tm_mday;
+      counter_today.date[1] = p->tm_mon;
+      counter_today.date[2] = p->tm_year;
+      counter_today.count = 0;
+
+      //Запускаємо запис у EEPROM
+      _SET_BIT(control_spi1_taskes, TASK_START_WRITE_RESURS_EEPROM_BIT);
+    }
+  }
+  /*****/
+
+  unsigned int perekluchennya = (_CHECK_SET_BIT(p_active_functions, RANG_PEREKLYUCHENNYA_RPN) != 0);
+  if (
+    (perekluchennya == 0) &&
+    (previous_state_perekluchennya != 0))
+  {
+    //Відбулося переключення
+    if (date_do_not_read != 0)
+    {
+      /*
+      Ще не відбулося зчитування системного часу,тому всі переключення тимчасово накописуємо
+      у змінній perekluchennya_unrecorded і після зчитання системного часу їх добавимо
+      до переключень текучого дня.
+      я думаю що малоймовірно, що прилад запущений до 00:00:00 і між зчитанням системного часу
+      відбулися переключення, а після зчитання системного часу вже час іде нової доби.
+      Тоді б ці переключення мали б бути враховані до попередньої доби.
+      Думаю, що нічого сташного не станеться. якщо ці переключення будуть зараховані до 
+      текучої доби.
+      */
+      perekluchennya_unrecorded++;
+    }
+    else
+    {
+      unsigned int delta = (perekluchennya_unrecorded + 1);
+      perekluchennya_unrecorded = 0;
+
+      if ((0xffffffff - counter_today.count) >= delta)
+        counter_today.count += delta;
+      else
+        counter_today.count = 0xffffffff;
+    }
+
+    //Загальне число переключень
+
+    if ((0xffffffff - counter_total) >= 1)
+    {
+      //Додавання одиниці не викличе переповнення
+      counter_total++;
+    }
+
+    //Запускаємо запис у EEPROM
+    _SET_BIT(control_spi1_taskes, TASK_START_WRITE_RESURS_EEPROM_BIT);
+  }
+  previous_state_perekluchennya = perekluchennya;
+}
+/*****************************************************/
+
+/*****************************************************/
+//Контроль приводу вимикача
+/*****************************************************/
+inline void control_VV(unsigned int *p_active_functions)
+{
+  unsigned int logic_control_VV_0 = 0;
+
+  //"Контроль Вкл."
+  logic_control_VV_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_CTRL_VKL) != 0) << 0;
+  //"Контроль Откл."
+  logic_control_VV_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_CTRL_OTKL) != 0) << 1;
+
+  _XOR_INVERTOR(logic_control_VV_0, 0, logic_control_VV_0, 1, logic_control_VV_0, 2);
+
+  _TIMER_T_0(INDEX_TIMER_PRYVOD_VV, current_settings_prt.timeout_pryvoda_VV, logic_control_VV_0, 2, logic_control_VV_0, 3);
+
+  //М:"Контроль ВВ"
+  logic_control_VV_0 |= ((current_settings_prt.control_switch & CTR_PRYVOD_VV) != 0) << 4;
+
+  _AND2(logic_control_VV_0, 3, logic_control_VV_0, 4, logic_control_VV_0, 5);
+
+  if (_GET_STATE(logic_control_VV_0, 5))
+    _SET_BIT(p_active_functions, RANG_PRYVID_VV);
+  else
+    _CLEAR_BIT(p_active_functions, RANG_PRYVID_VV);
+}
+/*****************************************************/
+
+/*****************************************************/
 //Перевірка на необхідність завершення роботи аналогового/дискретного реєстраторів
 /*****************************************************/
 inline unsigned int stop_regisrator(unsigned int *carrent_active_functions, unsigned int *ranguvannja_registrator)
@@ -2960,7 +4415,7 @@ inline void main_protection(void)
   //  diagnostyca_adc_execution();
 
   /**************************/
-  //Сигнал "Несправность Общая"
+  //Сигнал "Несправність Загальна"
   /**************************/
   if (
     (_CHECK_SET_BIT(active_functions, RANG_RESET_LEDS) != 0) ||
@@ -2997,7 +4452,7 @@ inline void main_protection(void)
   {
     _SET_BIT(active_functions, RANG_DEFECT);
     /**************************/
-    //Сигнал "Несправность Аварийная"
+    //Сигнал "Несправність Аварійна"
     /**************************/
     static unsigned int const maska_avar_error[N_DIAGN] =
       {
@@ -3169,10 +4624,195 @@ inline void main_protection(void)
   bank_measurement_high = bank_measurement_high_tmp;
   /***********************************************************/
 
+  //Визначаємо номер основного каналу
+  unsigned int number_main_canal = 1 + (_CHECK_SET_BIT(active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0);
+
   //Логічні схеми мають працювати тільки у тому випадку, якщо немє сигналу "Аварийная неисправность"
   if (_CHECK_SET_BIT(active_functions, RANG_AVAR_DEFECT) == 0)
   {
     //Аварійна ситуація не зафіксована
+
+    /**************************/
+    //Контроль привода ВВ
+    /**************************/
+    control_VV(active_functions);
+    /**************************/
+
+    /**************************/
+    //ТМ (запускається перед формуванням сигналу "Сброс Неисправности РПН" і РПН)
+    /**************************/
+    TM_handler(active_functions);
+    /**************************/
+
+    /**************************/
+    //Формування сигналу "Сброс Неисправности РПН"
+    /**************************/
+    Reset_Defect_RPN_handler(active_functions);
+    /**************************/
+
+    /**************************/
+    //ЗСХ
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << ZSKh_BIT_CONFIGURATION)) != 0)
+    {
+      ZSKh_handler(active_functions);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_zskh_signals[N_BIG] =
+        {
+          MASKA_ZSKh_SIGNALS_0,
+          MASKA_ZSKh_SIGNALS_1,
+          MASKA_ZSKh_SIGNALS_2,
+          MASKA_ZSKh_SIGNALS_3,
+          MASKA_ZSKh_SIGNALS_4,
+          MASKA_ZSKh_SIGNALS_5,
+          MASKA_ZSKh_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_zskh_signals[i]);
+
+      //Переводимо у початковий стан всі глобальні змінні по ЗСХ
+      trigger_ZSKh_0 = 0;
+      trigger_C_inputs_ZSKh_0 = 0;
+    }
+    /**************************/
+
+    /**************************/
+    //ЗНХ
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << ZNKh_BIT_CONFIGURATION)) != 0)
+    {
+      ZNKh_handler(active_functions, number_group_stp);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_znkh_signals[N_BIG] =
+        {
+          MASKA_ZNKh_SIGNALS_0,
+          MASKA_ZNKh_SIGNALS_1,
+          MASKA_ZNKh_SIGNALS_2,
+          MASKA_ZNKh_SIGNALS_3,
+          MASKA_ZNKh_SIGNALS_4,
+          MASKA_ZNKh_SIGNALS_5,
+          MASKA_ZNKh_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_znkh_signals[i]);
+      for (int *p = (global_timers + _INDEX_ZNKh_BEGIN); p <= (global_timers + _INDEX_ZNKh_END); ++p)
+        *p = -1;
+
+      //Переводимо у початковий стан всі глобальні змінні по ЗНХ
+      trigger_ZNKh_0 = 0;
+      trigger_C_inputs_ZNKh_0 = 0;
+    }
+    /**************************/
+
+    /**************************/
+    //БРП
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << BRP_BIT_CONFIGURATION)) != 0)
+    {
+      BRP_handler(number_main_canal, active_functions, number_group_stp);
+    }
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_brp_signals[N_BIG] =
+        {
+          MASKA_BRP_SIGNALS_0,
+          MASKA_BRP_SIGNALS_1,
+          MASKA_BRP_SIGNALS_2,
+          MASKA_BRP_SIGNALS_3,
+          MASKA_BRP_SIGNALS_4,
+          MASKA_BRP_SIGNALS_5,
+          MASKA_BRP_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_brp_signals[i]);
+    }
+    /**************************/
+
+    /**************************/
+    //ЗНмакс
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << Umax_BIT_CONFIGURATION)) != 0)
+    {
+      Umax_handler(number_main_canal, active_functions, number_group_stp);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_umax_signals[N_BIG] =
+        {
+          MASKA_UMAX_SIGNALS_0,
+          MASKA_UMAX_SIGNALS_1,
+          MASKA_UMAX_SIGNALS_2,
+          MASKA_UMAX_SIGNALS_3,
+          MASKA_UMAX_SIGNALS_4,
+          MASKA_UMAX_SIGNALS_5,
+          MASKA_UMAX_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_umax_signals[i]);
+      for (int *p = (global_timers + _INDEX_UMAX_BEGIN); p <= (global_timers + _INDEX_UMAX_END); ++p)
+        *p = -1;
+    }
+    /**************************/
+
+    /**************************/
+    //ЗНмін
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << Umin_BIT_CONFIGURATION)) != 0)
+    {
+      Umin_handler(number_main_canal, active_functions, number_group_stp);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_umin_signals[N_BIG] =
+        {
+          MASKA_UMIN_SIGNALS_0,
+          MASKA_UMIN_SIGNALS_1,
+          MASKA_UMIN_SIGNALS_2,
+          MASKA_UMIN_SIGNALS_3,
+          MASKA_UMIN_SIGNALS_4,
+          MASKA_UMIN_SIGNALS_5,
+          MASKA_UMIN_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_umin_signals[i]);
+      for (int *p = (global_timers + _INDEX_UMIN_BEGIN); p <= (global_timers + _INDEX_UMIN_END); ++p)
+        *p = -1;
+    }
+    /**************************/
+
+    /**************************/
+    //РПН (запускається після того, як всі допоміжні захисти вже відпрацювали свою логіку)
+    /**************************/
+    if ((current_settings_prt.configuration & (1 << RPN_BIT_CONFIGURATION)) != 0)
+    {
+      RPN_handler(((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0), number_main_canal, active_functions, number_group_stp);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_rpn_signals[N_BIG] =
+        {
+          MASKA_RPN_SIGNALS_0,
+          MASKA_RPN_SIGNALS_1,
+          MASKA_RPN_SIGNALS_2,
+          MASKA_RPN_SIGNALS_3,
+          MASKA_RPN_SIGNALS_4,
+          MASKA_RPN_SIGNALS_5,
+          MASKA_RPN_SIGNALS_6};
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_rpn_signals[i]);
+      for (int *p = (global_timers + _INDEX_RPN_BEGIN); p <= (global_timers + _INDEX_RPN_END); ++p)
+        *p = -1;
+
+      //Переводимо у початковий стан всі глобальні змінні по РПН
+      trigger_RPN_0 = 0;
+      previous_states_RPN_0 = 0;
+      count_RPN_1 = 0;
+    }
+    /**************************/
 
     /**************************/
     //Розширена логіка
@@ -3248,6 +4888,18 @@ inline void main_protection(void)
     /**************************/
 
     /**************************/
+    //Контроль положення
+    /**************************/
+    control_pologennja(active_functions);
+    /**************************/
+
+    /**************************/
+    //Лічильник ресурсу
+    /**************************/
+    lichylnyk_perekluchen(active_functions);
+    /**************************/
+
+    /**************************/
     //Готовность к ТУ
     /**************************/
     ready_tu(active_functions);
@@ -3283,18 +4935,27 @@ inline void main_protection(void)
 
     //Переводимо у початковий стан деякі глобальні змінні
 
-    static_logic_APV_0 = 0;
-    previous_states_APV_0 = 0;
-    trigger_APV_0 = 0;
-    previous_state_po_achr_chapv_uaf1 = 0;
-    previous_state_po_achr_chapv_ubf1 = 0;
-    previous_state_po_achr_chapv_ucf1 = 0;
-    previous_states_CHAPV1 = 0;
-    trigger_CHAPV1 = 0;
+    //Переводимо у початковий стан всі глобальні змінні по ЗСХ
+    trigger_ZSKh_0 = 0;
+    trigger_C_inputs_ZSKh_0 = 0;
+
+    //Переводимо у початковий стан всі глобальні змінні по ЗНХ
+    trigger_ZNKh_0 = 0;
+    trigger_C_inputs_ZNKh_0 = 0;
+
+    //Переводимо у початковий стан всі глобальні змінні по РПН
+    trigger_RPN_0 = 0;
+    previous_states_RPN_0 = 0;
+    count_RPN_1 = 0;
+
     previous_states_ready_tu = 0;
     trigger_ready_tu = 0;
 
     static_logic_df = 0;
+
+    //Контроль положення
+    current_step = NUMBER_STEPS_RPN_UNDEFINED;
+    current_step_logical = NUMBER_STEPS_RPN_UNDEFINED;
   }
 
   /**************************/

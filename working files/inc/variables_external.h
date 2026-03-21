@@ -152,28 +152,35 @@ extern unsigned int timer_prt_signal_output_mode_2;
 extern unsigned int output_timer_prt_signal_output_mode_2;
 extern unsigned int static_logic_df;
 
-extern unsigned int i1g_bilshe_porogu[NUMBER_I2G_CANALES];
-extern unsigned int i2g_bilshe_porogu[NUMBER_I2G_CANALES];
+extern unsigned int trigger_ZNKh_0;
+extern unsigned int trigger_C_inputs_ZNKh_0;
 
-//12345
-extern unsigned int previous_states_MTZ04_vvid_pr_0;
+extern unsigned int trigger_ZSKh_0;
+extern unsigned int trigger_C_inputs_ZSKh_0;
 
-extern unsigned int static_logic_APV_0;
-extern unsigned int previous_states_APV_0;
-extern unsigned int trigger_APV_0;
+extern unsigned int trigger_TM_0, trigger_TM_0_for_save, trigger_TM_0_for_save_ctrl;
+extern unsigned int previous_states_TM_0;
 
-extern _Bool previous_state_po_achr_chapv_uaf1;
-extern _Bool previous_state_po_achr_chapv_ubf1;
-extern _Bool previous_state_po_achr_chapv_ucf1;
-extern _Bool previous_states_CHAPV1;
-extern _Bool previous_states_CHAPV2;
-extern _Bool trigger_CHAPV1;
-extern _Bool trigger_CHAPV2;
+extern unsigned int trigger_RPN_0;
+extern unsigned int previous_states_RPN_0;
+extern unsigned int exchange_RPN_0;
+extern unsigned int count_RPN_1;
+extern int timer_rpn_ub_pryb_low;
+extern int timer_rpn_ub_pryb_prysk_low;
+extern int timer_rpn_prysk_vid_Umax_low;
+extern unsigned int znyzyty_bulo_pered_perecluchennjam;
+extern unsigned int pidvyshchyty_bulo_pered_perecluchennjam;
+
+extern unsigned int trigger_ctrl_pol_0;
+extern unsigned int trigger_C_inputs_ctrl_pol_0;
 
 extern _Bool previous_states_ready_tu;
 extern _Bool trigger_ready_tu;
 
 extern unsigned int start_restart;
+
+extern int current_step_logical, edition_current_step_logical;
+extern int current_step;
 
 extern unsigned char working_ekran[MAX_ROW_LCD][MAX_COL_LCD];
 extern unsigned int rewrite_ekran_once_more;
@@ -254,9 +261,6 @@ extern unsigned int type_of_input_signal_prt;
 extern unsigned int dopusk_dv_prt[NUMBER_INPUTS];
 
 extern __SETTINGS edition_settings, current_settings_interfaces;
-
-extern int current_step_logical, edition_current_step_logical;
-extern int current_step;
 
 //Визначення періодів у хвилину і більше
 extern unsigned int number_seconds;
@@ -427,6 +431,7 @@ extern unsigned char crc_resurs;
 extern __COUNTER_RESURS counter_today_ctrl, counter_previous_day_ctrl;
 extern unsigned int counter_total_ctrl;
 extern unsigned char crc_resurs_ctrl;
+extern unsigned int restart_counter, previous_state_perekluchennya, perekluchennya_unrecorded;
 
 extern const unsigned char letters[69][2];
 extern const unsigned char extra_letters[13][1 + MAX_NAMBER_LANGUAGE];

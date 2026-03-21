@@ -92,7 +92,7 @@ enum _error_id
 
   ERROR_SELECT_GRUPY_USRAVOK,
 
-  LOSE_ENERGY_DATA,
+  ERROR_LOGOMETR_VOLTAGE,
 
   TEST_OVD1,
   TEST_OVD2,
@@ -314,7 +314,7 @@ enum _error_id
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Пот.д.энергии  ", \
+    " Ош.напр.логом. ", \
     " Тест ОВД1      ", \
     " Тест ОВД2      ", \
     " Тест ОВД3      ", \
@@ -442,7 +442,7 @@ enum _error_id
     " Пом.зовн.SRAM  ", \
     " Пом.внутр.FLASH", \
     " Пом.виб.гр.уст.", \
-    " Втр.д.енергії  ", \
+    " Пом.напр.логом.", \
     " Тест ОВД1      ", \
     " Тест ОВД2      ", \
     " Тест ОВД3      ", \
@@ -570,7 +570,7 @@ enum _error_id
     " Ext SRAM Er    ", \
     " Flash Mem Er   ", \
     " SP Gr Sel Er   ", \
-    " En Ctr Dat Lost", \
+    " Logometer V.Err", \
     " Sensor1 Test   ", \
     " Sensor2 Test   ", \
     " Sensor3 Test   ", \
@@ -698,7 +698,7 @@ enum _error_id
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Пот.д.энергии  ", \
+    " Ош.напр.логом. ", \
     " Тест ОВД1      ", \
     " Тест ОВД2      ", \
     " Тест ОВД3      ", \

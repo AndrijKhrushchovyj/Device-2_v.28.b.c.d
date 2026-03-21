@@ -134,7 +134,7 @@ typedef struct
   int timeout_rpn_ub_pryb_prysk[NUMBER_GROUP_USTAVOK];  //Витримка РПН: "Зн./Підв. Приск."
   int timeout_rpn_prysk_vid_Umax[NUMBER_GROUP_USTAVOK]; //Витримка РПН: "Час пр.ЗНмакс1"
   int timeout_rpn_perekl[NUMBER_GROUP_USTAVOK];         //Витримка РПН: "Час перемик."
-  unsigned int timeout_rpn_nespr[NUMBER_GROUP_USTAVOK]; //Витримка РПН: "Час неспр."
+  int timeout_rpn_nespr[NUMBER_GROUP_USTAVOK];          //Витримка РПН: "Час неспр."
 
   unsigned int control_rpn; //Поле для управління РПН
 
