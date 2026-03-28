@@ -59,7 +59,6 @@
 #include "const_menu_registrators.h"
 #include "const_menu_setting_language.h"
 #include "const_watchdog.h"
-#include "const_menu_vidkluchennja.h"
 #include "const_menu_reprogram.h"
 
 #include "const_septoints_interval.h"

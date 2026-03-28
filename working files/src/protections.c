@@ -2138,6 +2138,164 @@ inline void lichylnyk_perekluchen(unsigned int *p_active_functions)
 /*****************************************************/
 
 /*****************************************************/
+//Функція управління блоками включення і відключення
+/*****************************************************/
+inline void on_off_handler(unsigned int *p_active_functions)
+{
+  /*********************/
+  //Спочатку опрацьовуємо таймери
+  /*********************/
+  //Таймер  відключення
+  if (global_timers[INDEX_TIMER_VIDKL_VV] >= 0)
+  {
+    //Таймер БО зараз активний і як мінімум тільки зараз завершить свою роботу
+    if (global_timers[INDEX_TIMER_VIDKL_VV] >= current_settings_prt.timeout_swch_off)
+    {
+      //Таймер досягнув свого максимального значення
+      global_timers[INDEX_TIMER_VIDKL_VV] = -1;
+      //Відмічаємо у масиві функцій, які зараз активуються, що блок БО має бути деативованим
+      _CLEAR_BIT(p_active_functions, RANG_WORK_BO);
+    }
+    //Незавершена робота блоку БО означає, що таймер блокування БВ має бути запущений і знаходитися у свому початковому значенні,
+    //щоб як тільки блок БО відпрацює, щоб блокування включення почалося на весь час з моменту закінчення роботи блоку БО
+    global_timers[INDEX_TIMER_BLK_VKL_VV] = 0;
+  }
+
+  //Таймер  блокування включення
+  if (global_timers[INDEX_TIMER_BLK_VKL_VV] >= 0)
+  {
+    //Таймер блокування включення БВ зараз активний і як мінімум тільки зараз завершить свою роботу
+    if (global_timers[INDEX_TIMER_BLK_VKL_VV] >= current_settings_prt.timeout_swch_udl_blk_on)
+    {
+      //Таймер досягнув свого максимального значення
+      global_timers[INDEX_TIMER_BLK_VKL_VV] = -1;
+    }
+  }
+
+  //Таймер  включення
+  if (global_timers[INDEX_TIMER_VKL_VV] >= 0)
+  {
+    //Таймер БВ зараз активний і як мінімум тільки зараз завершить свою роботу
+
+    //Якщо по якійсь причині таймер включення працює, при умові, що таймери БО і блокування включення ще не скинуті, то таймер включення треба скинути
+    if ((global_timers[INDEX_TIMER_VIDKL_VV] >= 0) || (global_timers[INDEX_TIMER_BLK_VKL_VV] >= 0))
+    {
+      global_timers[INDEX_TIMER_VKL_VV] = -1;
+      //Відмічаємо у масиві функцій, які зараз активуються, що блок БB має бути деативованим
+      _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
+    }
+    else
+    {
+      //Перевіряємо, чи таймер включення не досягнув свого масимального значення
+      if (global_timers[INDEX_TIMER_VKL_VV] >= current_settings_prt.timeout_swch_on)
+      {
+        //Таймер досягнув свого максимального значення
+        global_timers[INDEX_TIMER_VKL_VV] = -1;
+        //Відмічаємо у масиві функцій, які зараз активуються, що блок БB має бути деативованим
+        _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
+      }
+    }
+  }
+  /*********************/
+
+  /*********************/
+  //Першим розглядається блок відключення, бо він може блокувати включення вимикача
+  /*********************/
+  uint32_t off_cb_tmp[N_BIG];
+  for (size_t m = 0; m < N_BIG; ++m)
+  {
+    off_cb_tmp[m] = (p_active_functions[m] & current_settings_prt.ranguvannja_off_cb[m]);
+  }
+
+  /*
+  Цей сигнал встановлюється тільки у певних випадках, тому по замовчуванню його треба скинута,
+  а коли буде потрібно - він встановиться
+  */
+  _CLEAR_BIT(p_active_functions, RANG_VIDKL_VID_ZAKHYSTIV);
+  int flag = 0;
+  for (size_t m = 0; m < N_BIG; ++m)
+  {
+    if (off_cb_tmp[m] != 0)
+    {
+      flag = 1;
+      break;
+    }
+  }
+  if (flag)
+  {
+    //Є умова активації блку вимкнення
+    _SET_BIT(p_active_functions, RANG_WORK_BO);
+
+    //Запускаємо (або продовжуємо утримувати у 0, поки не пропаде сигнал активації БО) таймери: блоку БО, блокуванння БВ.
+    global_timers[INDEX_TIMER_VIDKL_VV] = 0;
+    global_timers[INDEX_TIMER_BLK_VKL_VV] = 0;
+
+    //Скидаємо активацію блоку увімкнення
+    _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
+    //Скидаємо таймер блку вимкнення
+    global_timers[INDEX_TIMER_VKL_VV] = -1;
+
+    /*
+    Формуємо сигнал "Відключення від захистів" (він рівний наявності умови команди
+    активації команди "Робота БО" будь-якою командою за виключенняв "Вимкн. ВВ")
+    */
+    _CLEAR_BIT(off_cb_tmp, RANG_OTKL_VV);
+    flag = 0;
+    for (size_t m = 0; m < N_BIG; ++m)
+    {
+      if (off_cb_tmp[m] != 0)
+      {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag)
+    {
+      //Вимкнення від захистів
+      _SET_BIT(p_active_functions, RANG_VIDKL_VID_ZAKHYSTIV);
+    }
+  }
+
+  /*********************/
+  //Потім розглядається блок включення
+  /*********************/
+  if (
+    (global_timers[INDEX_TIMER_VIDKL_VV] < 0) &&
+    (global_timers[INDEX_TIMER_BLK_VKL_VV] < 0) &&
+    (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_VKL_VV) == 0))
+  {
+    //Оскільки не працюють таймери БО і блокування включення БВ, а також немає сигналу блокування включення ВВ
+    //тому перевіряємо, чи немає умови запуску БВ
+
+    flag = 0;
+    for (size_t m = 0; m < N_BIG; ++m)
+    {
+      if ((p_active_functions[m] & current_settings_prt.ranguvannja_on_cb[m]) != 0)
+      {
+        flag = 1;
+        break;
+      }
+    }
+    if (flag)
+    {
+      //Відмічаємо у масиві функцій, які зараз активуються, що ще треба активувати блок БВ (якщо він ще не активний)
+      _SET_BIT(p_active_functions, RANG_WORK_BV);
+
+      //Запускаємо (або продовжуємо утримувати у 0, поки не пропаде сигнал активації БВ) таймер роботи БВ
+      global_timers[INDEX_TIMER_VKL_VV] = 0;
+    }
+  }
+  else
+  {
+    //На даний момент існує одна або більше умов блокування БВ
+    global_timers[INDEX_TIMER_VKL_VV] = -1;
+    _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
+  }
+  /*********************/
+}
+/*****************************************************/
+
+/*****************************************************/
 //Контроль приводу вимикача
 /*****************************************************/
 inline void control_VV(unsigned int *p_active_functions)
@@ -2519,7 +2677,7 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
               buffer_for_save_dr_record[FIRST_INDEX_DATA_TIME_DR + sizeof(time_t) + i] = *((unsigned char *) (&time_ms) + i);
 
             //Додаткові налаштування при яких було запущено дискретний реєстратор
-            unsigned int control_extra_settings_1_tmp = current_settings_prt.control_extra_settings_1 & (MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE) | MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04));
+            unsigned int control_extra_settings_1_tmp = 0;
             unsigned char *point_to_extra_settings = (unsigned char *) (&control_extra_settings_1_tmp);
             for (unsigned int i = 0; i < sizeof(control_extra_settings_1_tmp); i++)
               buffer_for_save_dr_record[FIRST_INDEX_EXTRA_SETTINGS_DR + i] = *(point_to_extra_settings + i);
@@ -2856,7 +3014,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
               header_ar.TVoltage2 = current_settings_prt.TVoltage2;
 
               //Додаткові налаштування при яких було запущено аналоговий реєстратор
-              header_ar.control_extra_settings_1 = current_settings_prt.control_extra_settings_1 & (MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04) | (MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)));
+              header_ar.control_extra_settings_1 = 0;
 
               //Час доаварійного масиву
               header_ar.prefault_number_periods = prefault_number_periods_tmp;
@@ -4214,8 +4372,48 @@ inline void main_protection(void)
 
     //Вимкнення ВВ
     active_functions[RANG_OTKL_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OTKL_VV) != 0) << (RANG_OTKL_VV & 0x1f);
+
+    //РПН
+    active_functions[RANG_OSNOVNYJ_TN2_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OSNOVNYJ_TN2_RPN) != 0) << (RANG_OSNOVNYJ_TN2_RPN & 0x1f);
+    active_functions[RANG_MRZS_OR_LOCAL_MODE_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_MRZS_OR_LOCAL_MODE_RPN) != 0) << (RANG_MRZS_OR_LOCAL_MODE_RPN & 0x1f);
+    active_functions[RANG_TM_MODE_VID_DV_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_TM_MODE_VID_DV_RPN) != 0) << (RANG_TM_MODE_VID_DV_RPN & 0x1f);
+    active_functions[RANG_AUTO_MODE_FROM_DV_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_AUTO_MODE_FROM_DV_RPN) != 0) << (RANG_AUTO_MODE_FROM_DV_RPN & 0x1f);
+    active_functions[RANG_PEREKLYUCHENNYA_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_PEREKLYUCHENNYA_RPN) != 0) << (RANG_PEREKLYUCHENNYA_RPN & 0x1f);
+    active_functions[RANG_UBAVYTY_FROM_DV_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_UBAVYTY_FROM_DV_RPN) != 0) << (RANG_UBAVYTY_FROM_DV_RPN & 0x1f);
+    active_functions[RANG_PRYBAVYTY_FROM_DV_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_PRYBAVYTY_FROM_DV_RPN) != 0) << (RANG_PRYBAVYTY_FROM_DV_RPN & 0x1f);
+    active_functions[RANG_BLOCK_STRUM_KOMP_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_STRUM_KOMP_RPN) != 0) << (RANG_BLOCK_STRUM_KOMP_RPN & 0x1f);
+    active_functions[RANG_ZOVNISHNJE_BLOCKUVANNJA_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_ZOVNISHNJE_BLOCKUVANNJA_RPN) != 0) << (RANG_ZOVNISHNJE_BLOCKUVANNJA_RPN & 0x1f);
+    active_functions[RANG_1_POLOGENNJA_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_1_POLOGENNJA_RPN) != 0) << (RANG_1_POLOGENNJA_RPN & 0x1f);
+    active_functions[RANG_NOMINALNA_POZYCIJA_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_NOMINALNA_POZYCIJA_RPN) != 0) << (RANG_NOMINALNA_POZYCIJA_RPN & 0x1f);
+    active_functions[RANG_N_POLOGENNJA_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_N_POLOGENNJA_RPN) != 0) << (RANG_N_POLOGENNJA_RPN & 0x1f);
+    active_functions[RANG_CLEAR_BLK_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_CLEAR_BLK_RPN) != 0) << (RANG_CLEAR_BLK_RPN & 0x1f);
+
+    //ЗСХ
+    active_functions[RANG_KONTROL_UBAVYTY_ZSKh >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_KONTROL_UBAVYTY_ZSKh) != 0) << (RANG_KONTROL_UBAVYTY_ZSKh & 0x1f);
+    active_functions[RANG_KONTROL_PRYBAVYTY_ZSKh >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_KONTROL_PRYBAVYTY_ZSKh) != 0) << (RANG_KONTROL_PRYBAVYTY_ZSKh & 0x1f);
+
+    //БРП
+    active_functions[RANG_BLOCK_BRP >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_BRP) != 0) << (RANG_BLOCK_BRP & 0x1f);
+
+    //Umax
+    active_functions[RANG_BLOCK_UMAX2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMAX2) != 0) << (RANG_BLOCK_UMAX2 & 0x1f);
+
+    //Umin
+    active_functions[RANG_BLOCK_UMIN1 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMIN1) != 0) << (RANG_BLOCK_UMIN1 & 0x1f);
+    active_functions[RANG_BLOCK_UMIN2 >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_UMIN2) != 0) << (RANG_BLOCK_UMIN2 & 0x1f);
+
+    //Блокування для УЗ
+    for (size_t i = 0; i < NUMBER_UP; i++)
+    {
+      uint32_t rang_small_block_up = RANG_SMALL_BLOCK_UP1 + i;
+      uint32_t rang_block_up = RANG_BLOCK_UP1 + 3 * i;
+      active_functions[rang_block_up >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, rang_small_block_up) != 0) << (rang_block_up & 0x1f);
+    }
   }
   /**************************/
+
+  //"Основний ТН2" може ще активуватися з налаштувань меню
+  active_functions[RANG_OSNOVNYJ_TN2_RPN >> 5] |= ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_OSNOVNYJ_TN2)) != 0) << (RANG_OSNOVNYJ_TN2_RPN & 0x1f);
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
 
@@ -4321,6 +4519,9 @@ inline void main_protection(void)
 
     //Сигнал "Скидання блокування готовності до ТУ"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
+
+    //Сигнал "Сброс блок.РПН"
+    _SET_BIT(temp_maska_filter_function, RANG_CLEAR_BLK_RPN);
 
     for (unsigned int i = 0; i < N_BIG; i++)
     {

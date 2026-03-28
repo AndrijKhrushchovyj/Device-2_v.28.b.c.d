@@ -1579,8 +1579,7 @@ void TIM4_IRQHandler(void)
         (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY) ||
         (current_ekran.current_level == EKRAN_STATE_INPUTS) ||
         (current_ekran.current_level == EKRAN_STATE_OUTPUTS) ||
-        (current_ekran.current_level == EKRAN_DIAGNOSTYKA) ||
-        (current_ekran.current_level == EKRAN_VIDKLUCHENNJA))
+        (current_ekran.current_level == EKRAN_DIAGNOSTYKA))
     {
       if (++time_rewrite > MAX_TIME_REWRITE_EKRAN)
       {

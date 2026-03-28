@@ -275,12 +275,6 @@ typedef struct
                                     //4 - Ethernet
 } __SETTINGS;
 
-typedef struct _info_vymk
-{
-  time_t time_dat;
-  int32_t time_ms;
-} __info_vymk;
-
 typedef struct
 {
   //Стан обміну

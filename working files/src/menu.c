@@ -1,8 +1,5 @@
 #include "header.h"
 
-static __CURRENT_EKRAN current_ekran_reserv_off_on;
-static unsigned char working_ekran_reserv_off_on[MAX_ROW_LCD][MAX_COL_LCD];
-
 static __CURRENT_EKRAN current_ekran_reserv_repr;
 static unsigned char working_ekran_reserv_repr[MAX_ROW_LCD][MAX_COL_LCD];
 
@@ -60,43 +57,6 @@ void main_manu_function(void)
 
     new_state_keyboard = (1u << BIT_REWRITE); //Ця команда буде виконана після поперднього відновлення стану екрану, який був до переходу у вікно відображення інформації про програмування або вікно, яке говорить, що цей режим не підтримується
     return;                                   //цим виходом я перериваю зараз виконання цієї функції, щоб спочатку булоа виведена попередня інформація, к потім вже відпрацюав біт BIT_REWRITE
-  }
-  else if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_WINDOW_OFF_CB)) != 0)
-  {
-    if (
-      (
-        (info_vidkluchennja_vymykacha[0] != 0) ||
-        (info_vidkluchennja_vymykacha[1] != 0)) &&
-      (current_ekran.current_level != EKRAN_VIDKLUCHENNJA) &&
-      ((new_state_keyboard & (1u << BIT_REWRITE)) == 0))
-    {
-
-      time_rewrite = 0;
-      //Запам'ятовуємо поперердній стан меню
-      current_ekran_reserv_off_on = current_ekran;
-      //Запам'ятовуємо попередній екран (бо діалогові вікна не обновлюються при виконанні команди REWRITE)
-      for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
-      {
-        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran_reserv_off_on[i][j] = working_ekran[i][j];
-      }
-
-      //Переходимо на меню відображення спрацювання захистів
-      current_ekran.current_level = EKRAN_VIDKLUCHENNJA;
-      current_ekran.index_position = -1 /*position_in_current_level_menu[current_ekran.current_level]*/;
-      current_ekran.edition = 0;
-      current_ekran.cursor_on = 0;
-      current_ekran.cursor_blinking_on = 0;
-
-      //Виставляємо команду на обновлекння нового екрану, а всі попередні натискування відміняємо
-      new_state_keyboard = (1u << BIT_REWRITE);
-    }
-  }
-  else if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_WINDOW_OFF_CB)) == 0)
-  {
-    //Очищаємо інформацію про спрацювання захистів
-    info_vidkluchennja_vymykacha[0] = 0;
-    info_vidkluchennja_vymykacha[1] = 0;
   }
 
   //Перевіряємо чи якась кнопка натиснута
@@ -11113,16 +11073,12 @@ void main_manu_function(void)
                       if (++edition_settings.ctrl_UP_input[n_UP] >= _UP_CTRL_NUMBER)
                         edition_settings.ctrl_UP_input[n_UP] = _UP_CTRL_MIN;
                     } while (
-                      ((edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_I04) && ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)) ||
-                      ((edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_3I0_r) && ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0)) ||
-                      ((
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua_Ub_Uc) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ub) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Uc) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U1) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U2)) &&
-                       ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0)));
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua_Ub_Uc) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ub) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Uc) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U1) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U2));
                   }
                   else
                   {
@@ -12063,16 +12019,12 @@ void main_manu_function(void)
                       if (--edition_settings.ctrl_UP_input[n_UP] < 0)
                         edition_settings.ctrl_UP_input[n_UP] = _UP_CTRL_NUMBER - 1;
                     } while (
-                      ((edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_I04) && ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) == 0)) ||
-                      ((edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_3I0_r) && ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_IB_I04)) != 0)) ||
-                      ((
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua_Ub_Uc) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ub) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Uc) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U1) ||
-                         (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U2)) &&
-                       ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_PHASE_LINE)) != 0)));
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua_Ub_Uc) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ua) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Ub) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_Uc) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U1) ||
+                      (edition_settings.ctrl_UP_input[n_UP] == UP_CTRL_U2));
                   }
                   else
                   {
@@ -16894,150 +16846,6 @@ void main_manu_function(void)
           break;
         }
         /******************************************************************************************************************************************/
-
-        /************************************* BEGIN  EKRAN_VIDKLUCHENNJA *****************************************************************************************************/
-      case EKRAN_VIDKLUCHENNJA:
-        {
-          //Очищаємо всі біти краім упралінських
-          new_state_keyboard &= (1u << BIT_KEY_ENTER) | (1u << BIT_KEY_UP) | (1u << BIT_KEY_DOWN) | (1u << BIT_REWRITE);
-          //Дальше виконуємо дії, якщо натиснута кнопка на яку треба реагівати, або стоїть команда обновити екран
-          if (new_state_keyboard != 0)
-          {
-            //Пріоритет стоїть на обновлені екрану
-            if ((new_state_keyboard & (1u << BIT_REWRITE)) != 0)
-            {
-              if (current_ekran.current_level == EKRAN_VIDKLUCHENNJA)
-              {
-                if (current_ekran.index_position >= ((int) MAX_ROW_FOR_VIDKLUCHENNJA))
-                  current_ekran.index_position = 0;
-
-                if (
-                  (info_vidkluchennja_vymykacha[0] == 0) &&
-                  (info_vidkluchennja_vymykacha[1] == 0))
-                {
-                  //Подаємо команду на вихід з віна повідомдень про відключення від захистів
-                  new_state_keyboard |= (1u << BIT_KEY_ENTER);
-                }
-                else
-                {
-                  //Переходимо на наступну інформацію про спрацювання захистів
-                  current_ekran.index_position++;
-
-                  while (_CHECK_SET_BIT(info_vidkluchennja_vymykacha, current_ekran.index_position) == 0)
-                  {
-                    current_ekran.index_position++;
-                    if (current_ekran.index_position >= ((int) MAX_ROW_FOR_VIDKLUCHENNJA))
-                      current_ekran.index_position = 0;
-                  }
-                }
-                position_in_current_level_menu[EKRAN_VIDKLUCHENNJA] = current_ekran.index_position;
-                //Формуємо екран повідомдень про відключення від захистів
-                make_ekran_vidkluchenja();
-              }
-
-              //Очищаємо біт обновлення екрану
-              new_state_keyboard &= ~(1u << BIT_REWRITE);
-            }
-            else
-            {
-              if (new_state_keyboard == (1u << BIT_KEY_ENTER))
-              {
-                //Очищаємо інформацію про спрацювання захистів
-                info_vidkluchennja_vymykacha[0] = 0;
-                info_vidkluchennja_vymykacha[1] = 0;
-
-                //Переходимо у попереднє меню
-                current_ekran = current_ekran_reserv_off_on;
-
-                //Відображаємо попередній екран (бо діалогові вікна не обновлюються при виконанні команди REWRITE)
-                for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
-                {
-                  for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-                    working_ekran[i][j] = working_ekran_reserv_off_on[i][j];
-                }
-                //Обновити повністю весь екран
-                current_ekran.current_action = ACTION_WITH_CARRENT_EKRANE_FULL_UPDATE;
-                time_rewrite = MAX_TIME_REWRITE_EKRAN;
-
-                //              //Виставляємо команду на обновлекння нового екрану
-                //              new_state_keyboard |= (1<<BIT_REWRITE);
-                //Очистити сигналізацію, що натиснута кнопка
-                new_state_keyboard &= ~(1u << BIT_KEY_ENTER);
-              }
-              else if (new_state_keyboard == (1u << BIT_KEY_UP))
-              {
-                //Натиснута кнопка UP
-                if (current_ekran.current_level == EKRAN_VIDKLUCHENNJA)
-                {
-                  if (
-                    (info_vidkluchennja_vymykacha[0] == 0) &&
-                    (info_vidkluchennja_vymykacha[1] == 0))
-                  {
-                    //Подаємо команду на вихід з віна повідомдень про відключення від захистів
-                    new_state_keyboard |= (1u << BIT_KEY_ENTER);
-                  }
-                  else
-                  {
-                    if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = MAX_ROW_FOR_VIDKLUCHENNJA - 1;
-                    while (_CHECK_SET_BIT(info_vidkluchennja_vymykacha, current_ekran.index_position) == 0)
-                    {
-                      current_ekran.index_position--;
-                      if (current_ekran.index_position < 0)
-                        current_ekran.index_position = MAX_ROW_FOR_VIDKLUCHENNJA - 1;
-                    }
-                  }
-                  position_in_current_level_menu[EKRAN_VIDKLUCHENNJA] = current_ekran.index_position;
-                  //Формуємо екран повідомдень про відключення від захистів
-                  make_ekran_vidkluchenja();
-                  time_rewrite = 0;
-                }
-
-                //Очистити сигналізацію, що натиснута кнопка
-                new_state_keyboard &= ~(1u << BIT_KEY_UP);
-              }
-              else if (new_state_keyboard == (1u << BIT_KEY_DOWN))
-              {
-                //Натиснута кнопка DOWN
-                if (current_ekran.current_level == EKRAN_VIDKLUCHENNJA)
-                {
-                  if (
-                    (info_vidkluchennja_vymykacha[0] == 0) &&
-                    (info_vidkluchennja_vymykacha[1] == 0))
-                  {
-                    //Подаємо команду на вихід з віна повідомдень про відключення від захистів
-                    new_state_keyboard |= (1u << BIT_KEY_ENTER);
-                  }
-                  else
-                  {
-                    if (++current_ekran.index_position >= ((int) MAX_ROW_FOR_VIDKLUCHENNJA))
-                      current_ekran.index_position = 0;
-                    while (_CHECK_SET_BIT(info_vidkluchennja_vymykacha, current_ekran.index_position) == 0)
-                    {
-                      current_ekran.index_position++;
-                      if (current_ekran.index_position >= ((int) MAX_ROW_FOR_VIDKLUCHENNJA))
-                        current_ekran.index_position = 0;
-                    }
-                  }
-                  position_in_current_level_menu[EKRAN_VIDKLUCHENNJA] = current_ekran.index_position;
-                  //Формуємо екран повідомдень про відключення від захистів
-                  make_ekran_vidkluchenja();
-                  time_rewrite = 0;
-                }
-
-                //Очистити сигналізацію, що натиснута кнопка
-                new_state_keyboard &= ~(1u << BIT_KEY_DOWN);
-              }
-              else
-              {
-                //Натиснуто зразу декілька кнопок - це є невизначена ситуація, тому скидаємо сигналізацію про натиснуті кнопки і чекаємо знову
-                unsigned int temp_data = new_state_keyboard;
-                new_state_keyboard &= ~temp_data;
-              }
-            }
-          }
-          break;
-        }
 
         /************************************* BEGIN  EKRAN_LEVEL_ *****************************************************************************************************/
         //    case 0xff:

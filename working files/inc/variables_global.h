@@ -916,10 +916,6 @@ SRAM1 unsigned int type_of_settings_changed;
 unsigned int serial_number_dev; //Заводський номер пристрою
 SRAM1 unsigned int edit_serial_number_dev;
 
-//Для відображення інформації про причину відключення
-unsigned int info_vidkluchennja_vymykacha[(VYMKNENNJA_VID_MAX_NUMBER / 32) + ((VYMKNENNJA_VID_MAX_NUMBER % 32) != 0)];
-__info_vymk info_vidkluchennja_vymykachatime[VYMKNENNJA_VID_MAX_NUMBER];
-
 unsigned int watchdog_l2;
 unsigned int control_word_of_watchdog;
 unsigned int test_watchdogs /* = 0*/;
