@@ -1599,7 +1599,7 @@ void min_settings(__SETTINGS *target_label)
   target_label->configuration = CONFIGURATION_WORK;
 
   for (size_t i = 0; i < NUMBER_UP; i++)
-    target_label->ctrl_UP_input[i] = UP_CTRL_Ia_Ib_Ic;
+    target_label->ctrl_UP_input[i] = UP_CTRL_Ia_TN1;
 
   target_label->control_rpn = CONTROL_RPN_WORK;
   target_label->control_zskh = CONTROL_ZSKh_WORK;

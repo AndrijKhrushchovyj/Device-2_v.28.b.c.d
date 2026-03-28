@@ -1578,44 +1578,16 @@ void def_pickup_timeout_UP(__SETTINGS *current_label, uint32_t _n_UP, uint32_t g
   uint32_t min = 0;
   switch (current_label->ctrl_UP_input[_n_UP])
   {
-    case UP_CTRL_Ia_Ib_Ic:
-    case UP_CTRL_Ia:
-    case UP_CTRL_Ib:
-    case UP_CTRL_Ic:
-    case UP_CTRL_I1:
-    case UP_CTRL_I2:
-    case UP_CTRL_I04:
-    case UP_CTRL_3I0_r:
+    case UP_CTRL_Ia_TN1:
+    case UP_CTRL_Ia_TN2:
       {
         min = SETPOINT_UP_I_MIN;
         break;
       }
-    case UP_CTRL_3I0:
-    case UP_CTRL_3I0_others:
-      {
-        min = SETPOINT_UP_3I0_MIN;
-        break;
-      }
-    case UP_CTRL_Ua_Ub_Uc:
-    case UP_CTRL_Uab_Ubc_Uca:
-    case UP_CTRL_Ua:
-    case UP_CTRL_Uab:
-    case UP_CTRL_Ub:
-    case UP_CTRL_Ubc:
-    case UP_CTRL_Uc:
-    case UP_CTRL_Uca:
-    case UP_CTRL_U1:
-    case UP_CTRL_U2:
-    case UP_CTRL_3U0:
+    case UP_CTRL_Uab_TN1:
+    case UP_CTRL_Uab_TN2:
       {
         min = SETPOINT_UP_U_MIN;
-        break;
-      }
-    case UP_CTRL_P:
-    case UP_CTRL_Q:
-    case UP_CTRL_S:
-      {
-        min = SETPOINT_UP_P_MIN;
         break;
       }
     default:
@@ -1640,7 +1612,6 @@ void action_after_changing_input_UP(__SETTINGS *current_label, uint32_t index, u
   {
     current_label->ctrl_UP_input[index] = value;
     uint32_t ctrl_maska = MASKA_FOR_BIT(index * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_STATE_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I)) |
-                          MASKA_FOR_BIT(index * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_OR_AND_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I)) |
                           MASKA_FOR_BIT(index * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_MORE_LESS_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I));
     current_label->control_UP &= (uint32_t)(~ctrl_maska);
 
