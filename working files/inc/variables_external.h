@@ -391,15 +391,16 @@ extern unsigned int part_reading_dr_from_dataflash_for_USB;
 extern unsigned int part_reading_dr_from_dataflash_for_RS485;
 //extern unsigned int state_current_monitoring;
 extern const __meas_to_d_meas im_to_idm[_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP];
-extern unsigned int max_phase_current_dr;
-extern int max_I2g_to_I1g;
-extern unsigned int min_voltage_dr;
-extern unsigned int max_voltage_dr;
-extern unsigned int number_min_U_dr;
-extern unsigned int number_max_U_dr;
+extern unsigned int max_U_base;
+extern unsigned int max_U_second;
+extern unsigned int min_U_base;
+extern unsigned int max_I_base;
+extern unsigned int number_max_U_base_dr;
+extern unsigned int number_max_U_second_dr;
+extern unsigned int number_min_U_base_dr;
+extern unsigned int number_max_I_base_dr;
 extern unsigned int type_view_max_values_dr;
 extern int index_cell_into_array_for_integral_values_dr;
-extern unsigned int control_extra_settings_1_dr_for_manu;
 
 extern enum _fix_date_time_avar drDateTimeState;
 

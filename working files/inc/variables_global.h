@@ -792,15 +792,16 @@ const __meas_to_d_meas im_to_idm[_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP] =
     {measurement, IM_UAB_TN2},
     {measurement, IM_IA_2}};
 
-unsigned int max_phase_current_dr; //максимальний фазний струм
-int max_I2g_to_I1g;                //пара (друга гармтоніка до першої гармоніки, яка має найбільше відношення)
-unsigned int min_voltage_dr;       //мінімальнва фазна/лінійна напруга
-unsigned int max_voltage_dr;       //максимальна фазна/лінійна напруга
-unsigned int number_min_U_dr;
-unsigned int number_max_U_dr;
+unsigned int max_U_base;
+unsigned int max_U_second;
+unsigned int min_U_base;
+unsigned int max_I_base;
+unsigned int number_max_U_base_dr;
+unsigned int number_max_U_second_dr;
+unsigned int number_min_U_base_dr;
+unsigned int number_max_I_base_dr;
 unsigned int type_view_max_values_dr;
 int index_cell_into_array_for_integral_values_dr;
-unsigned int control_extra_settings_1_dr_for_manu;
 
 enum _fix_date_time_avar drDateTimeState = AVAR_DATE_TIME_NONE;
 

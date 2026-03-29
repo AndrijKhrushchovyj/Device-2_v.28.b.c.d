@@ -2397,19 +2397,11 @@ inline unsigned int *deserialization_uchar_uint(unsigned char const *p_input, un
 inline void end_monitoring_min_max_measurement(unsigned char **const arr_identifiers, unsigned char const *const buffer_for_save_dr_record, unsigned int const type_current, unsigned int *const carrent_active_functions)
 {
   if (
-    /* (
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE04) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_ZNAM) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_3I0_1G) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_3I0_OTHERG) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_3I0_r) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE_3U0) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MAX_CURRENT_ZOP) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_MIN_FREQUENCY_ACHR) ||
-      (type_current == IDENTIFIER_BIT_ARRAY_FREQUENCY_CHAPV)) && */
+    (
+      (type_current == IDENTIFIER_BIT_ARRAY_MAX_U_BASE) ||
+      (type_current == IDENTIFIER_BIT_ARRAY_MAX_U_SECOND) ||
+      (type_current == IDENTIFIER_BIT_ARRAY_MIN_U_BASE) ||
+      (type_current == IDENTIFIER_BIT_ARRAY_MAX_I_BASE)) &&
     (arr_identifiers[type_current - 1] != NULL))
   {
     unsigned char *buffer = arr_identifiers[type_current - 1];
@@ -2425,6 +2417,74 @@ inline void end_monitoring_min_max_measurement(unsigned char **const arr_identif
       //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
       fix_undefined_error_dr(carrent_active_functions);
     }
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Початок моніторингу максимальну напругу основного каналу
+/*****************************************************/
+inline void start_monitoring_max_U_base(unsigned int const time_tmp, unsigned char * const buffer_for_save_dr_record, unsigned char ** const arr_identifiers, unsigned char ** const p_next_free_array, unsigned int* const carrent_active_functions)
+{
+  unsigned char * buffer = *p_next_free_array;
+  if (
+      (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1] == NULL) &&
+      (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) && 
+      ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS*sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR))  
+     )   
+  {
+    //Збільшуємо кількість фіксованих значень максимального фазного струму
+    ++number_max_phase_dr;
+    arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1] = buffer;
+    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS*sizeof(unsigned int);
+  
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    __meas_to_d_meas const * p_link = im_to_idm;
+    for(size_t i = 0; i <_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+    {
+      buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+      
+      ++p_link;
+    }
+  
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    int frequency_int = (int)frequency;
+    if (frequency_int >= 0) frequency_int = (int)(frequency*1000);
+    buffer = serialization_uint_uchar((unsigned int *)(&frequency_int), buffer, 0);
+
+    //ВМП
+    unsigned int const * p_arr = vmp_start_val;
+    for (size_t i = 0; i < 2; ++i)
+    {
+      buffer = serialization_uint_uchar(p_arr++, buffer, 0);
+    }
+  
+    //Фіксуємо час з моменту початку аварійного запису
+    buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+
+    //Фіксуємо причину запису
+    *buffer = IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE;
+
+    /***
+    Визначаємо макисальний фазний струм між трьома фазами
+    ***/
+    unsigned int tmp_data[3] = {0, 0, 0};
+    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1];
+    deserialization_uchar_uint(&buffer[IDM_IA*sizeof(unsigned int)], &tmp_data[0]);
+    deserialization_uchar_uint(&buffer[IDM_IB*sizeof(unsigned int)], &tmp_data[1]);
+    deserialization_uchar_uint(&buffer[IDM_IC*sizeof(unsigned int)], &tmp_data[2]);
+    max_phase_current_dr = tmp_data[0];
+    if (max_phase_current_dr < tmp_data[1]) max_phase_current_dr = tmp_data[1];
+    if (max_phase_current_dr < tmp_data[2]) max_phase_current_dr = tmp_data[2];
+    /***/
+
+//    //Помічаємо, що ми на стадії моніторингу максимального фазного струму
+//    state_current_monitoring |= (1<<IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE);
   }
   else
   {
@@ -2529,30 +2589,74 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
   static unsigned int number_items_dr;
   static unsigned int number_changes_into_dr_record;
   static unsigned int time_from_start_record_dr;
-  static unsigned int blocking_continue_monitoring_min_U;
+  // static unsigned int blocking_continue_monitoring_min_U;
 
   DigRegUniqVarsAddreses drUniqVarsAddreses = {
     &number_items_dr,
     &number_changes_into_dr_record,
     &time_from_start_record_dr,
-    &blocking_continue_monitoring_min_U,
+    (unsigned int *) 0, //! @&blocking_continue_monitoring_min_U,
     previous_active_functions,
     carrent_active_functions};
+
+  static unsigned int const monitoring_max_U_base_signals[N_BIG] =
+    {
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_0,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_2,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_3,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_4,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_5,
+      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6};
+
+  static unsigned int const monitoring_max_U_second_signals[N_BIG] =
+    {
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_0,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_2,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_4,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_5,
+      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6};
+
+  static unsigned int const monitoring_min_U_base_signals[N_BIG] =
+    {
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_0,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_1,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_2,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_5,
+      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6};
+
+  static unsigned int const monitoring_max_I_base_signals[N_BIG] =
+    {
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_0,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_1,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_2,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_3,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_4,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_5,
+      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6};
 
   unsigned char *buffer_for_save_dr_record = queue_dr[head_queue_dr];
   static unsigned int saving_record_dr = false;
   static unsigned char *arr_identifiers[_NUMBER_IDENTIFIER] =
     {
       NULL,
+      NULL,
+      NULL,
       NULL};
-  // static unsigned char *next_free_array = NULL;
+  static unsigned char *next_free_array = NULL;
 
   //Цю перевірку виконуємо тільки у тому випадку, коли іде процес формування нового запису
   if (state_dr_record == STATE_DR_EXECUTING_RECORD)
   {
     //Перевіряємо чи не виникла умова, що зарараз буде перебір фіксації максимальних струмів
-    unsigned int temp_value_for_max_min_fix_measurement = (number_min_U_dr +
-                                                           number_max_U_dr);
+    unsigned int temp_value_for_max_min_fix_measurement = (number_max_U_base_dr +
+                                                           number_max_U_second_dr +
+                                                           number_min_U_base_dr +
+                                                           number_max_I_base_dr);
     if (temp_value_for_max_min_fix_measurement > MAX_NUMBER_FIX_MAX_MEASUREMENTS)
     {
       //Сюди, теоретично програма нікол не мала б заходити, але якщо зайшла, тоиреба перервати роботу дискретного реєстратора
@@ -2566,6 +2670,51 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
     }
     else
     {
+      //Перевіряємо чи стоїть умова почати моніторити максимальну напругу основного каналу
+      unsigned int comp = false;
+      COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_base_signals, N_BIG)
+      if (comp)
+      {
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] == NULL)
+        {
+          //Є умова почати новий моніторинг максимальну напругу основного каналу
+          temp_value_for_max_min_fix_measurement++;
+        }
+      }
+
+      //Перевіряємо чи стоїть умова почати моніторити максимальну напругу допоміжного каналу
+      COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_second_signals, N_BIG)
+      if (comp)
+      {
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] == NULL)
+        {
+          //Є умова почати новий моніторинг максимальну напругу допоміжного каналу
+          temp_value_for_max_min_fix_measurement++;
+        }
+      }
+
+      //Перевіряємо чи стоїть умова почати моніторити мінімальної напруги основного каналу
+      COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_min_U_base_signals, N_BIG)
+      if (comp)
+      {
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] == NULL)
+        {
+          //Є умова почати новий моніторинг моніторити мінімальної напруги основного каналу
+          temp_value_for_max_min_fix_measurement++;
+        }
+      }
+
+      //Перевіряємо чи стоїть умова почати моніторити максимальний струму основного каналу
+      COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_I_base_signals, N_BIG)
+      if (comp)
+      {
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] == NULL)
+        {
+          //Перевіряємо чи стоїть умова почати моніторити максимальний струму основного каналу
+          temp_value_for_max_min_fix_measurement++;
+        }
+      }
+
       if (temp_value_for_max_min_fix_measurement > MAX_NUMBER_FIX_MAX_MEASUREMENTS)
       {
         //Виникла ситуація, що зарараз буде перебір фіксації максимальних вимірювань
@@ -2575,27 +2724,30 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
         buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR] = number_changes_into_dr_record & 0xff;
         buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR + 1] = (number_changes_into_dr_record >> 8) & 0xff;
 
-        //Перевіряємо чи треба завершити моніторинг мінімальної напруги
-        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE - 1] != NULL)
-          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE, carrent_active_functions);
+        //Перевіряємо чи треба завершити моніторинг максимальної напруги основного каналу
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] != NULL)
+          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_BASE, carrent_active_functions);
 
-        //Перевіряємо чи треба завершити моніторинг максимальної напруги
-        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE - 1] != NULL)
-          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_VOLTAGE, carrent_active_functions);
+        //Перевіряємо чи треба завершити моніторинг максимальної напруги допоміжного каналу
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] != NULL)
+          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_SECOND, carrent_active_functions);
 
-        /*
-        Ми не первіряємо чи треба завершити моніторинг фіксації частоти для ЧАПВ,
-        бо коли фіксується ця частота, то зразу моніторинг припиняється (ми не
-        шукаємо мінімальну чи максимальну частоту - а фікчуємо частоту при запуску АПВ
-        від ЧАПВ)
-        */
+        //Перевіряємо чи треба завершити моніторинг мінімальної напруги основного каналу
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] != NULL)
+          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MIN_U_BASE, carrent_active_functions);
+
+        //Перевіряємо чи треба завершити моніторинг максимальної струму основного каналу
+        if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] != NULL)
+          end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_I_BASE, carrent_active_functions);
 
         //Дальші дії виконуємо тіьлки у тому випадку, якщо функція end_monitoring_min_max_measurement не зафіксувала помилку і не скинула state_dr_record у STATE_DR_NO_RECORD
         if (state_dr_record != STATE_DR_NO_RECORD)
         {
           //Записуємо кількість зафіксованих максимальних струмів всіх типів
-          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MIN_U_DR] = number_min_U_dr;
-          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_DR] = number_max_U_dr;
+          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] = number_max_U_base_dr;
+          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] = number_max_U_second_dr;
+          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] = number_min_U_base_dr;
+          buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] = number_max_I_base_dr;
 
           //Помічаємо, що треба при першій же нагоді почати новий запис, бо попередній запис був примусово зупинений
           state_dr_record = STATE_DR_CUT_RECORD;
@@ -2676,19 +2828,13 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
             for (size_t i = 0; i < sizeof(int32_t); i++)
               buffer_for_save_dr_record[FIRST_INDEX_DATA_TIME_DR + sizeof(time_t) + i] = *((unsigned char *) (&time_ms) + i);
 
-            //Додаткові налаштування при яких було запущено дискретний реєстратор
-            unsigned int control_extra_settings_1_tmp = 0;
-            unsigned char *point_to_extra_settings = (unsigned char *) (&control_extra_settings_1_tmp);
-            for (unsigned int i = 0; i < sizeof(control_extra_settings_1_tmp); i++)
-              buffer_for_save_dr_record[FIRST_INDEX_EXTRA_SETTINGS_DR + i] = *(point_to_extra_settings + i);
-
             //І'мя комірки
             for (unsigned int i = 0; i < MAX_CHAR_IN_NAME_OF_CELL; i++)
               buffer_for_save_dr_record[FIRST_INDEX_NAME_OF_CELL_DR + i] = current_settings_prt.name_of_cell[i] & 0xff;
 
             //Коефіцієнти трансформації
             {
-              unsigned char *ptr_target = buffer_for_save_dr_record + FIRST_INDEX_C1;
+              unsigned char *ptr_target = buffer_for_save_dr_record + FIRST_INDEX_TC1;
               unsigned char *ptr_source = (unsigned char *) (&current_settings_prt.TCurrent1);
               for (size_t i = 0; i < sizeof(current_settings_prt.TCurrent1); ++i)
                 *ptr_target++ = *ptr_source++;
@@ -2718,18 +2864,41 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
             //Переводимо режим роботи із дискретним реєстратором у стан "Іде процес запису реєстратора"
             state_dr_record = STATE_DR_EXECUTING_RECORD;
             //Скидаємо кількість фіксацій максимальних струмів/напруг
-            number_min_U_dr = 0;
-            number_max_U_dr = 0;
+            number_max_U_base_dr = 0;
+            number_max_U_second_dr = 0;
+            number_min_U_base_dr = 0;
+            number_max_I_base_dr = 0;
             for (size_t i = 0; i < _NUMBER_IDENTIFIER; ++i)
               arr_identifiers[i] = NULL;
-            // next_free_array = (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR);
+            next_free_array = (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR);
 
-            /*
-            Перевірку необхідності запису фіксації вимірювань при роботі ЧАПВ здійснювати
-            не потрібно, тому що ми тільки запустили дискретний реєстратор, а умова запису
-            вимірювань при запуску ЧАПВ складається з двох зрізів у яких сигнал ЧАПВ
-            здійснює перехід "Активний"->"Пасивний"
-            */
+            //Перевіряємо чи стоїть умова моніторити максимальну напругу основного каналу
+            COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_base_signals, N_BIG)
+            if (comp)
+            {
+              start_monitoring_max_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+            }
+
+            //Перевіряємо чи стоїть умова моніторити максимальну напругу допоміжного каналу
+            COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_second_signals, N_BIG)
+            if (comp)
+            {
+              start_monitoring_max_U_second(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+            }
+
+            //Перевіряємо чи стоїть умова моніторити мsysvfkmye напругу основного каналу
+            COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_min_U_base_signals, N_BIG)
+            if (comp)
+            {
+              start_monitoring_min_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+            }
+
+            //Перевіряємо чи стоїть умова моніторити максимальний струм основного каналу
+            COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_I_base_signals, N_BIG)
+            if (comp)
+            {
+              start_monitoring_max_I_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+            }
           }
           else
           {
@@ -2763,7 +2932,66 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
 
         //Контроль-фіксація максимальних аналогових сигналів
 
+        //Перевіряємо чи стоїть умова моніторити максимальну напругу основного каналу
         unsigned int comp = false;
+        COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_base_signals, N_BIG)
+        if (comp)
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] != NULL)
+            continue_monitoring_max_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
+          else
+            start_monitoring_max_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+        }
+        else
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] != NULL)
+            end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_BASE, carrent_active_functions);
+        }
+
+        //Перевіряємо чи стоїть умова моніторити максимальну напругу допоміжного каналу
+        COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_U_second_signals, N_BIG)
+        if (comp)
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] != NULL)
+            continue_monitoring_max_U_second(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
+          else
+            start_monitoring_max_U_second(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+        }
+        else
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] != NULL)
+            end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_SECOND, carrent_active_functions);
+        }
+
+        //Перевіряємо чи стоїть умова моніторити мінімальну напругу основного каналу
+        COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_min_U_base_signals, N_BIG)
+        if (comp)
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] != NULL)
+            continue_monitoring_min_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
+          else
+            start_monitoring_min_U_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+        }
+        else
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] != NULL)
+            end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MIN_U_BASE, carrent_active_functions);
+        }
+
+        //Перевіряємо чи стоїть умова моніторити максимальний струм основного каналу
+        COMPARE_NOT_ZERO_OR(comp, carrent_active_functions, monitoring_max_I_base_signals, N_BIG)
+        if (comp)
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] != NULL)
+            continue_monitoring_max_3I0_r(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
+          else
+            start_monitoring_max_3I0_r(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+        }
+        else
+        {
+          if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] != NULL)
+            end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_I_BASE, carrent_active_functions);
+        }
 
         //Дальші дії виконуємо тіьлки у тому випадку, якщо функція end_monitoring_min_max_measurement не зафіксувала помилку і не скинула state_dr_record у STATE_DR_NO_RECORD
         if (state_dr_record != STATE_DR_NO_RECORD)
@@ -2828,19 +3056,30 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
             buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR] = number_changes_into_dr_record & 0xff;
             buffer_for_save_dr_record[FIRST_INDEX_NUMBER_CHANGES_DR + 1] = (number_changes_into_dr_record >> 8) & 0xff;
 
-            /*
-          Перевірку необхідності запису фіксація вимірювань при роботі ЧАПВ здійснювати
-          не потрібно, тому що зараз іде перевірка чи треба примусово зупинити робити формування
-          поточного запису. Якщо була ситуація заауску АПВ від ЧАПВ, то ця подія мала б зафіксованою бути
-          у місці програми, де аналізувалися блоки інтегральних величин
-          */
+            //Перевіряємо чи треба завершити моніторинг максимальну напругу основного каналу
+            if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] != NULL)
+              end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_BASE, carrent_active_functions);
+
+            //Перевіряємо чи треба завершити моніторинг максимальну напругу допоміжного каналу
+            if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] != NULL)
+              end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_U_SECOND, carrent_active_functions);
+
+            //Перевіряємо чи треба завершити моніторинг мінімальну напругу основного каналу
+            if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] != NULL)
+              end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MIN_U_BASE, carrent_active_functions);
+
+            //Перевіряємо чи треба завершити моніторинг максимальний струм основного каналу
+            if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] != NULL)
+              end_monitoring_min_max_measurement(arr_identifiers, buffer_for_save_dr_record, IDENTIFIER_BIT_ARRAY_MAX_I_BASE, carrent_active_functions);
 
             //Дальші дії виконуємо тіьлки у тому випадку, якщо функція end_monitoring_min_max_measurement не зафіксувала помилку і не скинула state_dr_record у STATE_DR_NO_RECORD
             if (state_dr_record != STATE_DR_NO_RECORD)
             {
               //Записуємо кількість зафіксованих максимальних вимірювань всіх типів
-              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MIN_U_DR] = number_min_U_dr;
-              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_DR] = number_max_U_dr;
+              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] = number_max_U_base_dr;
+              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] = number_max_U_second_dr;
+              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] = number_min_U_base_dr;
+              buffer_for_save_dr_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] = number_max_I_base_dr;
 
               //Переводимо режим роботи із дискретним реєстратором у стан "Виконується безпосередній запис у DataFlash"
               if (state_dr_record != STATE_DR_MAKE_RECORD)

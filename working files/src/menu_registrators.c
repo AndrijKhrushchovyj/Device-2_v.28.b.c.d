@@ -570,17 +570,25 @@ void make_ekran_list_titles_for_record_of_digital_registrator(void)
     static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TITLES_DIGITAL_REGISTRATOR][MAX_COL_LCD] =
       {
         {" Изм.дискр.сигн.",
-         " Мин.U          ",
-         " Макс.U         "},
+         " Макс.Напр.осн. ",
+         " Макс.Напр.всп. ",
+         " Мин.Напр.осн.  ",
+         " Макс.Ток осн.  "},
         {" Зм.дискр.сигн. ",
-         " Мін.U          ",
-         " Макс.U         "},
+         " Макс.Напр.осн. ",
+         " Макс.Напр.дод. ",
+         " Мін.Напр.осн.  ",
+         " Макс.Струм осн."},
         {" Bin S Changes  ",
-         " Min V          ",
-         " Max V          "},
+         " Max Main Volt. ",
+         " Max Aux.Volt.  ",
+         " Min Main Volt. ",
+         " Max Main Curr. "},
         {" Изм.дискр.сигн.",
-         " Мин.U          ",
-         " Макс.U         "}};
+         " Макс.Напр.осн. ",
+         " Макс.Напр.всп. ",
+         " Мин.Напр.осн.  ",
+         " Макс.Ток осн.  "}};
 
     unsigned int position = current_ekran.index_position;
     unsigned int position_temp = position;
@@ -594,8 +602,10 @@ void make_ekran_list_titles_for_record_of_digital_registrator(void)
       for (size_t i = (INDEX_ML_TITLE_DR_CHANGES_SIGNALS + 1); i < MAX_ROW_FOR_TITLES_DIGITAL_REGISTRATOR; ++i)
       {
         if (
-          ((i == INDEX_ML_TITLE_DR_MIN_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR] == 0)) ||
-          ((i == INDEX_ML_TITLE_DR_MAX_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_DR] == 0)))
+          ((i == INDEX_ML_TITLE_DR_MAX_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] == 0)) ||
+          ((i == INDEX_ML_TITLE_DR_MAX_U_SECOND) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] == 0)) ||
+          ((i == INDEX_ML_TITLE_DR_MIN_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] == 0)) ||
+          ((i == INDEX_ML_TITLE_DR_MAX_I_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] == 0)))
         {
           if (i < position)
           {
@@ -845,7 +855,7 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
   unsigned int index_of_ekran;
   unsigned int number_info_records;
 
-  number_info_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE];
+  number_info_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MAX_U_BASE];
 
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 

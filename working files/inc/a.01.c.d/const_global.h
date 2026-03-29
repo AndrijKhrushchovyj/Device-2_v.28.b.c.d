@@ -1188,56 +1188,86 @@ enum __rang_output_led_df_reg
 #define MASKA_INFO_SIGNALES_5                  0
 #define MASKA_INFO_SIGNALES_6                  0
 /*****************************************/
+
+/*****************************************/
+//Макска моніторингу максимальної фазної напруги основного каналу
+/*****************************************/
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_0 0
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1 0
+
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_2  (               \
+       (1u << (RANG_VYJCHE_ZONY_RPN - 64))                      \
+     | (1u << (RANG_PO3_U_OSN_RPN - 64))                        \
+     | (1u << (RANG_PO_UMAX1 - 64))                             \
+     | (1u << (RANG_PRYSK_UBAVYTY_VID_UMAX1 - 64))              \
+)     
+
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_3 (                \
+       (1u << (RANG_BLOCK_PRYBAVYTY_VID_UMAX1 - 96))            \
+     | (1u << (RANG_PO_UMAX2 - 96))                             \
+     | (1u << (RANG_UMAX2 - 96))                                \
+)     
+
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_4 0
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_5 0
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6 0
+/*****************************************/
+
+/*****************************************/
+//Макска моніторингу максимальної фазної напруги допоміжного каналу
+/*****************************************/
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_0 0
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1 0
+
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_2 (              \
+       (1u << (RANG_PO1_U_VSPOM_RPN - 64))                      \
+     | (1u << (RANG_PO3_U_VSPOM_RPN - 64))                      \
+)     
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3 0
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_4 0
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_5 0
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6 0
+/*****************************************/
+
+/*****************************************/
+//Макска моніторингу мінімальної фазної напруги основного каналу
+/*****************************************/
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_0  0
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_1  0
+
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_2 (              \
+       (1u << (RANG_NYJCHE_ZONY_RPN - 64))                    \
+     | (1u << (RANG_PO4_U_OSN_RPN - 64))                      \
+)     
+
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3 (              \
+       (1u << (RANG_PO_UMIN1 - 96))                           \
+     | (1u << (RANG_UMIN1 - 96))                              \
+     | (1u << (RANG_PO_UMIN2 - 96))                           \
+     | (1u << (RANG_UMIN2 - 96))                              \
+)   
+
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4  0
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_5  0
+#define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6  0
+/*****************************************/
+
+/*****************************************/
+//Макска моніторингу максимальноого струму основного каналу
+/*****************************************/
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_0  0
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_1  0
+
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_2 (              \
+       (1u << (RANG_BRP - 64))                                \
+) 
+
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_3  0
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_4  0
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_5  0
+#define MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6  0
+/*****************************************/
 // clang-format on
-
-/*****************************************/
-//Відключення від захистів
-/*****************************************/
-typedef enum __vymknennja_vid_zakhystiv__
-{
-  VYMKNENNJA_VID_MTZ1,
-  VYMKNENNJA_VID_MTZ2,
-  VYMKNENNJA_VID_MTZ3,
-  VYMKNENNJA_VID_MTZ4,
-
-  VYMKNENNJA_VID_MTZ04_1,
-  VYMKNENNJA_VID_MTZ04_2,
-
-  VYMKNENNJA_VID_ZDZ,
-
-  VYMKNENNJA_VID_3I0,
-  VYMKNENNJA_VID_3U0,
-  VYMKNENNJA_VID_NZZ,
-
-  VYMKNENNJA_VID_TZNP1,
-  VYMKNENNJA_VID_TZNP2,
-  VYMKNENNJA_VID_TZNP3,
-
-  VYMKNENNJA_VID_ACHR_CHAPV_VID_DV,
-  VYMKNENNJA_VID_ACHR_CHAPV1,
-  VYMKNENNJA_VID_ACHR_CHAPV2,
-
-  VYMKNENNJA_VID_UROV1,
-  VYMKNENNJA_VID_UROV2,
-
-  VYMKNENNJA_VID_ZOP,
-
-  VYMKNENNJA_VID_UMIN1,
-  VYMKNENNJA_VID_UMIN2,
-
-  VYMKNENNJA_VID_UMAX1,
-  VYMKNENNJA_VID_UMAX2,
-
-  VYMKNENNJA_VID_UP1,
-
-  VYMKNENNJA_VID_ZOVNISHNIKH_ZAKHYSTIV = VYMKNENNJA_VID_UP1 + NUMBER_UP,
-
-  VYMKNENNJA_VID_INSHYKH_SYGNALIV,
-
-  VYMKNENNJA_VID_MAX_NUMBER
-
-} __vymknennja_vid_zakhystiv;
-/*****************************************/
 
 /*****************************************/
 //Світлоіндикатори

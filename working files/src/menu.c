@@ -2344,8 +2344,10 @@ void main_manu_function(void)
                 while (
                   ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_MENU) == 0) &&
                   (current_ekran.index_position > INDEX_ML_TITLE_DR_CHANGES_SIGNALS) &&
-                  (((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR] == 0)) ||
-                   ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_DR] == 0))))
+                  (((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] == 0)) ||
+                   ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_SECOND) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] == 0)) ||
+                   ((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] == 0)) ||
+                   ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_I_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] == 0))))
                 {
                   if (++current_ekran.index_position >= MAX_ROW_FOR_TITLES_DIGITAL_REGISTRATOR)
                     current_ekran.index_position = 0;
@@ -2361,7 +2363,7 @@ void main_manu_function(void)
               }
               else if (current_ekran.current_level == EKRAN_TITLE_MAX_VALUES)
               {
-                unsigned int number_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE];
+                unsigned int number_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MAX_U_BASE];
 
                 if (current_ekran.index_position >= ((int) number_records))
                   current_ekran.index_position = 0;
@@ -3609,7 +3611,7 @@ void main_manu_function(void)
                     {
                       //Переходимо на меню відображення зафіксованих аналоговихзначень у запису дискретного реєстратора
                       current_ekran.current_level = EKRAN_TITLE_MAX_VALUES;
-                      type_view_max_values_dr = (current_ekran.index_position - INDEX_ML_TITLE_DR_MIN_U) + IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE;
+                      type_view_max_values_dr = (current_ekran.index_position - INDEX_ML_TITLE_DR_MAX_U_BASE) + IDENTIFIER_BIT_ARRAY_MAX_U_BASE;
                     }
                     current_ekran.index_position = 0;
                     current_ekran.edition = 0;
@@ -4426,8 +4428,10 @@ void main_manu_function(void)
                   } while (
                     ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_MENU) == 0) &&
                     (current_ekran.index_position > INDEX_ML_TITLE_DR_CHANGES_SIGNALS) &&
-                    (((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR] == 0)) ||
-                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_DR] == 0))));
+                    (((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_SECOND) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_I_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] == 0))));
                   position_in_current_level_menu[EKRAN_TITLES_DIGITAL_REGISTRATOR] = current_ekran.index_position;
                   //Формуємо екран відображення заголовків груп для дискретного реєстратора
                   make_ekran_list_titles_for_record_of_digital_registrator();
@@ -5189,8 +5193,10 @@ void main_manu_function(void)
                   } while (
                     ((control_tasks_dataflash & TASK_MAMORY_READ_DATAFLASH_FOR_DR_MENU) == 0) &&
                     (current_ekran.index_position > INDEX_ML_TITLE_DR_CHANGES_SIGNALS) &&
-                    (((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR] == 0)) ||
-                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_DR] == 0))));
+                    (((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_U_SECOND) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_SECOND_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MIN_U_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_BASE_DR] == 0)) ||
+                     ((current_ekran.index_position == INDEX_ML_TITLE_DR_MAX_I_BASE) && (buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_I_BASE_DR] == 0))));
                   position_in_current_level_menu[EKRAN_TITLES_DIGITAL_REGISTRATOR] = current_ekran.index_position;
                   //Формуємо екран відображення заголовків груп для дискретного реєстратора
                   make_ekran_list_titles_for_record_of_digital_registrator();
@@ -5203,7 +5209,7 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_TITLE_MAX_VALUES)
                 {
-                  unsigned int number_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MIN_U_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MIN_VOLTAGE];
+                  unsigned int number_records = buffer_for_manu_read_record[FIRST_INDEX_NUMBER_MAX_U_BASE_DR + type_view_max_values_dr - IDENTIFIER_BIT_ARRAY_MAX_U_BASE];
 
                   if (++current_ekran.index_position >= ((int) number_records))
                     current_ekran.index_position = 0;
