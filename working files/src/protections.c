@@ -2429,62 +2429,482 @@ inline void end_monitoring_min_max_measurement(unsigned char **const arr_identif
 /*****************************************************/
 //Початок моніторингу максимальну напругу основного каналу
 /*****************************************************/
-inline void start_monitoring_max_U_base(unsigned int const time_tmp, unsigned char * const buffer_for_save_dr_record, unsigned char ** const arr_identifiers, unsigned char ** const p_next_free_array, unsigned int* const carrent_active_functions)
+inline void start_monitoring_max_U_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned char **const p_next_free_array, unsigned int *const carrent_active_functions)
 {
-  unsigned char * buffer = *p_next_free_array;
+  unsigned char *buffer = *p_next_free_array;
   if (
-      (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1] == NULL) &&
-      (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) && 
-      ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS*sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR))  
-     )   
+    (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] == NULL) &&
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
   {
-    //Збільшуємо кількість фіксованих значень максимального фазного струму
-    ++number_max_phase_dr;
-    arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1] = buffer;
-    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS*sizeof(unsigned int);
-  
+    //Збільшуємо кількість фіксованих значень максимальної напруги основного каналу
+    ++number_max_U_base_dr;
+    arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] = buffer;
+    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int);
+
     //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    __meas_to_d_meas const * p_link = im_to_idm;
-    for(size_t i = 0; i <_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+    __meas_to_d_meas const *p_link = im_to_idm;
+    for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
     {
       buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
-      
+
       ++p_link;
     }
-  
-    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    int frequency_int = (int)frequency;
-    if (frequency_int >= 0) frequency_int = (int)(frequency*1000);
-    buffer = serialization_uint_uchar((unsigned int *)(&frequency_int), buffer, 0);
 
-    //ВМП
-    unsigned int const * p_arr = vmp_start_val;
-    for (size_t i = 0; i < 2; ++i)
-    {
-      buffer = serialization_uint_uchar(p_arr++, buffer, 0);
-    }
-  
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    int frequency_int = (int) frequency;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    //Поточне положення
+    buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+    buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
     //Фіксуємо час з моменту початку аварійного запису
     buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
 
     //Фіксуємо причину запису
-    *buffer = IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE;
+    *buffer = IDENTIFIER_BIT_ARRAY_MAX_U_BASE;
 
     /***
-    Визначаємо макисальний фазний струм між трьома фазами
+    Визначаємо макисальну напругу оснвного каналу
     ***/
-    unsigned int tmp_data[3] = {0, 0, 0};
-    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE - 1];
-    deserialization_uchar_uint(&buffer[IDM_IA*sizeof(unsigned int)], &tmp_data[0]);
-    deserialization_uchar_uint(&buffer[IDM_IB*sizeof(unsigned int)], &tmp_data[1]);
-    deserialization_uchar_uint(&buffer[IDM_IC*sizeof(unsigned int)], &tmp_data[2]);
-    max_phase_current_dr = tmp_data[0];
-    if (max_phase_current_dr < tmp_data[1]) max_phase_current_dr = tmp_data[1];
-    if (max_phase_current_dr < tmp_data[2]) max_phase_current_dr = tmp_data[2];
+    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1];
+    if ((bit_0 != 0) && (bit_1 != 0))
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U2 * sizeof(unsigned int)], &max_U_base);
+    }
+    else
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U1 * sizeof(unsigned int)], &max_U_base);
+    }
     /***/
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
 
-//    //Помічаємо, що ми на стадії моніторингу максимального фазного струму
-//    state_current_monitoring |= (1<<IDENTIFIER_BIT_ARRAY_MAX_CURRENT_PHASE);
+/*****************************************************/
+//Продовження моніторингу максимальну напругу основного каналу
+/*****************************************************/
+inline void continue_monitoring_max_U_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1];
+  if (
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+
+    unsigned int temp_U_base;
+    if ((bit_0 != 0) && (bit_1 != 0))
+      temp_U_base = measurement[IM_UAB_TN2];
+    else
+      temp_U_base = measurement[IM_UAB_TN1];
+
+    //Перевірка, чи не є зарза напруга оснвного каналу більшою, ніж та що помічена максимальною
+    if (max_U_base < temp_U_base)
+    {
+      __meas_to_d_meas const *p_link = im_to_idm;
+      for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+      {
+        buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+        ++p_link;
+      }
+
+      //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
+      int frequency_int = (int) frequency;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+      //Поточне положення
+      buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+      buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+      //Фіксуємо час з моменту початку аварійного запису
+      buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_BASE - 1] + IDM_TM_STAMPE * sizeof(unsigned int);
+      buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+    }
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Початок моніторингу максимальну напругу допоміжного каналу
+/*****************************************************/
+inline void start_monitoring_max_U_second(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned char **const p_next_free_array, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = *p_next_free_array;
+  if (
+    (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] == NULL) &&
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    //Збільшуємо кількість фіксованих значень максимальної напруги основного каналу
+    ++number_max_U_second_dr;
+    arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] = buffer;
+    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int);
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    __meas_to_d_meas const *p_link = im_to_idm;
+    for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+    {
+      buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+      ++p_link;
+    }
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    int frequency_int = (int) frequency;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    //Поточне положення
+    buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+    buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+    //Фіксуємо час з моменту початку аварійного запису
+    buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+
+    //Фіксуємо причину запису
+    *buffer = IDENTIFIER_BIT_ARRAY_MAX_U_SECOND;
+
+    /***
+    Визначаємо макисальну напругу оснвного каналу
+    ***/
+    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1];
+    if ((bit_0 != 0) && (bit_1 != 0))
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U1 * sizeof(unsigned int)], &max_U_second);
+    }
+    else
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U2 * sizeof(unsigned int)], &max_U_second);
+    }
+    /***/
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Продовження моніторингу максимальну напругу допоміжного каналу
+/*****************************************************/
+inline void continue_monitoring_max_U_second(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1];
+  if (
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+
+    unsigned int temp_U_second;
+    if ((bit_0 != 0) && (bit_1 != 0))
+      temp_U_second = measurement[IM_UAB_TN1];
+    else
+      temp_U_second = measurement[IM_UAB_TN2];
+
+    //Перевірка, чи не є зарза напруга оснвного каналу більшою, ніж та що помічена максимальною
+    if (max_U_second < temp_U_second)
+    {
+      __meas_to_d_meas const *p_link = im_to_idm;
+      for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+      {
+        buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+        ++p_link;
+      }
+
+      //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
+      int frequency_int = (int) frequency;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+      //Поточне положення
+      buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+      buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+      //Фіксуємо час з моменту початку аварійного запису
+      buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_U_SECOND - 1] + IDM_TM_STAMPE * sizeof(unsigned int);
+      buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+    }
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Початок моніторингу мінімальну напругу основного каналу
+/*****************************************************/
+inline void start_monitoring_min_U_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned char **const p_next_free_array, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = *p_next_free_array;
+  if (
+    (arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] == NULL) &&
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    //Збільшуємо кількість фіксованих значень мінімальної напруги основного каналу
+    ++number_min_U_base_dr;
+    arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] = buffer;
+    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int);
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    __meas_to_d_meas const *p_link = im_to_idm;
+    for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+    {
+      buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+      ++p_link;
+    }
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    int frequency_int = (int) frequency;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    //Поточне положення
+    buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+    buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+    //Фіксуємо час з моменту початку аварійного запису
+    buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+
+    //Фіксуємо причину запису
+    *buffer = IDENTIFIER_BIT_ARRAY_MIN_U_BASE;
+
+    /***
+    Визначаємо макисальну напругу оснвного каналу
+    ***/
+    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1];
+    if ((bit_0 != 0) && (bit_1 != 0))
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U2 * sizeof(unsigned int)], &min_U_base);
+    }
+    else
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_U1 * sizeof(unsigned int)], &min_U_base);
+    }
+    /***/
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Продовження моніторингу максиммінімальнульну напругу основного каналу
+/*****************************************************/
+inline void continue_monitoring_min_U_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1];
+  if (
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+
+    unsigned int temp_U_base;
+    if ((bit_0 != 0) && (bit_1 != 0))
+      temp_U_base = measurement[IM_UAB_TN2];
+    else
+      temp_U_base = measurement[IM_UAB_TN1];
+
+    //Перевірка, чи не є зарза напруга оснвного каналу більшою, ніж та що помічена максимальною
+    if (min_U_base > temp_U_base)
+    {
+      __meas_to_d_meas const *p_link = im_to_idm;
+      for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+      {
+        buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+        ++p_link;
+      }
+
+      //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
+      int frequency_int = (int) frequency;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+      //Поточне положення
+      buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+      buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+      //Фіксуємо час з моменту початку аварійного запису
+      buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MIN_U_BASE - 1] + IDM_TM_STAMPE * sizeof(unsigned int);
+      buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+    }
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Початок моніторингу максимальний струм основного каналу
+/*****************************************************/
+inline void start_monitoring_max_I_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned char **const p_next_free_array, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = *p_next_free_array;
+  if (
+    (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] == NULL) &&
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    //Збільшуємо кількість фіксованих значень максимального струму основного каналу
+    ++number_max_I_base_dr;
+    arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] = buffer;
+    *p_next_free_array += SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int);
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    __meas_to_d_meas const *p_link = im_to_idm;
+    for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+    {
+      buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+      ++p_link;
+    }
+
+    //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
+    int frequency_int = (int) frequency;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    //Поточне положення
+    buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+    buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+    //Фіксуємо час з моменту початку аварійного запису
+    buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+
+    //Фіксуємо причину запису
+    *buffer = IDENTIFIER_BIT_ARRAY_MAX_I_BASE;
+
+    /***
+    Визначаємо макисальну напругу оснвного каналу
+    ***/
+    buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1];
+    if ((bit_0 != 0) && (bit_1 != 0))
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_I2 * sizeof(unsigned int)], &max_I_base);
+    }
+    else
+    {
+      deserialization_uchar_uint(&buffer[INDEX_ML_DR_I1 * sizeof(unsigned int)], &max_I_base);
+    }
+    /***/
+  }
+  else
+  {
+    //Відбулася незрозуміла ситуація - сюди програма теоретично ніколи не мала б заходити
+    fix_undefined_error_dr(carrent_active_functions);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Продовження моніторингу максимальний струм основного каналу
+/*****************************************************/
+inline void continue_monitoring_max_I_base(unsigned int const time_tmp, unsigned char *const buffer_for_save_dr_record, unsigned char **const arr_identifiers, unsigned int *const carrent_active_functions)
+{
+  unsigned char *buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1];
+  if (
+    (buffer >= (buffer_for_save_dr_record + FIRST_INDEX_FIRST_BLOCK_DR)) &&
+    ((buffer + SIZE_ARRAY_FIX_MAX_MEASUREMENTS * sizeof(unsigned int) - 1) < (buffer_for_save_dr_record + FIRST_INDEX_FIRST_DATA_DR)))
+  {
+    unsigned int control_for_dr, bit_0, bit_1;
+    control_for_dr = (bit_0 = ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) != 0)) << 0;
+    control_for_dr |= (bit_1 = (_CHECK_SET_BIT(carrent_active_functions, RANG_OSNOVNYJ_TN2_RPN) != 0)) << 1;
+
+    unsigned int temp_I_base;
+    if ((bit_0 != 0) && (bit_1 != 0))
+      temp_I_base = measurement[IM_IA_2];
+    else
+      temp_I_base = measurement[IM_IA_1];
+
+    //Перевірка, чи не є зарза напруга оснвного каналу більшою, ніж та що помічена максимальною
+    if (max_I_base < temp_I_base)
+    {
+      __meas_to_d_meas const *p_link = im_to_idm;
+      for (size_t i = 0; i < _SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP; ++i)
+      {
+        buffer = serialization_uint_uchar(&(p_link->arr[p_link->ind]), buffer, 0);
+
+        ++p_link;
+      }
+
+      //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
+      int frequency_int = (int) frequency;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+      //Поточне положення
+      buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
+
+      buffer = serialization_uint_uchar(&control_for_dr, buffer, 0);
+
+      //Фіксуємо час з моменту початку аварійного запису
+      buffer = arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] + IDM_TM_STAMPE * sizeof(unsigned int);
+      buffer = serialization_uint_uchar(&time_tmp, buffer, 1);
+    }
   }
   else
   {
@@ -2983,9 +3403,9 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
         if (comp)
         {
           if (arr_identifiers[IDENTIFIER_BIT_ARRAY_MAX_I_BASE - 1] != NULL)
-            continue_monitoring_max_3I0_r(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
+            continue_monitoring_max_I_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, carrent_active_functions);
           else
-            start_monitoring_max_3I0_r(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
+            start_monitoring_max_I_base(time_from_start_record_dr, buffer_for_save_dr_record, arr_identifiers, &next_free_array, carrent_active_functions);
         }
         else
         {

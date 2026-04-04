@@ -2376,7 +2376,7 @@ void main_manu_function(void)
               {
                 unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
                 unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
-                unsigned int control_for_dr = *(point_unsigned_int + 5);
+                unsigned int control_for_dr = *(point_unsigned_int + IDM_CONTROL);
 
                 do
                 {
@@ -4446,7 +4446,7 @@ void main_manu_function(void)
                 {
                   unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
                   unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
-                  unsigned int control_for_dr = *(point_unsigned_int + 5);
+                  unsigned int control_for_dr = *(point_unsigned_int + IDM_CONTROL);
 
                   current_ekran.index_position--;
                   do
@@ -5222,7 +5222,7 @@ void main_manu_function(void)
                 {
                   unsigned char *point_unsigned_char = (unsigned char *) (buffer_for_manu_read_record + index_cell_into_array_for_integral_values_dr);
                   unsigned int *point_unsigned_int = (unsigned int *) point_unsigned_char;
-                  unsigned int control_for_dr = *(point_unsigned_int + 5);
+                  unsigned int control_for_dr = *(point_unsigned_int + IDM_CONTROL);
 
                   current_ekran.index_position++;
                   do
