@@ -2337,7 +2337,13 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_registrators.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_regulation.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_reprogram.h</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_resurs.h</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_rpn.h</name>
@@ -2536,6 +2542,12 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_registrators.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_regulation.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_resurs.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_rpn.c</name>

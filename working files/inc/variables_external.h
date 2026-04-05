@@ -133,6 +133,8 @@ extern unsigned int trigger_functions_RS485[N_BIG];
 extern unsigned int copying_active_functions;
 extern unsigned int active_functions_copy[N_BIG];
 extern unsigned int active_functions_trg[N_BIG];
+extern unsigned int active_functions_for_lower_moduls[N_BIG];
+extern unsigned int copying_active_functions_for_lower_moduls;
 extern unsigned int mutex_buttons;
 extern unsigned int pressed_buttons;
 extern unsigned int fix_active_buttons, fix_active_buttons_ctrl;
@@ -178,6 +180,8 @@ extern _Bool previous_states_ready_tu;
 extern _Bool trigger_ready_tu;
 
 extern unsigned int start_restart;
+
+extern unsigned int number_group_stp_low;
 
 extern int current_step_logical, edition_current_step_logical;
 extern int current_step;
@@ -434,7 +438,7 @@ extern unsigned int counter_total_ctrl;
 extern unsigned char crc_resurs_ctrl;
 extern unsigned int restart_counter, previous_state_perekluchennya, perekluchennya_unrecorded;
 
-extern const unsigned char letters[69][2];
+extern const unsigned char letters[71][2];
 extern const unsigned char extra_letters[13][1 + MAX_NAMBER_LANGUAGE];
 
 extern int current_language;

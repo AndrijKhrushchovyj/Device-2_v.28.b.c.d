@@ -676,6 +676,18 @@ void main_manu_function(void)
                   current_ekran.cursor_on = 1;
                   current_ekran.cursor_blinking_on = 0;
                 }
+                else if (current_ekran.index_position == INDEX_ML1_REGULATION)
+                {
+                  //Переходимо на меню відображення процесу регулювання
+                  current_ekran.current_level = EKRAN_REGULATION;
+                  current_ekran.index_position = 0;
+                }
+                else if (current_ekran.index_position == INDEX_ML1_RESURS)
+                {
+                  //Переходимо на меню відображення процесу регулювання
+                  current_ekran.current_level = EKRAN_RESURS;
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                }
                 else if (current_ekran.index_position == INDEX_ML1_INPUTS_OUTPUTS)
                 {
                   //Переходимо на меню вибору відображення списку вибору входів-виходів для відображення їх миттєвого стану
@@ -1651,6 +1663,7 @@ void main_manu_function(void)
       case EKRAN_TITLE_MAX_VALUES:
       case EKRAN_MAX_VALUES:
       case EKRAN_CHANGES_DIAGNOSTICS_PR_ERR:
+      case EKRAN_REGULATION:
       case EKRAN_TITLES_STATE_CMD_REGISTRATOR:
       case EKRAN_DATA_LABEL_STATE_CMD:
       case EKRAN_STATE_CMD_REG:
@@ -2424,6 +2437,13 @@ void main_manu_function(void)
               //?
               //?
               //?}
+              else if (current_ekran.current_level == EKRAN_REGULATION)
+              {
+                //Формуємо екран інформації по стану регулювання
+                make_ekran_regulation();
+                //Запам'ятовуємо на якій позиції ми зупинилися
+                position_in_current_level_menu[EKRAN_REGULATION] = current_ekran.index_position;
+              }
 
               //Очищаємо біт обновлення екрану
               new_state_keyboard &= ~(1u << BIT_REWRITE);
@@ -4506,6 +4526,15 @@ void main_manu_function(void)
                   //Формуємо екран відображення змін сигналів - записаних у  реєстраторі
                   make_ekran_signals_stable_one_in_data_elem_stt_reg();
                 }
+                else if (current_ekran.current_level == EKRAN_REGULATION)
+                {
+                  current_ekran.index_position--;
+                  //Формуємо екран інформації по стану регулювання
+                  make_ekran_regulation();
+                  //Запам'ятовуємо на якій позиції ми зупинилися
+                  position_in_current_level_menu[EKRAN_REGULATION] = current_ekran.index_position;
+                }
+
                 //Очистити сигналізацію, що натиснута кнопка
                 new_state_keyboard &= ~(1u << BIT_KEY_UP);
               }
@@ -5278,6 +5307,14 @@ void main_manu_function(void)
                   current_ekran.index_position++; //+= (MAX_ROW_LCD >> 1);
 
                   make_ekran_time_ms_c_val_c_name_sr_format_changing_signals();
+                }
+                else if (current_ekran.current_level == EKRAN_REGULATION)
+                {
+                  current_ekran.index_position++;
+                  //Формуємо екран інформації по стану регулювання
+                  make_ekran_regulation();
+                  //Запам'ятовуємо на якій позиції ми зупинилися
+                  position_in_current_level_menu[EKRAN_REGULATION] = current_ekran.index_position;
                 }
 
                 //Очистити сигналізацію, що натиснута кнопка
@@ -12247,6 +12284,153 @@ void main_manu_function(void)
 
                 //Очистити сигналізацію, що натиснута кнопка
                 new_state_keyboard &= ~(1u << BIT_KEY_LEFT);
+              }
+              else
+              {
+                //Натиснуто зразу декілька кнопок - це є невизначена ситуація, тому скидаємо сигналізацію про натиснуті кнопки і чекаємо знову
+                unsigned int temp_data = new_state_keyboard;
+                new_state_keyboard &= ~temp_data;
+              }
+            }
+          }
+          break;
+        }
+        /******************************************************************************************************************************************/
+
+        /******************************************************************************************************************************************/
+      case EKRAN_RESURS:
+        {
+          //Очищаємо всі біти краім упралінських
+          unsigned int maska_keyboard_bits = (1 << BIT_KEY_ENTER) | (1 << BIT_KEY_ESC) | (1 << BIT_REWRITE) | (1 << BIT_KEY_UP) | (1 << BIT_KEY_DOWN);
+
+          new_state_keyboard &= maska_keyboard_bits;
+          //Дальше виконуємо дії, якщо натиснута кнопка на яку треба реагувати, або стоїть команда обновити екран
+          if (new_state_keyboard != 0)
+          {
+            //Пріоритет стоїть на обновлені екрану
+            if ((new_state_keyboard & (1 << BIT_REWRITE)) != 0)
+            {
+              if (current_ekran.edition == 0)
+              {
+                if (current_ekran.current_level == EKRAN_RESURS)
+                {
+                  if (current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS)
+                    current_ekran.index_position = 0;
+                  position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
+                  //Формуємо екран відображення лічильників ресурсу
+                  make_ekran_resurs();
+                }
+              }
+              else if (current_ekran.edition == 1)
+              {
+                if (current_ekran.current_level == EKRAN_RESURS)
+                {
+                  unsigned char information_about_reset_counter[1][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
+                    {
+                      " Очистить ресурс",
+                      " Очистити ресурс",
+                      " Reset Resource ",
+                      " Очистить ресурс"};
+
+                  current_ekran.cursor_on = 0;
+                  current_ekran.cursor_blinking_on = 0;
+                  make_ekran_about_activation_command(0, information_about_reset_counter);
+                }
+
+                //Переходимо в режим введення значень у дію
+                current_ekran.edition = 2;
+              }
+
+              //Очищаємо біт обновлення екрану
+              new_state_keyboard &= (unsigned int) (~(1 << BIT_REWRITE));
+            }
+            else
+            {
+              if (new_state_keyboard == (1 << BIT_KEY_ENTER))
+              {
+                //Натиснута кнопка ENTER
+                if (current_ekran.edition == 0)
+                {
+                  int temp_current_level = current_ekran.current_level;
+
+                  //Переходимо на меню запиту паролю калібрування сельсинового датчика і скидання ресурсу вимикача
+                  current_ekran.current_level = EKRAN_LEVEL_PASSWORD_HARD;
+                  previous_level_in_current_level_menu[current_ekran.current_level] = temp_current_level;
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                }
+                else if (current_ekran.edition == 2)
+                {
+                  if (current_ekran.current_level == EKRAN_RESURS)
+                  {
+                    restart_counter = 0xff; /*Сигнал про очищення ресурсу лічильників з системи зазистів*/
+                  }
+
+                  //Виходимо з режиму редагування
+                  current_ekran.edition = 0;
+                }
+
+                //Виставляємо біт обновлення екрану
+                new_state_keyboard |= (1 << BIT_REWRITE);
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_ENTER));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_ESC))
+              {
+                if (current_ekran.edition == 0)
+                {
+                  //Вихід у режимі спостерігання
+                  //Переходимо у попереднє меню
+                  current_ekran.current_level = previous_level_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.edition = 0;
+                }
+                else
+                {
+                  //Вихід у режимі редагування без введення змін
+                  current_ekran.edition = 0;
+                }
+
+                //Виставляємо команду на обновлекння нового екрану
+                new_state_keyboard |= (1 << BIT_REWRITE);
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_ESC));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_UP))
+              {
+                //Натиснута кнопка UP
+                if (current_ekran.current_level == EKRAN_RESURS)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (--current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_EKRAN_RESURS - 1;
+                    position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
+                    //Формуємо екран відображення лічильників ресурсу
+                    make_ekran_resurs();
+                  }
+                }
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_UP));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_DOWN))
+              {
+                //Натиснута кнопка DOWN
+                if (current_ekran.current_level == EKRAN_RESURS)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_EKRAN_RESURS)
+                      current_ekran.index_position = 0;
+                    position_in_current_level_menu[EKRAN_RESURS] = current_ekran.index_position;
+                    //Формуємо екран відображення лічильників ресурсу
+                    make_ekran_resurs();
+                  }
+                }
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_DOWN));
               }
               else
               {

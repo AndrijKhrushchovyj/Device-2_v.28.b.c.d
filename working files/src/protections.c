@@ -5959,6 +5959,20 @@ inline void main_protection(void)
     unsigned int temp_data = active_functions[i];
     active_functions_copy[i] = temp_data;
     previous_active_functions[i] = temp_data;
+
+    if (copying_active_functions_for_lower_moduls == 0)
+    {
+      active_functions_for_lower_moduls[i] = temp_data;
+    }
+  }
+
+  if (copying_active_functions_for_lower_moduls == 0)
+  {
+    timer_rpn_ub_pryb_low = global_timers[INDEX_TIMER_RPN_UB_PRYB];
+    timer_rpn_ub_pryb_prysk_low = global_timers[INDEX_TIMER_RPN_UB_PRYB_PRYSK];
+    timer_rpn_prysk_vid_Umax_low = global_timers[INDEX_TIMER_RPN_PRYSK_VID_UMAX];
+
+    number_group_stp_low = number_group_stp;
   }
   /**************************/
   CmdPlusTimeLogHundler(active_functions);

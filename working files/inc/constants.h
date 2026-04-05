@@ -52,6 +52,8 @@
 #include "const_menu_d_or.h"
 #include "const_menu_d_xor.h"
 #include "const_menu_d_not.h"
+#include "const_menu_regulation.h"
+#include "const_menu_resurs.h"
 #include "const_menu_transfer_functions.h"
 #include "const_menu_buttons.h"
 #include "const_menu_info.h"

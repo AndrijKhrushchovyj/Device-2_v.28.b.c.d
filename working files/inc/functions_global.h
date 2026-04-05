@@ -180,6 +180,7 @@ void make_ekran_timeout_digital_registrator(void);
 void make_ekran_settings_digital_registrators(void);
 
 void make_ekran_setting_language(void);
+void make_ekran_regulation(void);
 void make_ekran_resurs(void);
 void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
