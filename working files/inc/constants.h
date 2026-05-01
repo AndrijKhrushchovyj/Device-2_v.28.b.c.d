@@ -38,6 +38,7 @@
 #include "const_menu_outputs.h"
 #include "const_menu_leds.h"
 #include "const_menu_transformator.h"
+#include "const_menu_chose_type_control_location.h"
 #include "const_menu_chose_settings_switcher.h"
 #include "const_menu_switch.h"
 #include "const_menu_chose_settings_uvv.h"

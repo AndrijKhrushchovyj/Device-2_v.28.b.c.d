@@ -61,7 +61,7 @@ static int first_position_for_unlimited_word(void)
 /*****************************************************/
 void make_ekran_setpoint_rpn(unsigned int group)
 {
-  static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_RPN][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_RPN][MAX_COL_LCD] =
     {
       {" Напряж.основное",
        "  Ширина зоны   ",
@@ -111,7 +111,7 @@ void make_ekran_setpoint_rpn(unsigned int group)
         //У непарному номері рядку виводимо заголовок
 
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = name_string_withoutznam[index_language][index_of_ekran_tmp][j];
+          working_ekran[i][j] = name_string[index_language][index_of_ekran_tmp][j];
 
         if (index_of_ekran_tmp == INDEX_ML_STPRPN_OSN)
         {
@@ -300,7 +300,7 @@ void make_ekran_setpoint_rpn(unsigned int group)
 /*****************************************************/
 void make_ekran_timeout_rpn(unsigned int group)
 {
-  static const unsigned char name_string_withoutznam[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_RPN][MAX_COL_LCD] =
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_TIMEOUT_RPN][MAX_COL_LCD] =
     {
       {" Время Уб./Приб.",
        "Уб./Приб. Ускор.",
@@ -342,7 +342,7 @@ void make_ekran_timeout_rpn(unsigned int group)
       {
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = name_string_withoutznam[index_language][index_of_ekran_tmp][j];
+          working_ekran[i][j] = name_string[index_language][index_of_ekran_tmp][j];
 
         if (index_of_ekran_tmp == INDEX_ML_TMORPN_UB_PRYB)
         {

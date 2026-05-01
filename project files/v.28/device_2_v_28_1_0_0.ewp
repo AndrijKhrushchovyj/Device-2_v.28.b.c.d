@@ -5539,6 +5539,9 @@
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_settings_uvv.h</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\..\working files\inc\const_menu_chose_type_control_location.h</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\..\working files\inc\const_menu_configuration.h</name>
                 </file>
                 <file>
@@ -5753,6 +5756,9 @@
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_chose_settings_uvv.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\working files\src\menu_chose_type_control_location.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\menu_configuration.c</name>

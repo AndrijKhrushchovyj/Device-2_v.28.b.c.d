@@ -1568,6 +1568,7 @@ void TIM4_IRQHandler(void)
     //Перевіряємо чи треба обновляти з часом 1 с дані на екрані
     /***********************************************************/
     if (((current_ekran.current_level == EKRAN_TIME) && (current_ekran.edition == 0)) ||
+        ((current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION) && (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT) && (current_ekran.edition == 0)) ||
         ((current_ekran.current_level == EKRAN_TITLES_DIGITAL_REGISTRATOR) && (rewrite_ekran_once_more > 0)) ||
         (current_ekran.current_level == EKRAN_LIST_ANALOG_REGISTRATOR_RECORDS) ||
         (current_ekran.current_level == EKRAN_LIST_DIGITAL_REGISTRATOR_RECORDS) ||

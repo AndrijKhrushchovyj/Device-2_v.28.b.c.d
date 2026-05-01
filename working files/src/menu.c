@@ -1563,6 +1563,7 @@ void main_manu_function(void)
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP2_UP:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP3_UP:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP4_UP:
+      case EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION:
       case EKRAN_CHOSE_SETTINGS:
       case EKRAN_LEVEL_CHOOSE_PASSWORDS:
       case EKRAN_LIST_INPUTS_FOR_RANGUVANNJA:
@@ -1856,6 +1857,23 @@ void main_manu_function(void)
 
                 //Формуємо екран заголовків настроювання
                 make_ekran_chose_settings();
+              }
+              else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION)
+              {
+                do
+                {
+                  if (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION)
+                    current_ekran.index_position = 0;
+
+                  if (
+                    (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
+                    ((current_settings.type_control_location != 2)))
+                    current_ekran.index_position++;
+                } while (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION);
+
+                position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION] = current_ekran.index_position;
+                //Формуємо екран всіх настройок для контролю положення РПН
+                make_ekran_chose_settings_type_control_location();
               }
               else if (current_ekran.current_level == EKRAN_LEVEL_CHOOSE_PASSWORDS)
               {
@@ -2832,6 +2850,32 @@ void main_manu_function(void)
                   current_ekran.cursor_on = 1;
                   current_ekran.cursor_blinking_on = 0;
                 }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION)
+                {
+                  //Натисну кнопка Enter у вікні вибору всіх настройок для контролю положення РПН
+                  if (current_ekran.index_position == INDEX_ML_STP_CONTROL_LOCATION)
+                  {
+                    //Запам'ятовуємо поперердній екран
+                    //Переходимо на меню відображення уставок для контролю положення РПН
+                    current_ekran.current_level = EKRAN_STP_CONTROL_LOCATION;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_TYPE_CONTROL_LOCATION)
+                  {
+                    //Запам'ятовуємо поперердній екран
+                    //Переходимо на меню відображення типу контролю положення РПН
+                    current_ekran.current_level = EKRAN_CHOOSE_TYPE_CONTROL_LOCATION;
+                  }
+                  else if (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN)
+                  {
+                    //Запам'ятовуємо поперердній екран
+                    //Переходимо на меню усправління сельсиновго положення
+                    current_ekran.current_level = EKRAN_CALIBRATION_SELSYN;
+                  }
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.edition = 0;
+                  current_ekran.cursor_on = 1;
+                  current_ekran.cursor_blinking_on = 0;
+                }
                 else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
                 {
                   //Натисну кнопка Enter у вікні вибору настройок
@@ -2870,6 +2914,12 @@ void main_manu_function(void)
                     //Запам'ятовуємо поперердній екран
                     //Переходимо на меню відображення списку дискретних світодіодів
                     current_ekran.current_level = EKRAN_LIST_LEDS_FOR_RANGUVANNJA;
+                  }
+                  else if (current_ekran.index_position == INDEX_OF_CONTROL_LOCATION)
+                  {
+                    //Запам'ятовуємо поперердній екран
+                    //Переходимо на меню відображення списку настройок для контролю положення РПН
+                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION;
                   }
                   else if (current_ekran.index_position == INDEX_OF_SWITCHER)
                   {
@@ -3942,6 +3992,24 @@ void main_manu_function(void)
                   //Формуємо екран БВимк./БУвімк.
                   make_ekran_choose_CBOn_CBOff();
                 }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION)
+                {
+                  current_ekran.index_position--;
+                  do
+                  {
+                    if (current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION - 1;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
+                      ((current_settings.type_control_location != 2)))
+                      current_ekran.index_position--;
+                  } while (current_ekran.index_position < 0);
+
+                  position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION] = current_ekran.index_position;
+                  //Формуємо екран всіх настройок для контролю положення РПН
+                  make_ekran_chose_settings_type_control_location();
+                }
                 else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
                 {
                   if (--current_ekran.index_position < 0)
@@ -4713,6 +4781,24 @@ void main_manu_function(void)
                   //Формуємо екран БВимк./БУвімк.
                   make_ekran_choose_CBOn_CBOff();
                 }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION)
+                {
+                  current_ekran.index_position++;
+                  do
+                  {
+                    if (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION)
+                      current_ekran.index_position = 0;
+
+                    if (
+                      (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
+                      ((current_settings.type_control_location != 2)))
+                      current_ekran.index_position++;
+                  } while (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION);
+
+                  position_in_current_level_menu[EKRAN_CHOOSE_SETTINGS_CONTROL_LOCATION] = current_ekran.index_position;
+                  //Формуємо екран всіх настройок для контролю положення РПН
+                  make_ekran_chose_settings_type_control_location();
+                }
                 else if (current_ekran.current_level == EKRAN_CHOSE_SETTINGS)
                 {
                   //Натиснута кнопка DOWN
@@ -5380,6 +5466,8 @@ void main_manu_function(void)
       case EKRAN_TIMEOUT_UP_GROUP3:
       case EKRAN_TIMEOUT_UP_GROUP4:
       case EKRAN_CONTROL_UP:
+      case EKRAN_STP_CONTROL_LOCATION:
+      case EKRAN_CHOOSE_TYPE_CONTROL_LOCATION:
       case EKRAN_TRANSFORMATOR_INFO:
       case EKRAN_SETPOINT_SWITCH:
       case EKRAN_TIMEOUT_SWITCH:
@@ -5680,6 +5768,22 @@ void main_manu_function(void)
                 //Формуємо екран управлінської інформації для вимикача
                 make_ekran_control_switch();
               }
+              else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+              {
+                if (current_ekran.index_position >= MAX_ROW_FOR_STP_CONTROL_LOCATION)
+                  current_ekran.index_position = 0;
+                position_in_current_level_menu[EKRAN_STP_CONTROL_LOCATION] = current_ekran.index_position;
+                //Формуємо екран відображення кількості ступенів РПН
+                make_ekran_setpoints_control_location();
+              }
+              else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+              {
+                if (current_ekran.index_position >= MAX_ROW_FOR_TYPE_CONTROL_LOCATION)
+                  current_ekran.index_position = 0;
+                position_in_current_level_menu[EKRAN_CHOOSE_TYPE_CONTROL_LOCATION] = current_ekran.index_position;
+                //Формуємо екран інформації по типу контролю положення РПН
+                make_ekran_type_control_location();
+              }
               else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
               {
                 if (current_ekran.index_position >= NUMBER_INPUTS)
@@ -5888,7 +5992,17 @@ void main_manu_function(void)
               if (new_state_keyboard == (1u << BIT_KEY_ENTER))
               {
                 //Натиснута кнопка ENTER
-                if (current_ekran.edition == 0)
+                if (
+                  (current_ekran.edition == 0) &&
+                  (!(
+                    (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION) &&
+                    (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT) &&
+                    ((current_settings.type_control_location == 1) ||
+                     ((current_settings.type_control_location == 2) &&
+                      ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
+                      (measurement[I_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+                      (measurement[I_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+                      (measurement[I_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))))))
                 {
                   int temp_current_level = current_ekran.current_level;
 
@@ -6213,6 +6327,30 @@ void main_manu_function(void)
                   else if (current_ekran.current_level == EKRAN_CONTROL_SWITCH)
                   {
                     edition_settings.control_switch = current_settings.control_switch;
+                  }
+                  else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                  {
+                    if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
+                    {
+                      edition_settings.number_steps_rpn = current_settings.number_steps_rpn;
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
+                    {
+                      edition_settings.number_step_nominal_rpn = current_settings.number_step_nominal_rpn;
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
+                    {
+                      edition_current_step_logical = current_step_logical;
+                      if ((edition_current_step_logical < 0) || (edition_current_step_logical > 99))
+                      {
+                        edition_current_step_logical = 1; //Першее положення вводимо, якщо ще не було введено поирчного положення
+                      }
+                    }
+                    current_ekran.position_cursor_x = COL_NUMBER_STEPS_RPN_BEGIN;
+                  }
+                  else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                  {
+                    edition_settings.type_control_location = current_settings.type_control_location;
                   }
                   else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                   {
@@ -6761,6 +6899,29 @@ void main_manu_function(void)
                   else if (current_ekran.current_level == EKRAN_CONTROL_SWITCH)
                   {
                     if (edition_settings.control_switch != current_settings.control_switch)
+                      found_changes = 1;
+                  }
+                  else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                  {
+                    if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
+                    {
+                      if (edition_settings.number_steps_rpn != current_settings.number_steps_rpn)
+                        found_changes = 1;
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
+                    {
+                      if (edition_settings.number_step_nominal_rpn != current_settings.number_step_nominal_rpn)
+                        found_changes = 1;
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
+                    {
+                      if (edition_current_step_logical != current_step_logical)
+                        found_changes = 1;
+                    }
+                  }
+                  else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                  {
+                    if (edition_settings.type_control_location != current_settings.type_control_location)
                       found_changes = 1;
                   }
                   else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
@@ -7924,6 +8085,72 @@ void main_manu_function(void)
                         changed_settings = CHANGED_ETAP_EXECUTION;
 
                         current_settings.control_switch = edition_settings.control_switch;
+                        //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                        fix_change_settings(0, 1);
+                      }
+                      //Виходимо з режиму редагування
+                      current_ekran.edition = 0;
+                    }
+                  }
+                  else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                  {
+                    if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
+                    {
+                      if (check_data_setpoint(edition_settings.number_steps_rpn, NUMBER_STEPS_RPN_MIN, NUMBER_STEPS_RPN_MAX) == 1)
+                      {
+                        if (edition_settings.number_steps_rpn != current_settings.number_steps_rpn)
+                        {
+                          //Помічаємо, що поле структури зараз буде змінене
+                          changed_settings = CHANGED_ETAP_EXECUTION;
+
+                          current_settings.number_steps_rpn = edition_settings.number_steps_rpn;
+                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                          fix_change_settings(0, 1);
+                        }
+                        //Виходимо з режиму редагування
+                        current_ekran.edition = 0;
+                      }
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
+                    {
+                      if (check_data_setpoint(edition_settings.number_step_nominal_rpn, 1, current_settings.number_steps_rpn) == 1)
+                      {
+                        if (edition_settings.number_step_nominal_rpn != current_settings.number_step_nominal_rpn)
+                        {
+                          //Помічаємо, що поле структури зараз буде змінене
+                          changed_settings = CHANGED_ETAP_EXECUTION;
+
+                          current_settings.number_step_nominal_rpn = edition_settings.number_step_nominal_rpn;
+                          //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                          fix_change_settings(0, 1);
+                        }
+                        //Виходимо з режиму редагування
+                        current_ekran.edition = 0;
+                      }
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
+                    {
+                      if (check_data_setpoint(edition_current_step_logical, 1, current_settings.number_steps_rpn) == 1)
+                      {
+                        if (edition_current_step_logical != current_step_logical)
+                        {
+                          current_step_logical = edition_current_step_logical;
+                        }
+                        //Виходимо з режиму редагування
+                        current_ekran.edition = 0;
+                      }
+                    }
+                  }
+                  else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                  {
+                    if (check_data_setpoint(edition_settings.type_control_location, VALUE_TYPE_CONTROL_LOCATION_MIN, VALUE_TYPE_CONTROL_LOCATION_MAX) == 1)
+                    {
+                      if (edition_settings.type_control_location != current_settings.type_control_location)
+                      {
+                        //Помічаємо, що поле структури зараз буде змінене
+                        changed_settings = CHANGED_ETAP_EXECUTION;
+
+                        current_settings.type_control_location = edition_settings.type_control_location;
                         //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                         fix_change_settings(0, 1);
                       }
@@ -9209,6 +9436,41 @@ void main_manu_function(void)
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
                 }
+                else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (--current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_STP_CONTROL_LOCATION - 1;
+                    position_in_current_level_menu[EKRAN_STP_CONTROL_LOCATION] = current_ekran.index_position;
+                  }
+                  else
+                  {
+                    //Редагування числа
+                    if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
+                    {
+                      edition_settings.number_steps_rpn = edit_setpoint(1, edition_settings.number_steps_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
+                    {
+                      edition_settings.number_step_nominal_rpn = edit_setpoint(1, edition_settings.number_step_nominal_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
+                    {
+                      edition_current_step_logical = edit_setpoint(1, edition_current_step_logical, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                  }
+                  //Формуємо екран відображення кількості ступенів РПН
+                  make_ekran_setpoints_control_location();
+                }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                {
+                  if (--current_ekran.index_position < 0)
+                    current_ekran.index_position = MAX_ROW_FOR_TYPE_CONTROL_LOCATION - 1;
+                  position_in_current_level_menu[EKRAN_CHOOSE_TYPE_CONTROL_LOCATION] = current_ekran.index_position;
+                  //Формуємо екран інформації по типу контролю положення РПН
+                  make_ekran_type_control_location();
+                }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
                   if (current_ekran.edition == 0)
@@ -10078,6 +10340,42 @@ void main_manu_function(void)
                   position_in_current_level_menu[EKRAN_CONTROL_SWITCH] = current_ekran.index_position;
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
+                }
+                else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_STP_CONTROL_LOCATION)
+                      current_ekran.index_position = 0;
+                    position_in_current_level_menu[EKRAN_STP_CONTROL_LOCATION] = current_ekran.index_position;
+                  }
+                  else
+                  {
+                    //Редагування числа
+                    if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
+                    {
+                      edition_settings.number_steps_rpn = edit_setpoint(1, edition_settings.number_steps_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
+                    {
+                      edition_settings.number_step_nominal_rpn = edit_setpoint(1, edition_settings.number_step_nominal_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
+                    {
+                      edition_current_step_logical = edit_setpoint(1, edition_current_step_logical, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                    }
+                  }
+
+                  //Формуємо екран відображення кількості ступенів РПН
+                  make_ekran_setpoints_control_location();
+                }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                {
+                  if (++current_ekran.index_position >= MAX_ROW_FOR_TYPE_CONTROL_LOCATION)
+                    current_ekran.index_position = 0;
+                  position_in_current_level_menu[EKRAN_CHOOSE_TYPE_CONTROL_LOCATION] = current_ekran.index_position;
+                  //Формуємо екран інформації по контролю положення РПН
+                  make_ekran_type_control_location();
                 }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
@@ -11000,6 +11298,25 @@ void main_manu_function(void)
                   //Формуємо екран управлінської інформації длявимикача
                   make_ekran_control_switch();
                 }
+                else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                {
+                  //Для всіх пунктів цього меню початоковий номер символа і кінцевий номера символа співпадають
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_STEPS_RPN_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_STEPS_RPN_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_STEPS_RPN_BEGIN;
+                  //Формуємо екран відображення кількості ступенів РПН
+                  make_ekran_setpoints_control_location();
+                }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                {
+                  //Редагування числа
+                  edition_settings.type_control_location++;
+                  if (edition_settings.type_control_location > VALUE_TYPE_CONTROL_LOCATION_MAX)
+                    edition_settings.type_control_location = VALUE_TYPE_CONTROL_LOCATION_MIN;
+
+                  //Формуємо екран інформації по контролю положення РПН
+                  make_ekran_type_control_location();
+                }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
                   if (
@@ -11896,6 +12213,25 @@ void main_manu_function(void)
                   //Формуємо екран управлінської інформації для вимикача
                   make_ekran_control_switch();
                 }
+                else if (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION)
+                {
+                  //Для всіх пунктів цього меню початоковий номер символа і кінцевий номера символа співпадають
+                  if ((current_ekran.position_cursor_x < COL_NUMBER_STEPS_RPN_BEGIN) ||
+                      (current_ekran.position_cursor_x > COL_NUMBER_STEPS_RPN_END))
+                    current_ekran.position_cursor_x = COL_NUMBER_STEPS_RPN_END;
+                  //Формуємо екран відображення кількості ступенів РПН
+                  make_ekran_setpoints_control_location();
+                }
+                else if (current_ekran.current_level == EKRAN_CHOOSE_TYPE_CONTROL_LOCATION)
+                {
+                  //Редагування числа
+                  edition_settings.type_control_location--;
+                  if (edition_settings.type_control_location < VALUE_TYPE_CONTROL_LOCATION_MIN)
+                    edition_settings.type_control_location = VALUE_TYPE_CONTROL_LOCATION_MAX;
+
+                  //Формуємо екран інформації по типу контролю положення РПН
+                  make_ekran_type_control_location();
+                }
                 else if (current_ekran.current_level == EKRAN_DOPUSK_DV_UVV)
                 {
                   if (
@@ -12284,6 +12620,201 @@ void main_manu_function(void)
 
                 //Очистити сигналізацію, що натиснута кнопка
                 new_state_keyboard &= ~(1u << BIT_KEY_LEFT);
+              }
+              else
+              {
+                //Натиснуто зразу декілька кнопок - це є невизначена ситуація, тому скидаємо сигналізацію про натиснуті кнопки і чекаємо знову
+                unsigned int temp_data = new_state_keyboard;
+                new_state_keyboard &= ~temp_data;
+              }
+            }
+          }
+          break;
+        }
+        /******************************************************************************************************************************************/
+
+        /******************************************************************************************************************************************/
+      case EKRAN_CALIBRATION_SELSYN:
+        {
+          //Очищаємо всі біти краім упралінських
+          unsigned int maska_keyboard_bits = (1 << BIT_KEY_ENTER) | (1 << BIT_KEY_ESC) | (1 << BIT_REWRITE);
+
+          if (current_ekran.edition == 0)
+            maska_keyboard_bits |= (1 << BIT_KEY_UP) | (1 << BIT_KEY_DOWN);
+
+          new_state_keyboard &= maska_keyboard_bits;
+          //Дальше виконуємо дії, якщо натиснута кнопка на яку треба реагівати, або стоїть команда обновити екран
+          if (new_state_keyboard != 0)
+          {
+            //Пріоритет стоїть на обновлені екрану
+            if ((new_state_keyboard & (1 << BIT_REWRITE)) != 0)
+            {
+
+              if (current_ekran.edition == 0)
+              {
+                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                {
+                  if (current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_RPN)
+                    current_ekran.index_position = 0;
+                  position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+
+                  //Формуємо екран калібрування сельинового датчика
+                  make_ekran_calibration_selsyn();
+                }
+              }
+              else if (current_ekran.edition == 1)
+              {
+                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                {
+                  unsigned char information_about_activation[MAX_ROW_FOR_CALIBRATION_SELSYN][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
+                    {
+                      {" Заф.пол.N 1 РПН",
+                       " Заф.пол.N 1 РПН",
+                       "OLTC Fix Pos.N 1",
+                       " Заф.пол.N 1 РПН"},
+                      {" Заф.пол.N?? РПН",
+                       " Заф.пол.N?? РПН",
+                       "OLTC Fix Pos.N??",
+                       " Заф.пол.N?? РПН"},
+                    };
+
+                  if (current_ekran.index_position == INDEX_ML_LAST_LOCATION_SELSYN)
+                  {
+                    const unsigned int first_index_number[MAX_NAMBER_LANGUAGE] = {10, 10, 14, 10};
+                    unsigned int number_steps_rpn_tmp = current_settings.number_steps_rpn;
+
+                    if (number_steps_rpn_tmp < 10)
+                    {
+                      for (unsigned int i = 0; i < MAX_NAMBER_LANGUAGE; i++)
+                      {
+                        unsigned int first_index_number_1 = first_index_number[i];
+                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1] = ' ';
+                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1 + 1] = number_steps_rpn_tmp + 0x30;
+                      }
+                    }
+                    else
+                    {
+                      for (unsigned int i = 0; i < MAX_NAMBER_LANGUAGE; i++)
+                      {
+                        unsigned int first_index_number_1 = first_index_number[i];
+                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1] = (number_steps_rpn_tmp / 10) + 0x30;
+                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1 + 1] = (number_steps_rpn_tmp % 10) + 0x30;
+                      }
+                    }
+                  }
+
+                  current_ekran.cursor_on = 0;
+                  current_ekran.cursor_blinking_on = 0;
+                  make_ekran_about_activation_command(current_ekran.index_position, information_about_activation);
+                }
+
+                //Переходимо в режим введення значень у дію
+                current_ekran.edition = 2;
+              }
+
+              //Очищаємо біт обновлення екрану
+              new_state_keyboard &= (unsigned int) (~(1 << BIT_REWRITE));
+            }
+            else
+            {
+              if (new_state_keyboard == (1 << BIT_KEY_ENTER))
+              {
+                //Натиснута кнопка ENTER
+                if (current_ekran.edition == 0)
+                {
+                  int temp_current_level = current_ekran.current_level;
+
+                  //Переходимо на меню запиту паролю калібрування сельсинового датчика і скидання ресурсу вимикача
+                  current_ekran.current_level = EKRAN_LEVEL_PASSWORD_HARD;
+                  previous_level_in_current_level_menu[current_ekran.current_level] = temp_current_level;
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                }
+                else if (current_ekran.edition == 2)
+                {
+                  if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                  {
+                    if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION_SELSYN)
+                    {
+                      //Обновлюємо значення fi-початкове
+                      sum_phi_begin = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
+                    }
+                    else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION_SELSYN)
+                    {
+                      //Обновлюємо значення fi-кінцеве
+                      sum_phi_end = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
+                    }
+                    //Подаємо команду запису fi-початкове і fi-кінцеве у EEPROM
+                    _SET_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT);
+                  }
+
+                  //Виходимо з режиму редагування
+                  current_ekran.edition = 0;
+                }
+
+                //Виставляємо біт обновлення екрану
+                new_state_keyboard |= (1 << BIT_REWRITE);
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_ENTER));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_ESC))
+              {
+                if (current_ekran.edition == 0)
+                {
+                  //Вихід у режимі спостерігання
+                  //Переходимо у попереднє меню
+                  current_ekran.current_level = previous_level_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
+                  current_ekran.edition = 0;
+                }
+                else
+                {
+                  //Вихід у режимі редагування без введення змін
+                  current_ekran.edition = 0;
+                }
+
+                //Виставляємо команду на обновлекння нового екрану
+                new_state_keyboard |= (1 << BIT_REWRITE);
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_ESC));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_UP))
+              {
+                //Натиснута кнопка UP
+                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (--current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_CALIBRATION_SELSYN - 1;
+                    position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+
+                    //Формуємо екран калібрування сельинового датчика
+                    make_ekran_calibration_selsyn();
+                  }
+                }
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_UP));
+              }
+              else if (new_state_keyboard == (1 << BIT_KEY_DOWN))
+              {
+                //Натиснута кнопка DOWN
+                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                {
+                  if (current_ekran.edition == 0)
+                  {
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_CALIBRATION_SELSYN)
+                      current_ekran.index_position = 0;
+                    position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+
+                    //Формуємо екран калібрування сельинового датчика
+                    make_ekran_calibration_selsyn();
+                  }
+                }
+
+                //Очистити сигналізацію, що натиснута кнопка
+                new_state_keyboard &= (unsigned int) (~(1 << BIT_KEY_DOWN));
               }
               else
               {
