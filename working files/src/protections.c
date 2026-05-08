@@ -5300,6 +5300,22 @@ inline void main_protection(void)
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   _CLEAR_BIT(diagnostyka_tmp, EVENT_RESTART_CB_BIT);
 #endif
+
+  if (current_settings_prt.type_control_location != 1)
+  {
+    //якщо не вибраний логометричний контроль, то всю ≥нформац≥ю по логометричному контрол≥ очищаЇмо
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_VOLTAGE);
+  }
+  if (current_settings_prt.type_control_location != 2)
+  {
+    //якщо не вибраний сельсиновий контроль, то всю ≥нформац≥ю по сельсиновому контрол≥ очищаЇмо
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_ANGLE_EEPROM_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_ANGLE_EEPROM_EMPTY_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_ANGLE_EEPROM_COMPARISON_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_ANGLE_EEPROM_CONTROL_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_CALIBRATION_SELSYN);
+  }
+
   unsigned int not_null = false;
   for (size_t i = 0; i < N_DIAGN; i++)
   {
@@ -5335,8 +5351,8 @@ inline void main_protection(void)
     }
     if (not_null)
     {
-      _SET_BIT(active_functions, RANG_AVAR_DEFECT);
-      //#warning "No Avar Error"
+      //      _SET_BIT(active_functions, RANG_AVAR_DEFECT);
+#warning "No Avar Error"
     }
     else
     {

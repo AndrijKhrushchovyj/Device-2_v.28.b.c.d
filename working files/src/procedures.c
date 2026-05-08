@@ -2085,6 +2085,21 @@ void changing_diagnostyka_state(void)
   /*****/
 
   //Визначаємо, чи відбулися зміни
+
+  /**********/
+  //Очищаємо повідомлення від діагностики, які не мають з'являтися для даної конфігурації
+  /**********/
+  unsigned int maska[N_DIAGN] = {0};
+  if (current_settings.type_control_location != 1)
+  {
+    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+  }
+  if (current_settings.type_control_location != 2)
+  {
+    for (unsigned int i = ERROR_ANGLE_EEPROM_BIT; i <= ERROR_CALIBRATION_SELSYN; i++)
+      _SET_BIT(maska, i);
+  }
+
   unsigned int value_changes[N_DIAGN], diagnostyka_now[N_DIAGN];
   /*
   Робимо копію тепершньої діагностики, бо ця функція працює на найнижчому пріоритеті,
@@ -2092,7 +2107,7 @@ void changing_diagnostyka_state(void)
   */
   for (size_t i = 0; i < N_DIAGN; i++)
   {
-    diagnostyka_now[i] = diagnostyka[i];
+    diagnostyka_now[i] = diagnostyka[i] & (~maska[i]);
     value_changes[i] = diagnostyka_before[i] ^ diagnostyka_now[i];
   }
 

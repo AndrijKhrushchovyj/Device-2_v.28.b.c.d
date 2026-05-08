@@ -2236,9 +2236,26 @@ void main_manu_function(void)
                 if (current_ekran.index_position >= ((int) MAX_ROW_FOR_DIAGNOSTYKA))
                   current_ekran.index_position = 0;
 
-                unsigned int diagnostyka_tmp[N_DIAGN];
+                /**********/
+                //Очищаємо повідомлення від діагностики, які не мають з'являтися для даної конфігурації
+                /**********/
+                unsigned int maska[N_DIAGN] = {0};
+                if (current_settings.type_control_location != 1)
+                {
+                  _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                }
+                if (current_settings.type_control_location != 2)
+                {
+                  for (unsigned int i = ERROR_ANGLE_EEPROM_BIT; i <= ERROR_CALIBRATION_SELSYN; i++)
+                    _SET_BIT(maska, i);
+                }
+                /**********/
+
+                unsigned int diagnostyka_tmp[N_DIAGN] = {0};
                 for (size_t i = 0; i < N_DIAGN; i++)
-                  diagnostyka_tmp[i] = diagnostyka[i];
+                {
+                  diagnostyka_tmp[i] = diagnostyka[i] & (~maska[i]);
+                }
 
                 unsigned int not_null = false;
                 for (size_t i = 0; i < N_DIAGN; i++)
@@ -4378,9 +4395,26 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_DIAGNOSTYKA)
                 {
-                  unsigned int diagnostyka_tmp[N_DIAGN];
+                  /**********/
+                  //Очищаємо повідомлення від діагностики, які не мають з'являтися для даної конфігурації
+                  /**********/
+                  unsigned int maska[N_DIAGN] = {0};
+                  if (current_settings.type_control_location != 1)
+                  {
+                    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                  }
+                  if (current_settings.type_control_location != 2)
+                  {
+                    for (unsigned int i = ERROR_ANGLE_EEPROM_BIT; i <= ERROR_CALIBRATION_SELSYN; i++)
+                      _SET_BIT(maska, i);
+                  }
+                  /**********/
+
+                  unsigned int diagnostyka_tmp[N_DIAGN] = {0};
                   for (size_t i = 0; i < N_DIAGN; i++)
-                    diagnostyka_tmp[i] = diagnostyka[i];
+                  {
+                    diagnostyka_tmp[i] = diagnostyka[i] & (~maska[i]);
+                  }
 
                   unsigned int not_null = false;
                   for (size_t i = 0; i < N_DIAGN; i++)
@@ -5177,9 +5211,26 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_DIAGNOSTYKA)
                 {
-                  unsigned int diagnostyka_tmp[N_DIAGN];
+                  /**********/
+                  //Очищаємо повідомлення від діагностики, які не мають з'являтися для даної конфігурації
+                  /**********/
+                  unsigned int maska[N_DIAGN] = {0};
+                  if (current_settings.type_control_location != 1)
+                  {
+                    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                  }
+                  if (current_settings.type_control_location != 2)
+                  {
+                    for (unsigned int i = ERROR_ANGLE_EEPROM_BIT; i <= ERROR_CALIBRATION_SELSYN; i++)
+                      _SET_BIT(maska, i);
+                  }
+                  /**********/
+
+                  unsigned int diagnostyka_tmp[N_DIAGN] = {0};
                   for (size_t i = 0; i < N_DIAGN; i++)
-                    diagnostyka_tmp[i] = diagnostyka[i];
+                  {
+                    diagnostyka_tmp[i] = diagnostyka[i] & (~maska[i]);
+                  }
 
                   unsigned int not_null = false;
                   for (size_t i = 0; i < N_DIAGN; i++)

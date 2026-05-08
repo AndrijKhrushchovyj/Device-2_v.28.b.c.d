@@ -28,8 +28,6 @@ void main_routines_for_spi1(void)
   //Статичні змінні для контролю коректності запису
   static __SETTINGS current_settings_comp;
   static unsigned int ustuvannja_comp[NUMBER_ANALOG_CANALES], serial_number_dev_comp;
-  static int phi_ustuvannja_comp[NUMBER_ANALOG_CANALES];
-  static float phi_ustuvannja_sin_cos_comp[2 * NUMBER_ANALOG_CANALES];
   static unsigned int state_trigger_leds_comp, state_signal_outputs_comp;
   static unsigned int fix_active_buttons_comp, trigger_active_functions_comp[N_BIG];
   static __INFO_AR_REJESTRATOR info_rejestrator_ar_comp;
@@ -1427,8 +1425,6 @@ void main_routines_for_spi1(void)
       //Спочатку аналізуємо, чи прояитаний блок є пустим, чи вже попередньо записаним
       unsigned int empty_block = 1, i = 0;
       unsigned int adjustment_id_tmp = 0, ustuvannja_tmp[NUMBER_ANALOG_CANALES], serial_number_dev_tmp = 0;
-      int phi_ustuvannja_tmp[NUMBER_ANALOG_CANALES];
-      float phi_ustuvannja_sin_cos_tmp[2 * NUMBER_ANALOG_CANALES];
 
       while ((empty_block != 0) && (i < (SIZE_USTUVANNJA + 1)))
       {
@@ -1468,26 +1464,6 @@ void main_routines_for_spi1(void)
           point++;
         }
         offset += sizeof(ustuvannja_tmp);
-
-        point = (unsigned char *) (&phi_ustuvannja_tmp);
-        for (i = 0; i < sizeof(phi_ustuvannja_tmp); i++)
-        {
-          temp_value = RxBuffer_SPI_EDF[offset + i];
-          *(point) = temp_value;
-          crc_eeprom_ustuvannja += temp_value;
-          point++;
-        }
-        offset += sizeof(phi_ustuvannja_tmp);
-
-        point = (unsigned char *) (&phi_ustuvannja_sin_cos_tmp);
-        for (i = 0; i < sizeof(phi_ustuvannja_sin_cos_tmp); i++)
-        {
-          temp_value = RxBuffer_SPI_EDF[offset + i];
-          *(point) = temp_value;
-          crc_eeprom_ustuvannja += temp_value;
-          point++;
-        }
-        offset += sizeof(phi_ustuvannja_sin_cos_tmp);
 
         point = (unsigned char *) (&serial_number_dev_tmp);
         for (i = 0; i < sizeof(serial_number_dev_tmp); i++)
@@ -1539,10 +1515,8 @@ void main_routines_for_spi1(void)
               {
                 //Перевірка запису юстуючих коефіцієнтів
                 if (
-                  (ustuvannja_comp[i] != ustuvannja_tmp[i]) ||
-                  (phi_ustuvannja_comp[i] != phi_ustuvannja_tmp[i]) ||
-                  (phi_ustuvannja_sin_cos_comp[2 * i] != phi_ustuvannja_sin_cos_tmp[2 * i]) ||
-                  (phi_ustuvannja_sin_cos_comp[2 * i + 1] != phi_ustuvannja_sin_cos_tmp[2 * i + 1]))
+                  (ustuvannja_comp[i] != ustuvannja_tmp[i])
+                )
                 {
                   difference = 0xff;
                 }
