@@ -748,16 +748,16 @@ void main_manu_function(void)
                   //Переходимо на меню ЗСХ
                   else if (current_ekran.index_position == INDEX_ML1_ZSKh)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZSKH;
-                  //Переходимо на меню БРП
+                  //Переходимо на меню ЗБХ
                   else if (current_ekran.index_position == INDEX_ML1_ZNKh)
-                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_BRP;
-                  //Переходимо на меню ЗНХ
-                  else if (current_ekran.index_position == INDEX_ML1_BRP)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_ZNKh;
-                  //Переходимо на меню ЗЗ
+                  //Переходимо на меню БРП
+                  else if (current_ekran.index_position == INDEX_ML1_BRP)
+                    current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_BRP;
+                  //Переходимо на меню Umax
                   else if (current_ekran.index_position == INDEX_ML1_Umax)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UMAX;
-                  //Переходимо на меню СЗНП
+                  //Переходимо на меню Umin
                   else if (current_ekran.index_position == INDEX_ML1_Umin)
                     current_ekran.current_level = EKRAN_CHOOSE_SETTINGS_UMIN;
                   //Переходимо на меню Універсальний захист
@@ -1531,6 +1531,7 @@ void main_manu_function(void)
       case EKRAN_MEASURMENT_SELSYN:
       case EKRAN_VOLTAGE_SELSYN:
       case EKRAN_ANGLE_SELSYN:
+      case EKRAN_LOGOMETR:
       case EKRAN_MEASURMENT_FREQUENCY:
       case EKRAN_CHOOSE_SETTINGS_RPN:
       case EKRAN_CHOOSE_SETPOINT_TIMEOUT_GROUP1_RPN:
@@ -1690,6 +1691,7 @@ void main_manu_function(void)
 
                   if (
                     (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                    ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                     ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                     current_ekran.index_position++;
 
@@ -3858,6 +3860,7 @@ void main_manu_function(void)
 
                     if (
                       (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                      ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                       ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                       current_ekran.index_position--;
                   } while (current_ekran.index_position < 0);
@@ -4653,6 +4656,7 @@ void main_manu_function(void)
 
                     if (
                       (current_ekran.index_position == INDEX_ML_MEASURMENT_2) &&
+                      ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                       ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                       current_ekran.index_position++;
 
@@ -5787,6 +5791,7 @@ void main_manu_function(void)
                     (
                       (current_ekran.index_position == INDEX_ML_TT2) ||
                       (current_ekran.index_position == INDEX_ML_TN2)) &&
+                    ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                     ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                     current_ekran.index_position++;
                 } while (current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO);
@@ -9137,7 +9142,7 @@ void main_manu_function(void)
                   {
                     //Редагування числа
                     if (current_ekran.index_position == INDEX_ML_STPBRP_I_BLK)
-                      edition_settings.setpoint_brp_I_blk[group] = edit_setpoint(1, edition_settings.setpoint_brp_I_blk[group], 1, COL_SETPOINT_BRP_I_BLK_COMMA, COL_SETPOINT_BRP_I_BLK_END, 1);
+                      edition_settings.setpoint_brp_I_blk[group] = edit_setpoint(1, edition_settings.setpoint_brp_I_blk[group], 1, COL_SETPOINT_BRP_I_BLK_COMMA, COL_SETPOINT_BRP_I_BLK_END, 100);
                   }
                   //Формуємо екран уставок БРП
                   make_ekran_setpoint_brp(group);
@@ -9167,15 +9172,7 @@ void main_manu_function(void)
                     //Редагування числа
                     if (current_ekran.index_position == INDEX_ML_TMOZNKh_PEREKL)
                     {
-                      unsigned int temp_setpoint = edition_settings.timeout_znkh_perekl[group];
-                      if ((temp_setpoint % 2) != 0)
-                        temp_setpoint &= (~1u); //Це випадок коли прошивка змінилася з 2мс  циклом де допуск був встановлений непарнмй допуск
-                      do
-                      {
-                        //Величину витримки зменшуємо почергого на 1 мс (ф-ція edit_setpoint збільшує/зменшує з кроком кратних 1, 10 і т.д.), щоб отримати крок 2 мс
-                        temp_setpoint = edit_setpoint(1, temp_setpoint, 1, COL_TMO_ZNKh_PEREKL_COMMA, COL_TMO_ZNKh_PEREKL_END, 1);
-                      } while ((temp_setpoint % 2) != 0);
-                      edition_settings.timeout_znkh_perekl[group] = temp_setpoint;
+                      edition_settings.timeout_znkh_perekl[group] = edit_setpoint(1, edition_settings.timeout_znkh_perekl[group], 1, COL_TMO_ZNKh_PEREKL_COMMA, COL_TMO_ZNKh_PEREKL_END, 10);
                     }
                   }
                   //Формуємо екран витримок ЗНХ
@@ -9406,6 +9403,7 @@ void main_manu_function(void)
                         (
                           (current_ekran.index_position == INDEX_ML_TT2) ||
                           (current_ekran.index_position == INDEX_ML_TN2)) &&
+                        ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                         ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                         current_ekran.index_position--;
                     } while (current_ekran.index_position < 0);
@@ -9957,7 +9955,7 @@ void main_manu_function(void)
                     else if (current_ekran.index_position == INDEX_ML_STPRPN_MAX_PER)
                       edition_settings.setpoint_rpn_per[group] = edit_setpoint(0, edition_settings.setpoint_rpn_per[group], 0, 0, COL_SETPOINT_RPN_MAX_PER_END, 1);
                     else if (current_ekran.index_position == INDEX_ML_STPRPN_DOD)
-                      edition_settings.setpoint_rpn_dod[group] = edit_setpoint(0, edition_settings.setpoint_rpn_dod[group], 0, COL_SETPOINT_RPN_DOD_COMMA, COL_SETPOINT_RPN_DOD_END, 100);
+                      edition_settings.setpoint_rpn_dod[group] = edit_setpoint(0, edition_settings.setpoint_rpn_dod[group], 1, COL_SETPOINT_RPN_DOD_COMMA, COL_SETPOINT_RPN_DOD_END, 100);
                     else if (current_ekran.index_position == INDEX_ML_STPRPN_K)
                       edition_settings.setpoint_rpn_K[group] = edit_setpoint(0, edition_settings.setpoint_rpn_K[group], 1, COL_SETPOINT_RPN_K_COMMA, COL_SETPOINT_RPN_K_END, 1);
                   }
@@ -10025,7 +10023,7 @@ void main_manu_function(void)
                   {
                     //Редагування числа
                     if (current_ekran.index_position == INDEX_ML_STPBRP_I_BLK)
-                      edition_settings.setpoint_brp_I_blk[group] = edit_setpoint(0, edition_settings.setpoint_brp_I_blk[group], 1, COL_SETPOINT_BRP_I_BLK_COMMA, COL_SETPOINT_BRP_I_BLK_END, 1);
+                      edition_settings.setpoint_brp_I_blk[group] = edit_setpoint(0, edition_settings.setpoint_brp_I_blk[group], 1, COL_SETPOINT_BRP_I_BLK_COMMA, COL_SETPOINT_BRP_I_BLK_END, 100);
                   }
                   //Формуємо екран уставок БРП
                   make_ekran_setpoint_brp(group);
@@ -10055,15 +10053,7 @@ void main_manu_function(void)
                     //Редагування числа
                     if (current_ekran.index_position == INDEX_ML_TMOZNKh_PEREKL)
                     {
-                      unsigned int temp_setpoint = edition_settings.timeout_znkh_perekl[group];
-                      if ((temp_setpoint % 2) != 0)
-                        temp_setpoint &= (~1u); //Це випадок коли прошивка змінилася з 2мс  циклом де допуск був встановлений непарнмй допуск
-                      do
-                      {
-                        //Величину витримки зменшуємо почергого на 1 мс (ф-ція edit_setpoint збільшує/зменшує з кроком кратних 1, 10 і т.д.), щоб отримати крок 2 мс
-                        temp_setpoint = edit_setpoint(0, temp_setpoint, 1, COL_TMO_ZNKh_PEREKL_COMMA, COL_TMO_ZNKh_PEREKL_END, 1);
-                      } while ((temp_setpoint % 2) != 0);
-                      edition_settings.timeout_znkh_perekl[group] = temp_setpoint;
+                      edition_settings.timeout_znkh_perekl[group] = edit_setpoint(0, edition_settings.timeout_znkh_perekl[group], 1, COL_TMO_ZNKh_PEREKL_COMMA, COL_TMO_ZNKh_PEREKL_END, 10);
                     }
                   }
                   //Формуємо екран витримок ЗНХ
@@ -10311,6 +10301,7 @@ void main_manu_function(void)
                         (
                           (current_ekran.index_position == INDEX_ML_TT2) ||
                           (current_ekran.index_position == INDEX_ML_TN2)) &&
+                        ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
                         ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
                         current_ekran.index_position++;
                     } while (current_ekran.index_position >= MAX_ROW_FOR_TRANSFORMATOR_INFO);
@@ -10405,15 +10396,15 @@ void main_manu_function(void)
                     //Редагування числа
                     if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_TOTAL)
                     {
-                      edition_settings.number_steps_rpn = edit_setpoint(1, edition_settings.number_steps_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                      edition_settings.number_steps_rpn = edit_setpoint(0, edition_settings.number_steps_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
                     }
                     else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_NOMINAL)
                     {
-                      edition_settings.number_step_nominal_rpn = edit_setpoint(1, edition_settings.number_step_nominal_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                      edition_settings.number_step_nominal_rpn = edit_setpoint(0, edition_settings.number_step_nominal_rpn, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
                     }
                     else if (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT)
                     {
-                      edition_current_step_logical = edit_setpoint(1, edition_current_step_logical, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
+                      edition_current_step_logical = edit_setpoint(0, edition_current_step_logical, 0, 0, COL_NUMBER_STEPS_RPN_END, 1);
                     }
                   }
 

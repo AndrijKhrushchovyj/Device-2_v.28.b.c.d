@@ -68,7 +68,55 @@ void make_ekran_transformator()
       name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
   }
 
-  unsigned int position_temp = current_ekran.index_position;
+  int additional_current = 0;
+  int position_temp = current_ekran.index_position;
+  int shift[MAX_ROW_FOR_TRANSFORMATOR_INFO] = {0};
+  /******************************************/
+  //Виключаємо поля, які не треба відображати
+  /******************************************/
+  //"Вимірювання ТН2"
+  /*
+  Не відображаємо "Вимірювання ТН2" у тому випадку, якщо у конфігурації РПН
+  вибрано алу настройка стоїть на 2-обмотковий трансформатор
+  
+  Інакше відображаємо вимірювання як з ТН1, так і з ТН2 (навіть якщо РПН виведено
+  з конфігурації, бо тоді, на мою думку, буде неможливо побачити вибір 2-обмю/3-обм.
+  трансформатор і виникне питання .чого в одному випідку ці вимірюванні відображаються,
+  а у іншому ні).
+  */
+  if (
+    ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+    ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+  {
+    while (additional_current < 2)
+    {
+      int index_deleted_feild;
+
+      if (additional_current == 0)
+        index_deleted_feild = INDEX_ML_TT2;
+      else
+        index_deleted_feild = INDEX_ML_TN2;
+
+      int i = index_deleted_feild - additional_current;
+
+      if ((i + 1) <= position_temp)
+        position_temp--;
+      do
+      {
+        for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        {
+          if ((i + 1) < MAX_ROW_FOR_TRANSFORMATOR_INFO)
+            name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+          else
+            name_string_tmp[i][j] = ' ';
+        }
+        shift[i] += 1;
+        i++;
+      } while (i < (MAX_ROW_FOR_TRANSFORMATOR_INFO - additional_current));
+      additional_current++;
+    }
+  }
+
   unsigned int vaga, value, first_symbol;
 
   //Множення на два величини position_temp потрібне для того, бо наодн позицію ми використовуємо два рядки (назва + значення)
@@ -78,14 +126,14 @@ void make_ekran_transformator()
   {
     int index_of_ekran_tmp = index_of_ekran >> 1;
     unsigned int view = ((current_ekran.edition == 0) || (position_temp != index_of_ekran_tmp));
-    if (index_of_ekran_tmp < MAX_ROW_FOR_TRANSFORMATOR_INFO)
+    if (index_of_ekran_tmp < (MAX_ROW_FOR_TRANSFORMATOR_INFO - additional_current))
     {
       if ((i & 0x1) == 0)
       {
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
           working_ekran[i][j] = name_string_tmp[index_of_ekran_tmp][j];
-        if (index_of_ekran_tmp == INDEX_ML_TT1)
+        if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT1)
         {
           vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC1
           if (view == true)
@@ -94,7 +142,7 @@ void make_ekran_transformator()
             value = edition_settings.TCurrent1;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
-        else if (index_of_ekran_tmp == INDEX_ML_TT2)
+        else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT2)
         {
           vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC2
           if (view == true)
@@ -103,7 +151,7 @@ void make_ekran_transformator()
             value = edition_settings.TCurrent2;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
-        else if (index_of_ekran_tmp == INDEX_ML_TN1)
+        else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TN1)
         {
           vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН1
           if (view == true)
@@ -112,7 +160,7 @@ void make_ekran_transformator()
             value = edition_settings.TVoltage1;
           first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
         }
-        else if (index_of_ekran_tmp == INDEX_ML_TN2)
+        else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TN2)
         {
           vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН2
           if (view == true)
@@ -128,8 +176,8 @@ void make_ekran_transformator()
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         {
           if (
-            (index_of_ekran_tmp == INDEX_ML_TT1) ||
-            (index_of_ekran_tmp == INDEX_ML_TT2))
+            ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT1) ||
+            ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT2))
           {
             if ((j < COL_TT_BEGIN) || (j > COL_TT_END))
               working_ekran[i][j] = ' ';

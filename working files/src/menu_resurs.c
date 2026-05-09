@@ -25,7 +25,7 @@ void make_ekran_resurs(void)
   unsigned int index_of_ekran;
   unsigned int vaga, value = 0, first_symbol;
 
-  index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+  index_of_ekran = ((position_temp<<1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
   unsigned int number_digits;
   unsigned int col_begin = 0, col_end = 0;
@@ -35,13 +35,13 @@ void make_ekran_resurs(void)
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     int index_of_ekran_tmp = index_of_ekran >> 1;
-    if (index_of_ekran < MAX_ROW_FOR_EKRAN_RESURS)
+    if (index_of_ekran_tmp < MAX_ROW_FOR_EKRAN_RESURS)
     {
       if ((i & 0x1) == 0)
       {
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-          working_ekran[i][j] = name_string[index_language][index_of_ekran][j];
+          working_ekran[i][j] = name_string[index_language][index_of_ekran_tmp][j];
 
         vaga = 1;          //початковий ваговий коефіцієнт
         number_digits = 1; //початкова кількість розрядів

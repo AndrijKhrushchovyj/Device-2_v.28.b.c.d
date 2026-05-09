@@ -124,7 +124,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     if ((target_label->configuration & (1 << RPN_BIT_CONFIGURATION)) == 0)
     {
       //Виводим ступені РПН
-      target_label->control_rpn = (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRRPN_STATE));
+      target_label->control_rpn &= (unsigned int) (~MASKA_FOR_BIT(INDEX_ML_CTRRPN_STATE));
 
       //Формуємо маски функцій РПН
       for (unsigned int i = 0; i < N_SMALL; i++)

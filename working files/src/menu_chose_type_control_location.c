@@ -220,9 +220,9 @@ void make_ekran_setpoints_control_location(void)
   }
 
   //Курсор видимий, якщо ми у режимі редагування
-  if (current_ekran.edition == 0)
-    current_ekran.cursor_on = 0;
-  else
+  // if (current_ekran.edition == 0)
+  //   current_ekran.cursor_on = 0;
+  // else
     current_ekran.cursor_on = 1;
 
   //Курсор не мигає

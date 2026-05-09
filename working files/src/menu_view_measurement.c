@@ -352,10 +352,96 @@ void make_ekran_measurement(void)
        " Логометр       ",
        " Сельсин        ",
        " Частоты        "}};
-  int const index_language = index_language_in_array(current_settings.language);
+  unsigned char name_string_tmp[MAX_ROW_FOR_MEASURMENT][MAX_COL_LCD];
 
+  int const index_language = index_language_in_array(current_settings.language);
+  for (int index_1 = 0; index_1 < MAX_ROW_FOR_MEASURMENT; index_1++)
+  {
+    for (int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+      name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
+  }
+
+  unsigned int additional_current = 0;
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
+
+  /******************************************/
+  //Виключаємо поля, які не треба відображати
+  /******************************************/
+  //"Вимірювання ТН2"
+  /*
+  Не відображаємо "Вимірювання ТН2" у тому випадку, якщо у конфігурації РПН
+  вибрано алу настройка стоїть на 2-обмотковий трансформатор
+  
+  Інакше відображаємо вимірювання як з ТН1, так і з ТН2 (навіть якщо РПН виведено
+  з конфігурації, бо тоді, на мою думку, буде неможливо побачити вибір 2-обмю/3-обм.
+  трансформатор і виникне питання .чого в одному випідку ці вимірюванні відображаються,
+  а у іншому ні).
+  */
+  if (
+    ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+    ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+  {
+    unsigned int i = INDEX_ML_MEASURMENT_2 - additional_current;
+
+    if ((i + 1) <= position_temp)
+      position_temp--;
+    do
+    {
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+      {
+        if ((i + 1) < MAX_ROW_FOR_MEASURMENT)
+          name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+        else
+          name_string_tmp[i][j] = ' ';
+      }
+      i++;
+    } while (i < (MAX_ROW_FOR_MEASURMENT - additional_current));
+    additional_current++;
+  }
+
+  //Логометр
+  if (current_settings.type_control_location != 1)
+  {
+    unsigned int i = INDEX_ML_MEASURMENT_LOGOMETR - additional_current;
+
+    if ((i + 1) <= position_temp)
+      position_temp--;
+    do
+    {
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+      {
+        if ((i + 1) < MAX_ROW_FOR_MEASURMENT)
+          name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+        else
+          name_string_tmp[i][j] = ' ';
+      }
+      i++;
+    } while (i < (MAX_ROW_FOR_MEASURMENT - additional_current));
+    additional_current++;
+  }
+
+  //Сельсин
+  if (current_settings.type_control_location != 2)
+  {
+    unsigned int i = INDEX_ML_MEASURMENT_SELSYN - additional_current;
+
+    if ((i + 1) <= position_temp)
+      position_temp--;
+    do
+    {
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+      {
+        if ((i + 1) < MAX_ROW_FOR_MEASURMENT)
+          name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+        else
+          name_string_tmp[i][j] = ' ';
+      }
+      i++;
+    } while (i < (MAX_ROW_FOR_MEASURMENT - additional_current));
+    additional_current++;
+  }
+  /******************************************/
 
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
@@ -363,9 +449,9 @@ void make_ekran_measurement(void)
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій коффігурації
-    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT)
+    if (index_of_ekran < (MAX_ROW_FOR_MEASURMENT - additional_current))
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
-        working_ekran[i][j] = name_string[index_language][index_of_ekran][j];
+        working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
     else
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = ' ';
@@ -403,7 +489,6 @@ void make_ekran_measuremet_for_selsyn(void)
        " Углы           "}};
   int index_language = index_language_in_array(current_settings.language);
 
-  unsigned int additional_current = 0;
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
 
@@ -413,7 +498,7 @@ void make_ekran_measuremet_for_selsyn(void)
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій коффігурації
-    if (index_of_ekran < (MAX_ROW_FOR_MEASURMENT - additional_current))
+    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_FOR_SELSYN)
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = name_string[index_language][index_of_ekran][j];
     else
