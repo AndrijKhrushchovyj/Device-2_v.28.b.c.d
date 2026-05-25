@@ -478,7 +478,7 @@ void start_settings_peripherals(void)
   if ((board_register_tmp & 0x01) == 0x01)
   {
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x1;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) >> 8) != 0x11)
+    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) >> 8) != 0x14)
       _SET_BIT(set_diagnostyka, ERROR_BA_1_CTLR);
   }
 #if ( \
@@ -664,7 +664,7 @@ void start_settings_peripherals(void)
   /*Вибір АЦП */
   GPIO_InitStructure.GPIO_Pin = GPIO_SELECTPin_ADC;
   GPIO_Init(GPIO_SELECT_ADC, &GPIO_InitStructure);
-  GPIO_ResetBits(GPIO_SELECT_ADC, GPIO_SELECTPin_ADC);
+  GPIO_SetBits(GPIO_SELECT_ADC, GPIO_SELECTPin_ADC);
 
   /*NSS_ADC каналу SPI_ADC */
   GPIO_InitStructure.GPIO_Pin = GPIO_NSSPin_ADC;
@@ -1005,7 +1005,7 @@ void start_settings_peripherals(void)
     SPI_I2S_ReceiveData(SPI_ADC);
 
   {
-    GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
+    GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC;
 
     //Посилаємо перше слово 0xffff
     while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET)
@@ -1031,7 +1031,7 @@ void start_settings_peripherals(void)
   }
 
   {
-    GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; //Підключаємо другий АЦП2
+    GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC; //Підключаємо другий АЦП2
 
     //Відправляємо число 0xa000 (+-10V)
     while (SPI_I2S_GetFlagStatus(SPI_ADC, SPI_I2S_FLAG_TXE) == RESET)
@@ -1044,7 +1044,7 @@ void start_settings_peripherals(void)
     GPIO_SetBits(GPIO_SPI_ADC, GPIO_NSSPin_ADC); //Знімаємо chip_select
     SPI_I2S_ReceiveData(SPI_ADC);                //Читаємо прийняті дані
 
-    GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC; //Підключаємо перший АЦП1
+    GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC; //Підключаємо перший АЦП1
   }
 
   //Дозволяємо переривання від прийнятого байту по SPI

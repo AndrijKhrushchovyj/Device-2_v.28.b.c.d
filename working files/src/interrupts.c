@@ -353,7 +353,7 @@ inline void diagnostyka_boards(void)
   {
     _SET_BIT(clear_diagnostyka, ERROR_BA_1_FIX);
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x1;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) >> 8) != 0x11)
+    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) >> 8) != 0x14)
       _SET_BIT(set_diagnostyka, ERROR_BA_1_CTLR);
     else
       _SET_BIT(clear_diagnostyka, ERROR_BA_1_CTLR);

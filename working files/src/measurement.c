@@ -84,7 +84,7 @@ void control_reading_ADCs(void)
     /*
     Визначаємо, який зараз активний АЦП
     */
-    unsigned int active_adc_old = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) == 0) ? 1 : 2;
+    unsigned int active_adc_old = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) == 0) ? 2 : 1;
 
     /*
     Визначаємо, який зараз треба активовувати АЦП і які дані треба передати
@@ -103,13 +103,13 @@ void control_reading_ADCs(void)
       */
       switch (active_adc_new)
       {
-        case 1:
+        case 2:
           {
             //АЦП1
             GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
             break;
           }
-        case 2:
+        case 1:
           {
             //АЦП2
             GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC;
@@ -610,7 +610,7 @@ void SPI_ADC_IRQHandler(void)
     (state_reading_ADCs == STATE_READING_WRITE_READ) ||
     (state_reading_ADCs == STATE_READING_READ))
   {
-    int const adc_number = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) != 0); // 0 = 0!=0; 1 = 1!=0
+    int const adc_number = ((GPIO_SELECT_ADC->ODR & GPIO_SELECTPin_ADC) == 0); // 0 = 1==0; 1 = 0==0
     unsigned int const number_canal = (adc_number == 0) ? ((read_value >> 12) & 0xf) : (NUMBER_CANALs_ADC1 + ((read_value >> 13) & 0x1));
 
     output_adc[number_canal].tick = tick_output_adc_p;
