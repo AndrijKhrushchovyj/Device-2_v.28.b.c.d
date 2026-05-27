@@ -80,7 +80,7 @@
                 </option>
                 <option>
                     <name>OCProductVersion</name>
-                    <state>9.40.2.67586</state>
+                    <state>9.70.4.21192</state>
                 </option>
                 <option>
                     <name>OCDynDriverList</name>
@@ -610,15 +610,15 @@
                 <option>
                     <name>IjetResetList</name>
                     <version>1</version>
-                    <state>10</state>
+                    <state>15</state>
                 </option>
                 <option>
                     <name>IjetHWResetDuration</name>
-                    <state>300</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>IjetHWResetDelay</name>
-                    <state>200</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>IjetPowerFromProbe</name>
@@ -796,7 +796,7 @@
                 </option>
                 <option>
                     <name>IjetPreferETB</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>IjetTraceSettingsList</name>
@@ -874,7 +874,7 @@
                 </option>
                 <option>
                     <name>IjetHWResetTimingOverride</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -931,7 +931,7 @@
                 </option>
                 <option>
                     <name>CCJLinkTCPIP</name>
-                    <state>10.0.0.55</state>
+                    <state>aaa.bbb.ccc.ddd</state>
                 </option>
                 <option>
                     <name>CCJLinkSpeedRadioV2</name>

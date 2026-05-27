@@ -70,7 +70,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>9.70.2.18199</state>
+                    <state>9.70.4.21192</state>
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
@@ -300,7 +300,7 @@
                 <option>
                     <name>CCAllowList</name>
                     <version>1</version>
-                    <state>00000000</state>
+                    <state>11111110</state>
                 </option>
                 <option>
                     <name>CCDebugInfo</name>
@@ -388,7 +388,7 @@
                 </option>
                 <option>
                     <name>CCOptLevel</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCOptStrategy</name>
@@ -397,7 +397,7 @@
                 </option>
                 <option>
                     <name>CCOptLevelSlave</name>
-                    <state>0</state>
+                    <state>3</state>
                 </option>
                 <option>
                     <name>CCPosIndRopi</name>
@@ -698,7 +698,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>device_2_v_14_1_6_0.bin</state>
+                    <state>device_2_v_28_1_0_0.bin</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -1273,7 +1273,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -1361,7 +1361,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -1370,7 +1370,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -1558,7 +1558,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -1646,7 +1646,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -1655,7 +1655,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -1933,7 +1933,7 @@
                             </option>
                             <option>
                                 <name>CCDiagSuppress</name>
-                                <state>Pa091</state>
+                                <state> Pa091</state>
                             </option>
                             <option>
                                 <name>CCDiagRemark</name>
@@ -1954,7 +1954,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -2042,7 +2042,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -2051,7 +2051,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -2239,7 +2239,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -2327,7 +2327,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -2336,7 +2336,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -2524,7 +2524,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -2612,7 +2612,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -2621,7 +2621,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -2812,7 +2812,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -2900,7 +2900,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -2909,7 +2909,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -3097,7 +3097,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -3185,7 +3185,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -3194,7 +3194,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -3415,7 +3415,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -3503,7 +3503,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -3512,7 +3512,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -3725,7 +3725,7 @@
                                     <option>
                                         <name>CCAllowList</name>
                                         <version>1</version>
-                                        <state>00000000</state>
+                                        <state>11111110</state>
                                     </option>
                                     <option>
                                         <name>CCDebugInfo</name>
@@ -3813,7 +3813,7 @@
                                     </option>
                                     <option>
                                         <name>CCOptLevel</name>
-                                        <state>0</state>
+                                        <state>3</state>
                                     </option>
                                     <option>
                                         <name>CCOptStrategy</name>
@@ -3822,7 +3822,7 @@
                                     </option>
                                     <option>
                                         <name>CCOptLevelSlave</name>
-                                        <state>0</state>
+                                        <state>3</state>
                                     </option>
                                     <option>
                                         <name>CCPosIndRopi</name>
@@ -4035,7 +4035,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -4123,7 +4123,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -4132,7 +4132,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -4323,7 +4323,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -4411,7 +4411,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -4420,7 +4420,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -4636,7 +4636,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -4724,7 +4724,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -4733,7 +4733,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -4921,7 +4921,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -5009,7 +5009,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -5018,7 +5018,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -5206,7 +5206,7 @@
                             <option>
                                 <name>CCAllowList</name>
                                 <version>1</version>
-                                <state>00000000</state>
+                                <state>11111110</state>
                             </option>
                             <option>
                                 <name>CCDebugInfo</name>
@@ -5294,7 +5294,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevel</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCOptStrategy</name>
@@ -5303,7 +5303,7 @@
                             </option>
                             <option>
                                 <name>CCOptLevelSlave</name>
-                                <state>0</state>
+                                <state>3</state>
                             </option>
                             <option>
                                 <name>CCPosIndRopi</name>
@@ -5931,7 +5931,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -6019,7 +6019,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -6028,7 +6028,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -6255,7 +6255,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -6343,7 +6343,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -6352,7 +6352,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -6540,7 +6540,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -6628,7 +6628,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -6637,7 +6637,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -6825,7 +6825,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -6913,7 +6913,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -6922,7 +6922,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>
@@ -7110,7 +7110,7 @@
                                 <option>
                                     <name>CCAllowList</name>
                                     <version>1</version>
-                                    <state>00000000</state>
+                                    <state>11111110</state>
                                 </option>
                                 <option>
                                     <name>CCDebugInfo</name>
@@ -7198,7 +7198,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevel</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCOptStrategy</name>
@@ -7207,7 +7207,7 @@
                                 </option>
                                 <option>
                                     <name>CCOptLevelSlave</name>
-                                    <state>0</state>
+                                    <state>3</state>
                                 </option>
                                 <option>
                                     <name>CCPosIndRopi</name>

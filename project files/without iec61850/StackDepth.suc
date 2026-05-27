@@ -32,6 +32,8 @@ possible calls DCD_IsoINIncomplete_ISR : USBD_IsoINIncomplete;
 possible calls USBD_IsoINIncomplete : ;
 possible calls DCD_IsoOUTIncomplete_ISR : USBD_IsoOUTIncomplete;
 possible calls USBD_IsoOUTIncomplete : ;
+possible calls USBD_OTG_ISR_Handler : ;
+possible calls USBD_StdDevReq : ;
 
 max recursion depth main_manu_function : 1;
 

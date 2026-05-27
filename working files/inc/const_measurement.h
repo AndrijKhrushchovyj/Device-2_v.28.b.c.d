@@ -101,22 +101,22 @@ R2-change to 86,6
 #define V_K_3_3_NORMAL_VALUE 0xb00
 
 //Канали
-#define C_VREF1 0
-#define C_IA_1_16 1
-#define C_IA_1 2
-#define C_UAB_TN2_16 3
-#define C_UAB_TN2 4
-#define C_UAB_TN1_16 5
+#define C_IA_1_16 0
+#define C_IA_1 1
+#define C_IA_2_16 2
+#define C_IA_2 3
+#define C_UAB_TN2_16 4
+#define C_UAB_TN2 5
 #define C_UAB_TN1 6
-#define C_UP1P2_16 7
-#define C_UP1P2_1 8
-#define C_UP2P3_16 9
+#define C_UAB_TN1_16 7
+#define C_UC1C2_1 8
+#define C_UC1C2_16 9
 #define C_UP2P3_1 10
-#define C_UC1C2_16 11
-#define C_UC1C2_1 12
-#define C_V_K_3_3 13
-#define C_IA_2 14
-#define C_IA_2_16 15
+#define C_UP2P3_16 11
+#define C_UP1P2_16 12
+#define C_UP1P2_1 13
+#define C_VREF1 14
+#define C_V_K_3_3 15
 #define C_ADC2_Ch0 (0 + NUMBER_CANALs_ADC1)
 #define C_ADC2_Ch1 (1 + NUMBER_CANALs_ADC1)
 

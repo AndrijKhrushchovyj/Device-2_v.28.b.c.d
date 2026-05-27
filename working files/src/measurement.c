@@ -105,13 +105,13 @@ void control_reading_ADCs(void)
       {
         case 2:
           {
-            //ÀÖÏ1
+            //ÀÖÏ2
             GPIO_SELECT_ADC->BSRRH = GPIO_SELECTPin_ADC;
             break;
           }
         case 1:
           {
-            //ÀÖÏ2
+            //ÀÖÏ1
             GPIO_SELECT_ADC->BSRRL = GPIO_SELECTPin_ADC;
             break;
           }
@@ -1768,7 +1768,7 @@ void calc_measurement(unsigned int number_group_stp)
     ortogonal_local[i] = ortogonal[i][bank_ortogonal_tmp];
   }
   adc2_channel0_averange_prt = adc2_channel0_averange[bank_ortogonal_tmp];
-  adc2_channel1_averange_prt = adc2_channel0_averange[bank_ortogonal_tmp];
+  adc2_channel1_averange_prt = adc2_channel1_averange[bank_ortogonal_tmp];
   bank_ortogonal = bank_ortogonal_tmp;
   adc2_read_after_start = true;
 
