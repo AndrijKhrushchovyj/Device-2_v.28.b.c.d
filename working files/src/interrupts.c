@@ -1035,100 +1035,10 @@ void TIM5_IRQHandler(void)
 #ifdef _TEST_DURATION
     uint32_t const start_tick = TIM2->CNT;
 #endif
+
     /*
-    Виконуємо дії по формування даних для аналогового реєстратора
+    Виставляємо повідослення пор необхідність оцифрувати каналів тестових значень
     */
-    if (data_for_oscylograph[head_data_for_oscylograph].DATA_fix == 0)
-    {
-      //Переповнення не зафіксоване
-      _SET_BIT(clear_diagnostyka, ERROR_OSCYLOJRAPH_OVERFLOW);
-
-      //Перевірка на те, чи не потрібно запустити роботу аналогового реєстртора на рівні "Вимірювання"
-      if (
-        (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) &&
-        (state_ar_record_m != STATE_AR_BLOCK_M) &&
-        (index_array_ar_tail != index_array_ar_heat))
-      {
-        state_ar_record_fatfs = STATE_AR_WRITE_FATFS;
-      }
-
-      if (
-        (
-          (state_ar_record_m == STATE_AR_NONE_M) ||
-          (state_ar_record_m == STATE_AR_WORK_STOP_M)) &&
-        (_CHECK_SET_BIT(active_functions, RANG_WORK_A_REJESTRATOR) != 0))
-      {
-        state_ar_record_m = STATE_AR_WORK_M;
-
-        if (state_ar_record_fatfs == STATE_AR_NONE_FATFS)
-          state_ar_record_fatfs = STATE_AR_WAIT_TO_WRITE_FATFS;
-      }
-      else if (
-        (state_ar_record_m == STATE_AR_WORK_M) &&
-        (_CHECK_SET_BIT(active_functions, RANG_WORK_A_REJESTRATOR) == 0))
-      {
-        state_ar_record_m = STATE_AR_WORK_STOP_M;
-      }
-      else if (
-        (state_ar_record_m == STATE_AR_WORK_STOP_M) &&
-        ((state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_BLOCK_FATFS)))
-      {
-        state_ar_record_m = STATE_AR_NONE_M;
-        if (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS)
-          state_ar_record_fatfs = STATE_AR_STOP_WRITE_FATFS;
-        else if (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS)
-          state_ar_record_fatfs = STATE_AR_NONE_FATFS;
-      }
-      else if (
-        (state_ar_record_m == STATE_AR_BLOCK_M) &&
-        ((state_ar_record_fatfs == STATE_AR_NONE_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_WAIT_TO_WRITE_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS) ||
-         (state_ar_record_fatfs == STATE_AR_BLOCK_FATFS)))
-      {
-        state_ar_record_m = STATE_AR_NONE_M;
-        if (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS)
-          state_ar_record_fatfs = STATE_AR_STOP_WRITE_FATFS;
-        else if (
-          (state_ar_record_fatfs == STATE_AR_WAIT_TO_WRITE_FATFS) ||
-          (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS))
-        {
-          state_ar_record_fatfs = STATE_AR_NONE_FATFS;
-        }
-
-        _SET_BIT(clear_diagnostyka, ERROR_AR_OVERLOAD_BUFFER_BIT);
-      }
-
-      //Мітка часу
-      data_for_oscylograph[head_data_for_oscylograph].time_stemp = current_tick;
-      data_for_oscylograph[head_data_for_oscylograph].state_ar_record = state_ar_record_m;
-
-      //Активні дискретні сигнали
-      unsigned int *label_to_active_functions_target = data_for_oscylograph[head_data_for_oscylograph].active_functions;
-      unsigned int *label_to_active_functions;
-      if (copying_active_functions == 0)
-        label_to_active_functions = (unsigned int *) active_functions;
-      else
-        label_to_active_functions = (unsigned int *) active_functions_copy;
-      for (unsigned int i = 0; i < N_BIG; i++)
-        *(label_to_active_functions_target + i) = *(label_to_active_functions + i);
-
-      if (++head_data_for_oscylograph >= MAX_INDEX_DATA_FOR_OSCYLOGRAPH)
-        head_data_for_oscylograph = 0;
-    }
-    else
-    {
-      //Переповнення зафіксоване
-      _SET_BIT(set_diagnostyka, ERROR_OSCYLOJRAPH_OVERFLOW);
-    }
-    /***/
-
-    /*
-       Виставляємо повідослення пор необхідність оцифрувати каналів тестових значень
-       */
     adc_TEST_VAL_read = true;
 
     //Опрацьовуємо дискретні входи

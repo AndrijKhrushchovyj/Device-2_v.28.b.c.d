@@ -73,11 +73,6 @@ void global_vareiables_installation(void)
     adc2_channel1_moment_value[i] = 0;
   }
 
-  for (unsigned int i = 0; i < MAX_INDEX_DATA_FOR_OSCYLOGRAPH; i++)
-  {
-    data_for_oscylograph[i].state_ar_record = STATE_AR_NONE_M;
-  }
-
   /**************************/
 
   /**************************/
@@ -1665,8 +1660,9 @@ void min_settings(__SETTINGS *target_label)
   target_label->timeout_pryvoda_VV = TIMEOUT_PRYVODA_VV_MIN;
   target_label->control_switch = 0;
 
-  target_label->prefault_number_periods = TIMEOUT_PREFAULT_MIN / 20;
-  target_label->postfault_number_periods = TIMEOUT_POSTFAULT_MIN / 20;
+  target_label->prefault_number_periods = TIMEOUT_PREFAULT_WORK / 20;
+  target_label->postfault_number_periods = TIMEOUT_POSTFAULT_WORK / 20;
+  target_label->diskretnt_number_periods = TIMEOUT_DISKRETN_WORK / 20;
   target_label->control_ar = 0;
 
   target_label->timeout_prolongation_work_digital_registrator = TIMEOUT_DR_ELONGATION_MIN;

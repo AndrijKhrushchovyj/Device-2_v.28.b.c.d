@@ -899,12 +899,6 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
       }
 
       unsigned char information[MAX_COL_LCD] = "                ";
-      static const unsigned char ms[MAX_NAMBER_LANGUAGE][3] =
-        {
-          "мс.",
-          "мс.",
-          "ms ",
-          "мс."};
       if ((number_finded_this_type_of_current == (index_of_ekran + k + 1)) && (index_cell_into_array < FIRST_INDEX_FIRST_DATA_DR))
       {
         //Ми знайшли потрібний блок
@@ -938,7 +932,6 @@ void make_ekran_title_analog_value_records_digital_registrator(void)
         information[local_index1++] = ' ';
         information[local_index1++] = ms[index_language][0];
         information[local_index1++] = ms[index_language][1];
-        information[local_index1++] = ms[index_language][2];
       }
       else
       {
@@ -1466,12 +1459,6 @@ void make_ekran_changing_signals_digital_registrator(void)
                 //У другому рядку відображаємо час зміни і яке значення прийняв зараз сигнал
                 unsigned char second_row[MAX_COL_LCD] = "                ";
                 unsigned char sring_of_time[8] = "        ";
-                static const unsigned char ms[MAX_NAMBER_LANGUAGE][3] =
-                  {
-                    "мс.",
-                    "мс.",
-                    "ms ",
-                    "мс."};
                 static const unsigned char passive_active[MAX_NAMBER_LANGUAGE][2][5] =
                   {
                     {"Пасс.", "Акт. "},
@@ -1510,7 +1497,6 @@ void make_ekran_changing_signals_digital_registrator(void)
                   second_row[local_index1++] = ' ';
                 second_row[local_index1++] = ms[index_language][0];
                 second_row[local_index1++] = ms[index_language][1];
-                second_row[local_index1++] = ms[index_language][2];
 
                 //Визначаємо стан даного дискретного сигналу
                 if ((array_new[index_of_function_in_the_slice >> 5] & (1 << (index_of_function_in_the_slice & ((1 << 5) - 1)))) != 0)

@@ -203,6 +203,7 @@ unsigned int set_new_settings_from_interface(unsigned int);
 void restore_trigger_functions(unsigned int *);
 void changing_diagnostyka_state(void);
 unsigned int count_number_set_bit(unsigned int *, unsigned int);
+void actions_after_changing_tiomouts_discret_ar(__SETTINGS *);
 
 long GetNumberChangingInLogElem(long lIdx);
 

@@ -7,7 +7,6 @@ extern unsigned int adc_TEST_VAL_read;
 extern unsigned int status_adc_read_work;
 extern const unsigned int input_adc[NUMBER_INPUTs_ADCs][2];
 extern EXTENDED_OUTPUT_DATA output_adc[NUMBER_INPUTs_ADCs];
-extern ROZSHYRENA_VYBORKA rozshyrena_vyborka;
 
 extern uint32_t tick_output_adc_p;
 extern unsigned int command_word_adc, command_word_adc_work, active_index_command_word_adc;
@@ -16,10 +15,6 @@ extern unsigned int channel_request, channel_answer;
 
 extern uint32_t step_timer_adc;
 extern uint32_t penultimate_tick_DATA_VAL, previous_tick_DATA_VAL;
-
-extern DATA_FOR_OSCYLOGRAPH data_for_oscylograph[MAX_INDEX_DATA_FOR_OSCYLOGRAPH];
-extern unsigned int head_data_for_oscylograph;
-extern unsigned int tail_data_for_oscylograph, DATA_VAL_tail_data_for_oscylograph;
 
 extern VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 extern unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
@@ -132,7 +127,6 @@ extern unsigned int trigger_functions_USB[N_BIG];
 extern unsigned int trigger_functions_RS485[N_BIG];
 extern unsigned int copying_active_functions;
 extern unsigned int active_functions_copy[N_BIG];
-extern unsigned int active_functions_trg[N_BIG];
 extern unsigned int active_functions_for_lower_moduls[N_BIG];
 extern unsigned int copying_active_functions_for_lower_moduls;
 extern unsigned int mutex_buttons;
@@ -233,6 +227,7 @@ extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;
 
 extern const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA];
+extern const unsigned char ms[MAX_NAMBER_LANGUAGE][2];
 
 extern unsigned int realDateTime;
 
@@ -339,8 +334,7 @@ extern unsigned char crc_info_rejestrator_ar_ctrl;
 extern __INFO_AR_REJESTRATOR info_rejestrator_ar_ctrl;
 //extern const unsigned int number_word_digital_part_ar;
 extern unsigned int forbidden_new_record_ar_mode_0;
-extern unsigned int state_ar_record_m, state_ar_record_prt, state_ar_record_fatfs;
-extern unsigned int prev_state_ar_record_m;
+extern unsigned int state_ar_record_prt, state_ar_record_fatfs;
 extern short int array_ar[SIZE_BUFFER_FOR_AR];
 extern short int volatile word_SRAM1;
 extern unsigned int index_array_ar_current;

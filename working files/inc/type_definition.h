@@ -216,6 +216,7 @@ typedef struct
   //Аналоговий реєстратор
   unsigned int prefault_number_periods;  //Час доаварійного масиву (кількість періодів промислової частоти)
   unsigned int postfault_number_periods; //Час післяарійного масиву (кількість періодів промислової частоти)
+  unsigned int diskretnt_number_periods; //Дискретність виборок (кількість періодів промислової частоти)
   unsigned int control_ar;               //Поля для управління аналоговим реєстратором
 
   //Комунікація
@@ -341,9 +342,9 @@ typedef struct
   unsigned int TCurrent2;
   unsigned int TVoltage1;
   unsigned int TVoltage2;
-  unsigned int control_extra_settings_1;
-  unsigned int prefault_number_periods;
   unsigned char name_of_cell[MAX_CHAR_IN_NAME_OF_CELL];
+  unsigned int prefault_number_periods;  //Час доаварійного масиву (кількість періодів промислової частоти)
+  unsigned int diskretnt_number_periods; //Дискретність виборок (кількість періодів промислової частоти)
   unsigned int cur_active_sources[N_BIG];
 } __HEADER_AR;
 
@@ -376,27 +377,6 @@ typedef struct
   uint32_t tick;
   int value;
 } EXTENDED_SAMPLE;
-
-typedef struct
-{
-  unsigned int time_p;
-  int data_p[NUMBER_ANALOG_CANALES];
-  float frequency_p;
-
-  unsigned int time_c;
-  int data_c[NUMBER_ANALOG_CANALES];
-  float frequency_c;
-} ROZSHYRENA_VYBORKA;
-
-typedef struct
-{
-  unsigned int time_stemp;
-  unsigned int DATA_fix;
-  int data[AR_NUMBER_ANALOG_CANALES];
-  unsigned int active_functions[N_BIG];
-  int state_ar_record;
-
-} DATA_FOR_OSCYLOGRAPH;
 
 typedef struct
 {

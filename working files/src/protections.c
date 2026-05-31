@@ -3591,7 +3591,6 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
 
   if (
     ((global_timers[INDEX_TIMER_FULL_AR_RECORD] >= MAX_TIME_FULL_AR_RECORD) && (_CHECK_SET_BIT(carrent_active_functions, RANG_WORK_A_REJESTRATOR) != 0)) ||
-    (state_ar_record_m == STATE_AR_BLOCK_M) ||
     (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS) ||
     (state_ar_record_fatfs == STATE_AR_BLOCK_FATFS))
   {
@@ -3672,9 +3671,6 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
               //Коефіцієнт трансформації TVoltage2
               header_ar.TVoltage2 = current_settings_prt.TVoltage2;
 
-              //Додаткові налаштування при яких було запущено аналоговий реєстратор
-              header_ar.control_extra_settings_1 = 0;
-
               //Час доаварійного масиву
               header_ar.prefault_number_periods = prefault_number_periods_tmp;
 
@@ -3739,9 +3735,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
     case STATE_AR_BLOCK_PRT:
       {
         //Аналізуємо чи немає умови почати новий запис поки ми не вийшли з блокованого стану
-        if (
-          (state_ar_record_fatfs == STATE_AR_NONE_FATFS) &&
-          (state_ar_record_m == STATE_AR_NONE_M))
+        if (state_ar_record_fatfs == STATE_AR_NONE_FATFS)
         {
           state_ar_record_prt = STATE_AR_NONE_PRT;
 
@@ -5351,8 +5345,8 @@ inline void main_protection(void)
     }
     if (not_null)
     {
-            _SET_BIT(active_functions, RANG_AVAR_DEFECT);
-//#warning "No Avar Error"
+      _SET_BIT(active_functions, RANG_AVAR_DEFECT);
+      //#warning "No Avar Error"
     }
     else
     {

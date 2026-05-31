@@ -202,6 +202,7 @@ extern unsigned int set_new_settings_from_interface(unsigned int);
 extern void restore_trigger_functions(unsigned int *);
 extern void changing_diagnostyka_state(void);
 extern unsigned int count_number_set_bit(unsigned int *, unsigned int);
+extern void actions_after_changing_tiomouts_discret_ar(__SETTINGS *);
 
 extern void set_bit(unsigned int *, unsigned int);
 extern void clear_bit(unsigned int *, unsigned int);

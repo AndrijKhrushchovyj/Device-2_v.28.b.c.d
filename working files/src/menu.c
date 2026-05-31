@@ -6600,10 +6600,15 @@ void main_manu_function(void)
                       edition_settings.prefault_number_periods = current_settings.prefault_number_periods;
                       current_ekran.position_cursor_x = COL_TMO_PREFAULT_BEGIN;
                     }
-                    else
+                    else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                     {
                       edition_settings.postfault_number_periods = current_settings.postfault_number_periods;
                       current_ekran.position_cursor_x = COL_TMO_POSTFAULT_BEGIN;
+                    }
+                    else
+                    {
+                      edition_settings.diskretnt_number_periods = current_settings.diskretnt_number_periods;
+                      current_ekran.position_cursor_x = COL_TMO_DISKRETN_BEGIN;
                     }
                   }
                   else if (current_ekran.current_level == EKRAN_VIEW_SETTING_LANGUAGE)
@@ -7188,9 +7193,14 @@ void main_manu_function(void)
                       if (edition_settings.prefault_number_periods != current_settings.prefault_number_periods)
                         found_changes = 1;
                     }
-                    else
+                    else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                     {
                       if (edition_settings.postfault_number_periods != current_settings.postfault_number_periods)
+                        found_changes = 1;
+                    }
+                    else
+                    {
+                      if (edition_settings.diskretnt_number_periods != current_settings.diskretnt_number_periods)
                         found_changes = 1;
                     }
                   }
@@ -8911,7 +8921,7 @@ void main_manu_function(void)
                         current_ekran.edition = 0;
                       }
                     }
-                    else
+                    else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                     {
                       if (check_data_setpoint((edition_settings.postfault_number_periods * 20), TIMEOUT_POSTFAULT_MIN, TIMEOUT_POSTFAULT_MAX) == 1)
                       {
@@ -8927,6 +8937,30 @@ void main_manu_function(void)
                         }
                         //Виходимо з режиму редагування
                         current_ekran.edition = 0;
+                      }
+                    }
+                    else
+                    {
+                      if (check_data_setpoint((edition_settings.diskretnt_number_periods * 20), TIMEOUT_DISKRETN_MIN, TIMEOUT_DISKRETN_MAX) == 1)
+                      {
+                        if ((edition_settings.diskretnt_number_periods % NUMBER_PEROPD_USEREDNENNJA) == 0)
+                        {
+                          if (edition_settings.diskretnt_number_periods != current_settings.diskretnt_number_periods)
+                          {
+                            //Помічаємо, що поле структури зараз буде змінене
+                            changed_settings = CHANGED_ETAP_EXECUTION;
+
+                            current_settings.diskretnt_number_periods = edition_settings.diskretnt_number_periods;
+                            //Виконуємо дії по зміні часових витримок дискрети аналогового реєстратора
+                            actions_after_changing_tiomouts_discret_ar(&current_settings);
+                            //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
+                            fix_change_settings(0, 1);
+                          }
+                          //Виходимо з режиму редагування
+                          current_ekran.edition = 0;
+                        }
+                        else
+                          current_ekran.edition = 4;
                       }
                     }
                   }
@@ -9860,15 +9894,25 @@ void main_manu_function(void)
                       } while ((temp_setpoint % 20) != 0);
                       edition_settings.prefault_number_periods = temp_setpoint / 20;
                     }
-                    else
+                    else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                     {
                       unsigned int temp_setpoint = edition_settings.postfault_number_periods * 20;
                       do
                       {
                         //Величину витримки збільшуємо почергого на 10 мс (ф-ція edit_setpoint збільшує/зменшує з крогом кратних 1, 10 і т.д.), щоб отримати крок 20 мс
-                        temp_setpoint = edit_setpoint(1, temp_setpoint, 1, COL_TMO_PREFAULT_COMMA, COL_TMO_PREFAULT_END, 10);
+                        temp_setpoint = edit_setpoint(1, temp_setpoint, 1, COL_TMO_POSTFAULT_COMMA, COL_TMO_POSTFAULT_END, 10);
                       } while ((temp_setpoint % 20) != 0);
                       edition_settings.postfault_number_periods = temp_setpoint / 20;
+                    }
+                    else
+                    {
+                      unsigned int temp_setpoint = edition_settings.diskretnt_number_periods * 20;
+                      do
+                      {
+                        //Величину витримки збільшуємо почергого на 10 мс (ф-ція edit_setpoint збільшує/зменшує з крогом кратних 1, 10 і т.д.), щоб отримати крок 20 мс
+                        temp_setpoint = edit_setpoint(1, temp_setpoint, 0, 0, COL_TMO_DISKRETN_END, 1);
+                      } while ((temp_setpoint % 20) != 0);
+                      edition_settings.diskretnt_number_periods = temp_setpoint / 20;
                     }
                   }
                   //Формуємо екран витримок аналогового реєстратора
@@ -10759,7 +10803,7 @@ void main_manu_function(void)
                       } while ((temp_setpoint % 20) != 0);
                       edition_settings.prefault_number_periods = temp_setpoint / 20;
                     }
-                    else
+                    else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                     {
                       unsigned int temp_setpoint = edition_settings.postfault_number_periods * 20;
                       do
@@ -10768,6 +10812,16 @@ void main_manu_function(void)
                         temp_setpoint = edit_setpoint(0, temp_setpoint, 1, COL_TMO_PREFAULT_COMMA, COL_TMO_PREFAULT_END, 10);
                       } while ((temp_setpoint % 20) != 0);
                       edition_settings.postfault_number_periods = temp_setpoint / 20;
+                    }
+                    else
+                    {
+                      unsigned int temp_setpoint = edition_settings.diskretnt_number_periods * 20;
+                      do
+                      {
+                        //Величину витримки збільшуємо почергого на 10 мс (ф-ція edit_setpoint збільшує/зменшує з крогом кратних 1, 10 і т.д.), щоб отримати крок 20 мс
+                        temp_setpoint = edit_setpoint(0, temp_setpoint, 0, 0, COL_TMO_DISKRETN_END, 1);
+                      } while ((temp_setpoint % 20) != 0);
+                      edition_settings.diskretnt_number_periods = temp_setpoint / 20;
                     }
                   }
                   //Формуємо екран витримок аналогового реєстратора
@@ -11708,13 +11762,19 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_PREFAULT_END))
                       current_ekran.position_cursor_x = COL_TMO_PREFAULT_BEGIN;
                   }
-                  else
+                  else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_POSTFAULT_COMMA)
                       current_ekran.position_cursor_x++;
                     if ((current_ekran.position_cursor_x < COL_TMO_POSTFAULT_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_TMO_POSTFAULT_END))
                       current_ekran.position_cursor_x = COL_TMO_POSTFAULT_BEGIN;
+                  }
+                  else
+                  {
+                    if ((current_ekran.position_cursor_x < COL_TMO_DISKRETN_BEGIN) ||
+                        (current_ekran.position_cursor_x >= COL_TMO_DISKRETN_END)) /*останній символ (одтнці) не редагуємо, бо крок редагування 20 мс (період промислової частоти)*/
+                      current_ekran.position_cursor_x = COL_TMO_DISKRETN_BEGIN;
                   }
                   //Формуємо екран витримок аналогового реєстратора
                   make_ekran_timeout_analog_registrator();
@@ -12627,13 +12687,19 @@ void main_manu_function(void)
                         (current_ekran.position_cursor_x > COL_TMO_PREFAULT_END))
                       current_ekran.position_cursor_x = COL_TMO_PREFAULT_END;
                   }
-                  else
+                  else if (current_ekran.index_position == INDEX_ML_TMOPOSTFAULT)
                   {
                     if (current_ekran.position_cursor_x == COL_TMO_POSTFAULT_COMMA)
                       current_ekran.position_cursor_x--;
                     if ((current_ekran.position_cursor_x < COL_TMO_POSTFAULT_BEGIN) ||
                         (current_ekran.position_cursor_x > COL_TMO_POSTFAULT_END))
                       current_ekran.position_cursor_x = COL_TMO_POSTFAULT_END;
+                  }
+                  else
+                  {
+                    if ((current_ekran.position_cursor_x < COL_TMO_DISKRETN_BEGIN) ||
+                        (current_ekran.position_cursor_x >= COL_TMO_DISKRETN_END)) /*останній символ (одтнці) не редагуємо, бо крок редагування 20 мс (період промислової частоти)*/
+                      current_ekran.position_cursor_x = (COL_TMO_DISKRETN_END - 1);
                   }
                   //Формуємо екран витримок аналогового реєстратора
                   make_ekran_timeout_analog_registrator();

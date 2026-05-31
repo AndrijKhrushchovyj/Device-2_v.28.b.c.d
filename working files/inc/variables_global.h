@@ -26,9 +26,6 @@ const unsigned int input_adc[NUMBER_INPUTs_ADCs][2] = {
   {2, 0x8010},
   {2, 0x8410}};
 EXTENDED_OUTPUT_DATA output_adc[NUMBER_INPUTs_ADCs];
-ROZSHYRENA_VYBORKA rozshyrena_vyborka;
-//12345
-uint32_t previous_states_MTZ04_vvid_pr_0;
 
 uint32_t tick_output_adc_p;
 unsigned int command_word_adc, command_word_adc_work, active_index_command_word_adc;
@@ -37,10 +34,6 @@ unsigned int channel_request, channel_answer;
 
 uint32_t step_timer_adc = TIM5_CCR1_2_VAL;
 uint32_t penultimate_tick_DATA_VAL, previous_tick_DATA_VAL;
-
-DATA_FOR_OSCYLOGRAPH data_for_oscylograph[MAX_INDEX_DATA_FOR_OSCYLOGRAPH];
-unsigned int head_data_for_oscylograph;
-unsigned int tail_data_for_oscylograph, DATA_VAL_tail_data_for_oscylograph;
 
 VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
@@ -357,7 +350,6 @@ unsigned int trigger_functions_USB[N_BIG];
 unsigned int trigger_functions_RS485[N_BIG];
 unsigned int copying_active_functions;
 unsigned int active_functions_copy[N_BIG];
-unsigned int active_functions_trg[N_BIG];
 unsigned int active_functions_for_lower_moduls[N_BIG];
 unsigned int copying_active_functions_for_lower_moduls;
 unsigned int mutex_buttons;
@@ -602,6 +594,7 @@ const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VY
     {'А', 'В', '%', 'с'},
     {'A', 'V', '%', 's'},
     {'А', 'В', '%', 'с'}};
+const unsigned char ms[MAX_NAMBER_LANGUAGE][2] = {"мс", "мс", "ms", "мс"};
 
 const uint32_t max_value_for_tf[1 + _FIX_NUMBER_PROTECTION][MAX_ROW_LIST_SOURCE_TF] =
   {
@@ -734,8 +727,7 @@ __INFO_AR_REJESTRATOR info_rejestrator_ar;
 unsigned char crc_info_rejestrator_ar_ctrl;
 __INFO_AR_REJESTRATOR info_rejestrator_ar_ctrl;
 unsigned int forbidden_new_record_ar_mode_0 /*= 0*/;
-unsigned int state_ar_record_m = STATE_AR_NONE_M, state_ar_record_prt = STATE_AR_NONE_PRT, state_ar_record_fatfs = STATE_AR_NONE_FATFS;
-unsigned int prev_state_ar_record_m = STATE_AR_NONE_M;
+unsigned int state_ar_record_prt = STATE_AR_NONE_PRT, state_ar_record_fatfs = STATE_AR_NONE_FATFS;
 SRAM1_AR short int array_ar[SIZE_BUFFER_FOR_AR];
 SRAM1 short int volatile word_SRAM1;
 unsigned int index_array_ar_current;

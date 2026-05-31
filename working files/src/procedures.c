@@ -2759,6 +2759,29 @@ void action_after_changing_resurs_pickup(__SETTINGS *const target_label)
 /*****************************************************/
 
 /*****************************************************/
+//Дії при зміні витримок для налалогового реєстратора
+/*****************************************************/
+void actions_after_changing_tiomouts_discret_ar(__SETTINGS *target_label)
+{
+  if ((target_label->prefault_number_periods % target_label->diskretnt_number_periods) != 0)
+  {
+    //Треба підкоректувати час доаварійного масиву, щоб він став кратним дискреті
+    unsigned int discret = target_label->prefault_number_periods / target_label->diskretnt_number_periods;
+    if (discret == 0)
+      discret = 1;
+    target_label->prefault_number_periods = discret * target_label->diskretnt_number_periods;
+    if (check_data_setpoint((target_label->prefault_number_periods * 20), TIMEOUT_PREFAULT_MIN, TIMEOUT_PREFAULT_MAX) == 0)
+    {
+      //Ця умова мала б виконуватися завжди
+
+      //Відбулася невизначена помилка, тому треба піти на перезавантаження
+      total_error_sw_fixed();
+    }
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
 /*****************************************************/
 //
 /*****************************************************/
