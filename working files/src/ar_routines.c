@@ -384,7 +384,7 @@ void ar_routine_with_fatfs(unsigned int before_full_start)
                 /***
             Копіюємо частину підготовлених даних у тимчасовий буфер для запису з допомогою FATFS
             ***/
-                static short int bufer_to_write[5 * NUMBER_POINT_AR * AR_TOTAL_NUMBER_CANALES]; /*5x0,02(c) = 0,1(c)*/
+                static short int bufer_to_write[5 * AR_TOTAL_NUMBER_CANALES];
                 short int *p_target = bufer_to_write;
                 short int *p_source = &array_ar[index_array_ar_tail_tmp];
                 size_t i = 0;
@@ -392,9 +392,9 @@ void ar_routine_with_fatfs(unsigned int before_full_start)
                   (index_array_ar_tail_tmp != index_array_ar_heat_tmp) &&
                   ((
                      ((POWER_CTRL->IDR & POWER_CTRL_PIN) != (uint32_t) Bit_RESET) &&
-                     (i < (1 * NUMBER_POINT_AR))) ||
+                     (i < 5)) ||
                    (((POWER_CTRL->IDR & POWER_CTRL_PIN) == (uint32_t) Bit_RESET) &&
-                    (i < (NUMBER_POINT_AR)))))
+                    (i < 1))))
                 {
                   if ((beforeArraySaved == false) && (index_array_ar_tail_tmp == index_array_tail_min))
                     beforeArraySaved = true;

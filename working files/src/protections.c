@@ -3547,8 +3547,211 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
 /*****************************************************/
 //Функція обробки логіки дискретного реєстратора
 /*****************************************************/
-inline void analog_registrator(unsigned int *carrent_active_functions)
+inline void fill_analog_registrator_buffer(unsigned int const *const p_counter_for_ar_discrets, unsigned int const *const p_diskret)
 {
+  if (p_counter_for_ar_discrets == 0)
+  {
+    //У буфер додаємо значення тільки тоді, коли лічильник на початку дискрети
+
+    unsigned int working_ar = false; /*по замовчуванню ставимо, що Аналоговий реєстратор не працює*/
+    unsigned int const index_array_ar_current_before = index_array_ar_current;
+
+    /*****
+    Формуємо масив значень і виконуємо операції для аналогового реєстратора
+    *****/
+    for (unsigned int i = 0; i < AR_NUMBER_ANALOG_CANALES; i++)
+    {
+#ifdef DEBUG_TEST
+//          *pointer_internal++ = (number_sample_ar << 8) | (i+1);
+#else
+      if ((i == I_UAB_TN1) || (i == I_UAB_TN2))
+      {
+        AR_WRITE(index_array_ar_current, (measurement[i] >> 3));
+      }
+      else
+      {
+        AR_WRITE(index_array_ar_current, (measurement[i] >> 2));
+      }
+#endif
+    }
+    //Індекс масиву об'єднаних виборок для аналогового реєстратора
+    if (index_array_ar_current >= SIZE_BUFFER_FOR_AR)
+      index_array_ar_current = 0; /*Умова мала б бути ==, але щоб перестахуватися на невизначену помилку я поставив >=*/
+
+#ifdef DEBUG_TEST
+//          number_sample_ar++;
+#endif
+    /*****/
+
+    if (
+      (state_ar_record_prt == STATE_AR_NONE_PRT) &&
+      ((state_ar_record_fatfs == STATE_AR_NONE_FATFS) ||
+       (state_ar_record_fatfs == STATE_AR_STOP_WRITE_FATFS) ||
+       (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS) ||
+       (state_ar_record_fatfs == STATE_AR_BLOCK_FATFS)) /*умова, що на даний момент часу не ішов запис даних у енергонезалежну пам'ять*/
+    )
+    {
+      working_ar = false;
+      //Випадок, коли Аналоговий реєстратор не працює
+      index_array_ar_tail = index_array_tail_min = index_array_ar_heat = index_array_ar_current;
+      tail_to_heat = current_to_tail = false;
+    }
+    else
+    {
+      working_ar = true;
+
+      if (
+        (state_ar_record_prt == STATE_AR_AVAR_PRT) ||
+        (state_ar_record_prt == STATE_AR_POSTAVAR_PRT))
+      {
+        /*
+        Вже новий зріз післяаварійного масиву доданий у масив
+        */
+        if (prev_state_ar_record_prt == STATE_AR_NONE_PRT)
+        {
+          //Умова, що треба включити доаварійний масив для запису
+
+          int difference;
+          /*
+          оскільки 1 післяаварійних зрізів доданио у масив,
+          то для визначення першої мітки післяаварійного масиву від index_array_ar_current
+          відняти кількість значень у одному зрізі
+          */
+          /*
+          Встановлюємо мітку першого миттєвого значееня післяаваріного масиву і 
+          тимчасово помісчаємо її у змінну "вигрузки" для того, щоб дальша програма 
+          мала "універсальний", тобто прстіший, вигляд
+          */
+          difference = index_array_ar_current - AR_TOTAL_NUMBER_CANALES;
+          if (difference >= 0)
+            index_array_ar_tail = difference;
+          else
+            index_array_ar_tail = difference + SIZE_BUFFER_FOR_AR;
+
+          //Встановлюємо мітку "вигрузки" в умовах холодного або близького КЗ з пропаданням оперативного живлення
+          unsigned int const number_samples_prefault_min = AR_TAIL_MIN_NUMBER_PERIOD / (*p_diskret);
+          difference = index_array_ar_tail - number_samples_prefault_min * AR_TOTAL_NUMBER_CANALES;
+          if (difference >= 0)
+            index_array_tail_min = difference;
+          else
+            index_array_tail_min = difference + SIZE_BUFFER_FOR_AR;
+
+          //Встановлюємо мітку "вигрузки"
+          unsigned int const number_samples_prefault = header_ar.prefault_number_periods / (*p_diskret);
+          difference = index_array_ar_tail - number_samples_prefault * AR_TOTAL_NUMBER_CANALES;
+
+          if (difference >= 0)
+            index_array_ar_tail = difference;
+          else
+            index_array_ar_tail = difference + SIZE_BUFFER_FOR_AR;
+        }
+
+        index_array_ar_heat = index_array_ar_current;
+        tail_to_heat = false;
+      }
+    }
+
+    prev_state_ar_record_prt = state_ar_record_prt;
+
+    /***
+      Визначаємо, чи не відбулося переповнення      
+      working_ar - значення у цьому місці відповідає останньому часовому зрізу, який доданий у буфер
+      ***/
+
+    if (working_ar != false)
+    {
+      /***
+        Початок відділку беремо від index_array_ar_current_before;
+        ***/
+
+      int end_tmp = index_array_ar_current - index_array_ar_current_before;
+      if (end_tmp < 0)
+        end_tmp += SIZE_BUFFER_FOR_AR;
+
+      int tail_tmp = index_array_ar_tail - index_array_ar_current_before;
+      if (
+        (tail_tmp < 0) ||
+        ((tail_tmp == 0) &&
+         (current_to_tail == false)))
+      {
+        tail_tmp += SIZE_BUFFER_FOR_AR;
+      }
+
+      if (tail_tmp <= end_tmp)
+      {
+        current_to_tail = true;
+
+        if (tail_tmp < end_tmp)
+        {
+          //Помилкова ситуація, яка викликана переповненням
+          _SET_BIT(set_diagnostyka, ERROR_AR_OVERLOAD_BUFFER_BIT);
+
+          state_ar_record_prt = STATE_AR_BLOCK_PRT;
+        }
+      }
+      else
+        current_to_tail = false;
+
+      diff_index_heat_tail = tail_tmp - end_tmp;
+    }
+    else
+      diff_index_heat_tail = -1;
+
+    diff_index_heat_tail = index_array_ar_current - index_array_ar_tail;
+    if (diff_index_heat_tail < 0)
+      diff_index_heat_tail += SIZE_BUFFER_FOR_AR;
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Функція обробки логіки дискретного реєстратора
+/*****************************************************/
+inline void analog_registrator(unsigned int *carrent_active_functions, unsigned int number_main_canal)
+{
+  /*******************************/
+  //Визначаємо струм-напругу основного і допоміжного каналів
+  /*******************************/
+  //  unsigned int base_faze_current, second_faze_current = 0;
+  unsigned int base_faze_voltage = 0 /*, second_faze_voltage = 0*/;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        //      base_faze_current = measurement_prt[I_IA_1];
+        base_faze_voltage = measurement[I_UAB_TN1];
+
+        //      if (triple_wound)
+        //      {
+        //        second_faze_current = measurement[I_IA_2];
+        //        second_faze_voltage = measurement[I_UAB_TN2];
+        //      }
+
+        break;
+      }
+    case 2:
+      {
+        //      base_faze_current = measurement_prt[I_IA_2];
+        base_faze_voltage = measurement[I_UAB_TN2];
+
+        //      if (triple_wound)
+        //      {
+        //        second_faze_current = measurement[I_IA_1];
+        //        second_faze_voltage = measurement[I_UAB_TN1];
+        //      }
+
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
+  unsigned int counter_for_ar_discrets = 0;
   static unsigned int prev_active_sources[N_BIG];
   unsigned int cur_active_sources[N_BIG];
   for (size_t i = 0; i < N_BIG; ++i)
@@ -3566,7 +3769,9 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
     - появитьс новий сигнал запуску, якого не було раніше
     */
     ZERO_AND(comp, cur_active_sources, N_BIG)
-    if (comp)
+    if (
+      (base_faze_voltage < PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) ||
+      (comp))
     {
       //Перша умова розблокування можливості початку нового запису виконана
       forbidden_new_record_ar_mode_0 = 0;
@@ -3614,6 +3819,16 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
     header_ar.time_ms = time_ms;
   }
 
+  /*
+  Інкрементуємо лічильник (визначення дискрети) а обробляти його будемо пізніше,
+  бо можливо прийде сигнал почати новий запис і тоді цей лічильник треба буде 
+  перевести на початок дискрети
+  */
+  unsigned int const diskret = (state_ar_record_prt == STATE_AR_NONE_PRT) ? current_settings_prt.diskretnt_number_periods : header_ar.diskretnt_number_periods;
+
+  if ((++counter_for_ar_discrets) >= (diskret * 20))
+    counter_for_ar_discrets = 0;
+
   switch (state_ar_record_prt)
   {
     case STATE_AR_NONE_PRT:
@@ -3628,6 +3843,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
         NOT_ZERO_OR(comp, cur_active_sources, N_BIG)
         if (
           (
+            (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) &&
             (comp) &&
             (forbidden_new_record_ar_mode_0 == 0) /*при попередній роботі ан.реєстротора (якщо така була) вже всі джерела активації були зняті і зароз вони знову виникли*/
             ) ||
@@ -3655,6 +3871,11 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
               prefault_number_periods_tmp = ((POWER_CTRL->IDR & POWER_CTRL_PIN) != (uint32_t) Bit_RESET) ? current_settings_prt.prefault_number_periods : AR_TAIL_MIN_NUMBER_PERIOD;
               global_timers[INDEX_TIMER_FULL_AR_RECORD] = 20 * prefault_number_periods_tmp; //Запускаємо таймер цілого запису  з врахуванням що буде доданий доаварійний масив
 
+              /*****
+              Лічильник (визначення дискрети) переводимо на початок дискрети
+              ******/
+              counter_for_ar_discrets = 0;
+
               //Записуємо мітку початку запису
               header_ar.label_start_record = LABEL_START_RECORD_AR;
               //Записуємо час початку запису
@@ -3673,6 +3894,8 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
 
               //Час доаварійного масиву
               header_ar.prefault_number_periods = prefault_number_periods_tmp;
+              //Дискретність запису
+              header_ar.diskretnt_number_periods = current_settings_prt.diskretnt_number_periods;
 
               //І'мя комірки
               for (unsigned int i = 0; i < MAX_CHAR_IN_NAME_OF_CELL; i++)
@@ -3694,6 +3917,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
       {
         ZERO_AND(comp, cur_active_sources, N_BIG)
         if (
+          (base_faze_voltage < PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) ||
           (comp) ||
           ((current_settings_prt.control_ar & MASKA_FOR_BIT(INDEX_ML_CTR_AR_AVAR_STATE)) == 0) /*може статися хіба, коли під час роботи ан.реєстратора змінено це налаштування*/
         )
@@ -3709,6 +3933,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
         NOT_ZERO_OR(comp, cur_active_sources, N_BIG)
 
         if (
+          (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) &&
           ((current_settings_prt.control_ar & MASKA_FOR_BIT(INDEX_ML_CTR_AR_AVAR_STATE)) != 0) &&
           (comp))
         {
@@ -3740,7 +3965,9 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
           state_ar_record_prt = STATE_AR_NONE_PRT;
 
           NOT_ZERO_OR(comp, cur_active_sources, N_BIG)
-          if (comp)
+          if (
+            (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) &&
+            (comp))
           {
             forbidden_new_record_ar_mode_0 = 0xff; /*помічаємо будь-яким числом, що є активними деякі сигнали від попереднього записту*/
           }
@@ -3784,6 +4011,8 @@ inline void analog_registrator(unsigned int *carrent_active_functions)
     prev_active_sources[i] = cur_active_sources[i];
 
   start_ar = 0;
+
+  fill_analog_registrator_buffer(&counter_for_ar_discrets, &diskret);
 }
 /*****************************************************/
 
@@ -5831,7 +6060,7 @@ inline void main_protection(void)
   /**************************/
   //Обробка аналогового реєстратора
   /**************************/
-  analog_registrator(active_functions);
+  analog_registrator(active_functions, number_main_canal);
   /**************************/
 
   /**************************/

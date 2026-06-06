@@ -728,6 +728,7 @@ unsigned char crc_info_rejestrator_ar_ctrl;
 __INFO_AR_REJESTRATOR info_rejestrator_ar_ctrl;
 unsigned int forbidden_new_record_ar_mode_0 /*= 0*/;
 unsigned int state_ar_record_prt = STATE_AR_NONE_PRT, state_ar_record_fatfs = STATE_AR_NONE_FATFS;
+unsigned int prev_state_ar_record_prt = STATE_AR_NONE_PRT;
 SRAM1_AR short int array_ar[SIZE_BUFFER_FOR_AR];
 SRAM1 short int volatile word_SRAM1;
 unsigned int index_array_ar_current;

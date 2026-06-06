@@ -182,7 +182,9 @@ enum _index_channel
   I_IA_2,
   I_UAB_TN1,
   I_UAB_TN2,
-  I_UC1C2,
+
+  _NUMBER_ANALOG_CANALES_AR,
+  I_UC1C2 = _NUMBER_ANALOG_CANALES_AR,
   I_UP1P2,
   I_UP2P3,
 

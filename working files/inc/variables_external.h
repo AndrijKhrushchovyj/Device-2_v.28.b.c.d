@@ -335,6 +335,7 @@ extern __INFO_AR_REJESTRATOR info_rejestrator_ar_ctrl;
 //extern const unsigned int number_word_digital_part_ar;
 extern unsigned int forbidden_new_record_ar_mode_0;
 extern unsigned int state_ar_record_prt, state_ar_record_fatfs;
+extern unsigned int prev_state_ar_record_prt;
 extern short int array_ar[SIZE_BUFFER_FOR_AR];
 extern short int volatile word_SRAM1;
 extern unsigned int index_array_ar_current;

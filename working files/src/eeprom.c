@@ -1298,7 +1298,7 @@ void main_routines_for_spi1(void)
               //Онулюємо доаварійний масив перед стартом захистів
               {
                 uint32_t const number_words_slice = AR_TOTAL_NUMBER_CANALES;
-                uint32_t total_size = (current_settings.prefault_number_periods << VAGA_NUMBER_POINT_AR) * number_words_slice;
+                uint32_t total_size = (current_settings.prefault_number_periods / current_settings.diskretnt_number_periods) * number_words_slice;
                 int32_t difference = index_array_ar_heat - total_size;
                 uint32_t index = (difference >= 0) ? difference : (difference + SIZE_BUFFER_FOR_AR);
 
@@ -1515,8 +1515,7 @@ void main_routines_for_spi1(void)
               {
                 //Перевірка запису юстуючих коефіцієнтів
                 if (
-                  (ustuvannja_comp[i] != ustuvannja_tmp[i])
-                )
+                  (ustuvannja_comp[i] != ustuvannja_tmp[i]))
                 {
                   difference = 0xff;
                 }
@@ -2644,7 +2643,7 @@ void main_routines_for_spi1(void)
 
       while ((empty_block != 0) && (i < (sizeof(sum_phi_begin) + sizeof(sum_phi_end) + 1)))
       {
-        if (TxBuffer_SPI_EDF[3 + i] != 0xff)
+        if (RxBuffer_SPI_EDF[3 + i] != 0xff)
           empty_block = 0;
         i++;
       }
@@ -2664,7 +2663,7 @@ void main_routines_for_spi1(void)
         point = (unsigned char *) (&sum_phi_begin_tmp);
         for (i = 0; i < sizeof(sum_phi_begin_tmp); i++)
         {
-          temp_value = TxBuffer_SPI_EDF[offset + i];
+          temp_value = RxBuffer_SPI_EDF[offset + i];
           *(point) = temp_value;
           crc_eeprom_angle += temp_value;
           point++;
@@ -2674,14 +2673,14 @@ void main_routines_for_spi1(void)
         point = (unsigned char *) (&sum_phi_end_tmp);
         for (i = 0; i < sizeof(sum_phi_end_tmp); i++)
         {
-          temp_value = TxBuffer_SPI_EDF[offset + i];
+          temp_value = RxBuffer_SPI_EDF[offset + i];
           *(point) = temp_value;
           crc_eeprom_angle += temp_value;
           point++;
         }
         offset += sizeof(sum_phi_end_tmp);
 
-        if (TxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_angle) & 0xff)))
+        if (RxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_angle) & 0xff)))
         {
           //Контролдьна сума сходиться
 
@@ -2759,7 +2758,7 @@ void main_routines_for_spi1(void)
 
       while ((empty_block != 0) && (i < (sizeof(counter_today) + sizeof(counter_previous_day) + sizeof(counter_total) + 1)))
       {
-        if (TxBuffer_SPI_EDF[3 + i] != 0xff)
+        if (RxBuffer_SPI_EDF[3 + i] != 0xff)
           empty_block = 0;
         i++;
       }
@@ -2779,7 +2778,7 @@ void main_routines_for_spi1(void)
         point = (unsigned char *) (&counter_today_tmp);
         for (i = 0; i < sizeof(counter_today_tmp); i++)
         {
-          temp_value = TxBuffer_SPI_EDF[offset + i];
+          temp_value = RxBuffer_SPI_EDF[offset + i];
           *(point) = temp_value;
           crc_eeprom_resurs += temp_value;
           point++;
@@ -2789,7 +2788,7 @@ void main_routines_for_spi1(void)
         point = (unsigned char *) (&counter_previous_day_tmp);
         for (i = 0; i < sizeof(counter_previous_day_tmp); i++)
         {
-          temp_value = TxBuffer_SPI_EDF[offset + i];
+          temp_value = RxBuffer_SPI_EDF[offset + i];
           *(point) = temp_value;
           crc_eeprom_resurs += temp_value;
           point++;
@@ -2799,14 +2798,14 @@ void main_routines_for_spi1(void)
         point = (unsigned char *) (&counter_total_tmp);
         for (i = 0; i < sizeof(counter_total_tmp); i++)
         {
-          temp_value = TxBuffer_SPI_EDF[offset + i];
+          temp_value = RxBuffer_SPI_EDF[offset + i];
           *(point) = temp_value;
           crc_eeprom_resurs += temp_value;
           point++;
         }
         offset += sizeof(counter_total_tmp);
 
-        if (TxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_resurs) & 0xff)))
+        if (RxBuffer_SPI_EDF[offset] == ((unsigned char) ((~(unsigned int) crc_eeprom_resurs) & 0xff)))
         {
           //Контролдьна сума сходиться
 
