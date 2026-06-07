@@ -3547,9 +3547,10 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
 /*****************************************************/
 //‘ункц≥€ обробки лог≥ки дискретного реЇстратора
 /*****************************************************/
-inline void fill_analog_registrator_buffer(unsigned int const *const p_counter_for_ar_discrets, unsigned int const *const p_diskret)
+//#pragma optimize=none
+inline static void fill_analog_registrator_buffer(unsigned int const *const p_counter_for_ar_discrets, unsigned int const *const p_diskret)
 {
-  if (p_counter_for_ar_discrets == 0)
+  if (*p_counter_for_ar_discrets == 0)
   {
     //” буфер додаЇмо значенн€ т≥льки тод≥, коли л≥чильник на початку дискрети
 
@@ -3707,6 +3708,7 @@ inline void fill_analog_registrator_buffer(unsigned int const *const p_counter_f
 /*****************************************************/
 //‘ункц≥€ обробки лог≥ки дискретного реЇстратора
 /*****************************************************/
+//#pragma optimize=none
 inline void analog_registrator(unsigned int *carrent_active_functions, unsigned int number_main_canal)
 {
   /*******************************/
@@ -3751,7 +3753,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions, unsigned 
   }
   /*******************************/
 
-  unsigned int counter_for_ar_discrets = 0;
+  static unsigned int counter_for_ar_discrets = 0;
   static unsigned int prev_active_sources[N_BIG];
   unsigned int cur_active_sources[N_BIG];
   for (size_t i = 0; i < N_BIG; ++i)
@@ -3945,7 +3947,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions, unsigned 
         {
           //«авершивс€ п≥сл€авар≥йний процес
           global_timers[INDEX_TIMER_POSTFAULT] = -1; //«упин€Їмо таймер п≥сл€авар≥йного процесу
-          state_ar_record_prt = STATE_AR_NONE_PRT;
+          state_ar_record_prt = STATE_AR_TERMINATE;
 
           if (
             /*перев≥рку на те, що режим "¬ласнеавар≥йний процес" ув≥мкнутий не треба, бо при умов≥ активних джерел ми б попали у попередню умову де з п≥сл€авар≥ного процесу йде поворот до авар≥йного процесу*/
@@ -3958,6 +3960,7 @@ inline void analog_registrator(unsigned int *carrent_active_functions, unsigned 
         break;
       }
     case STATE_AR_BLOCK_PRT:
+    case STATE_AR_TERMINATE:
       {
         //јнал≥зуЇмо чи немаЇ умови почати новий запис поки ми не вийшли з блокованого стану
         if (state_ar_record_fatfs == STATE_AR_NONE_FATFS)

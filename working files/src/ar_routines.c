@@ -3,19 +3,48 @@
 /*****************************************************/
 //Виконання дій по формуванні даних для аналогового реєстратора
 /*****************************************************/
-inline void ar_update_states(void)
+inline static void ar_update_states(void)
 {
   if (
     (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) &&
+    (state_ar_record_prt != STATE_AR_BLOCK_PRT) &&
     (index_array_ar_tail != index_array_ar_heat))
   {
     state_ar_record_fatfs = STATE_AR_WRITE_FATFS;
   }
 
-  if (_CHECK_SET_BIT(active_functions, RANG_WORK_A_REJESTRATOR) != 0)
+  if ((state_ar_record_fatfs == STATE_AR_NONE_FATFS) &&
+      (_CHECK_SET_BIT(active_functions, RANG_WORK_A_REJESTRATOR) != 0))
   {
-    if (state_ar_record_fatfs == STATE_AR_NONE_FATFS)
-      state_ar_record_fatfs = STATE_AR_WAIT_TO_WRITE_FATFS;
+    state_ar_record_fatfs = STATE_AR_WAIT_TO_WRITE_FATFS;
+  }
+  else if (
+    (state_ar_record_prt == STATE_AR_TERMINATE) &&
+    ((state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) ||
+     (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS) ||
+     (state_ar_record_fatfs == STATE_AR_BLOCK_FATFS)))
+  {
+    if (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS)
+      state_ar_record_fatfs = STATE_AR_STOP_WRITE_FATFS;
+    else if (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS)
+      state_ar_record_fatfs = STATE_AR_NONE_FATFS;
+  }
+  else if (
+    (state_ar_record_prt == STATE_AR_BLOCK_PRT) &&
+    ((state_ar_record_fatfs == STATE_AR_WAIT_TO_WRITE_FATFS) ||
+     (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS) ||
+     (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS)))
+  {
+    if (state_ar_record_fatfs == STATE_AR_WAIT_TO_STOP_WRITE_FATFS)
+      state_ar_record_fatfs = STATE_AR_STOP_WRITE_FATFS;
+    else if (
+      (state_ar_record_fatfs == STATE_AR_WAIT_TO_WRITE_FATFS) ||
+      (state_ar_record_fatfs == STATE_AR_MEMORY_FULL_FATFS))
+    {
+      state_ar_record_fatfs = STATE_AR_NONE_FATFS;
+    }
+
+    _SET_BIT(clear_diagnostyka, ERROR_AR_OVERLOAD_BUFFER_BIT);
   }
 }
 /*****************************************************/
