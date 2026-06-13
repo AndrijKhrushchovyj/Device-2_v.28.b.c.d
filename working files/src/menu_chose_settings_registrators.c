@@ -160,7 +160,7 @@ void make_ekran_timeout_analog_registrator(void)
         }
         else if (index_of_ekran_tmp == INDEX_ML_TMODISKRETN)
         {
-          vaga = 1000; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки "Дискретність"
+          vaga = 100; //максимальний ваговий коефіцієнт для вилілення старшого розряду для витримки "Дискретність"
           if (view == true)
             value = current_settings.diskretnt_number_periods * 20; //у змінну value поміщаємо значення витримки "Час післяаварійного масиву" але виражену не у періодах, а у мілісекундах
           else
