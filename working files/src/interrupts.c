@@ -636,7 +636,6 @@ inline void input_scan(void)
 #if (                              \
   (MODYFIKACIA_VERSII_PZ != 18) && \
   (MODYFIKACIA_VERSII_PZ != 8))
-#pragma diag_suppress = Pa082
   unsigned int const state_inputs_into_pin = (_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) & 0xffff)
 
 #if (                             \

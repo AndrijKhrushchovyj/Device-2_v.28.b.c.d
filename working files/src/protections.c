@@ -2326,18 +2326,21 @@ inline void control_VV(unsigned int *p_active_functions)
 /*****************************************************/
 //Перевірка на необхідність завершення роботи аналогового/дискретного реєстраторів
 /*****************************************************/
-inline unsigned int stop_regisrator(unsigned int *carrent_active_functions, unsigned int *ranguvannja_registrator)
+inline unsigned int stop_regisrator(unsigned int *carrent_active_functions, unsigned int *ranguvannja_registrator, unsigned int const base_faze_voltage)
 {
   if (global_timers[INDEX_TIMER_DR_WORK] < 0)
-    global_timers[INDEX_TIMER_DR_WORK] = DELTA_TIME_FOR_TIMERS; /*вже, к мінімум з моменту запуску ДР процшло стільки мілісекунд*/
+    global_timers[INDEX_TIMER_DR_WORK] = DELTA_TIME_FOR_TIMERS; /*вже, як мінімум з моменту запуску ДР процшло стільки мілісекунд*/
 
-  int flag = 0;
-  for (size_t m = 0; m < N_BIG; ++m)
+  int flag = (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV);
+  if (flag == 0)
   {
-    if ((carrent_active_functions[m] & ranguvannja_registrator[m]) != 0)
+    for (size_t m = 0; m < N_BIG; ++m)
     {
-      flag = (1u << 0);
-      break;
+      if ((carrent_active_functions[m] & ranguvannja_registrator[m]) != 0)
+      {
+        flag = (1u << 0);
+        break;
+      }
     }
   }
 
@@ -2972,7 +2975,7 @@ long tstBrrFooSelector = 0; //змінна для тестів і перевірок
 /*****************************************************/
 //Функція обробки логіки дискретного реєстратора
 /*****************************************************/
-inline void digital_registrator(unsigned int *carrent_active_functions)
+inline void digital_registrator(unsigned int *carrent_active_functions, unsigned int number_main_canal)
 {
 
   /***
@@ -3004,6 +3007,26 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
   }
   /***/
 
+  /***
+  Формуємо маску біт, які треба виключити з моніторингу
+  ***/
+  unsigned int maska_vykluchennja[N_BIG] = {0};
+  if ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_STRUMOVA_COMP)) == 0)
+  {
+    _SET_BIT(maska_vykluchennja, RANG_PO1_U_OSN_KOMP_RPN);
+    _SET_BIT(maska_vykluchennja, RANG_PO2_U_OSN_KOMP_RPN);
+  }
+  else
+  {
+    _SET_BIT(maska_vykluchennja, RANG_PO1_U_OSN_RPN);
+    _SET_BIT(maska_vykluchennja, RANG_PO2_U_OSN_RPN);
+  }
+  for (size_t i = 0; i < N_BIG; ++i)
+  {
+    maska_vykluchennja[i] = (unsigned int) (~maska_vykluchennja[i]);
+  }
+  /***/
+
   static unsigned int previous_active_functions[N_BIG];
 
   static unsigned int number_items_dr;
@@ -3019,45 +3042,45 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
     previous_active_functions,
     carrent_active_functions};
 
-  static unsigned int const monitoring_max_U_base_signals[N_BIG] =
+  unsigned int monitoring_max_U_base_signals[N_BIG] =
     {
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_0,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_2,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_3,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_4,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_5,
-      MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6};
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_0 & maska_vykluchennja[0]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1 & maska_vykluchennja[1]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_2 & maska_vykluchennja[2]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_3 & maska_vykluchennja[3]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_4 & maska_vykluchennja[4]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_5 & maska_vykluchennja[5]),
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6 & maska_vykluchennja[6])};
 
-  static unsigned int const monitoring_max_U_second_signals[N_BIG] =
+  unsigned int monitoring_max_U_second_signals[N_BIG] =
     {
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_0,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_2,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_4,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_5,
-      MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6};
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_0 & maska_vykluchennja[0]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1 & maska_vykluchennja[1]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_2 & maska_vykluchennja[2]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3 & maska_vykluchennja[3]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_4 & maska_vykluchennja[4]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_5 & maska_vykluchennja[5]),
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6 & maska_vykluchennja[6])};
 
-  static unsigned int const monitoring_min_U_base_signals[N_BIG] =
+  unsigned int monitoring_min_U_base_signals[N_BIG] =
     {
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_0,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_1,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_2,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_5,
-      MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6};
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_0 & maska_vykluchennja[0]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_1 & maska_vykluchennja[1]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_2 & maska_vykluchennja[2]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3 & maska_vykluchennja[3]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4 & maska_vykluchennja[4]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_5 & maska_vykluchennja[5]),
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6 & maska_vykluchennja[6])};
 
-  static unsigned int const monitoring_max_I_base_signals[N_BIG] =
+  unsigned int monitoring_max_I_base_signals[N_BIG] =
     {
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_0,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_1,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_2,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_3,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_4,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_5,
-      MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6};
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_0 & maska_vykluchennja[0]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_1 & maska_vykluchennja[1]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_2 & maska_vykluchennja[2]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_3 & maska_vykluchennja[3]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_4 & maska_vykluchennja[4]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_5 & maska_vykluchennja[5]),
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6 & maska_vykluchennja[6])};
 
   unsigned char *buffer_for_save_dr_record = queue_dr[head_queue_dr];
   static unsigned int saving_record_dr = false;
@@ -3198,6 +3221,48 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
     move_tail_queue_dr = false;
   }
 
+  /*******************************/
+  //Визначаємо струм-напругу основного і допоміжного каналів
+  /*******************************/
+  //      unsigned int base_faze_current, second_faze_current = 0;
+  unsigned int base_faze_voltage = 0 /*, second_faze_voltage = 0*/;
+  switch (number_main_canal)
+  {
+    case 1:
+      {
+        //          base_faze_current = measurement[I_IA_1];
+        base_faze_voltage = measurement[I_UAB_TN1];
+
+        //          if (triple_wound)
+        //          {
+        //            second_faze_current = measurement[I_IA_2];
+        //            second_faze_voltage = measurement[I_UAB_TN2];
+        //          }
+
+        break;
+      }
+    case 2:
+      {
+        //          base_faze_current = measurement[I_IA_2];
+        base_faze_voltage = measurement[I_UAB_TN2];
+
+        //          if (triple_wound)
+        //          {
+        //            second_faze_current = measurement[I_IA_1];
+        //            second_faze_voltage = measurement[I_UAB_TN1];
+        //          }
+
+        break;
+      }
+    default:
+      {
+        //Теоретично цього ніколи не мало б бути
+        total_error_sw_fixed();
+        break;
+      }
+  }
+  /*******************************/
+
   switch (state_dr_record)
   {
     case STATE_DR_NO_RECORD:
@@ -3222,7 +3287,9 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
         unsigned int comp = false;
         NOT_ZERO_OR(comp, cur_active_sources, N_BIG)
         if (
-          (comp) ||
+          (
+            (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV) &&
+            (comp)) ||
           (state_dr_record == STATE_DR_FORCE_START_NEW_RECORD))
         {
           //Є умова запуску дискретного реєстратора
@@ -3418,7 +3485,7 @@ inline void digital_registrator(unsigned int *carrent_active_functions)
         {
           //Перевіряємо, чи ще існує умова продовження запису
           //Якщо такої умови немає - то скидаємо сигнал запущеного дискретного реєстратора, що це зафіксувати у змінених сигналах
-          if (stop_regisrator(carrent_active_functions, current_settings_prt.ranguvannja_digital_registrator) != 0)
+          if (stop_regisrator(carrent_active_functions, current_settings_prt.ranguvannja_digital_registrator, base_faze_voltage) != 0)
           {
             //Скидаємо сигнал роботи дискретного реєстратора
             _CLEAR_BIT(carrent_active_functions, RANG_WORK_D_REJESTRATOR);
@@ -6069,7 +6136,7 @@ inline void main_protection(void)
   /**************************/
   //Обробка дискретного реєстратора
   /**************************/
-  digital_registrator(active_functions);
+  digital_registrator(active_functions, number_main_canal);
   /**************************/
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
@@ -7029,7 +7096,6 @@ void TIM2_IRQHandler(void)
     /***********************************************************/
     //Діагностика вузлів, яку треба проводити кожен раз перед початком опрацьовуванням логіки пристрою
     uint32_t TIM_PRT_read_tick = TIM2->CNT;
-#pragma diag_suppress = Pa082
     uint64_t TIM_PRT_delta_write_read;
     if (TIM_PRT_read_tick < TIM_PRT_write_tick)
       TIM_PRT_delta_write_read = (uint64_t) TIM_PRT_read_tick + 0x100000000ull - (uint64_t) TIM_PRT_write_tick;
