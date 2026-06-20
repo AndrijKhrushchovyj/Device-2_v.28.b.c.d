@@ -2332,8 +2332,8 @@ inline unsigned int stop_regisrator(unsigned int *carrent_active_functions, unsi
   if (global_timers[INDEX_TIMER_DR_WORK] < 0)
     global_timers[INDEX_TIMER_DR_WORK] = DELTA_TIME_FOR_TIMERS; /*вже, як мінімум з моменту запуску ДР процшло стільки мілісекунд*/
 
-  int flag = (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV);
-  if (flag == 0)
+  int flag = 0;
+  if (base_faze_voltage >= PORIG_ZATJAGUVANNJA_ROBOTY_REJESTRATORIV)
   {
     for (size_t m = 0; m < N_BIG; ++m)
     {
