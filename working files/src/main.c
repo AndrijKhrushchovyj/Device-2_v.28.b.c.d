@@ -47,7 +47,7 @@ __test_watchdog testWatchDogMax =
 /*******************************************************************************/
 //Робота з Watchdog
 /*******************************************************************************/
-#pragma optimize = none
+//#pragma optimize = none
 void watchdog_routine(unsigned int maska, unsigned int const label)
 {
   static int problemPresent = 0;

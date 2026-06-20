@@ -1825,6 +1825,7 @@ inline void Reset_Defect_RPN_handler(unsigned int *p_active_functions)
 /*****************************************************/
 //Контроль положення
 /*****************************************************/
+//#pragma optimize=none
 inline void control_pologennja(unsigned int *p_active_functions)
 {
   //Мінімальна перевірка можливості роботи контролю положення по сельсинових датчиках

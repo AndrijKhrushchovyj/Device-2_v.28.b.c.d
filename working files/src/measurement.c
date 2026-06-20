@@ -1465,6 +1465,7 @@ void angle_determination(void)
 /*****************************************************/
 //Розрахунки віимірювань
 /*****************************************************/
+//#pragma optimize = none
 void calc_measurement(unsigned int number_group_stp)
 {
   UNUSED(number_group_stp);
@@ -1501,14 +1502,14 @@ void calc_measurement(unsigned int number_group_stp)
   Другк 16-кратне підсилення забрати вже в остаточному результаті
   */
 
-  unsigned int bank_ortogonal_tmp = (bank_ortogonal + 1) & 0x1;
+  unsigned int const bank_ortogonal_tmp = bank_ortogonal;
+  bank_ortogonal = (bank_ortogonal_tmp + 1) & 0x1;
   for (unsigned int i = 0; i < (2 * NUMBER_ANALOG_CANALES); i++)
   {
     ortogonal_local[i] = ortogonal[i][bank_ortogonal_tmp];
   }
   adc2_channel0_averange_prt = adc2_channel0_averange[bank_ortogonal_tmp];
   adc2_channel1_averange_prt = adc2_channel1_averange[bank_ortogonal_tmp];
-  bank_ortogonal = bank_ortogonal_tmp;
   adc2_read_after_start = true;
 
   freq_mutex = true;
