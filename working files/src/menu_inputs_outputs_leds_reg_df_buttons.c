@@ -1229,9 +1229,7 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
     /*************************************************************/
     if (
       (type_ekran == INDEX_VIEWING_A_REG) ||
-      (type_ekran == INDEX_VIEWING_D_REG) ||
-      (type_ekran == INDEX_VIEWING_OFF_CB) ||
-      (type_ekran == INDEX_VIEWING_ON_CB))
+      (type_ekran == INDEX_VIEWING_D_REG))
     {
       /*************************************************************/
       //У випадку, якщо відображення здійснюється вікна аналогового реєстратора чи дискретного реєстратора, то відктдпємо ті функції, які не можуть бути джерелати
@@ -1244,19 +1242,8 @@ void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int number_ekran, 
 
         if (type_ekran == INDEX_VIEWING_A_REG)
           index_deleted_function = RANG_WORK_A_REJESTRATOR;
-        else if (type_ekran == INDEX_VIEWING_D_REG)
-          index_deleted_function = RANG_WORK_D_REJESTRATOR;
-        else if (type_ekran == INDEX_VIEWING_OFF_CB)
-        {
-          number = 2;
-
-          if (num == 0)
-            index_deleted_function = RANG_VIDKL_VID_ZAKHYSTIV;
-          else
-            index_deleted_function = RANG_WORK_BO;
-        }
         else
-          index_deleted_function = RANG_WORK_BV;
+          index_deleted_function = RANG_WORK_D_REJESTRATOR;
 
         /*************************************************************/
         //Відкидаємо ім'я даної функції і зміщаємо біти

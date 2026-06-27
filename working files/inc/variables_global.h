@@ -201,16 +201,9 @@ int base_index_for_angle = -1;
 //Конвертація "короткої" таблиці ранжування у "довгу"
 const uint32_t small_big_rang[NUMBER_TOTAL_SIGNAL_FOR_RANG_SMALL] =
   {
-    RANG_BLOCK_VKL_VV,
     RANG_RESET_LEDS,
     RANG_RESET_RELES,
     RANG_MISCEVE_DYSTANCIJNE,
-    RANG_STATE_VV,
-    RANG_OTKL_VID_ZOVN_ZAHYSTIV,
-    RANG_OTKL_VV,
-    RANG_VKL_VV,
-    RANG_CTRL_OTKL,
-    RANG_CTRL_VKL,
     RANG_1_GRUPA_USTAVOK,
     RANG_2_GRUPA_USTAVOK,
     RANG_3_GRUPA_USTAVOK,

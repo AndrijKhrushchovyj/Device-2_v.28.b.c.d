@@ -75,7 +75,6 @@ extern void make_ekran_chose_timeout_control(void);
 extern void make_ekran_chose_setpoint(void);
 extern void make_ekran_chose_timeout(void);
 extern void make_ekran_chose_control(void);
-extern void make_ekran_chose_settings_switcher(void);
 extern void make_ekran_chose_settings_type_control_location(void);
 extern void make_ekran_calibration_selsyn(void);
 extern void make_ekran_setpoints_control_location(void);
@@ -117,10 +116,6 @@ extern void make_ekran_set_function_in_bi(unsigned int, unsigned int, unsigned i
 );
 extern void make_ekran_set_function_in_output_led_df_dt_reg(unsigned int, unsigned int, unsigned int *);
 extern void check_current_index_is_presented_in_configuration(unsigned int *, int *, /*EL_FILTER_STRUCT[],*/ int, int, int, int, int, int, int, int, int, int);
-extern void make_ekran_choose_CBOn_CBOff(void);
-extern void make_ekran_setpoint_switch(void);
-extern void make_ekran_timeout_switch(void);
-extern void make_ekran_control_switch(void);
 extern void make_ekran_chose_settings_uvv(void);
 extern void make_ekran_dopusk_dv(void);
 extern void make_ekran_type_input_uvv(unsigned int);

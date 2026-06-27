@@ -5,106 +5,93 @@
 /*****************************************************/
 void make_ekran_chose_settings(void)
 {
-  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CHOSE_SETTINGS][MAX_COL_LCD] = 
-  {
+  static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CHOSE_SETTINGS][MAX_COL_LCD] =
     {
-      " Инфо.          ",
-      " Метка настроек ",
+      {" Инфо.          ",
+       " Метка настроек ",
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-      " IEC 61850      ",
+       " IEC 61850      ",
 #endif
-      " Входы          ",
-      " Выходы         ",
-      " Светоиндикаторы",
-      " Контр.положения",
-      " Выключатель    ",
-      " Трансформаторы ",
-      " УВВ            ",
-      " Коммуникация   ",
-      " Дата и время   ",
-      " Регистраторы   ",
-      " Расш.логика    ",
-      " Ф-кнопки       ",
-      " Группа уставок ",
-      " Доп.настройки  ",
-      " Пароли         "
-    },
-    {
-      " Інфо.          ",
-      " Мітка налашт.  ",
+       " Входы          ",
+       " Выходы         ",
+       " Светоиндикаторы",
+       " Контр.положения",
+       " Трансформаторы ",
+       " УВВ            ",
+       " Коммуникация   ",
+       " Дата и время   ",
+       " Регистраторы   ",
+       " Расш.логика    ",
+       " Ф-кнопки       ",
+       " Группа уставок ",
+       " Доп.настройки  ",
+       " Пароли         "},
+      {" Інфо.          ",
+       " Мітка налашт.  ",
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-      " IEC 61850      ",
+       " IEC 61850      ",
 #endif
-      " Входи          ",
-      " Виходи         ",
-      " Світлоіндикат. ",
-      " Контроль стану ",
-      " Вимикач        ",
-      " Трансформатори ",
-      " ПВВ            ",
-      " Комунікація    ",
-      " Дата і час     ",
-      " Реєстратори    ",
-      " Розш.логіка    ",
-      " Ф-кнопки       ",
-      " Група уставок  ",
-      " Дод.налашт.    ",
-      " Паролі         "
-    },
-    {
-      " Info           ",
-      " Settings Mark  ",
+       " Входи          ",
+       " Виходи         ",
+       " Світлоіндикат. ",
+       " Контроль стану ",
+       " Трансформатори ",
+       " ПВВ            ",
+       " Комунікація    ",
+       " Дата і час     ",
+       " Реєстратори    ",
+       " Розш.логіка    ",
+       " Ф-кнопки       ",
+       " Група уставок  ",
+       " Дод.налашт.    ",
+       " Паролі         "},
+      {" Info           ",
+       " Settings Mark  ",
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-      " IEC 61850      ",
+       " IEC 61850      ",
 #endif
-      " Binary Inputs  ",
-      " Binary Outputs ",
-      " LED            ",
-      " Pos.Checking   ",
-      " Circuit-Breaker",
-      " Meas trans     ",
-      " IO Devices     ",
-      " Communication  ",
-      " Date and Time  ",
-      " Recorders      ",
-      " UD-logic       ",
-      " UD-Keys        ",
-      "SetPoints Groups",
-      " Addit Settings ",
-      " Passwords      "
-    },
-    {
-      " Инфо.          ",
-      " Метка настроек ",
+       " Binary Inputs  ",
+       " Binary Outputs ",
+       " LED            ",
+       " Pos.Checking   ",
+       " Meas trans     ",
+       " IO Devices     ",
+       " Communication  ",
+       " Date and Time  ",
+       " Recorders      ",
+       " UD-logic       ",
+       " UD-Keys        ",
+       "SetPoints Groups",
+       " Addit Settings ",
+       " Passwords      "},
+      {" Инфо.          ",
+       " Метка настроек ",
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-      " IEC 61850      ",
+       " IEC 61850      ",
 #endif
-      " Входы          ",
-      " Выходы         ",
-      " Светоиндикаторы",
-      " Контр.положения",
-      " Выключатель    ",
-      " Трансформаторы ",
-      " УВВ            ",
-      " Коммуникация   ",
-      " Дата и время   ",
-      " Регистраторы   ",
-      " Расш.логика    ",
-      " Ф-кнопки       ",
-      " Группа уставок ",
-      " Доп.настройки  ",
-      " Пароли         "
-    }
-  };
+       " Входы          ",
+       " Выходы         ",
+       " Светоиндикаторы",
+       " Контр.положения",
+       " Трансформаторы ",
+       " УВВ            ",
+       " Коммуникация   ",
+       " Дата и время   ",
+       " Регистраторы   ",
+       " Расш.логика    ",
+       " Ф-кнопки       ",
+       " Группа уставок ",
+       " Доп.настройки  ",
+       " Пароли         "}};
   unsigned char name_string_tmp[MAX_ROW_FOR_CHOSE_SETTINGS][MAX_COL_LCD];
 
   int index_language = index_language_in_array(current_settings.language);
-  for(int index_1 = 0; index_1 < MAX_ROW_FOR_CHOSE_SETTINGS; index_1++)
+  for (int index_1 = 0; index_1 < MAX_ROW_FOR_CHOSE_SETTINGS; index_1++)
   {
-    for(int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
+    for (int index_2 = 0; index_2 < MAX_COL_LCD; index_2++)
       name_string_tmp[index_1][index_2] = name_string[index_language][index_1][index_2];
   }
-  
+
   /******************************************/
   //Виключаємо поля, які не треба відображати
   /******************************************/
@@ -115,35 +102,38 @@ void make_ekran_chose_settings(void)
   if ((current_settings.configuration & (1 << EL_BIT_CONFIGURATION)) == 0)
   {
     int i = INDEX_OF_EXTENDED_LOGIC - additional_current;
-    if ((i+1) <= position_temp) position_temp--;
+    if ((i + 1) <= position_temp)
+      position_temp--;
     do
     {
-      for(unsigned int j = 0; j < MAX_COL_LCD; j++)
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
       {
-        if ((i+1) < (MAX_ROW_FOR_CHOSE_SETTINGS - additional_current)) name_string_tmp[i][j] = name_string_tmp[i + 1][j];
-        else name_string_tmp[i][j] = ' ';
+        if ((i + 1) < (MAX_ROW_FOR_CHOSE_SETTINGS - additional_current))
+          name_string_tmp[i][j] = name_string_tmp[i + 1][j];
+        else
+          name_string_tmp[i][j] = ' ';
       }
 
       i++;
-    }
-    while (i< (MAX_ROW_FOR_CHOSE_SETTINGS - additional_current));
+    } while (i < (MAX_ROW_FOR_CHOSE_SETTINGS - additional_current));
     additional_current++;
   }
   /******************************************/
-  
+
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
-  
   //Копіюємо  рядки у робочий екран
-  for (unsigned int i=0; i< MAX_ROW_LCD; i++)
+  for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій коффігурації
     if (index_of_ekran < (MAX_ROW_FOR_CHOSE_SETTINGS - additional_current))
     {
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
-    } 
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = name_string_tmp[index_of_ekran][j];
+    }
     else
-      for (unsigned int j = 0; j<MAX_COL_LCD; j++) working_ekran[i][j] = ' ';
+      for (unsigned int j = 0; j < MAX_COL_LCD; j++)
+        working_ekran[i][j] = ' ';
 
     index_of_ekran++;
   }

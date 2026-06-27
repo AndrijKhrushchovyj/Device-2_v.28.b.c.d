@@ -684,8 +684,8 @@ inline void tf_handler(unsigned int *p_previous_active_functions, unsigned int *
 /*****************************************************/
 inline void ready_tu(unsigned int *p_active_functions)
 {
-  unsigned int tmp_value = (_CHECK_SET_BIT(p_active_functions, RANG_PRYVID_VV) == 0) << 0;
-  tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_VIDKL_VID_ZAKHYSTIV) != 0) << 1;
+  unsigned int tmp_value = 0;
+
   tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) != 0) << 2;
   tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_AVAR_DEFECT) == 0) << 3;
   tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_MISCEVE_DYSTANCIJNE) == 0) << 6;
@@ -2135,192 +2135,6 @@ inline void lichylnyk_perekluchen(unsigned int *p_active_functions)
     _SET_BIT(control_spi1_taskes, TASK_START_WRITE_RESURS_EEPROM_BIT);
   }
   previous_state_perekluchennya = perekluchennya;
-}
-/*****************************************************/
-
-/*****************************************************/
-//Функція управління блоками включення і відключення
-/*****************************************************/
-inline void on_off_handler(unsigned int *p_active_functions)
-{
-  /*********************/
-  //Спочатку опрацьовуємо таймери
-  /*********************/
-  //Таймер  відключення
-  if (global_timers[INDEX_TIMER_VIDKL_VV] >= 0)
-  {
-    //Таймер БО зараз активний і як мінімум тільки зараз завершить свою роботу
-    if (global_timers[INDEX_TIMER_VIDKL_VV] >= current_settings_prt.timeout_swch_off)
-    {
-      //Таймер досягнув свого максимального значення
-      global_timers[INDEX_TIMER_VIDKL_VV] = -1;
-      //Відмічаємо у масиві функцій, які зараз активуються, що блок БО має бути деативованим
-      _CLEAR_BIT(p_active_functions, RANG_WORK_BO);
-    }
-    //Незавершена робота блоку БО означає, що таймер блокування БВ має бути запущений і знаходитися у свому початковому значенні,
-    //щоб як тільки блок БО відпрацює, щоб блокування включення почалося на весь час з моменту закінчення роботи блоку БО
-    global_timers[INDEX_TIMER_BLK_VKL_VV] = 0;
-  }
-
-  //Таймер  блокування включення
-  if (global_timers[INDEX_TIMER_BLK_VKL_VV] >= 0)
-  {
-    //Таймер блокування включення БВ зараз активний і як мінімум тільки зараз завершить свою роботу
-    if (global_timers[INDEX_TIMER_BLK_VKL_VV] >= current_settings_prt.timeout_swch_udl_blk_on)
-    {
-      //Таймер досягнув свого максимального значення
-      global_timers[INDEX_TIMER_BLK_VKL_VV] = -1;
-    }
-  }
-
-  //Таймер  включення
-  if (global_timers[INDEX_TIMER_VKL_VV] >= 0)
-  {
-    //Таймер БВ зараз активний і як мінімум тільки зараз завершить свою роботу
-
-    //Якщо по якійсь причині таймер включення працює, при умові, що таймери БО і блокування включення ще не скинуті, то таймер включення треба скинути
-    if ((global_timers[INDEX_TIMER_VIDKL_VV] >= 0) || (global_timers[INDEX_TIMER_BLK_VKL_VV] >= 0))
-    {
-      global_timers[INDEX_TIMER_VKL_VV] = -1;
-      //Відмічаємо у масиві функцій, які зараз активуються, що блок БB має бути деативованим
-      _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
-    }
-    else
-    {
-      //Перевіряємо, чи таймер включення не досягнув свого масимального значення
-      if (global_timers[INDEX_TIMER_VKL_VV] >= current_settings_prt.timeout_swch_on)
-      {
-        //Таймер досягнув свого максимального значення
-        global_timers[INDEX_TIMER_VKL_VV] = -1;
-        //Відмічаємо у масиві функцій, які зараз активуються, що блок БB має бути деативованим
-        _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
-      }
-    }
-  }
-  /*********************/
-
-  /*********************/
-  //Першим розглядається блок відключення, бо він може блокувати включення вимикача
-  /*********************/
-  uint32_t off_cb_tmp[N_BIG];
-  for (size_t m = 0; m < N_BIG; ++m)
-  {
-    off_cb_tmp[m] = (p_active_functions[m] & current_settings_prt.ranguvannja_off_cb[m]);
-  }
-
-  /*
-  Цей сигнал встановлюється тільки у певних випадках, тому по замовчуванню його треба скинута,
-  а коли буде потрібно - він встановиться
-  */
-  _CLEAR_BIT(p_active_functions, RANG_VIDKL_VID_ZAKHYSTIV);
-  int flag = 0;
-  for (size_t m = 0; m < N_BIG; ++m)
-  {
-    if (off_cb_tmp[m] != 0)
-    {
-      flag = 1;
-      break;
-    }
-  }
-  if (flag)
-  {
-    //Є умова активації блку вимкнення
-    _SET_BIT(p_active_functions, RANG_WORK_BO);
-
-    //Запускаємо (або продовжуємо утримувати у 0, поки не пропаде сигнал активації БО) таймери: блоку БО, блокуванння БВ.
-    global_timers[INDEX_TIMER_VIDKL_VV] = 0;
-    global_timers[INDEX_TIMER_BLK_VKL_VV] = 0;
-
-    //Скидаємо активацію блоку увімкнення
-    _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
-    //Скидаємо таймер блку вимкнення
-    global_timers[INDEX_TIMER_VKL_VV] = -1;
-
-    /*
-    Формуємо сигнал "Відключення від захистів" (він рівний наявності умови команди
-    активації команди "Робота БО" будь-якою командою за виключенняв "Вимкн. ВВ")
-    */
-    _CLEAR_BIT(off_cb_tmp, RANG_OTKL_VV);
-    flag = 0;
-    for (size_t m = 0; m < N_BIG; ++m)
-    {
-      if (off_cb_tmp[m] != 0)
-      {
-        flag = 1;
-        break;
-      }
-    }
-    if (flag)
-    {
-      //Вимкнення від захистів
-      _SET_BIT(p_active_functions, RANG_VIDKL_VID_ZAKHYSTIV);
-    }
-  }
-
-  /*********************/
-  //Потім розглядається блок включення
-  /*********************/
-  if (
-    (global_timers[INDEX_TIMER_VIDKL_VV] < 0) &&
-    (global_timers[INDEX_TIMER_BLK_VKL_VV] < 0) &&
-    (_CHECK_SET_BIT(p_active_functions, RANG_BLOCK_VKL_VV) == 0))
-  {
-    //Оскільки не працюють таймери БО і блокування включення БВ, а також немає сигналу блокування включення ВВ
-    //тому перевіряємо, чи немає умови запуску БВ
-
-    flag = 0;
-    for (size_t m = 0; m < N_BIG; ++m)
-    {
-      if ((p_active_functions[m] & current_settings_prt.ranguvannja_on_cb[m]) != 0)
-      {
-        flag = 1;
-        break;
-      }
-    }
-    if (flag)
-    {
-      //Відмічаємо у масиві функцій, які зараз активуються, що ще треба активувати блок БВ (якщо він ще не активний)
-      _SET_BIT(p_active_functions, RANG_WORK_BV);
-
-      //Запускаємо (або продовжуємо утримувати у 0, поки не пропаде сигнал активації БВ) таймер роботи БВ
-      global_timers[INDEX_TIMER_VKL_VV] = 0;
-    }
-  }
-  else
-  {
-    //На даний момент існує одна або більше умов блокування БВ
-    global_timers[INDEX_TIMER_VKL_VV] = -1;
-    _CLEAR_BIT(p_active_functions, RANG_WORK_BV);
-  }
-  /*********************/
-}
-/*****************************************************/
-
-/*****************************************************/
-//Контроль приводу вимикача
-/*****************************************************/
-inline void control_VV(unsigned int *p_active_functions)
-{
-  unsigned int logic_control_VV_0 = 0;
-
-  //"Контроль Вкл."
-  logic_control_VV_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_CTRL_VKL) != 0) << 0;
-  //"Контроль Откл."
-  logic_control_VV_0 |= (_CHECK_SET_BIT(p_active_functions, RANG_CTRL_OTKL) != 0) << 1;
-
-  _XOR_INVERTOR(logic_control_VV_0, 0, logic_control_VV_0, 1, logic_control_VV_0, 2);
-
-  _TIMER_T_0(INDEX_TIMER_PRYVOD_VV, current_settings_prt.timeout_pryvoda_VV, logic_control_VV_0, 2, logic_control_VV_0, 3);
-
-  //М:"Контроль ВВ"
-  logic_control_VV_0 |= ((current_settings_prt.control_switch & CTR_PRYVOD_VV) != 0) << 4;
-
-  _AND2(logic_control_VV_0, 3, logic_control_VV_0, 4, logic_control_VV_0, 5);
-
-  if (_GET_STATE(logic_control_VV_0, 5))
-    _SET_BIT(p_active_functions, RANG_PRYVID_VV);
-  else
-    _CLEAR_BIT(p_active_functions, RANG_PRYVID_VV);
 }
 /*****************************************************/
 
@@ -5305,26 +5119,15 @@ inline void main_protection(void)
     }
 
     //Загальні функції (без ОФ-ій і функцій, які можуть блокуватися у місцевому управлінні)
-    active_functions[RANG_BLOCK_VKL_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BLOCK_VKL_VV) != 0) << (RANG_BLOCK_VKL_VV & 0x1f);
     active_functions[RANG_RESET_LEDS >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_LEDS) != 0) << (RANG_RESET_LEDS & 0x1f);
     active_functions[RANG_RESET_RELES >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_RELES) != 0) << (RANG_RESET_RELES & 0x1f);
     active_functions[RANG_MISCEVE_DYSTANCIJNE >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_MISCEVE_DYSTANCIJNE) != 0) << (RANG_MISCEVE_DYSTANCIJNE & 0x1f);
-    active_functions[RANG_STATE_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_STATE_VV) != 0) << (RANG_STATE_VV & 0x1f);
-    active_functions[RANG_CTRL_VKL >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_CTRL_VKL) != 0) << (RANG_CTRL_VKL & 0x1f);
-    active_functions[RANG_CTRL_OTKL >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_CTRL_OTKL) != 0) << (RANG_CTRL_OTKL & 0x1f);
     active_functions[RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) != 0) << (RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV & 0x1f);
-    active_functions[RANG_OTKL_VID_ZOVN_ZAHYSTIV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OTKL_VID_ZOVN_ZAHYSTIV) != 0) << (RANG_OTKL_VID_ZOVN_ZAHYSTIV & 0x1f);
 
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_1_GRUPA_USTAVOK) != 0) << (RANG_SMALL_1_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_2_GRUPA_USTAVOK) != 0) << (RANG_SMALL_2_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_3_GRUPA_USTAVOK) != 0) << (RANG_SMALL_3_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_4_GRUPA_USTAVOK) != 0) << (RANG_SMALL_4_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
-
-    //Увімкнення ВВ
-    active_functions[RANG_VKL_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_VKL_VV) != 0) << (RANG_VKL_VV & 0x1f);
-
-    //Вимкнення ВВ
-    active_functions[RANG_OTKL_VV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OTKL_VV) != 0) << (RANG_OTKL_VV & 0x1f);
 
     //РПН
     active_functions[RANG_OSNOVNYJ_TN2_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OSNOVNYJ_TN2_RPN) != 0) << (RANG_OSNOVNYJ_TN2_RPN & 0x1f);
@@ -5464,12 +5267,6 @@ inline void main_protection(void)
     //Сигнал "Сблос реле"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_RELES);
 
-    //Сигнал "Включить ВВ"
-    _SET_BIT(temp_maska_filter_function, RANG_VKL_VV);
-
-    //Сигнал "Отключить ВВ"
-    _SET_BIT(temp_maska_filter_function, RANG_OTKL_VV);
-
     //Сигнал "Скидання блокування готовності до ТУ"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
 
@@ -5497,54 +5294,6 @@ inline void main_protection(void)
 
       //Обновляємо масив функцій, які зараз активуються з врахуванням того, що серед виділених функцій маскою активними мають юути тільки ті, у яких перехід був з "0" в "1"
       active_functions[i] = (active_functions[i] & (~temp_maska_filter_function[i])) | temp_activating_functions[i];
-    }
-  }
-  /**************************/
-
-  /**************************
-  Світлова індикація стану вимикача
-  **************************/
-  {
-    uint32_t state_vv_dv = false;
-    for (size_t i = 0; i < NUMBER_INPUTS; i++)
-    {
-      if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_inputs + N_SMALL * i), RANG_SMALL_STATE_VV) != 0)
-      {
-        state_vv_dv = true;
-        break;
-      }
-    }
-#if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
-    //Шукаємо рандування "Стан ВВ" на блоках вхідних GOOSE
-    for (size_t i = 0; (state_vv_dv == false) && (i < N_IN_GOOSE); ++i)
-    {
-      for (size_t j = 0; j < N_IN_GOOSE_MMS_OUT; ++j)
-      {
-        if (_CHECK_SET_BIT(current_settings_prt.ranguvannja_In_GOOSE[i][j], RANG_SMALL_STATE_VV) != 0)
-        {
-          state_vv_dv = true;
-          break;
-        }
-      }
-    }
-#endif
-
-    if (state_vv_dv)
-    {
-      if (_CHECK_SET_BIT(active_functions, RANG_STATE_VV) != 0)
-      {
-        state_leds_ctrl &= (uint32_t)(~((1 << LED_COLOR_GREEN_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_O)));
-        state_leds_ctrl |= (uint32_t)((1 << LED_COLOR_RED_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_I));
-      }
-      else
-      {
-        state_leds_ctrl &= (uint32_t)(~((1 << LED_COLOR_RED_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_I)));
-        state_leds_ctrl |= (uint32_t)((1 << LED_COLOR_GREEN_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_O));
-      }
-    }
-    else
-    {
-      state_leds_ctrl &= (uint32_t)(~(((1 << LED_COLOR_GREEN_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_O)) | ((1 << LED_COLOR_RED_BIT) << ((uint32_t) NUMBER_LED_COLOR * (uint32_t) LED_CTRL_I))));
     }
   }
   /**************************/
@@ -5801,12 +5550,6 @@ inline void main_protection(void)
   if (_CHECK_SET_BIT(active_functions, RANG_AVAR_DEFECT) == 0)
   {
     //Аварійна ситуація не зафіксована
-
-    /**************************/
-    //Контроль привода ВВ
-    /**************************/
-    control_VV(active_functions);
-    /**************************/
 
     /**************************/
     //ТМ (запускається перед формуванням сигналу "Сброс Неисправности РПН" і РПН)
@@ -6351,34 +6094,7 @@ inline void main_protection(void)
         }
       if (flag)
       {
-        //Для сигнального реле виконуємо його замикання, а для командного перевіряємо чи нема спроби активувати реле при умові що на нього заведено блок включення, причому він блокований
-        if ((current_settings_prt.type_of_output & (1 << i)) != 0)
-        {
-          //Вихід сигнальний, тому у буль якому разі замикаємо реле
-          //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-          state_outputs |= (1 << i);
-        }
-        else
-        {
-          //Вихід командний, тому перевіряємо чи не йде спроба активувати реле, на яке заведено БВ, причому блок БВ з пеквних причин блокований (неактивний)
-          if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG * i), RANG_WORK_BV) == 0)
-          {
-            //На дане реле не заводиться сигнал БВ (блок включення)
-
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-            state_outputs |= (1 << i);
-          }
-          else
-          {
-            //На дане реле заводиться сигнал БВ (блок включення)
-
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ тільки тоді, коли функція БВ активна зараз
-            if (_CHECK_SET_BIT(active_functions, RANG_WORK_BV) != 0)
-              state_outputs |= (1 << i);
-            else
-              state_outputs &= ~(1 << i);
-          }
-        }
+        state_outputs |= (1 << i);
       }
       else
       {
