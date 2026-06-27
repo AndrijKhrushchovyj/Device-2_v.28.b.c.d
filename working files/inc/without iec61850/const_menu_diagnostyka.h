@@ -61,13 +61,9 @@ enum _error_id
   ERROR_SPI_ADC1_BIT,
   ERROR_SPI_ADC2_BIT,
 
-  ERROR_OSCYLOJRAPH_OVERFLOW,
-
   ERROR_DIGITAL_OUTPUT_1_BIT,
 
-  ERROR_DS_OUTPUT_BIT = ERROR_DIGITAL_OUTPUT_1_BIT + 24,
-
-  ERROR_AR_TEMPORARY_BUSY_BIT = ERROR_DS_OUTPUT_BIT + 1,
+  ERROR_AR_TEMPORARY_BUSY_BIT = ERROR_DIGITAL_OUTPUT_1_BIT + 20,
   ERROR_AR_OVERLOAD_BUFFER_BIT,
   ERROR_AR_MEMORY_FULL_BIT,
   ERROR_AR_UNDEFINED_BIT,
@@ -94,41 +90,17 @@ enum _error_id
 
   ERROR_LOGOMETR_VOLTAGE,
 
-  TEST_OVD1,
-  TEST_OVD2,
-  TEST_OVD3,
-  TEST_OVD4,
-
   ERROR_BA_1_FIX,
   ERROR_BA_1_CTLR,
   ERROR_BDVV5_1_FIX,
   ERROR_BDVV5_1_CTLR,
   ERROR_BDVV5_2_FIX,
   ERROR_BDVV5_2_CTLR,
-  ERROR_BDV_DZ_FIX,
-  ERROR_BDV_DZ_CTLR,
-  ERROR_BDZ_FIX,
-  ERROR_BDZ_CTLR,
   ERROR_BDVV6_FIX,
   ERROR_BDVV6_CTLR,
-  ERROR_BDSH_FIX,
-  ERROR_BDSH_CTLR,
-  ERROR_BDVV9_FIX,
-  ERROR_BDVV9_CTLR,
-
-  ERROR_BDV2_FIX,
-  ERROR_BDV2_CTLR,
-  ERROR_BDV5_FIX,
-  ERROR_BDV5_CTLR,
 
   ERROR_FATFS,
   WARNING_REPROGRAM,
-
-  ERROR_BDVV_DZ_FIX,
-  ERROR_BDVV_DZ_CTLR,
-
-  //?ERROR_OVER_FLOW_EXTERNAL_WATCHDOG_IN,
-  //?ERROR_OVER_FLOW_EXTERNAL_WATCHDOG_OUT,
 
   MAX_ROW_FOR_DIAGNOSTYKA
 };
@@ -169,11 +141,11 @@ enum _error_id
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  8 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  9 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 10 - 32))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 32))               \
 )
 
 #define MASKA_AVAR_ERROR_2        (unsigned int)(               \
-    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 64))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 64))               \
+    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 13 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 14 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 15 - 64))               \
@@ -181,38 +153,19 @@ enum _error_id
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 17 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 18 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 19 - 64))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 20 - 64))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 21 - 64))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 22 - 64))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 23 - 64))               \
-  | (1 << (ERROR_DS_OUTPUT_BIT - 64))                           \
   | (1 << (ERROR_INTERNAL_FLASH_BIT - 64))                      \
+  | (1 << (ERROR_BA_1_FIX - 64))                                \
+  | (1 << (ERROR_BA_1_CTLR - 64))                               \
+  | (1 << (ERROR_BDVV5_1_FIX - 64))                             \
+  | (1 << (ERROR_BDVV5_1_CTLR - 64))                            \
 )
 
 #define MASKA_AVAR_ERROR_3        (unsigned int)(               \
-    (1 << (ERROR_BA_1_FIX - 96))                                \
-  | (1 << (ERROR_BA_1_CTLR - 96))                               \
-  | (1 << (ERROR_BDVV5_1_FIX - 96))                             \
-  | (1 << (ERROR_BDVV5_1_CTLR - 96))                            \
-  | (1 << (ERROR_BDVV5_2_FIX - 96))                             \
+    (1 << (ERROR_BDVV5_2_FIX - 96))                             \
   | (1 << (ERROR_BDVV5_2_CTLR - 96))                            \
-  | (1 << (ERROR_BDV_DZ_FIX - 96))                              \
-  | (1 << (ERROR_BDV_DZ_CTLR - 96))                             \
-  | (1 << (ERROR_BDZ_FIX - 96))                                 \
-  | (1 << (ERROR_BDZ_CTLR - 96))                                \
   | (1 << (ERROR_BDVV6_FIX - 96))                               \
   | (1 << (ERROR_BDVV6_CTLR - 96))                              \
-  | (1 << (ERROR_BDSH_FIX - 96))                                \
-  | (1 << (ERROR_BDSH_CTLR - 96))                               \
-  | (1 << (ERROR_BDVV9_FIX - 96))                               \
-  | (1 << (ERROR_BDVV9_CTLR - 96))                              \
-  | (1 << (ERROR_BDV2_FIX - 96))                                \
-  | (1 << (ERROR_BDV2_CTLR - 96))                               \
-  | (1 << (ERROR_BDV5_FIX - 96))                                \
-  | (1 << (ERROR_BDV5_CTLR - 96))                               \
   | (1 << (WARNING_REPROGRAM - 96))                             \
-  | (1 << (ERROR_BDVV_DZ_FIX - 96))                             \
-  | (1 << (ERROR_BDVV_DZ_CTLR - 96))                            \
 )
 // clang-format on
 
@@ -269,7 +222,6 @@ enum _error_id
     " Òåñò VDD ÀÖÏ ãð", \
     " Îø.SPI ÀÖÏ1    ", \
     " Îø.SPI ÀÖÏ2    ", \
-    "Ïåðåï.áóô.ö.îñö.", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
@@ -290,11 +242,6 @@ enum _error_id
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ÄØ      ", \
     "Àí.ðåã.âð.çàíÿò.", \
     " Ïåð.áóô.aí.ðåã.", \
     " Ï.aí.ðåã.èñ÷.  ", \
@@ -315,34 +262,16 @@ enum _error_id
     " Îø.âíóòð.FLASH ", \
     " Îø.âûá.ãð.óñò. ", \
     " Îø.íàïð.ëîãîì. ", \
-    " Òåñò ÎÂÄ1      ", \
-    " Òåñò ÎÂÄ2      ", \
-    " Òåñò ÎÂÄ3      ", \
-    " Òåñò ÎÂÄ4      ", \
     " ÁÀ1 îò.        ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 îò.    ", \
     " ÁÄÂÂ5_1 ï.     ", \
     " ÁÄÂÂ5_2 îò.    ", \
     " ÁÄÂÂ5_2 ï.     ", \
-    " ÁÄÂ-ÄÇ îò.     ", \
-    " ÁÄÂ-ÄÇ ï.      ", \
-    " ÁÄÇ îò.        ", \
-    " ÁÄÇ ï.         ", \
     " ÁÄÂÂ6 îò.      ", \
     " ÁÄÂÂ6 ï.       ", \
-    " ÁÄØ îò.        ", \
-    " ÁÄØ ï.         ", \
-    " ÁÄÂÂ9 îò.      ", \
-    " ÁÄÂÂ9 ï.       ", \
-    " ÁÄÂ2  îò.      ", \
-    " ÁÄÂ2  ï.       ", \
-    " ÁÄÂ5  îò.      ", \
-    " ÁÄÂ5  ï.       ", \
     " Îø.Ô.Ñ.        ", \
-    "Ðåæèì ïåðåïðîãð.", \
-    " ÁÄÂÂ-ÄÇ îò.    ", \
-    " ÁÄÂÂ-ÄÇ ï.     "
+    "Ðåæèì ïåðåïðîãð."
 
 #define NAME_DIAGN_UA   \
   " Ïîì.I2C        ",   \
@@ -397,7 +326,6 @@ enum _error_id
     " Òåñò VDD ÀÖÏ ãð", \
     " Ïîì.SPI ÀÖÏ1   ", \
     " Ïîì.SPI ÀÖÏ2   ", \
-    "Ïåðåï.áóô.ö.îñö.", \
     " Ïîì.âèõ.ðåëå?.?", \
     " Ïîì.âèõ.ðåëå?.?", \
     " Ïîì.âèõ.ðåëå?.?", \
@@ -418,11 +346,6 @@ enum _error_id
     " Ïîì.âèõ.ðåëå?.?", \
     " Ïîì.âèõ.ðåëå?.?", \
     " Ïîì.âèõ.ðåëå?.?", \
-    " Ïîì.âèõ.ðåëå?.?", \
-    " Ïîì.âèõ.ðåëå?.?", \
-    " Ïîì.âèõ.ðåëå?.?", \
-    " Ïîì.âèõ.ðåëå?.?", \
-    " Ïîì.âèõ.ÄØ     ", \
     "Àí.ð.òèì÷.çàéíÿò", \
     " Ïåðåï.áóô.aí.ð.", \
     " Ï.aí.ðåã.âè÷.  ", \
@@ -443,34 +366,16 @@ enum _error_id
     " Ïîì.âíóòð.FLASH", \
     " Ïîì.âèá.ãð.óñò.", \
     " Ïîì.íàïð.ëîãîì.", \
-    " Òåñò ÎÂÄ1      ", \
-    " Òåñò ÎÂÄ2      ", \
-    " Òåñò ÎÂÄ3      ", \
-    " Òåñò ÎÂÄ4      ", \
     " ÁÀ1 â³ä.       ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 â³ä.   ", \
     " ÁÄÂÂ5_1 ï.     ", \
     " ÁÄÂÂ5_2 â³ä.   ", \
     " ÁÄÂÂ5_2 ï.     ", \
-    " ÁÄÂ-ÄÇ â³ä.    ", \
-    " ÁÄÂ-ÄÇ ï.      ", \
-    " ÁÄÇ â³ä.       ", \
-    " ÁÄÇ ï.         ", \
     " ÁÄÂÂ6 â³ä.     ", \
     " ÁÄÂÂ6 ï.       ", \
-    " ÁÄØ â³ä.       ", \
-    " ÁÄØ ï.         ", \
-    " ÁÄÂÂ9 â³ä.     ", \
-    " ÁÄÂÂ9 ï.       ", \
-    " ÁÄÂ2  â³ä.     ", \
-    " ÁÄÂ2  ï.       ", \
-    " ÁÄÂ5  â³ä.     ", \
-    " ÁÄÂ5  ï.       ", \
     " Ïîì.Ô.Ñ.       ", \
-    "Ðåæèì ïåðåïðîãð.", \
-    " ÁÄÂÂ-ÄÇ â³ä.   ", \
-    " ÁÄÂÂ-ÄÇ ï.     "
+    "Ðåæèì ïåðåïðîãð."
 
 #define NAME_DIAGN_EN   \
   " I2C Er         ",   \
@@ -525,7 +430,6 @@ enum _error_id
     " ADC:VDD fail R.", \
     " ADC1 SPI Err.  ", \
     " ADC2 SPI Err.  ", \
-    "UnAp D Buf Ovrfl", \
     " BO?.? Ctl Er   ", \
     " BO?.? Ctl Er   ", \
     " BO?.? Ctl Er   ", \
@@ -546,11 +450,6 @@ enum _error_id
     " BO?.? Ctl Er   ", \
     " BO?.? Ctl Er   ", \
     " BO?.? Ctl Er   ", \
-    " BO?.? Ctl Er   ", \
-    " BO?.? Ctl Er   ", \
-    " BO?.? Ctl Er   ", \
-    " BO?.? Ctl Er   ", \
-    " DSh outp. err. ", \
     " Dst Rec Busy   ", \
     " Dst Rec Buf Ovf", \
     "Dst Rec Mem Full", \
@@ -571,34 +470,16 @@ enum _error_id
     " Flash Mem Er   ", \
     " SP Gr Sel Er   ", \
     " Logometer V.Err", \
-    " Sensor1 Test   ", \
-    " Sensor2 Test   ", \
-    " Sensor3 Test   ", \
-    " Sensor4 Test   ", \
     " AIU01 abs      ", \
     " AIU01 ver      ", \
     " BIOU05_1 abs   ", \
     " BIOU05_1 ver   ", \
     " BIOU05_2 abs   ", \
     " BIOU05_2 ver   ", \
-    " BIASU01 abs    ", \
-    " BIASU01 ver    ", \
-    " ASU abs        ", \
-    " ASU ver        ", \
     " BIOU06 abs     ", \
     " BIOU06 ver     ", \
-    " DShU01 abs.    ", \
-    " DShU01 ver.    ", \
-    " BIOU09 abs     ", \
-    " BIOU09 ver     ", \
-    " BIU02  abs     ", \
-    " BIU02  ver     ", \
-    " BOU05  abs     ", \
-    " BOU05  ver     ", \
     " F.S.Error      ", \
-    " Reprogram Mode ", \
-    " BIOASU01 abs   ", \
-    " BIOASU01 ver   "
+    " Reprogram Mode "
 
 #define NAME_DIAGN_KZ   \
   " Îø.I2C         ",   \
@@ -653,7 +534,6 @@ enum _error_id
     " Òåñò VDD ÀÖÏ ãð", \
     " Îø.SPI ÀÖÏ1    ", \
     " Îø.SPI ÀÖÏ2    ", \
-    "Ïåðåï.áóô.ö.îñö.", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
@@ -674,11 +554,6 @@ enum _error_id
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
     " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ðåëå ?.?", \
-    " Îø.âûõ.ÄØ      ", \
     "Àí.ðåã.âð.çàíÿò.", \
     " Ïåð.áóô.aí.ðåã.", \
     " Ï.aí.ðåã.èñ÷.  ", \
@@ -699,33 +574,15 @@ enum _error_id
     " Îø.âíóòð.FLASH ", \
     " Îø.âûá.ãð.óñò. ", \
     " Îø.íàïð.ëîãîì. ", \
-    " Òåñò ÎÂÄ1      ", \
-    " Òåñò ÎÂÄ2      ", \
-    " Òåñò ÎÂÄ3      ", \
-    " Òåñò ÎÂÄ4      ", \
     " ÁÀ1 îò.        ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 îò.    ", \
     " ÁÄÂÂ5_1 ï.     ", \
     " ÁÄÂÂ5_2 îò.    ", \
     " ÁÄÂÂ5_2 ï.     ", \
-    " ÁÄÂ-ÄÇ îò.     ", \
-    " ÁÄÂ-ÄÇ ï.      ", \
-    " ÁÄÇ îò.        ", \
-    " ÁÄÇ ï.         ", \
     " ÁÄÂÂ6 îò.      ", \
     " ÁÄÂÂ6 ï.       ", \
-    " ÁÄØ îò.        ", \
-    " ÁÄØ ï.         ", \
-    " ÁÄÂÂ9 îò.      ", \
-    " ÁÄÂÂ9 ï.       ", \
-    " ÁÄÂ2  îò.      ", \
-    " ÁÄÂ2  ï.       ", \
-    " ÁÄÂ5  îò.      ", \
-    " ÁÄÂ5  ï.       ", \
     " Îø.Ô.Ñ.        ", \
-    "Ðåæèì ïåðåïðîãð.", \
-    " ÁÄÂÂ-ÄÇ îò.    ", \
-    " ÁÄÂÂ-ÄÇ ï.     "
+    "Ðåæèì ïåðåïðîãð."
 
 #endif

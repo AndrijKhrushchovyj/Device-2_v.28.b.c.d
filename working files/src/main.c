@@ -67,7 +67,7 @@ void watchdog_routine(unsigned int maska, unsigned int const label)
     //.asm volatile(
     //.  "bkpt 1"
     //.);
-    _SET_BIT(set_diagnostyka, TEST_OVD2); //ERROR_OVER_FLOW_EXTERNAL_WATCHDOG_IN
+    // _SET_BIT(set_diagnostyka, TEST_OVD2); //ERROR_OVER_FLOW_EXTERNAL_WATCHDOG_IN
   }
 
   for (size_t i = 0; i < 8; ++i)
@@ -120,7 +120,7 @@ void watchdog_routine(unsigned int maska, unsigned int const label)
         //.asm volatile(
         //.  "bkpt 1"
         //.);
-        _SET_BIT(set_diagnostyka, TEST_OVD3);
+        // _SET_BIT(set_diagnostyka, TEST_OVD3);
         //.if(time_delta_watchdog_output > 91000){
         //. asm volatile(
         //.   "bkpt 1"

@@ -2345,7 +2345,7 @@ inline unsigned int stop_regisrator(unsigned int *carrent_active_functions, unsi
     }
   }
 
-  _TIMER_0_T(INDEX_TIMER_DR_WORK, current_settings_prt.timeout_prolongation_work_digital_registrator + DELTA_TIME_FOR_TIMERS, flag, 0, flag, 1);
+  _TIMER_0_T(INDEX_TIMER_DR_WORK, (current_settings_prt.timeout_prolongation_work_digital_registrator + DELTA_TIME_FOR_TIMERS), flag, 0, flag, 1);
 
   return (flag == 0);
 }
@@ -7468,7 +7468,7 @@ void TIM2_IRQHandler(void)
       //.      //asm volatile(
       //.      //  "bkpt 1"
       //.      //);
-      _SET_BIT(set_diagnostyka, TEST_OVD3);
+      // _SET_BIT(set_diagnostyka, TEST_OVD3);
     }
     if (durLogicMax < delta_tick)
       durLogicMax = delta_tick;
