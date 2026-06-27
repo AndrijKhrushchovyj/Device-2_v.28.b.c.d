@@ -1,13 +1,13 @@
 #ifndef __CONST_MO__
 #define __CONST_MO__
 
-#define BROADCAST_ADDRESS_MO      ((uint8_t)-1)
+#define BROADCAST_ADDRESS_MO ((uint8_t) -1)
 
-#define BUFFER_CANAL1_MO          500
-#define BUFFER_CANAL2_MO          500
+#define BUFFER_CANAL1_MO 500
+#define BUFFER_CANAL2_MO 500
 
-#define START_BYTE_MO             0x5A
-#define STOP_BYTE_MO              0xA5
+#define START_BYTE_MO 0x5A
+#define STOP_BYTE_MO 0xA5
 
 enum _start_label
 {
@@ -16,73 +16,41 @@ enum _start_label
   START_LABEL_NEW_BLOCK
 };
 
-#ifdef NUMBER_DS
+#define SIZE_SENDING_DATA_TM                          \
+  (                                                   \
+    (sizeof(float) * _NUMBER_IM) +                    \
+    sizeof(frequency) +                               \
+    (sizeof(float) * MAX_NUMBER_INDEXES_RESISTANCE) + \
+    sizeof(float) /*P*/ +                             \
+    sizeof(float) /*Q*/ +                             \
+    sizeof(float) /*S*/ +                             \
+    sizeof(float) /*cos_phi*/ +                       \
+    (sizeof(float) * MAX_NUMBER_INDEXES_ENERGY) +     \
+    (sizeof(float) * FULL_ORT_MAX) +                  \
+    sizeof(float) /*resurs_vymykacha у відсотках*/ +  \
+    sizeof(resurs_vidkljuchennja) +                   \
+    sizeof(active_inputs_prt) +                       \
+    sizeof(state_outputs) +                           \
+    sizeof(state_leds) +                              \
+    sizeof(active_functions) +                        \
+    sizeof(diagnostyka) +                             \
+    sizeof(Output_Out_LAN_block))
 
-#define SIZE_SENDING_DATA_TM                      \
-(                                                 \
-  (sizeof(float)*_NUMBER_IM) +                    \
-  sizeof(frequency) +                             \
-  (sizeof(float)*MAX_NUMBER_INDEXES_RESISTANCE) + \
-  sizeof(float)/*P*/ +                            \
-  sizeof(float)/*Q*/ +                            \
-  sizeof(float)/*S*/ +                            \
-  sizeof(float)/*cos_phi*/ +                      \
-  (sizeof(float)*MAX_NUMBER_INDEXES_ENERGY) +     \
-  (sizeof(float)*FULL_ORT_MAX) +                  \
-  sizeof(float)/*resurs_vymykacha у відсотках*/ + \
-  sizeof(resurs_vidkljuchennja) +                 \
-  sizeof(active_inputs_prt) +                         \
-  sizeof(state_outputs) +                         \
-  sizeof(ds) +                                    \
-  sizeof(state_leds) +                            \
-  sizeof(active_functions) +                      \
-  sizeof(diagnostyka) +                           \
-  sizeof(Output_Out_LAN_block)                    \
-)
+#define SIZE_RECEIVING_DATA_TM     \
+  (                                \
+    sizeof(Input_In_GOOSE_block) + \
+    sizeof(Input_In_MMS_block) +   \
+    sizeof(activation_function_from_KP))
 
-#else
+#define SIZE_RECEIVING_ACT_DATA_TM      \
+  (                                     \
+    sizeof(Input_ctrl_In_GOOSE_block) + \
+    sizeof(Input_ctrl_In_MMS_block) +   \
+    sizeof(ctrl_activation_function_from_KP))
 
-#define SIZE_SENDING_DATA_TM            \
-(                                       \
-  (sizeof(float)*_NUMBER_IM) +                    \
-  sizeof(frequency) +                             \
-  (sizeof(float)*MAX_NUMBER_INDEXES_RESISTANCE) + \
-  sizeof(float)/*P*/ +                            \
-  sizeof(float)/*Q*/ +                            \
-  sizeof(float)/*S*/ +                            \
-  sizeof(float)/*cos_phi*/ +                      \
-  (sizeof(float)*MAX_NUMBER_INDEXES_ENERGY) +     \
-  (sizeof(float)*FULL_ORT_MAX) +                  \
-  sizeof(float)/*resurs_vymykacha у відсотках*/ + \
-  sizeof(resurs_vidkljuchennja) +                 \
-  sizeof(active_inputs_prt) +                         \
-  sizeof(state_outputs) +                         \
-  sizeof(state_leds) +                            \
-  sizeof(active_functions) +                      \
-  sizeof(diagnostyka) +                           \
-  sizeof(Output_Out_LAN_block)                    \
-)
-
-#endif
-
-#define SIZE_RECEIVING_DATA_TM          \
-(                                       \
-  sizeof(Input_In_GOOSE_block) +        \
-  sizeof(Input_In_MMS_block  ) +        \
-  sizeof(activation_function_from_KP)   \
-)
-
-#define SIZE_RECEIVING_ACT_DATA_TM      		\
-(                                       		\
-  sizeof(Input_ctrl_In_GOOSE_block) +   	 	\
-  sizeof(Input_ctrl_In_MMS_block  ) +   	 	\
-  sizeof(ctrl_activation_function_from_KP) 	\
-)
-
-#define SIZE_DESCRIPTION_DATA_TM      \
-(                                       \
-  20    \
-)
+#define SIZE_DESCRIPTION_DATA_TM \
+  (                              \
+    20)
 
 enum __type_head_info_mo
 {
@@ -112,9 +80,9 @@ enum _IEC_state_queue_mo
   IEC_STATE_QUEUE_MO_ASK_SENDING_SETTING_NETWORK_LAYER,
 
   IEC_STATE_QUEUE_MO_NEW_MODBUS_TCP_REQ,
-  
+
   IEC_STATE_QUEUE_MO_REBOOT_REQ,
-  
+
   IEC_STATE_QUEUE_MO_TRANSACTION_PROGRESS = 31
 };
 
@@ -126,33 +94,32 @@ enum _state_queue_mo
   STATE_QUEUE_MO_TRANSMITING_MAKING_MEMORY_BLOCK,
   STATE_QUEUE_MO_ASK_SENDING_SETTING_NETWORK_LAYER,
   STATE_QUEUE_MO_RECEIVING_SETTING_NETWORK_LAYER,
-  
+
   STATE_QUEUE_MO_ASK_NEW_MODBUS_TCP_REQ,
   STATE_QUEUE_MO_RECEIVING_NEW_MODBUS_TCP_REQ,
   STATE_QUEUE_MO_SEND_MODBUS_TCP_RESP,
   STATE_QUEUE_MO_TRANSMITING_MODBUS_TCP_RESP,
 
   STATE_QUEUE_MO_RESTART_KP,
-  
+
   STATE_QUEUE_MO_READ_FW_VERSION,
   STATE_QUEUE_MO_READING_FW_VERSION,
-  
+
   STATE_QUEUE_MO_BREAK_LAST_ACTION_IN_IEC = 30,
   STATE_QUEUE_MO_TRANSACTION_PROGRESS_IN_IEC = 31
 };
-#define QUEUQ_MO_IRQ   (                                                                  \
-                         MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_BASIC_SETTINGS)         |       \
-                         MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_MAKING_MEMORY_BLOCK)    |       \
-                         MASKA_FOR_BIT(STATE_QUEUE_MO_TRANSACTION_PROGRESS_IN_IEC)|       \
-                         MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_SENDING_SETTING_NETWORK_LAYER) |\
-                         MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_NEW_MODBUS_TCP_REQ)             \
-                       )    
+#define QUEUQ_MO_IRQ (                                              \
+  MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_BASIC_SETTINGS) |                \
+  MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_MAKING_MEMORY_BLOCK) |           \
+  MASKA_FOR_BIT(STATE_QUEUE_MO_TRANSACTION_PROGRESS_IN_IEC) |       \
+  MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_SENDING_SETTING_NETWORK_LAYER) | \
+  MASKA_FOR_BIT(STATE_QUEUE_MO_ASK_NEW_MODBUS_TCP_REQ))
 
 enum _state_acs
 {
   ACS_MADE = 0,
   ACS_NO_FREE_MEMORY,
-  
+
   ACS_ALL_BLOCKS_CREATED,
   ACS_BLOCKS_CREATED_OF_LAST_REQUEST,
   ACS_NOT_ALL_BLOCKS_CREATED_OF_LAST_REQUEST,
@@ -163,6 +130,5 @@ enum _state_acs
   ACS_SOME_ID_INCREASE_ACS,
   ACS_ERROR_PACKET
 };
-
 
 #endif

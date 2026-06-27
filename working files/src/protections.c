@@ -6099,9 +6099,6 @@ inline void main_protection(void)
 
     //Деактивовуємо всі реле
     state_outputs = 0;
-#ifdef NUMBER_DS
-    ds = 0;
-#endif
 
     //Переводимо у початковий стан деякі глобальні змінні
 
@@ -6395,86 +6392,6 @@ inline void main_protection(void)
         }
       }
     }
-
-#ifdef NUMBER_DS
-    if ((current_settings_prt.configuration & (1 << DS_BIT_CONFIGURATION)) != 0)
-    {
-      for (size_t i = NUMBER_SIMPLE_OUTPUTS; i != NUMBER_OUTPUTS; ++i)
-      {
-        //У тимчасовий масив поміщаємо ЛОГІЧНЕ І ранжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
-        unsigned int temp_array_of_outputs[N_BIG];
-
-        for (unsigned int j = 0; j < N_BIG; j++)
-          temp_array_of_outputs[j] = current_settings_prt.ranguvannja_outputs[N_BIG * i + j] & active_functions[j];
-
-        //Сигнал "Аварійна несправність" працює у інверсному режимі: замикає реле на якому зранжована у випадку, коли даний сигнал не активинй
-        if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG * i), RANG_AVAR_DEFECT) != 0)
-        {
-          //Сигнал "Aварийная неисправность"  справді зранжовано на даний вихід
-          if (_CHECK_SET_BIT(temp_array_of_outputs, RANG_AVAR_DEFECT) == 0)
-          {
-            //Сигнал "Aварийная неисправность" не є активним
-            //Приимусово встановлюємо його у активний стан у масиві, який є  ЛОГІЧНИМ І анжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
-            _SET_BIT(temp_array_of_outputs, RANG_AVAR_DEFECT);
-          }
-          else
-          {
-            //Сигнал "Aварийная неисправность" є активним
-            //Приимусово переводимо його у пасивний стан у масиві, який є  ЛОГІЧНИМ І анжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
-            _CLEAR_BIT(temp_array_of_outputs, RANG_AVAR_DEFECT);
-          }
-        }
-
-        //Сигнал "Загальна несправність" працює у інверсному режимі: замикає реле на якому зранжована у випадку, коли даний сигнал не активинй
-        if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG * i), RANG_DEFECT) != 0)
-        {
-          //Сигнал "Загальна несправність"  справді зранжовано на даний вихід
-          if (_CHECK_SET_BIT(temp_array_of_outputs, RANG_DEFECT) == 0)
-          {
-            //Сигнал "Загальна несправність" не є активним
-            //Приимусово встановлюємо його у активний стан у масиві, який є  ЛОГІЧНИМ І анжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
-            _SET_BIT(temp_array_of_outputs, RANG_DEFECT);
-          }
-          else
-          {
-            //Сигнал "Загальна несправність" є активним
-            //Приимусово переводимо його у пасивний стан у масиві, який є  ЛОГІЧНИМ І анжування виходу, який індексується інедексом "i" і функцій, які зараз є активними
-            _CLEAR_BIT(temp_array_of_outputs, RANG_DEFECT);
-          }
-        }
-
-        //Перевіряємо, чи є співпадіння між ранжованими функціями на цьому виході і функціями, які зараз є активними - умова активації виходу
-        NOT_ZERO_OR(comp, temp_array_of_outputs, N_BIG)
-        if (comp)
-        {
-          if (_CHECK_SET_BIT((current_settings_prt.ranguvannja_outputs + N_BIG * i), RANG_WORK_BV) == 0)
-          {
-            //На дане реле не заводиться сигнал БВ (блок включення)
-
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ
-            _SET_STATE(ds, (i - NUMBER_SIMPLE_OUTPUTS));
-          }
-          else
-          {
-            //На дане реле заводиться сигнал БВ (блок включення)
-
-            //Відмічаємо, що даний вихід - ЗАМКНУТИЙ тільки тоді, коли функція БВ активна зараз
-            if (_CHECK_SET_BIT(active_functions, RANG_WORK_BV) != 0)
-              _SET_STATE(ds, (i - NUMBER_SIMPLE_OUTPUTS));
-            else
-              _CLEAR_STATE(ds, (i - NUMBER_SIMPLE_OUTPUTS));
-          }
-        }
-        else
-        {
-          //Відмічаємо, що даний вихід - РОЗІМКНУТИЙ
-          _CLEAR_STATE(ds, (i - NUMBER_SIMPLE_OUTPUTS));
-        }
-      }
-    }
-    else
-      ds = 0;
-#endif
   }
   else
   {
@@ -6482,9 +6399,6 @@ inline void main_protection(void)
 
     //Деактивовуємо всі реле
     state_outputs = 0;
-#ifdef NUMBER_DS
-    ds = 0;
-#endif
   }
 
   //Перевіряємо чи треба записувати стан сигнальних виходів у EEPROM
@@ -6536,18 +6450,6 @@ inline void main_protection(void)
   _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) = (state_outputs_raw >> 16) << 8;
 
 #else
-
-#ifdef NUMBER_DS
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) =
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-
-    (((state_outputs_raw >> 11) & ((1u << 1) - 1)) << 1) |
-
-#endif
-    (ds & (MASKA_FOR_BIT(NUMBER_DS) - 1)) << 8;
-#endif
 
 #endif
 
@@ -7174,10 +7076,6 @@ void TIM2_IRQHandler(void)
       control_state_outputs = u32_ctrl_rele_val;                                                                  //^state_outputs_rawunsigned int control_state_outputs =
 #endif
 
-#ifdef NUMBER_DS
-      unsigned int control_ds = (~((unsigned int) (_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) >> 8))) & (MASKA_FOR_BIT(NUMBER_DS) - 1);
-#endif
-
       static uint32_t error_rele[NUMBER_OUTPUTS];
       if (control_state_outputs != state_outputs_raw)
       {
@@ -7201,31 +7099,6 @@ void TIM2_IRQHandler(void)
         for (size_t index = 0; index < NUMBER_SIMPLE_OUTPUTS; ++index)
           error_rele[index] = 0;
       }
-
-#ifdef NUMBER_DS
-      if (control_ds != ds)
-      {
-        for (size_t index = 0; index < NUMBER_DS; ++index)
-        {
-          uint32_t maska = 1 << index;
-
-          if ((control_ds & maska) != (ds & maska))
-          {
-            if (error_rele[NUMBER_SIMPLE_OUTPUTS + index] < 3)
-              ++error_rele[NUMBER_SIMPLE_OUTPUTS + index];
-            if (error_rele[NUMBER_SIMPLE_OUTPUTS + index] >= 3)
-              _SET_BIT(set_diagnostyka, (ERROR_DS_OUTPUT_BIT + index));
-          }
-          else
-            error_rele[NUMBER_SIMPLE_OUTPUTS + index] = 0;
-        }
-      }
-      else
-      {
-        for (size_t index = 0; index < NUMBER_DS; ++index)
-          error_rele[NUMBER_SIMPLE_OUTPUTS + index] = 0;
-      }
-#endif
     }
 
     //Функції захистів

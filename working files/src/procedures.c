@@ -1508,19 +1508,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
         }
       }
     }
-
-#ifdef NUMBER_DS
-    //Налаштування для ДШ
-    if ((target_label->configuration & (1 << DS_BIT_CONFIGURATION)) == 0)
-    {
-      //Знімаємо всі функції для ДШ
-      for (size_t i = NUMBER_SIMPLE_OUTPUTS; i < NUMBER_OUTPUTS; ++i)
-      {
-        for (size_t j = 0; j < N_BIG; ++j)
-          target_label->ranguvannja_outputs[N_BIG * i + j] = 0;
-      }
-    }
-#endif
   }
   return error_window;
 }

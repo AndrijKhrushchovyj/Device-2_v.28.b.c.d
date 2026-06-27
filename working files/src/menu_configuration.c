@@ -16,12 +16,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ַֽלאךס    ",
        "ַֽלטם     ",
        "׃ַ        ",
-       "׀אסר.כמד. "
-#ifdef NUMBER_DS
-       ,
-       "ִ״        "
-#endif
-      },
+       "׀אסר.כמד. "},
       {"׀ֽֿ       ",
        "ַׁױ       ",
        "ֱַױ       ",
@@ -29,12 +24,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ַֽלאךס    ",
        "ַֽל³ם     ",
        "׃ַ        ",
-       "׀מחר.כמד. "
-#ifdef NUMBER_DS
-       ,
-       "ִ״        "
-#endif
-      },
+       "׀מחר.כמד. "},
       {"RPN       ",
        "ZSCH      ",
        "ZNCH      ",
@@ -42,12 +32,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "Umax      ",
        "Umin      ",
        "FL        ",
-       "UD-logic  "
-#ifdef NUMBER_DS
-       ,
-       "DSh       "
-#endif
-      },
+       "UD-logic  "},
       {"׀ֽֿ       ",
        "ַׁױ       ",
        "ַֽױ       ",
@@ -55,12 +40,7 @@ void make_ekran_configuration(unsigned int configuration_edit_temp)
        "ַֽלאךס    ",
        "ַֽלטם     ",
        "׃ַ        ",
-       "׀אסר.כמד. "
-#ifdef NUMBER_DS
-       ,
-       "ִ״        "
-#endif
-      }};
+       "׀אסר.כמד. "}};
 
   static const unsigned char information_on[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - MAX_COL_LCD_PART1] =
     {

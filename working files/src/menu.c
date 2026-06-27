@@ -2302,11 +2302,7 @@ void main_manu_function(void)
                 }
                 else
                 {
-                  if (current_ekran.index_position >= (NUMBER_SIMPLE_OUTPUTS
-#ifdef NUMBER_DS
-                                                       + ((current_settings.configuration & (1 << DS_BIT_CONFIGURATION)) != 0) * NUMBER_DS
-#endif
-                                                       ))
+                  if (current_ekran.index_position >= (NUMBER_SIMPLE_OUTPUTS))
                     current_ekran.index_position = 0;
                 }
 
@@ -4465,11 +4461,7 @@ void main_manu_function(void)
                   else
                   {
                     if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = NUMBER_SIMPLE_OUTPUTS
-#ifdef NUMBER_DS
-                                                     + ((current_settings.configuration & (1 << DS_BIT_CONFIGURATION)) != 0) * NUMBER_DS
-#endif
-                                                     - 1;
+                      current_ekran.index_position = NUMBER_SIMPLE_OUTPUTS - 1;
                   }
 
                   position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
@@ -5281,11 +5273,7 @@ void main_manu_function(void)
                   }
                   else
                   {
-                    if (++current_ekran.index_position >= (NUMBER_SIMPLE_OUTPUTS
-#ifdef NUMBER_DS
-                                                           + ((current_settings.configuration & (1 << DS_BIT_CONFIGURATION)) != 0) * NUMBER_DS
-#endif
-                                                           ))
+                    if (++current_ekran.index_position >= (NUMBER_SIMPLE_OUTPUTS))
                       current_ekran.index_position = 0;
                   }
 

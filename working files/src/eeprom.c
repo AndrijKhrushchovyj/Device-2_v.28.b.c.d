@@ -1748,18 +1748,6 @@ void main_routines_for_spi1(void)
 
 #else
 
-#ifdef NUMBER_DS
-        _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) =
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-
-          (((state_outputs_raw >> 11) & ((1u << 1) - 1)) << 1) |
-
-#endif
-          (ds & (MASKA_FOR_BIT(NUMBER_DS) - 1)) << 8;
-#endif
-
 #endif
 
         TIM_PRT_write_tick = TIM2->CNT;
