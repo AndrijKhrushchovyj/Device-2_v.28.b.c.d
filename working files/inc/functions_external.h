@@ -184,7 +184,6 @@ extern void make_ekran_timeout_digital_registrator(void);
 extern void make_ekran_settings_digital_registrators(void);
 
 extern unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);
-extern void action_after_changing_resurs_pickup(__SETTINGS *);
 extern void action_during_changing_button_mode(__SETTINGS *, __SETTINGS *);
 extern void def_pickup_timeout_UP(__SETTINGS *, uint32_t, uint32_t);
 extern void action_after_changing_input_UP(__SETTINGS *, uint32_t, uint32_t);

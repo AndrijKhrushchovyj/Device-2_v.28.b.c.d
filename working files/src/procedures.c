@@ -227,8 +227,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -391,8 +389,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -557,8 +553,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -726,8 +720,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -896,8 +888,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -1068,8 +1058,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -1245,8 +1233,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
       //Знімаємо всі функції для ранжування оприділювальних функцій
       for (int i = 0; i < NUMBER_DEFINED_FUNCTIONS; i++)
@@ -1420,8 +1406,6 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
       {
         target_label->ranguvannja_analog_registrator[j] &= ~maska_1[j];
         target_label->ranguvannja_digital_registrator[j] &= ~maska_1[j];
-        target_label->ranguvannja_off_cb[j] &= ~maska_1[j];
-        target_label->ranguvannja_on_cb[j] &= ~maska_1[j];
       }
 
       //Очищємо всі функції для ранжування оприділювальних функцій
@@ -2723,24 +2707,6 @@ void control_resurs(void)
 
     //Виствляємо повідомлення у слові діагностики
     _SET_BIT(set_diagnostyka, ERROR_RESURS_EEPROM_CONTROL_BIT);
-  }
-}
-/*****************************************************/
-
-/*****************************************************/
-//Функція обновлення змінних при зміні типу реле 33/3I0
-/*****************************************************/
-void action_after_changing_resurs_pickup(__SETTINGS *const target_label)
-{
-  unsigned int const chastka = target_label->setpoint_r_kom_st_Inom / target_label->setpoint_r_kom_st_Inom_vymk;
-  if (check_data_setpoint(target_label->setpoint_pochatkovyj_resurs, (2 * chastka), target_label->setpoint_r_kom_st_Inom) != 1)
-  {
-    target_label->setpoint_pochatkovyj_resurs = 2 * chastka;
-  }
-
-  if (check_data_setpoint(target_label->setpoint_krytychnyj_resurs, chastka, (2 * chastka)) != 1)
-  {
-    target_label->setpoint_krytychnyj_resurs = chastka;
   }
 }
 /*****************************************************/

@@ -111,7 +111,7 @@ void make_ekran_setpoints_control_location(void)
       "   Невизнач.    ",
       "   Undefined    ",
       "    Неопред.    "};
-  const unsigned char undefined_word[MAX_NAMBER_LANGUAGE] = {4, 3, 3, 4};
+  const unsigned char undefined_word[MAX_NAMBER_LANGUAGE] = {3, 2, 2, 3};
   int const index_language = index_language_in_array(current_settings.language);
 
   unsigned int position_temp = current_ekran.index_position;
@@ -199,7 +199,7 @@ void make_ekran_setpoints_control_location(void)
     int last_position_cursor_x = COL_NUMBER_STEPS_RPN_END;
     if (
       (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT) &&
-      (edition_current_step_logical < 0))
+      (current_step_logical < 0))
     {
       current_ekran.position_cursor_x = undefined_word[index_language];
     }
@@ -223,7 +223,7 @@ void make_ekran_setpoints_control_location(void)
   // if (current_ekran.edition == 0)
   //   current_ekran.cursor_on = 0;
   // else
-    current_ekran.cursor_on = 1;
+  current_ekran.cursor_on = 1;
 
   //Курсор не мигає
   if (current_ekran.edition == 0)

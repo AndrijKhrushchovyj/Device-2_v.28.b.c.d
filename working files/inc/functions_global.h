@@ -185,7 +185,6 @@ void make_ekran_grupa_ustavok(void);
 void make_ekran_vidkluchenja(void);
 
 unsigned int action_after_changing_of_configuration(unsigned int, __SETTINGS *);
-void action_after_changing_resurs_pickup(__SETTINGS *);
 void action_during_changing_button_mode(__SETTINGS *, __SETTINGS *);
 void def_pickup_timeout_UP(__SETTINGS *, uint32_t, uint32_t);
 void action_after_changing_input_UP(__SETTINGS *, uint32_t, uint32_t);
