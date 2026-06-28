@@ -53,8 +53,8 @@ enum _index_viewing
 #define BIT_KEY_5 10
 #define BIT_KEY_6 11
 #define BIT_KEY_C 12
-#define BIT_KEY_I 13
-#define BIT_KEY_O 14
+// #define BIT_KEY_I 13
+// #define BIT_KEY_O 14
 
 #define BIT_REWRITE 30
 

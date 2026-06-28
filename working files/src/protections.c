@@ -4969,16 +4969,6 @@ inline void main_protection(void)
         _SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_RELES);
         _SET_BIT(active_functions_fc_small_tmp, RANG_SMALL_RESET_RELES);
       }
-      if ((pressed_buttons_united & (1 << (BIT_KEY_I - BIT_KEY_1))) != 0)
-      {
-        _SET_BIT(temp_value_for_activated_function, RANG_SMALL_VKL_VV);
-        _SET_BIT(active_functions_fc_small_tmp, RANG_SMALL_VKL_VV);
-      }
-      if ((pressed_buttons_united & (1 << (BIT_KEY_O - BIT_KEY_1))) != 0)
-      {
-        _SET_BIT(temp_value_for_activated_function, RANG_SMALL_OTKL_VV);
-        _SET_BIT(active_functions_fc_small_tmp, RANG_SMALL_OTKL_VV);
-      }
     }
 
     //Активація з Д.Входу

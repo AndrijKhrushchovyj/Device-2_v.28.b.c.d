@@ -50,16 +50,9 @@ enum _configuration
 enum __rang_small
 {
   _RANG_SMALL_GENERAL_BEGIN = 0,
-  RANG_SMALL_BLOCK_VKL_VV = _RANG_SMALL_GENERAL_BEGIN,
-  RANG_SMALL_RESET_LEDS,
+  RANG_SMALL_RESET_LEDS = _RANG_SMALL_GENERAL_BEGIN,
   RANG_SMALL_RESET_RELES,
   RANG_SMALL_MISCEVE_DYSTANCIJNE,
-  RANG_SMALL_STATE_VV,
-  RANG_SMALL_OTKL_VID_ZOVN_ZAHYSTIV,
-  RANG_SMALL_OTKL_VV,
-  RANG_SMALL_VKL_VV,
-  RANG_SMALL_CTRL_OTKL,
-  RANG_SMALL_CTRL_VKL,
   RANG_SMALL_1_GRUPA_USTAVOK,
   RANG_SMALL_2_GRUPA_USTAVOK,
   RANG_SMALL_3_GRUPA_USTAVOK,
@@ -398,8 +391,6 @@ enum __rang_output_led_df_reg
 #define COMMAND_SIGNALES_0 (                                  \
     (1u << (RANG_SMALL_RESET_LEDS - 0))                       \
   | (1u << (RANG_SMALL_RESET_RELES - 0))                      \
-  | (1u << (RANG_SMALL_OTKL_VV - 0))                          \
-  | (1u << (RANG_SMALL_VKL_VV - 0))                           \
   | (1u << (RANG_SMALL_RESET_BLOCK_READY_TU_VID_ZAHYSTIV - 0))\
   | (1u << (RANG_SMALL_CLEAR_BLK_RPN - 0))                    \
   | (1u << (RANG_SMALL_UBAVYTY_FROM_KB_OR_UPPER_LEVEL_RPN - 0))\
@@ -427,17 +418,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                       \
   | (1u << (RANG_SMALL_DT2_SET - 32))                         \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                       \
+  | (1u << (RANG_SMALL_DT3_SET - 32))                         \
+  | (1u << (RANG_SMALL_DT3_RESET - 32))                       \
+  | (1u << (RANG_SMALL_DT4_SET - 32))                         \
+  | (1u << (RANG_SMALL_DT4_RESET - 32))                       \
+  | (1u << (RANG_SMALL_LF1 - 32))                             \
+  | (1u << (RANG_SMALL_LF2 - 32))                             \
+  | (1u << (RANG_SMALL_LF3 - 32))                             \
 )
 
 #define COMMAND_SIGNALES_2 (                                  \
-    (1u << (RANG_SMALL_DT3_SET - 64))                         \
-  | (1u << (RANG_SMALL_DT3_RESET - 64))                       \
-  | (1u << (RANG_SMALL_DT4_SET - 64))                         \
-  | (1u << (RANG_SMALL_DT4_RESET - 64))                       \
-  | (1u << (RANG_SMALL_LF1 - 64))                             \
-  | (1u << (RANG_SMALL_LF2 - 64))                             \
-  | (1u << (RANG_SMALL_LF3 - 64))                             \
-  | (1u << (RANG_SMALL_LF4 - 64))                             \
+    (1u << (RANG_SMALL_LF4 - 64))                             \
   | (1u << (RANG_SMALL_LF5 - 64))                             \
   | (1u << (RANG_SMALL_LF6 - 64))                             \
   | (1u << (RANG_SMALL_LF7 - 64))                             \
@@ -486,17 +477,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
+  | (1u << (RANG_SMALL_LF1 - 32))                              \
+  | (1u << (RANG_SMALL_LF2 - 32))                              \
+  | (1u << (RANG_SMALL_LF3 - 32))                              \
 )
 
 #define MASKA_BUTTON_MODE_0_SIGNALS_2 (                        \
-    (1u << (RANG_SMALL_DT3_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
-  | (1u << (RANG_SMALL_LF1 - 64))                              \
-  | (1u << (RANG_SMALL_LF2 - 64))                              \
-  | (1u << (RANG_SMALL_LF3 - 64))                              \
-  | (1u << (RANG_SMALL_LF4 - 64))                              \
+    (1u << (RANG_SMALL_LF4 - 64))                              \
   | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \
@@ -516,8 +507,7 @@ enum __rang_output_led_df_reg
 //Макски сигналів, які можна зранжувати на функціональні кнопки у Режимі Ключ
 /*****************************************/
 #define MASKA_BUTTON_MODE_1_SIGNALS_0 (                        \
-    (1u << (RANG_SMALL_BLOCK_VKL_VV - 0))                      \
-  | (1u << (RANG_SMALL_MISCEVE_DYSTANCIJNE - 0))               \
+    (1u << (RANG_SMALL_MISCEVE_DYSTANCIJNE - 0))               \
   | (1u << (RANG_SMALL_1_GRUPA_USTAVOK - 0))                   \
   | (1u << (RANG_SMALL_2_GRUPA_USTAVOK - 0))                   \
   | (1u << (RANG_SMALL_3_GRUPA_USTAVOK - 0))                   \
@@ -537,17 +527,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_CLEAR_BLK_RPN - 0))                     \
   | (1u << (RANG_SMALL_KONTROL_UBAVYTY_ZSKh - 0))              \
   | (1u << (RANG_SMALL_KONTROL_PRYBAVYTY_ZSKh - 0))            \
+  | (1u << (RANG_SMALL_BLOCK_BRP - 0))                         \
+  | (1u << (RANG_SMALL_BLOCK_UMAX2 - 0))                       \
+  | (1u << (RANG_SMALL_BLOCK_UMIN1 - 0))                       \
+  | (1u << (RANG_SMALL_BLOCK_UMIN2 - 0))                       \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 0 - 0))                     \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 1 - 0))                     \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 2 - 0))                     \
 )
 
 #define MASKA_BUTTON_MODE_1_SIGNALS_1 (                        \
-    (1u << (RANG_SMALL_BLOCK_BRP - 32))                        \
-  | (1u << (RANG_SMALL_BLOCK_UMAX2 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UMIN1 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UMIN2 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 0 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 1 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 2 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 3 - 32))                    \
+    (1u << (RANG_SMALL_BLOCK_UP1 + 3 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 4 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 5 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 6 - 32))                    \
@@ -572,17 +562,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
+  | (1u << (RANG_SMALL_LF1 - 32))                              \
+  | (1u << (RANG_SMALL_LF2 - 32))                              \
+  | (1u << (RANG_SMALL_LF3 - 32))                              \
 )
 
 #define MASKA_BUTTON_MODE_1_SIGNALS_2 (                        \
-    (1u << (RANG_SMALL_DT3_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
-  | (1u << (RANG_SMALL_LF1 - 64))                              \
-  | (1u << (RANG_SMALL_LF2 - 64))                              \
-  | (1u << (RANG_SMALL_LF3 - 64))                              \
-  | (1u << (RANG_SMALL_LF4 - 64))                              \
+    (1u << (RANG_SMALL_LF4 - 64))                              \
   | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \
@@ -602,16 +592,9 @@ enum __rang_output_led_df_reg
 //Макски сигналів, які можна зранжувати на дискретні входи
 /*****************************************/
 #define MASKA_INPUT_SIGNALS_0 (                                \
-    (1u << (RANG_SMALL_BLOCK_VKL_VV - 0))                      \
-  | (1u << (RANG_SMALL_RESET_LEDS - 0))                        \
+    (1u << (RANG_SMALL_RESET_LEDS - 0))                        \
   | (1u << (RANG_SMALL_RESET_RELES - 0))                       \
   | (1u << (RANG_SMALL_MISCEVE_DYSTANCIJNE - 0))               \
-  | (1u << (RANG_SMALL_STATE_VV - 0))                          \
-  | (1u << (RANG_SMALL_OTKL_VID_ZOVN_ZAHYSTIV - 0))            \
-  | (1u << (RANG_SMALL_OTKL_VV - 0))                           \
-  | (1u << (RANG_SMALL_VKL_VV - 0))                            \
-  | (1u << (RANG_SMALL_CTRL_OTKL - 0))                         \
-  | (1u << (RANG_SMALL_CTRL_VKL - 0))                          \
   | (1u << (RANG_SMALL_1_GRUPA_USTAVOK - 0))                   \
   | (1u << (RANG_SMALL_2_GRUPA_USTAVOK - 0))                   \
   | (1u << (RANG_SMALL_3_GRUPA_USTAVOK - 0))                   \
@@ -632,17 +615,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_CLEAR_BLK_RPN - 0))                     \
   | (1u << (RANG_SMALL_KONTROL_UBAVYTY_ZSKh - 0))              \
   | (1u << (RANG_SMALL_KONTROL_PRYBAVYTY_ZSKh - 0))            \
+  | (1u << (RANG_SMALL_BLOCK_BRP - 0))                        \
+  | (1u << (RANG_SMALL_BLOCK_UMAX2 - 0))                      \
+  | (1u << (RANG_SMALL_BLOCK_UMIN1 - 0))                      \
+  | (1u << (RANG_SMALL_BLOCK_UMIN2 - 0))                      \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 0 - 0))                    \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 1 - 0))                    \
+  | (1u << (RANG_SMALL_BLOCK_UP1 + 2 - 0))                    \
 )
 
 #define MASKA_INPUT_SIGNALS_1 (                                \
-    (1u << (RANG_SMALL_BLOCK_BRP - 32))                        \
-  | (1u << (RANG_SMALL_BLOCK_UMAX2 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UMIN1 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UMIN2 - 32))                      \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 0 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 1 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 2 - 32))                    \
-  | (1u << (RANG_SMALL_BLOCK_UP1 + 3 - 32))                    \
+    (1u << (RANG_SMALL_BLOCK_UP1 + 3 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 4 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 5 - 32))                    \
   | (1u << (RANG_SMALL_BLOCK_UP1 + 6 - 32))                    \
@@ -667,17 +650,17 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_DT1_RESET - 32))                        \
   | (1u << (RANG_SMALL_DT2_SET - 32))                          \
   | (1u << (RANG_SMALL_DT2_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT3_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT3_RESET - 32))                        \
+  | (1u << (RANG_SMALL_DT4_SET - 32))                          \
+  | (1u << (RANG_SMALL_DT4_RESET - 32))                        \
+  | (1u << (RANG_SMALL_LF1 - 32))                              \
+  | (1u << (RANG_SMALL_LF2 - 32))                              \
+  | (1u << (RANG_SMALL_LF3 - 32))                              \
 )
 
 #define MASKA_INPUT_SIGNALS_2 (                                \
-    (1u << (RANG_SMALL_DT3_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT3_RESET - 64))                        \
-  | (1u << (RANG_SMALL_DT4_SET - 64))                          \
-  | (1u << (RANG_SMALL_DT4_RESET - 64))                        \
-  | (1u << (RANG_SMALL_LF1 - 64))                              \
-  | (1u << (RANG_SMALL_LF2 - 64))                              \
-  | (1u << (RANG_SMALL_LF3 - 64))                              \
-  | (1u << (RANG_SMALL_LF4 - 64))                              \
+    (1u << (RANG_SMALL_LF4 - 64))                              \
   | (1u << (RANG_SMALL_LF5 - 64))                              \
   | (1u << (RANG_SMALL_LF6 - 64))                              \
   | (1u << (RANG_SMALL_LF7 - 64))                              \

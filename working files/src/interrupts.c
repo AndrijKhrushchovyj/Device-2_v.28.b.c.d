@@ -1315,7 +1315,7 @@ void TIM4_IRQHandler(void)
     check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_ESC);
     check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_LEFT);
     check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_UP);
-    check_state_key(KEYBOARD_SW_D, KEYBOARD_SW_D_PIN, BIT_KEY_I);
+    // check_state_key(KEYBOARD_SW_D, KEYBOARD_SW_D_PIN, BIT_KEY_I);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_2_PIN);
 
     //Робимо невелику затримку
@@ -1327,7 +1327,7 @@ void TIM4_IRQHandler(void)
     check_state_key(KEYBOARD_SW_A, KEYBOARD_SW_A_PIN, BIT_KEY_1);
     check_state_key(KEYBOARD_SW_B, KEYBOARD_SW_B_PIN, BIT_KEY_2);
     check_state_key(KEYBOARD_SW_C, KEYBOARD_SW_C_PIN, BIT_KEY_3);
-    check_state_key(KEYBOARD_SW_D, KEYBOARD_SW_D_PIN, BIT_KEY_O);
+    // check_state_key(KEYBOARD_SW_D, KEYBOARD_SW_D_PIN, BIT_KEY_O);
     GPIO_SetBits(KEYBOARD, KEYBOARD_SW_3_PIN);
 
     //Робимо невелику затримку
@@ -1355,9 +1355,7 @@ void TIM4_IRQHandler(void)
       (1 << BIT_KEY_4) |
       (1 << BIT_KEY_5) |
       (1 << BIT_KEY_6) |
-      (1 << BIT_KEY_C) |
-      (1 << BIT_KEY_I) |
-      (1 << BIT_KEY_O));
+      (1 << BIT_KEY_C));
     if ((LCD_BL->ODR & LCD_BL_PIN) != (uint32_t) Bit_RESET)
     //?if (1)
     {
@@ -1408,9 +1406,7 @@ void TIM4_IRQHandler(void)
                                                                        (1 << BIT_KEY_4) |
                                                                        (1 << BIT_KEY_5) |
                                                                        (1 << BIT_KEY_6) |
-                                                                       (1 << BIT_KEY_C) |
-                                                                       (1 << BIT_KEY_I) |
-                                                                       (1 << BIT_KEY_O))); /*new_state_keyboard змінюється і потім аналізується у функції main_manu_function, тому для аналізу натискування функціональних кнопок натискування цих кнопок аналізуємо через іншу змінну*/
+                                                                       (1 << BIT_KEY_C))); /*new_state_keyboard змінюється і потім аналізується у функції main_manu_function, тому для аналізу натискування функціональних кнопок натискування цих кнопок аналізуємо через іншу змінну*/
     new_state_keyboard &= (unsigned int) (~(
       (1 << BIT_KEY_1) |
       (1 << BIT_KEY_2) |
@@ -1418,9 +1414,7 @@ void TIM4_IRQHandler(void)
       (1 << BIT_KEY_4) |
       (1 << BIT_KEY_5) |
       (1 << BIT_KEY_6) |
-      (1 << BIT_KEY_C) |
-      (1 << BIT_KEY_I) |
-      (1 << BIT_KEY_O)));
+      (1 << BIT_KEY_C)));
 
     //Перевірка на те, чи вже кнопка відпущена чи ще натиснута
     if (time_set_keyboard[BIT_KEY_1] == 0)
@@ -1437,12 +1431,8 @@ void TIM4_IRQHandler(void)
       new_state_keyboard_for_db &= (unsigned int) (~(1 << BIT_KEY_6));
     if (time_set_keyboard[BIT_KEY_C] == 0)
       new_state_keyboard_for_db &= (unsigned int) (~(1 << BIT_KEY_C));
-    if (time_set_keyboard[BIT_KEY_I] == 0)
-      new_state_keyboard_for_db &= (unsigned int) (~(1 << BIT_KEY_I));
-    if (time_set_keyboard[BIT_KEY_O] == 0)
-      new_state_keyboard_for_db &= (unsigned int) (~(1 << BIT_KEY_O));
 
-    if ((new_state_keyboard_for_db & ((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C) | (1 << BIT_KEY_I) | (1 << BIT_KEY_O))) != 0)
+    if ((new_state_keyboard_for_db & ((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C))) != 0)
     {
       if (
         ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_FB_ACTIVATION)) == 0) ||
@@ -1453,9 +1443,9 @@ void TIM4_IRQHandler(void)
         Натиснуті кнопки переносимо до спеціальної змінної, щоб їх обслуговувати  у системі захистів
         ***************************/
         mutex_buttons = true;
-        pressed_buttons |= (new_state_keyboard_for_db & ((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C) | (1 << BIT_KEY_I) | (1 << BIT_KEY_O))) >> BIT_KEY_1;
+        pressed_buttons |= (new_state_keyboard_for_db & ((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C))) >> BIT_KEY_1;
         mutex_buttons = false;
-        new_state_keyboard_for_db &= (unsigned int) (~((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C) | (1 << BIT_KEY_I) | (1 << BIT_KEY_O)));
+        new_state_keyboard_for_db &= (unsigned int) (~((1 << BIT_KEY_1) | (1 << BIT_KEY_2) | (1 << BIT_KEY_3) | (1 << BIT_KEY_4) | (1 << BIT_KEY_5) | (1 << BIT_KEY_6) | (1 << BIT_KEY_C)));
         /***************************/
 
         if ((current_settings.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_FB_ACTIVATION)) != 0)
