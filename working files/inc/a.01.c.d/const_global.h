@@ -1120,10 +1120,46 @@ enum __rang_output_led_df_reg
 //Макска для блокування зміни груп  уставок
 /*****************************************/
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_0  0
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1  0
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_2  0
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3  0
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4  0
+
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1 (              \
+     (1u << (RANG_VYJCHE_ZONY_RPN - 32))                      \
+   | (1u << (RANG_NYJCHE_ZONY_RPN - 32))                      \
+)
+
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_2 (              \
+     (1u << (RANG_PO_UMAX1 - 64))                             \
+   | (1u << (RANG_PRYSK_UBAVYTY_VID_UMAX1 - 64))              \
+   | (1u << (RANG_BLOCK_PRYBAVYTY_VID_UMAX1 - 64))            \
+   | (1u << (RANG_PO_UMAX2 - 64))                             \
+   | (1u << (RANG_UMAX2 - 64))                                \
+   | (1u << (RANG_BRP - 64))                                  \
+   | (1u << (RANG_PO_UMIN1 - 64))                             \
+   | (1u << (RANG_UMIN1 - 64))                                \
+   | (1u << (RANG_PO_UMIN2 - 64))                             \
+   | (1u << (RANG_UMIN2 - 64))                                \
+)
+
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3 (              \
+     (1u << (RANG_PO_UP1 + 3*0 - 64))                         \
+)
+
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4 (              \
+     (1u << (RANG_UP1 + 3*0 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*1 - 96))                         \
+   | (1u << (RANG_UP1 + 3*1 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*2 - 96))                         \
+   | (1u << (RANG_UP1 + 3*2 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*3 - 96))                         \
+   | (1u << (RANG_UP1 + 3*3 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*4 - 96))                         \
+   | (1u << (RANG_UP1 + 3*4 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*5 - 96))                         \
+   | (1u << (RANG_UP1 + 3*5 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*6 - 96))                         \
+   | (1u << (RANG_UP1 + 3*6 - 96))                            \
+   | (1u << (RANG_PO_UP1 + 3*7 - 96))                         \
+   | (1u << (RANG_UP1 + 3*7 - 96))                            \
+)
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_5  0
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6  0
 /*****************************************/
