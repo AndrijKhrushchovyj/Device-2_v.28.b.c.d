@@ -1690,6 +1690,84 @@ inline void RPN_handler(unsigned int triple_wound, unsigned int number_main_cana
 /*****************************************************/
 
 /*****************************************************/
+// Універсальний Захист
+/*****************************************************/
+inline void up_handler(unsigned int *p_active_functions, unsigned int number_group_stp)
+{
+  for (size_t n_UP = 0; n_UP < NUMBER_UP; n_UP++)
+  {
+    uint32_t logic_UP_0 = 0;
+
+    logic_UP_0 |= (((current_settings_prt.control_UP & MASKA_FOR_BIT(n_UP * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_STATE_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I))) != 0) &&
+                   (_CHECK_SET_BIT(p_active_functions, (RANG_BLOCK_UP1 + 3 * n_UP)) == 0))
+                  << 0;
+
+    int32_t pickup = current_settings_prt.setpoint_UP[n_UP][0][number_group_stp];
+    if (_CHECK_SET_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP)) != 0)
+      pickup = (pickup * (int32_t) current_settings_prt.setpoint_UP_KP[n_UP][0][number_group_stp]) / 100;
+
+    unsigned int more_less = ((current_settings_prt.control_UP & MASKA_FOR_BIT(n_UP * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_MORE_LESS_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I))) != 0);
+
+    int32_t analog_value = 0;
+
+    switch (current_settings_prt.ctrl_UP_input[n_UP])
+    {
+      case UP_CTRL_Ia_TN1:
+        {
+          analog_value = measurement[IM_IA_1];
+
+          break;
+        }
+      case UP_CTRL_Ia_TN2:
+        {
+          analog_value = measurement[IM_IA_2];
+
+          break;
+        }
+      case UP_CTRL_Uab_TN1:
+        {
+          analog_value = measurement[IM_UAB_TN1];
+
+          break;
+        }
+      case UP_CTRL_Uab_TN2:
+        {
+          analog_value = measurement[IM_UAB_TN2];
+
+          break;
+        }
+      default:
+        {
+          //Теоретично цього ніколи не мало б бути
+          total_error_sw_fixed();
+        }
+    }
+
+    if (more_less)
+    {
+      logic_UP_0 |= (analog_value <= pickup) << 1;
+    }
+    else
+    {
+      logic_UP_0 |= (analog_value >= pickup) << 1;
+    }
+
+    _AND2(logic_UP_0, 0, logic_UP_0, 1, logic_UP_0, 2);
+    if (_GET_STATE(logic_UP_0, 2))
+      _SET_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP));
+    else
+      _CLEAR_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP));
+
+    _TIMER_T_0(INDEX_TIMER_UP1 + n_UP, current_settings_prt.timeout_UP[n_UP][0][number_group_stp], logic_UP_0, 2, logic_UP_0, 3);
+    if (_GET_STATE(logic_UP_0, 3))
+      _SET_BIT(p_active_functions, (RANG_UP1 + 3 * n_UP));
+    else
+      _CLEAR_BIT(p_active_functions, (RANG_UP1 + 3 * n_UP));
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
 // ТМ
 /*****************************************************/
 inline void TM_handler(unsigned int *p_active_functions)
@@ -2865,7 +2943,12 @@ inline void digital_registrator(unsigned int *carrent_active_functions, unsigned
       (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_3 & maska_vykluchennja[3]),
       (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_4 & maska_vykluchennja[4]),
       (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_5 & maska_vykluchennja[5]),
-      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6 & maska_vykluchennja[6])};
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_6 & maska_vykluchennja[6])
+#ifdef MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_7
+        ,
+      (MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_7 & maska_vykluchennja[7])
+#endif
+    };
 
   unsigned int monitoring_max_U_second_signals[N_BIG] =
     {
@@ -2875,7 +2958,12 @@ inline void digital_registrator(unsigned int *carrent_active_functions, unsigned
       (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3 & maska_vykluchennja[3]),
       (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_4 & maska_vykluchennja[4]),
       (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_5 & maska_vykluchennja[5]),
-      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6 & maska_vykluchennja[6])};
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_6 & maska_vykluchennja[6])
+#ifdef MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_7
+        ,
+      (MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_7 & maska_vykluchennja[7])
+#endif
+    };
 
   unsigned int monitoring_min_U_base_signals[N_BIG] =
     {
@@ -2885,7 +2973,12 @@ inline void digital_registrator(unsigned int *carrent_active_functions, unsigned
       (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3 & maska_vykluchennja[3]),
       (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4 & maska_vykluchennja[4]),
       (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_5 & maska_vykluchennja[5]),
-      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6 & maska_vykluchennja[6])};
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_6 & maska_vykluchennja[6])
+#ifdef MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_7
+        ,
+      (MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_7 & maska_vykluchennja[7])
+#endif
+    };
 
   unsigned int monitoring_max_I_base_signals[N_BIG] =
     {
@@ -2895,7 +2988,13 @@ inline void digital_registrator(unsigned int *carrent_active_functions, unsigned
       (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_3 & maska_vykluchennja[3]),
       (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_4 & maska_vykluchennja[4]),
       (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_5 & maska_vykluchennja[5]),
-      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6 & maska_vykluchennja[6])};
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_6 & maska_vykluchennja[6])
+#ifdef MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_7
+        ,
+      (MASKA_MONITOTYNG_MAX_I_BASE_SIGNALES_7 & maska_vykluchennja[7])
+#endif
+
+    };
 
   unsigned char *buffer_for_save_dr_record = queue_dr[head_queue_dr];
   static unsigned int saving_record_dr = false;
@@ -4517,7 +4616,12 @@ inline void main_protection(void)
       MASKA_FOR_INPUT_SIGNALS_3,
       MASKA_FOR_INPUT_SIGNALS_4,
       MASKA_FOR_INPUT_SIGNALS_5,
-      MASKA_FOR_INPUT_SIGNALS_6};
+      MASKA_FOR_INPUT_SIGNALS_6
+#ifdef MASKA_FOR_INPUT_SIGNALS_7
+      ,
+      MASKA_FOR_INPUT_SIGNALS_7
+#endif
+    };
   for (unsigned int i = 0; i < N_BIG; i++)
     active_functions[i] &= (unsigned int) (~maska_input_signals[i]);
 
@@ -4547,7 +4651,6 @@ inline void main_protection(void)
         trigger_functions_LAN[i] = 0;
 
       information_about_restart_counter &= (unsigned int) (~(1 << LAN_RECUEST));
-      information_about_clean_energy &= (unsigned int) (~(1 << LAN_RECUEST));
     }
 #endif
 
@@ -5177,7 +5280,12 @@ inline void main_protection(void)
       {
         COMMAND_SIGNALES_0,
         COMMAND_SIGNALES_1,
-        COMMAND_SIGNALES_2};
+        COMMAND_SIGNALES_2
+#ifdef COMMAND_SIGNALES_3
+        ,
+        COMMAND_SIGNALES_3
+#endif
+      };
 
     static unsigned int prev_active_functions_small[N_SOURCE][N_SMALL];
 
@@ -5461,7 +5569,12 @@ inline void main_protection(void)
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4,
       MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_5,
-      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6};
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6
+#ifdef MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_7
+      ,
+      MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_7
+#endif
+    };
   unsigned int comp = false;
   COMPARE_NOT_ZERO_OR(comp, active_functions, maska_signals_for_lock_group, N_BIG)
   if (comp)
@@ -5571,7 +5684,12 @@ inline void main_protection(void)
           MASKA_ZSKh_SIGNALS_3,
           MASKA_ZSKh_SIGNALS_4,
           MASKA_ZSKh_SIGNALS_5,
-          MASKA_ZSKh_SIGNALS_6};
+          MASKA_ZSKh_SIGNALS_6
+#ifdef MASKA_ZSKh_SIGNALS_7
+          ,
+          MASKA_ZSKh_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_zskh_signals[i]);
 
@@ -5599,7 +5717,12 @@ inline void main_protection(void)
           MASKA_ZNKh_SIGNALS_3,
           MASKA_ZNKh_SIGNALS_4,
           MASKA_ZNKh_SIGNALS_5,
-          MASKA_ZNKh_SIGNALS_6};
+          MASKA_ZNKh_SIGNALS_6
+#ifdef MASKA_ZNKh_SIGNALS_7
+          ,
+          MASKA_ZNKh_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_znkh_signals[i]);
       for (int *p = (global_timers + _INDEX_ZNKh_BEGIN); p <= (global_timers + _INDEX_ZNKh_END); ++p)
@@ -5628,7 +5751,12 @@ inline void main_protection(void)
           MASKA_BRP_SIGNALS_3,
           MASKA_BRP_SIGNALS_4,
           MASKA_BRP_SIGNALS_5,
-          MASKA_BRP_SIGNALS_6};
+          MASKA_BRP_SIGNALS_6
+#ifdef MASKA_BRP_SIGNALS_7
+          ,
+          MASKA_BRP_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_brp_signals[i]);
     }
@@ -5652,7 +5780,12 @@ inline void main_protection(void)
           MASKA_UMAX_SIGNALS_3,
           MASKA_UMAX_SIGNALS_4,
           MASKA_UMAX_SIGNALS_5,
-          MASKA_UMAX_SIGNALS_6};
+          MASKA_UMAX_SIGNALS_6
+#ifdef MASKA_UMAX_SIGNALS_7
+          ,
+          MASKA_UMAX_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_umax_signals[i]);
       for (int *p = (global_timers + _INDEX_UMAX_BEGIN); p <= (global_timers + _INDEX_UMAX_END); ++p)
@@ -5678,7 +5811,12 @@ inline void main_protection(void)
           MASKA_UMIN_SIGNALS_3,
           MASKA_UMIN_SIGNALS_4,
           MASKA_UMIN_SIGNALS_5,
-          MASKA_UMIN_SIGNALS_6};
+          MASKA_UMIN_SIGNALS_6
+#ifdef MASKA_UMIN_SIGNALS_7
+          ,
+          MASKA_UMIN_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_umin_signals[i]);
       for (int *p = (global_timers + _INDEX_UMIN_BEGIN); p <= (global_timers + _INDEX_UMIN_END); ++p)
@@ -5704,7 +5842,12 @@ inline void main_protection(void)
           MASKA_RPN_SIGNALS_3,
           MASKA_RPN_SIGNALS_4,
           MASKA_RPN_SIGNALS_5,
-          MASKA_RPN_SIGNALS_6};
+          MASKA_RPN_SIGNALS_6
+#ifdef MASKA_RPN_SIGNALS_7
+          ,
+          MASKA_RPN_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_rpn_signals[i]);
       for (int *p = (global_timers + _INDEX_RPN_BEGIN); p <= (global_timers + _INDEX_RPN_END); ++p)
@@ -5716,6 +5859,34 @@ inline void main_protection(void)
       count_RPN_1 = 0;
     }
     /**************************/
+
+    if ((current_settings_prt.configuration & (1 << UP_BIT_CONFIGURATION)) != 0)
+    {
+      up_handler(active_functions, number_group_stp);
+    }
+    else
+    {
+      //Очищуємо сигнали, які не можуть бути у даній конфігурації
+      static const unsigned int maska_up_signals[N_BIG] =
+        {
+          MASKA_UP_SIGNALS_0,
+          MASKA_UP_SIGNALS_1,
+          MASKA_UP_SIGNALS_2,
+          MASKA_UP_SIGNALS_3,
+          MASKA_UP_SIGNALS_4,
+          MASKA_UP_SIGNALS_5,
+          MASKA_UP_SIGNALS_6
+
+#ifdef MASKA_UP_SIGNALS_7
+          ,
+          MASKA_UP_SIGNALS_7
+#endif
+        };
+      for (size_t i = 0; i < N_BIG; ++i)
+        active_functions[i] &= (unsigned int) (~maska_up_signals[i]);
+      for (int *p = (global_timers + _INDEX_UP_BEGIN); p <= (global_timers + _INDEX_UP_END); ++p)
+        *p = -1;
+    }
 
     /**************************/
     //Розширена логіка
@@ -5778,7 +5949,12 @@ inline void main_protection(void)
           MASKA_EL_SIGNALS_3,
           MASKA_EL_SIGNALS_4,
           MASKA_EL_SIGNALS_5,
-          MASKA_EL_SIGNALS_6};
+          MASKA_EL_SIGNALS_6
+#ifdef MASKA_EL_SIGNALS_7
+          ,
+          MASKA_EL_SIGNALS_7
+#endif
+        };
       for (size_t i = 0; i < N_BIG; ++i)
         active_functions[i] &= (unsigned int) (~maska_el_signals[i]);
 
@@ -5821,7 +5997,12 @@ inline void main_protection(void)
         MASKA_INFO_SIGNALES_3,
         MASKA_INFO_SIGNALES_4,
         MASKA_INFO_SIGNALES_5,
-        MASKA_INFO_SIGNALES_6};
+        MASKA_INFO_SIGNALES_6
+#ifdef MASKA_INFO_SIGNALES_7
+        ,
+        MASKA_INFO_SIGNALES_7
+#endif
+      };
 
     for (size_t i = 0; i != N_BIG; ++i)
       active_functions[i] &= maska_info_signals[i];
@@ -5952,7 +6133,12 @@ inline void main_protection(void)
         MASKA_TRIGGER_SIGNALES_3,
         MASKA_TRIGGER_SIGNALES_4,
         MASKA_TRIGGER_SIGNALES_5,
-        MASKA_TRIGGER_SIGNALES_6};
+        MASKA_TRIGGER_SIGNALES_6
+#ifdef MASKA_TRIGGER_SIGNALES_7
+        ,
+        MASKA_TRIGGER_SIGNALES_7
+#endif
+      };
     comp = true;
     for (size_t i = 0; i != N_BIG; ++i)
     {

@@ -192,7 +192,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_MTZ1 + 1)) && (value <= (RANG_NCN_MTZ + 1)))
+            else if ((value >= (RANG_OSNOVNYJ_TN2_RPN + 1)) && (value <= (RANG_NESPRAVNIST_RPN + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {
@@ -354,7 +354,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_MTZ04_1 + 1)) && (value <= (RANG_MTZ04_2 + 1)))
+            else if ((value >= (RANG_ZNKh_IR + 1)) && (value <= (RANG_ZNKh + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {
@@ -518,7 +518,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_ZNAM + 1)) && (value <= (RANG_ZNAM + 1)))
+            else if ((value >= (RANG_ZNKh_IR + 1)) && (value <= (RANG_ZNKh + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {
@@ -684,7 +684,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_ZDZ + 1)) && (value <= (RANG_ZDZ + 1)))
+            else if ((value >= (RANG_BLOCK_BRP + 1)) && (value <= (RANG_BRP + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {
@@ -776,7 +776,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
     //Перевіряємо, чи Umax зараз знято з конфігурації
     if ((target_label->configuration & (1 << Umax_BIT_CONFIGURATION)) == 0)
     {
-      //Виводим ЗЗ
+      //Виводим Umax
       target_label->control_Umax &= ~(MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_1) | MASKA_FOR_BIT(INDEX_ML_CTRUmax_STAGE_2));
 
       //Формуємо маки функцій Umax
@@ -853,7 +853,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_NZZ + 1)) && (value <= (RANG_SECTOR_NZZ + 1)))
+            else if ((value >= (RANG_BLOCK_UMAX2 + 1)) && (value <= (RANG_UMAX2 + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {
@@ -1023,7 +1023,7 @@ unsigned int action_after_changing_of_configuration(unsigned int new_configurati
 
             if (value == 0)
               break;
-            else if ((value >= (RANG_BLOCK_TZNP1 + 1)) && (value <= (RANG_TZNP3 + 1)))
+            else if ((value >= (RANG_BLOCK_UMIN1 + 1)) && (value <= (RANG_PO_UMIN2 + 1)))
             {
               for (intptr_t l = (k - additional_current); l < (MAX_FUNCTIONS_IN_OUT_LAN - additional_current); l++)
               {

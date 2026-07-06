@@ -1137,13 +1137,10 @@ enum __rang_output_led_df_reg
    | (1u << (RANG_UMIN1 - 64))                                \
    | (1u << (RANG_PO_UMIN2 - 64))                             \
    | (1u << (RANG_UMIN2 - 64))                                \
+   | (1u << (RANG_PO_UP1 + 3*0 - 64))                         \
 )
 
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3 (              \
-     (1u << (RANG_PO_UP1 + 3*0 - 64))                         \
-)
-
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4 (              \
      (1u << (RANG_UP1 + 3*0 - 96))                            \
    | (1u << (RANG_PO_UP1 + 3*1 - 96))                         \
    | (1u << (RANG_UP1 + 3*1 - 96))                            \
@@ -1160,6 +1157,8 @@ enum __rang_output_led_df_reg
    | (1u << (RANG_PO_UP1 + 3*7 - 96))                         \
    | (1u << (RANG_UP1 + 3*7 - 96))                            \
 )
+
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_4  0
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_5  0
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_6  0
 /*****************************************/

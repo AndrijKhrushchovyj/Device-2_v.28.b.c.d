@@ -6,45 +6,19 @@ uint64_t periodPacketCur = 0;
 
 __control_info const control_info[] =
   {
-    {&current_settings_prt.control_rpn, INDEX_ML_CTRRPN_TRANSF},
     {&current_settings_prt.control_rpn, INDEX_ML_CTRRPN_STATE},
-    {&current_settings_prt.control_rpn, N_BIT_CTRMTZ_3},
-    {&current_settings_prt.control_rpn, N_BIT_CTRMTZ_4},
 
-    {&current_settings_prt.control_zskh, N_BIT_CTRMTZ04_1},
-    {&current_settings_prt.control_zskh, N_BIT_CTRMTZ04_2},
-
-    {&current_settings_prt.control_brp, INDEX_ML_CTRBRP_STATE},
+    {&current_settings_prt.control_zskh, INDEX_ML_CTRZSKh_STATE},
 
     {&current_settings_prt.control_znkh, INDEX_ML_CTRZNKh_STATE},
 
-    {&current_settings_prt.control_zz, INDEX_ML_CTR_ZZ1_3I0_STATE},
-    {&current_settings_prt.control_zz, INDEX_ML_CTR_ZZ1_3U0_STATE},
-    {&current_settings_prt.control_zz, INDEX_ML_CTR_ZZ1_NZZ_STATE},
-
-    {&current_settings_prt.control_tznp, INDEX_ML_CTR_TZNP1},
-    {&current_settings_prt.control_tznp, INDEX_ML_CTR_TZNP2},
-    {&current_settings_prt.control_tznp, INDEX_ML_CTR_TZNP3},
-
-    {&current_settings_prt.control_apv, INDEX_ML_CTRAPV_STAGE_1},
-    {&current_settings_prt.control_apv, INDEX_ML_CTRAPV_STAGE_2},
-    {&current_settings_prt.control_apv, INDEX_ML_CTRAPV_STAGE_3},
-    {&current_settings_prt.control_apv, INDEX_ML_CTRAPV_STAGE_4},
-
-    {&current_settings_prt.control_achr_chapv, INDEX_CTR_ACHR1},
-    {&current_settings_prt.control_achr_chapv, INDEX_CTR_CHAPV1},
-    {&current_settings_prt.control_achr_chapv, INDEX_CTR_ACHR2},
-    {&current_settings_prt.control_achr_chapv, INDEX_CTR_CHAPV2},
-
-    {&current_settings_prt.control_urov, INDEX_ML_CTRUROV_STATE},
-
-    {&current_settings_prt.control_zop, CTR_ZOP_STATE_BIT},
+    {&current_settings_prt.control_brp, INDEX_ML_CTRBRP_STATE},
 
     {&current_settings_prt.control_Umin, INDEX_ML_CTRUmin_STAGE_1},
-    {&current_settings_prt.control_Umin, INDEX_CTR_UMIN2},
+    {&current_settings_prt.control_Umin, INDEX_ML_CTRUmin_STAGE_2},
 
     {&current_settings_prt.control_Umax, INDEX_ML_CTRUmax_STAGE_1},
-    {&current_settings_prt.control_Umax, INDEX_CTR_UMAX2},
+    {&current_settings_prt.control_Umax, INDEX_ML_CTRUmax_STAGE_2},
 
     {&current_settings_prt.control_UP, (0 * (_CTR_UP_NEXT_BIT - _CTR_UP_PART_II) + CTR_UP_STATE_BIT - _CTR_UP_PART_II)},
     {&current_settings_prt.control_UP, (1 * (_CTR_UP_NEXT_BIT - _CTR_UP_PART_II) + CTR_UP_STATE_BIT - _CTR_UP_PART_II)},
@@ -56,11 +30,6 @@ __control_info const control_info[] =
     {&current_settings_prt.control_UP, (7 * (_CTR_UP_NEXT_BIT - _CTR_UP_PART_II) + CTR_UP_STATE_BIT - _CTR_UP_PART_II)},
 
     {&current_settings_prt.configuration, EL_BIT_CONFIGURATION},
-
-    {&current_settings_prt.control_vmp, INDEX_CTR_VMP_STATE},
-
-    {&current_settings_prt.control_switch, INDEX_ML_CTRPRYVOD_VV},
-    {&current_settings_prt.control_switch, INDEX_ML_CTRRESURS_VV},
 
     {&current_settings_prt.control_ar, INDEX_ML_CTR_AR_AVAR_STATE}
 
@@ -101,7 +70,6 @@ void start_receive_data_via_CANAL1_MO()
   clear_diagnostyka[1] |= WORD_1_MASKA_ERRORS_FROM_CANAL_1;
   clear_diagnostyka[2] |= WORD_2_MASKA_ERRORS_FROM_CANAL_1;
   clear_diagnostyka[3] |= WORD_3_MASKA_ERRORS_FROM_CANAL_1;
-  clear_diagnostyka[4] |= WORD_4_MASKA_ERRORS_FROM_CANAL_1;
 
   uint32_t error_status = 0xffffffff;
   int32_t size_packet = 0;
@@ -500,32 +468,14 @@ void start_transmint_data_via_CANAL1_MO(void)
     sum += Canal1_MO_Transmit[index++] = (((SIZE_SENDING_DATA_TM + SIZE_BLOCK_CONTROL_INFO) >> 8) & 0xff);
 
     //Вимірювання з аналогових давачів
-    for (size_t i = 0; i < _NUMBER_IM; ++i)
+    for (size_t i = 0; i < _NUMBER_IM_INFO; ++i)
     {
       static unsigned int const *const p_koef[_NUMBER_IM] =
         {
-          &current_settings_prt.T0,
-          &current_settings_prt.T0,
-          &current_settings_prt.T0,
           &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent04,
+          &current_settings_prt.TCurrent2,
           &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TVoltage1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1,
-          &current_settings_prt.TCurrent1};
+          &current_settings_prt.TVoltage2};
 
       float const meas_tmp = ((float) (*p_koef[i])) * ((float) measurement[i]) / 1000.0f;
       uint8_t const *p = (uint8_t const *) (&meas_tmp);
@@ -541,117 +491,6 @@ void start_transmint_data_via_CANAL1_MO(void)
       for (uint32_t i = 0; i < sizeof(frequency); i++)
       {
         sum += Canal1_MO_Transmit[index++] = *(point++);
-      }
-    }
-
-    //Вимірювання, які одночасно залежні від коефіцієнта трансормації струму і напруги
-    {
-      static unsigned int const *const p_koef_U = &current_settings_prt.TVoltage1;
-      static unsigned int const *const p_koef_I = &current_settings_prt.TCurrent1;
-
-      //Опори (Ом)
-      float const div_tmp = ((float) (*p_koef_U)) / ((float) (*p_koef_I));
-      for (size_t i = 0; i < MAX_NUMBER_INDEXES_RESISTANCE; ++i)
-      {
-        float const meas_tmp = div_tmp * ((float) resistance[i]);
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      float const mul_tmp = ((float) (*p_koef_U)) * ((float) (*p_koef_I));
-      uint32_t bank_for_calc_power_tmp = (state_calc_power == false) ? bank_for_calc_power : ((bank_for_calc_power ^ 0x1) & 0x1);
-
-      //Активнам потужність (Вт)
-      {
-        float const meas_tmp = mul_tmp * ((float) P[bank_for_calc_power_tmp]) / 1000.0f;
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      //Реактивна потужність (ВАр)
-      {
-        float const meas_tmp = mul_tmp * ((float) Q[bank_for_calc_power_tmp]) / 1000.0f;
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      //Повна потужність (ВА)
-      {
-        float const meas_tmp = mul_tmp * ((float) S[bank_for_calc_power_tmp]) / 1000.0f;
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      //Коефіцієнт потужності
-      {
-        float const meas_tmp = cos_phi_x1000[bank_for_calc_power_tmp] / 1000.0f;
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      //Енергії (кВт*год)
-      uint32_t bank_for_calc_energy_tmp = (state_calc_energy == false) ? 0 : 1;
-      double const *p_energy = energy[bank_for_calc_energy_tmp];
-      for (size_t i = 0; i < MAX_NUMBER_INDEXES_ENERGY; ++i)
-      {
-        float const meas_tmp = (float) (((double) mul_tmp) * p_energy[i]);
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-    }
-
-    //Кут між вимірюванням і базовою напругою (°)
-    uint32_t bank_for_calc_phi_angle_tmp = (state_calc_phi_angle == false) ? bank_for_calc_phi_angle : ((bank_for_calc_phi_angle ^ 0x1) & 0x1);
-
-    int const *p_phi_angle = phi_angle[bank_for_calc_phi_angle_tmp];
-    for (size_t i = 0; i < FULL_ORT_MAX; ++i)
-    {
-      float const meas_tmp = ((float) p_phi_angle[i]) / 10.0f;
-      uint8_t const *p = (uint8_t const *) (&meas_tmp);
-      for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-      {
-        sum += Canal1_MO_Transmit[index++] = *p++;
-      }
-    }
-
-    //Ресурс вимикача + кількість вимкнень
-    {
-      //Ресурс вимикача (у відсотках)
-      static unsigned int const *const p_setpoint_r_kom_st_Inom = &current_settings_prt.setpoint_r_kom_st_Inom;
-      {
-        float const meas_tmp = ((float) resurs_vymykacha) * 100.0f / ((float) (*p_setpoint_r_kom_st_Inom));
-        uint8_t const *p = (uint8_t const *) (&meas_tmp);
-        for (size_t j = 0; j < sizeof(meas_tmp); ++j)
-        {
-          sum += Canal1_MO_Transmit[index++] = *p++;
-        }
-      }
-
-      //Кількість вимкнень
-      {
-        uint8_t const *p = (uint8_t const *) (&resurs_vidkljuchennja);
-        for (uint32_t i = 0; i < sizeof(resurs_vidkljuchennja); i++)
-        {
-          sum += Canal1_MO_Transmit[index++] = *(p++);
-        }
       }
     }
 
@@ -1061,7 +900,6 @@ void CANAL2_MO_routine()
         clear_diagnostyka[1] |= WORD_1_MASKA_RECEIVING_ERRORS_CANAL_2;
         clear_diagnostyka[2] |= WORD_2_MASKA_RECEIVING_ERRORS_CANAL_2;
         clear_diagnostyka[3] |= WORD_3_MASKA_RECEIVING_ERRORS_CANAL_2;
-        clear_diagnostyka[4] |= WORD_4_MASKA_RECEIVING_ERRORS_CANAL_2;
 
         int32_t size_packet = BUFFER_CANAL2_MO - rx_ndtr;
         static unsigned int lock_error_no_answer;

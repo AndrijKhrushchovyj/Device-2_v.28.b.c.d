@@ -16,24 +16,15 @@ enum _start_label
   START_LABEL_NEW_BLOCK
 };
 
-#define SIZE_SENDING_DATA_TM                          \
-  (                                                   \
-    (sizeof(float) * _NUMBER_IM) +                    \
-    sizeof(frequency) +                               \
-    (sizeof(float) * MAX_NUMBER_INDEXES_RESISTANCE) + \
-    sizeof(float) /*P*/ +                             \
-    sizeof(float) /*Q*/ +                             \
-    sizeof(float) /*S*/ +                             \
-    sizeof(float) /*cos_phi*/ +                       \
-    (sizeof(float) * MAX_NUMBER_INDEXES_ENERGY) +     \
-    (sizeof(float) * FULL_ORT_MAX) +                  \
-    sizeof(float) /*resurs_vymykacha у відсотках*/ +  \
-    sizeof(resurs_vidkljuchennja) +                   \
-    sizeof(active_inputs_prt) +                       \
-    sizeof(state_outputs) +                           \
-    sizeof(state_leds) +                              \
-    sizeof(active_functions) +                        \
-    sizeof(diagnostyka) +                             \
+#define SIZE_SENDING_DATA_TM            \
+  (                                     \
+    (sizeof(float) * _NUMBER_IM_INFO) + \
+    sizeof(frequency) +                 \
+    sizeof(active_inputs_prt) +         \
+    sizeof(state_outputs) +             \
+    sizeof(state_leds) +                \
+    sizeof(active_functions) +          \
+    sizeof(diagnostyka) +               \
     sizeof(Output_Out_LAN_block))
 
 #define SIZE_RECEIVING_DATA_TM     \

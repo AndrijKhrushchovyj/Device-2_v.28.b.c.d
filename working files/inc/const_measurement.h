@@ -197,7 +197,9 @@ enum _index_meas
   IM_IA_2,
   IM_UAB_TN1,
   IM_UAB_TN2,
-  IM_UP1P2,
+
+  _NUMBER_IM_INFO,
+  IM_UP1P2 = _NUMBER_IM_INFO,
   IM_UP2P3,
   IM_UC1C2,
 
