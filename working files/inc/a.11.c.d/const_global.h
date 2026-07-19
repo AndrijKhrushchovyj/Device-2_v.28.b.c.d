@@ -583,17 +583,8 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_MRZS_OR_LOCAL_MODE_RPN - 32))            \
   | (1u << (RANG_SMALL_TM_MODE_VID_DV_RPN - 32))                \
   | (1u << (RANG_SMALL_AUTO_MODE_FROM_DV_RPN - 32))             \
-  | (1u << (RANG_SMALL_PEREKLYUCHENNYA_RPN - 32))               \
-  | (1u << (RANG_SMALL_UBAVYTY_FROM_DV_RPN - 32))               \
-  | (1u << (RANG_SMALL_PRYBAVYTY_FROM_DV_RPN - 32))             \
   | (1u << (RANG_SMALL_BLOCK_STRUM_KOMP_RPN - 32))              \
   | (1u << (RANG_SMALL_ZOVNISHNJE_BLOCKUVANNJA_RPN - 32))       \
-  | (1u << (RANG_SMALL_1_POLOGENNJA_RPN - 32))                  \
-  | (1u << (RANG_SMALL_NOMINALNA_POZYCIJA_RPN - 32))            \
-  | (1u << (RANG_SMALL_N_POLOGENNJA_RPN - 32))                  \
-  | (1u << (RANG_SMALL_CLEAR_BLK_RPN - 32))                     \
-  | (1u << (RANG_SMALL_KONTROL_UBAVYTY_ZSKh - 32))              \
-  | (1u << (RANG_SMALL_KONTROL_PRYBAVYTY_ZSKh - 32))            \
   | (1u << (RANG_SMALL_BLOCK_BRP - 32))                         \
   | (1u << (RANG_SMALL_BLOCK_UMAX2 - 32))                       \
   | (1u << (RANG_SMALL_BLOCK_UMIN1 - 32))                       \
@@ -768,7 +759,8 @@ enum __rang_output_led_df_reg
 )
 
 #define MASKA_IN_MMS_SIGNALS_1 (                                \
-  (1u << (RANG_SMALL_DF1_IN - 32))                              \
+    (1u << (RANG_SMALL_CLEAR_BLK_RPN - 32))                     \
+  | (1u << (RANG_SMALL_DF1_IN - 32))                            \
   | (1u << (RANG_SMALL_DF1_R - 32))                             \
   | (1u << (RANG_SMALL_DF2_IN - 32))                            \
 )

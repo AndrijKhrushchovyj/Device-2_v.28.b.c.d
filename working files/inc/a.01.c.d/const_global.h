@@ -516,17 +516,8 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_SMALL_MRZS_OR_LOCAL_MODE_RPN - 0))            \
   | (1u << (RANG_SMALL_TM_MODE_VID_DV_RPN - 0))                \
   | (1u << (RANG_SMALL_AUTO_MODE_FROM_DV_RPN - 0))             \
-  | (1u << (RANG_SMALL_PEREKLYUCHENNYA_RPN - 0))               \
-  | (1u << (RANG_SMALL_UBAVYTY_FROM_DV_RPN - 0))               \
-  | (1u << (RANG_SMALL_PRYBAVYTY_FROM_DV_RPN - 0))             \
   | (1u << (RANG_SMALL_BLOCK_STRUM_KOMP_RPN - 0))              \
   | (1u << (RANG_SMALL_ZOVNISHNJE_BLOCKUVANNJA_RPN - 0))       \
-  | (1u << (RANG_SMALL_1_POLOGENNJA_RPN - 0))                  \
-  | (1u << (RANG_SMALL_NOMINALNA_POZYCIJA_RPN - 0))            \
-  | (1u << (RANG_SMALL_N_POLOGENNJA_RPN - 0))                  \
-  | (1u << (RANG_SMALL_CLEAR_BLK_RPN - 0))                     \
-  | (1u << (RANG_SMALL_KONTROL_UBAVYTY_ZSKh - 0))              \
-  | (1u << (RANG_SMALL_KONTROL_PRYBAVYTY_ZSKh - 0))            \
   | (1u << (RANG_SMALL_BLOCK_BRP - 0))                         \
   | (1u << (RANG_SMALL_BLOCK_UMAX2 - 0))                       \
   | (1u << (RANG_SMALL_BLOCK_UMIN1 - 0))                       \
