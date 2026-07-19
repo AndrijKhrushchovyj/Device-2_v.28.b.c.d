@@ -143,7 +143,7 @@ void make_ekran_regulation(void)
   /*******************************/
 
   unsigned int position_temp = current_ekran.index_position;
-  unsigned int const min_index = (position_temp / MAX_ROW_LCD) * MAX_ROW_LCD;
+  unsigned int const min_index = (position_temp / (MAX_ROW_LCD - 1)) * (MAX_ROW_LCD - 1);
   unsigned int const max_index = min_index + (MAX_ROW_LCD - 1);
   unsigned int index_of_ekran = 0;
 
@@ -284,7 +284,7 @@ void make_ekran_regulation(void)
         else
           delta = delta_tmp;
 
-        unsigned int first_position = 0 ;
+        unsigned int first_position = 0;
         if (_CHECK_SET_BIT(digital_signals, RANG_UBAVYTY_1_RPN) != 0)
         {
           //Іде підготовка до видачі команди "Знизити"

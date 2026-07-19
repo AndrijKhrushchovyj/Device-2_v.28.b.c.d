@@ -10,6 +10,8 @@ my.bat
 *.txt
 # Ігнорувати log-файли
 *.log
+# Ігнорувати папку для VS-Code
+.vscode/
 
 # Ігнорувати файли з папки settings/
 settings/
