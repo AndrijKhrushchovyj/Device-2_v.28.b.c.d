@@ -494,6 +494,31 @@ void start_transmint_data_via_CANAL1_MO(void)
       }
     }
 
+    //Положення перемикача
+    {
+      uint8_t const *point = (uint8_t const *) (&current_step);
+      for (uint32_t i = 0; i < sizeof(current_step); i++)
+      {
+        sum += Canal1_MO_Transmit[index++] = *(point++);
+      }
+    }
+
+    //Кількість перемикань
+    for (size_t i = 0; i < 3; ++i)
+    {
+      static unsigned int const *const p_count[3] =
+        {
+          &counter_today.count,
+          &counter_previous_day.count,
+          &counter_total};
+
+      uint8_t const *p = (uint8_t const *) p_count[i];
+      for (uint32_t j = 0; i < sizeof(unsigned int); j++)
+      {
+        sum += Canal1_MO_Transmit[index++] = *(p++);
+      }
+    }
+
     active_inputs_lock_guard_prt = 0xff;
     unsigned int const active_inputs_local = active_inputs_prt;
     active_inputs_lock_guard_prt = 0x0;

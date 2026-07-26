@@ -20,6 +20,8 @@ enum _start_label
   (                                     \
     (sizeof(float) * _NUMBER_IM_INFO) + \
     sizeof(frequency) +                 \
+    sizeof(current_step) +              \
+    (3 * sizeof(unsigned int)) +        \
     sizeof(active_inputs_prt) +         \
     sizeof(state_outputs) +             \
     sizeof(state_leds) +                \
