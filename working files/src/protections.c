@@ -3541,7 +3541,7 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
     /*****
     Формуємо масив значень і виконуємо операції для аналогового реєстратора
     *****/
-    for (unsigned int i = 0; i < AR_NUMBER_ANALOG_CANALES; i++)
+    for (unsigned int i = 0; i < _NUMBER_ANALOG_CANALES_AR; i++)
     {
 #ifdef DEBUG_TEST
 //          *pointer_internal++ = (number_sample_ar << 8) | (i+1);
@@ -3556,6 +3556,13 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
       }
 #endif
     }
+    //Частота
+    int data_tmp = (frequency < 0) ? 0x8000 : (int) (roundf(frequency * 100.0f));
+    AR_WRITE(index_array_ar_current, data_tmp);
+
+    //Положення
+    AR_WRITE(index_array_ar_current, current_step);
+
     //Індекс масиву об'єднаних виборок для аналогового реєстратора
     if (index_array_ar_current >= SIZE_BUFFER_FOR_AR)
       index_array_ar_current = 0; /*Умова мала б бути ==, але щоб перестахуватися на невизначену помилку я поставив >=*/
