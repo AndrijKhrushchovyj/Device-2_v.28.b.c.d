@@ -680,37 +680,6 @@ inline void tf_handler(unsigned int *p_previous_active_functions, unsigned int *
 /*****************************************************/
 
 /*****************************************************/
-// Готовность к ТУ
-/*****************************************************/
-inline void ready_tu(unsigned int *p_active_functions)
-{
-  unsigned int tmp_value = 0;
-
-  tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) != 0) << 2;
-  tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_AVAR_DEFECT) == 0) << 3;
-  tmp_value |= (_CHECK_SET_BIT(p_active_functions, RANG_MISCEVE_DYSTANCIJNE) == 0) << 6;
-
-  _Bool ctrl_ready_tu = ((current_settings_prt.control_extra_settings_1 & MASKA_FOR_BIT(INDEX_ML_CTREXTRA_SETTINGS_1_CTRL_READY_TU)) == 0);
-
-  if (!previous_states_ready_tu && _GET_STATE(tmp_value, 1))
-  {
-    previous_states_ready_tu = 0;
-  }
-
-  _OR2(tmp_value, 2, ctrl_ready_tu, 0, tmp_value, 7);
-  _D_TRIGGER(1, 0, _GET_STATE(tmp_value, 7), previous_states_ready_tu, 0, tmp_value, 1, trigger_ready_tu, 0);
-
-  _AND4(tmp_value, 0, tmp_value, 3, !trigger_ready_tu, 0, tmp_value, 6, tmp_value, 5);
-
-  //Готовность к ТУ
-  if (_GET_STATE(tmp_value, 5))
-    _SET_BIT(p_active_functions, RANG_READY_TU);
-  else
-    _CLEAR_BIT(p_active_functions, RANG_READY_TU);
-}
-/*****************************************************/
-
-/*****************************************************/
 //ЗСХ
 /*****************************************************/
 inline void ZSKh_handler(unsigned int *p_active_functions)
@@ -5222,7 +5191,6 @@ inline void main_protection(void)
     active_functions[RANG_RESET_LEDS >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_LEDS) != 0) << (RANG_RESET_LEDS & 0x1f);
     active_functions[RANG_RESET_RELES >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_RELES) != 0) << (RANG_RESET_RELES & 0x1f);
     active_functions[RANG_MISCEVE_DYSTANCIJNE >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_MISCEVE_DYSTANCIJNE) != 0) << (RANG_MISCEVE_DYSTANCIJNE & 0x1f);
-    active_functions[RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_RESET_BLOCK_READY_TU_VID_ZAHYSTIV) != 0) << (RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV & 0x1f);
 
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_1_GRUPA_USTAVOK) != 0) << (RANG_SMALL_1_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_2_GRUPA_USTAVOK) != 0) << (RANG_SMALL_2_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
@@ -5371,9 +5339,6 @@ inline void main_protection(void)
 
     //Сигнал "Сблос реле"
     _SET_BIT(temp_maska_filter_function, RANG_RESET_RELES);
-
-    //Сигнал "Скидання блокування готовності до ТУ"
-    _SET_BIT(temp_maska_filter_function, RANG_RESET_BLOCK_READY_TU_VID_ZAHYSTIV);
 
     //Сигнал "Сброс блок.РПН"
     _SET_BIT(temp_maska_filter_function, RANG_CLEAR_BLK_RPN);
@@ -5983,12 +5948,6 @@ inline void main_protection(void)
     //Лічильник ресурсу
     /**************************/
     lichylnyk_perekluchen(active_functions);
-    /**************************/
-
-    /**************************/
-    //Готовность к ТУ
-    /**************************/
-    ready_tu(active_functions);
     /**************************/
   }
   else
