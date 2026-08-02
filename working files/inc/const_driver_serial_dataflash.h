@@ -203,8 +203,6 @@ enum _reading_for
 
 #define AR_TAIL_MIN_NUMBER_PERIOD 1
 #define POWER_DOWN_TIME 70
-#define POWEER_IS_FROM_IA_IC 3850
-#define POWEER_ISNOT_FROM_IA_IC 3500
 
 enum _state_ar_prt
 {
