@@ -15,7 +15,7 @@
 #define KOEF_TT2_WORK 30
 
 #define KOEF_TN_MIN 30
-#define KOEF_TN_MAX 350
+#define KOEF_TN_MAX 2500
 #define KOEF_TN1_WORK 100
 #define KOEF_TN2_WORK 350
 

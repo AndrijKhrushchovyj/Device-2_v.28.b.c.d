@@ -16,7 +16,7 @@ enum _index_ml_stp_transformator
 #define COL_TT_BEGIN 6
 #define COL_TT_END 8
 
-#define COL_TN_BEGIN 6
+#define COL_TN_BEGIN 5
 #define COL_TN_END 8
 
 #endif
