@@ -1,5 +1,30 @@
 #include "header.h"
 
+typedef struct _vd_stp
+{
+  uint32_t n;
+  uint32_t index_arr;
+  uint32_t view;
+  int sign;
+  unsigned int begin;
+  unsigned int comma;
+  unsigned int end;
+  unsigned int u_begin;
+  unsigned int u_end;
+  const unsigned char *p_unit;
+} __vd_stp;
+
+typedef struct _vd_tmo
+{
+  int sign;
+  unsigned int begin;
+  unsigned int comma;
+  unsigned int end;
+  unsigned int u_begin;
+  unsigned int u_end;
+  const unsigned char *p_unit;
+} __vd_tmo;
+
 /*****************************************************/
 //Формуємо екран відображення уставок Універсального захисту
 /*****************************************************/
@@ -8,139 +33,154 @@ void make_ekran_setpoint_UP(unsigned int group)
   static const unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_UP][MAX_COL_LCD] =
     {
       {"      УЗ x      ",
+       "   УЗ x возвр.  ",
        "    КВ УЗ x     "},
       {"      УЗ x      ",
+       "    УЗ x пов.   ",
        "    КП УЗ x     "},
       {"     MFP x      ",
+       "   MFP x Rel    ",
        "    MFP x RR    "},
       {"      УЗ x      ",
+       "   УЗ x возвр.  ",
        "    КВ УЗ x     "}};
   static const uint32_t index_number[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_SETPOINT_UP] =
     {
-      {9, 10},
-      {9, 10},
-      {9, 8},
-      {9, 10}};
+      {9, 6, 10},
+      {9, 7, 10},
+      {9, 7, 8},
+      {9, 6, 10}};
 
   int index_language = index_language_in_array(current_settings.language);
   unsigned int position_temp = current_ekran.index_position;
 
-  __vd vd[NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP];
+  __vd_stp vd[NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP];
   uint32_t vaga_arr[NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP];
   int32_t *p_value[NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP];
 
+  size_t pos = 0;
+  size_t rem_before = 0;
   for (size_t i = 0; i < (NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP); i++)
   {
     unsigned int view = ((current_ekran.edition == 0) || (position_temp != i));
+
     uint32_t _n_UP = i / MAX_ROW_FOR_SETPOINT_UP;
+    uint32_t const index = i - _n_UP * MAX_ROW_FOR_SETPOINT_UP;
+
     uint32_t in_canal = current_settings.ctrl_UP_input[_n_UP];
 
-    vd[i].sign = -1;
-    switch (i)
+    if (
+      ((in_canal < UP_CTRL_F) && (index != INDEX_ML_STP_UP_POV)) ||
+      ((in_canal == UP_CTRL_F) && (index != INDEX_ML_STP_UP_KP)))
     {
-      case 0:
-      case 2:
-      case 4:
-      case 6:
-      case 8:
-      case 10:
-      case 12:
-      case 14:
+      vd[pos].n = _n_UP;
+      vd[pos].index_arr = index;
+      vd[pos].view = view;
+
+      vd[pos].sign = -1;
+
+      if (
+        (index == INDEX_ML_STP_UP) ||
+        (index == INDEX_ML_STP_UP_POV))
+      {
+        switch (in_canal)
         {
-          switch (in_canal)
-          {
-            case UP_CTRL_Ia_TN1:
-            case UP_CTRL_Ia_TN2:
-              {
-                vd[i].begin = COL_SETPOINT_UP_I_BEGIN;
-                vd[i].comma = COL_SETPOINT_UP_I_COMMA;
-                vd[i].end = COL_SETPOINT_UP_I_END;
-                vd[i].u_begin = COL_SETPOINT_UP_I_END + 2;
-                vd[i].u_end = COL_SETPOINT_UP_I_END + 2;
-                vd[i].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_A];
+          case UP_CTRL_Ia_TN1:
+          case UP_CTRL_Ia_TN2:
+            {
+              vd[pos].begin = COL_SETPOINT_UP_I_BEGIN;
+              vd[pos].comma = COL_SETPOINT_UP_I_COMMA;
+              vd[pos].end = COL_SETPOINT_UP_I_END;
+              vd[pos].u_begin = COL_SETPOINT_UP_I_END + 2;
+              vd[pos].u_end = COL_SETPOINT_UP_I_END + 2 + 1 - 1;
+              vd[pos].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_A];
 
-                vaga_arr[i] = 100000;
+              vaga_arr[i] = 100000;
 
-                break;
-              }
-            case UP_CTRL_Uab_TN1:
-            case UP_CTRL_Uab_TN2:
-              {
-                vd[i].begin = COL_SETPOINT_UP_U_BEGIN;
-                vd[i].comma = COL_SETPOINT_UP_U_COMMA;
-                vd[i].end = COL_SETPOINT_UP_U_END;
-                vd[i].u_begin = COL_SETPOINT_UP_U_END + 2;
-                vd[i].u_end = COL_SETPOINT_UP_U_END + 2;
-                vd[i].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_V];
+              break;
+            }
+          case UP_CTRL_Uab_TN1:
+          case UP_CTRL_Uab_TN2:
+            {
+              vd[pos].begin = COL_SETPOINT_UP_U_BEGIN;
+              vd[pos].comma = COL_SETPOINT_UP_U_COMMA;
+              vd[pos].end = COL_SETPOINT_UP_U_END;
+              vd[pos].u_begin = COL_SETPOINT_UP_U_END + 2;
+              vd[pos].u_end = COL_SETPOINT_UP_U_END + 2 + 1 - 1;
+              vd[pos].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_V];
 
-                vaga_arr[i] = 100000;
+              vaga_arr[i] = 100000;
 
-                break;
-              }
-            default:
-              {
-                //Теоретично цього ніколи не мало б бути
-                total_error_sw_fixed();
+              break;
+            }
+          case UP_CTRL_F:
+            {
+              vd[pos].begin = COL_STP_UP_F_BEGIN;
+              vd[pos].comma = COL_STP_UP_F_COMMA;
+              vd[pos].end = COL_STP_UP_F_END;
+              vd[pos].u_begin = COL_STP_UP_F_END + 2;
+              vd[pos].u_end = COL_STP_UP_F_END + 2 + 2 - 1;
+              vd[pos].p_unit = Hz[index_language];
 
-                break;
-              }
-          }
+              vaga_arr[pos] = 1000;
 
-          if (view == true)
-            p_value[i] = current_settings.setpoint_UP[_n_UP][0]; //у змінну value поміщаємо значення уставки
-          else
-            p_value[i] = edition_settings.setpoint_UP[_n_UP][0];
+              break;
+            }
+          default:
+            {
+              //Теоретично цього ніколи не мало б бути
+              total_error_sw_fixed();
 
-          break;
+              break;
+            }
         }
-      case 1:
-      case 3:
-      case 5:
-      case 7:
-      case 9:
-      case 11:
-      case 13:
-      case 15:
-        {
-          vd[i].begin = COL_SETPOINT_UP_KP_BEGIN;
-          vd[i].comma = COL_SETPOINT_UP_KP_COMMA;
-          vd[i].end = COL_SETPOINT_UP_KP_END;
-          vd[i].u_begin = COL_SETPOINT_UP_KP_END + 2;
-          vd[i].u_end = COL_SETPOINT_UP_KP_END + 2;
-          vd[i].p_unit = NULL;
 
-          vaga_arr[i] = 100;
+        if (view == true)
+          p_value[i] = current_settings.setpoint_UP[_n_UP][index]; //у змінну value поміщаємо значення уставки
+        else
+          p_value[i] = edition_settings.setpoint_UP[_n_UP][index];
+      }
+      else if (index == INDEX_ML_STP_UP_KP)
+      {
+        vd[pos].begin = COL_SETPOINT_UP_KP_BEGIN;
+        vd[pos].comma = COL_SETPOINT_UP_KP_COMMA;
+        vd[pos].end = COL_SETPOINT_UP_KP_END;
+        vd[pos].u_begin = COL_SETPOINT_UP_KP_END + 2;
+        vd[pos].u_end = COL_SETPOINT_UP_KP_END + 2 + 1 - 1;
+        vd[pos].p_unit = NULL;
 
-          if (view == true)
-            p_value[i] = (int32_t *) current_settings.setpoint_UP_KP[_n_UP][0]; //у змінну value поміщаємо значення уставки
-          else
-            p_value[i] = (int32_t *) edition_settings.setpoint_UP_KP[_n_UP][0];
+        vaga_arr[i] = 100;
 
-          break;
-        }
-      default:
-        {
-          //Теоретично цього ніколи не мало б бути
-          total_error_sw_fixed();
-        }
+        if (view == true)
+          p_value[i] = (int32_t *) current_settings.setpoint_UP_KP[_n_UP]; //у змінну value поміщаємо значення уставки
+        else
+          p_value[i] = (int32_t *) edition_settings.setpoint_UP_KP[_n_UP];
+      }
+
+      ++pos;
+    }
+    else
+    {
+      if (i < position_temp)
+        ++rem_before;
     }
   }
+  position_temp -= rem_before;
 
-  int index_of_ekran;
   unsigned int vaga, value, first_symbol;
 
   //Множення на два величини position_temp потрібне для того, бо наодн позицію ми використовуємо два рядки (назва + значення)
-  index_of_ekran = ((position_temp << 1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
+  unsigned int index_of_ekran = ((position_temp << 1) >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
-    if (index_of_ekran < ((NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP) << 1)) //Множення на два потрібне для того, бо наодн позицію ми використовуємо два рядки (назва + значення)
+    unsigned int index_of_ekran_tmp = index_of_ekran >> 1;
+    if (index_of_ekran_tmp < pos)
     {
-      unsigned int index_of_ekran_tmp = index_of_ekran >> 1;
       if ((i & 0x1) == 0)
       {
-        uint32_t _n_UP = index_of_ekran_tmp / MAX_ROW_FOR_SETPOINT_UP;
-        uint32_t _n_index = index_of_ekran_tmp % MAX_ROW_FOR_SETPOINT_UP;
+        uint32_t _n_UP = vd[index_of_ekran_tmp].n;
+        uint32_t _n_index = vd[index_of_ekran_tmp].index_arr;
         //У непарному номері рядку виводимо заголовок
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         {
@@ -154,7 +194,7 @@ void make_ekran_setpoint_UP(unsigned int group)
       else
       {
         //У парному номері рядку виводимо значення уставки
-        unsigned int view = ((current_ekran.edition == 0) || (position_temp != index_of_ekran_tmp));
+        unsigned int const view = vd[index_of_ekran_tmp].view;
         for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         {
           if (j == vd[index_of_ekran_tmp].sign)
@@ -256,16 +296,16 @@ void make_ekran_timeout_UP(unsigned int group)
 
   int index_language = index_language_in_array(current_settings.language);
 
-  const __vd vd[MAX_ROW_FOR_TIMEOUT_UP] =
+  const __vd_tmo vd[MAX_ROW_FOR_TIMEOUT_UP] =
     {
       {-1, COL_TMO_UP_BEGIN, COL_TMO_UP_COMMA, COL_TMO_UP_END, COL_TMO_UP_END + 2, COL_TMO_UP_END + 2, &odynyci_vymirjuvannja[index_language][INDEX_SECOND]}};
   static const uint32_t vaga_arr[MAX_ROW_FOR_TIMEOUT_UP] =
     {
       100000};
-  static int32_t(*const p_value_current[MAX_ROW_FOR_TIMEOUT_UP])[1][NUMBER_GROUP_USTAVOK] =
+  static int32_t(*const p_value_current[MAX_ROW_FOR_TIMEOUT_UP])[NUMBER_GROUP_USTAVOK] =
     {
       current_settings.timeout_UP};
-  static int32_t(*const p_value_edit[MAX_ROW_FOR_TIMEOUT_UP])[1][NUMBER_GROUP_USTAVOK] =
+  static int32_t(*const p_value_edit[MAX_ROW_FOR_TIMEOUT_UP])[NUMBER_GROUP_USTAVOK] =
     {
       edition_settings.timeout_UP};
 
@@ -295,9 +335,9 @@ void make_ekran_timeout_UP(unsigned int group)
 
         vaga = vaga_arr[_n_index];
         if (view == true)
-          value = p_value_current[_n_index][_n_UP][0][group]; //у змінну value поміщаємо значення витримки
+          value = p_value_current[_n_index][_n_UP][group]; //у змінну value поміщаємо значення витримки
         else
-          value = p_value_edit[_n_index][_n_UP][0][group];
+          value = p_value_edit[_n_index][_n_UP][group];
 
         first_symbol = 0; //помічаємо, що ще ніодин значущий символ не виведений
       }

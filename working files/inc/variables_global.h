@@ -605,6 +605,7 @@ const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VY
     {'ְ', 'ֲ', '%', 'ס'},
     {'A', 'V', '%', 's'},
     {'ְ', 'ֲ', '%', 'ס'}};
+unsigned char const Hz[MAX_NAMBER_LANGUAGE][2] = {"ֳצ", "ֳצ", "Hz", "ֳצ"};
 const unsigned char ms[MAX_NAMBER_LANGUAGE][2] = {"לס", "לס", "ms", "לס"};
 
 const uint32_t max_value_for_tf[1 + _FIX_NUMBER_PROTECTION][MAX_ROW_LIST_SOURCE_TF] =

@@ -6083,9 +6083,11 @@ void main_manu_function(void)
 
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
-                    if (_n_index == INDEX_ML_STP_UP)
+                    if (
+                      (_n_index == INDEX_ML_STP_UP_POV) ||
+                      (_n_index == INDEX_ML_STP_UP))
                     {
-                      edition_settings.setpoint_UP[_n_UP][0][group] = current_settings.setpoint_UP[_n_UP][0][group];
+                      edition_settings.setpoint_UP[_n_UP][_n_index][group] = current_settings.setpoint_UP[_n_UP][_n_index][group];
                       switch (current_settings.ctrl_UP_input[_n_UP])
                       {
                         case UP_CTRL_Ia_TN1:
@@ -6100,6 +6102,11 @@ void main_manu_function(void)
                             current_ekran.position_cursor_x = COL_SETPOINT_UP_U_BEGIN;
                             break;
                           }
+                        case UP_CTRL_F:
+                          {
+                            current_ekran.position_cursor_x = COL_STP_UP_F_BEGIN;
+                            break;
+                          }
                         default:
                           {
                             //Теоретично цього ніколи не мало б бути
@@ -6109,7 +6116,7 @@ void main_manu_function(void)
                     }
                     else if (_n_index == INDEX_ML_STP_UP_KP)
                     {
-                      edition_settings.setpoint_UP_KP[_n_UP][0][group] = current_settings.setpoint_UP_KP[_n_UP][0][group];
+                      edition_settings.setpoint_UP_KP[_n_UP][group] = current_settings.setpoint_UP_KP[_n_UP][group];
                       current_ekran.position_cursor_x = COL_SETPOINT_UP_KP_BEGIN;
                     }
                   }
@@ -6123,7 +6130,7 @@ void main_manu_function(void)
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_TIMEOUT_UP;
                     if (_n_index == INDEX_ML_TMOUP)
                     {
-                      edition_settings.timeout_UP[_n_UP][0][group] = current_settings.timeout_UP[_n_UP][0][group];
+                      edition_settings.timeout_UP[_n_UP][group] = current_settings.timeout_UP[_n_UP][group];
                       current_ekran.position_cursor_x = COL_TMO_UP_BEGIN;
                     }
                   }
@@ -6607,14 +6614,16 @@ void main_manu_function(void)
 
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
-                    if (_n_index == INDEX_ML_STP_UP)
+                    if (
+                      (_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                     {
-                      if (edition_settings.setpoint_UP[_n_UP][0][group] != current_settings.setpoint_UP[_n_UP][0][group])
+                      if (edition_settings.setpoint_UP[_n_UP][_n_index][group] != current_settings.setpoint_UP[_n_UP][_n_index][group])
                         found_changes = 1;
                     }
                     else if (_n_index == INDEX_ML_STP_UP_KP)
                     {
-                      if (edition_settings.setpoint_UP_KP[_n_UP][0][group] != current_settings.setpoint_UP_KP[_n_UP][0][group])
+                      if (edition_settings.setpoint_UP_KP[_n_UP][group] != current_settings.setpoint_UP_KP[_n_UP][group])
                         found_changes = 1;
                     }
                   }
@@ -6628,7 +6637,7 @@ void main_manu_function(void)
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_TIMEOUT_UP;
                     if (_n_index == INDEX_ML_TMOUP)
                     {
-                      if (edition_settings.timeout_UP[_n_UP][0][group] != current_settings.timeout_UP[_n_UP][0][group])
+                      if (edition_settings.timeout_UP[_n_UP][group] != current_settings.timeout_UP[_n_UP][group])
                         found_changes = 1;
                     }
                   }
@@ -7438,7 +7447,9 @@ void main_manu_function(void)
 
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
-                    if (_n_index == INDEX_ML_STP_UP)
+                    if (
+                      (_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                     {
                       uint32_t min = 0, max = 0;
                       switch (current_settings.ctrl_UP_input[_n_UP])
@@ -7457,20 +7468,26 @@ void main_manu_function(void)
                             max = SETPOINT_UP_U_MAX;
                             break;
                           }
+                        case UP_CTRL_F:
+                          {
+                            min = STP_UP_F_MIN;
+                            max = STP_UP_F_MAX;
+                            break;
+                          }
                         default:
                           {
                             //Теоретично цього ніколи не мало б бути
                             total_error_sw_fixed();
                           }
                       }
-                      if (check_data_setpoint(edition_settings.setpoint_UP[_n_UP][0][group], min, max) == 1)
+                      if (check_data_setpoint(edition_settings.setpoint_UP[_n_UP][_n_index][group], min, max) == 1)
                       {
-                        if (edition_settings.setpoint_UP[_n_UP][0][group] != current_settings.setpoint_UP[_n_UP][0][group])
+                        if (edition_settings.setpoint_UP[_n_UP][_n_index][group] != current_settings.setpoint_UP[_n_UP][_n_index][group])
                         {
                           //Помічаємо, що поле структури зараз буде змінене
                           changed_settings = CHANGED_ETAP_EXECUTION;
 
-                          current_settings.setpoint_UP[_n_UP][0][group] = edition_settings.setpoint_UP[_n_UP][0][group];
+                          current_settings.setpoint_UP[_n_UP][_n_index][group] = edition_settings.setpoint_UP[_n_UP][_n_index][group];
                           //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                           fix_change_settings(0, 1);
                         }
@@ -7493,14 +7510,14 @@ void main_manu_function(void)
                         max = SETPOINT_UP_KP_MORE_MAX;
                       }
 
-                      if (check_data_setpoint(edition_settings.setpoint_UP_KP[_n_UP][0][group], min, max) == 1)
+                      if (check_data_setpoint(edition_settings.setpoint_UP_KP[_n_UP][group], min, max) == 1)
                       {
-                        if (edition_settings.setpoint_UP_KP[_n_UP][0][group] != current_settings.setpoint_UP_KP[_n_UP][0][group])
+                        if (edition_settings.setpoint_UP_KP[_n_UP][group] != current_settings.setpoint_UP_KP[_n_UP][group])
                         {
                           //Помічаємо, що поле структури зараз буде змінене
                           changed_settings = CHANGED_ETAP_EXECUTION;
 
-                          current_settings.setpoint_UP_KP[_n_UP][0][group] = edition_settings.setpoint_UP_KP[_n_UP][0][group];
+                          current_settings.setpoint_UP_KP[_n_UP][group] = edition_settings.setpoint_UP_KP[_n_UP][group];
                           //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                           fix_change_settings(0, 1);
                         }
@@ -7519,14 +7536,14 @@ void main_manu_function(void)
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_TIMEOUT_UP;
                     if (_n_index == INDEX_ML_TMOUP)
                     {
-                      if (check_data_setpoint(edition_settings.timeout_UP[_n_UP][0][group], TIMEOUT_UP_MIN, TIMEOUT_UP_MAX) == 1)
+                      if (check_data_setpoint(edition_settings.timeout_UP[_n_UP][group], TIMEOUT_UP_MIN, TIMEOUT_UP_MAX) == 1)
                       {
-                        if (edition_settings.timeout_UP[_n_UP][0][group] != current_settings.timeout_UP[_n_UP][0][group])
+                        if (edition_settings.timeout_UP[_n_UP][group] != current_settings.timeout_UP[_n_UP][group])
                         {
                           //Помічаємо, що поле структури зараз буде змінене
                           changed_settings = CHANGED_ETAP_EXECUTION;
 
-                          current_settings.timeout_UP[_n_UP][0][group] = edition_settings.timeout_UP[_n_UP][0][group];
+                          current_settings.timeout_UP[_n_UP][group] = edition_settings.timeout_UP[_n_UP][group];
                           //Формуємо запис у таблиці настройок про зміну конфігурації і ініціюємо запис у EEPROM нових настройок
                           fix_change_settings(0, 1);
                         }
@@ -8835,7 +8852,9 @@ void main_manu_function(void)
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
-                    if (_n_index == INDEX_ML_STP_UP)
+                    if (
+                      (_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                     {
                       uint32_t comma = 0, end = 0, min_step = 0;
                       int32_t sign_before = 1, sign_after = 1;
@@ -8857,6 +8876,13 @@ void main_manu_function(void)
                             min_step = 100;
                             break;
                           }
+                        case UP_CTRL_F:
+                          {
+                            comma = COL_STP_UP_F_COMMA;
+                            end = COL_STP_UP_F_END;
+                            min_step = 1;
+                            break;
+                          }
                         default:
                           {
                             //Теоретично цього ніколи не мало б бути
@@ -8865,12 +8891,12 @@ void main_manu_function(void)
                       }
 
                       if (sign_before == sign_after)
-                        edition_settings.setpoint_UP[_n_UP][0][group] = sign_after * edit_setpoint(1, abs(edition_settings.setpoint_UP[_n_UP][0][group]), 1, comma, end, min_step);
+                        edition_settings.setpoint_UP[_n_UP][_n_index][group] = sign_after * edit_setpoint(1, abs(edition_settings.setpoint_UP[_n_UP][_n_index][group]), 1, comma, end, min_step);
                       else
-                        edition_settings.setpoint_UP[_n_UP][0][group] = sign_after * abs(edition_settings.setpoint_UP[_n_UP][0][group]);
+                        edition_settings.setpoint_UP[_n_UP][_n_index][group] = sign_after * abs(edition_settings.setpoint_UP[_n_UP][_n_index][group]);
                     }
                     else if (_n_index == INDEX_ML_STP_UP_KP)
-                      edition_settings.setpoint_UP_KP[_n_UP][0][group] = edit_setpoint(1, edition_settings.setpoint_UP_KP[_n_UP][0][group], 1, COL_SETPOINT_UP_KP_COMMA, COL_SETPOINT_UP_KP_END, 1);
+                      edition_settings.setpoint_UP_KP[_n_UP][group] = edit_setpoint(1, edition_settings.setpoint_UP_KP[_n_UP][group], 1, COL_SETPOINT_UP_KP_COMMA, COL_SETPOINT_UP_KP_END, 1);
                   }
                   //Формуємо екран уставок УЗ
                   make_ekran_setpoint_UP(group);
@@ -8894,7 +8920,7 @@ void main_manu_function(void)
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_TIMEOUT_UP;
 
                     if (_n_index == INDEX_ML_TMOUP)
-                      edition_settings.timeout_UP[_n_UP][0][group] = edit_setpoint(1, edition_settings.timeout_UP[_n_UP][0][group], 1, COL_TMO_UP_COMMA, COL_TMO_UP_END, 10);
+                      edition_settings.timeout_UP[_n_UP][group] = edit_setpoint(1, edition_settings.timeout_UP[_n_UP][group], 1, COL_TMO_UP_COMMA, COL_TMO_UP_END, 10);
                   }
                   //Формуємо екран витримок УЗ
                   make_ekran_timeout_UP(group);
@@ -9683,7 +9709,9 @@ void main_manu_function(void)
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
-                    if (_n_index == INDEX_ML_STP_UP)
+                    if (
+                      (_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                     {
                       uint32_t comma = 0, end = 0, min_step = 0;
                       int32_t sign_before = 1, sign_after = 1;
@@ -9705,6 +9733,13 @@ void main_manu_function(void)
                             min_step = 100;
                             break;
                           }
+                        case UP_CTRL_F:
+                          {
+                            comma = COL_STP_UP_F_COMMA;
+                            end = COL_STP_UP_F_END;
+                            min_step = 1;
+                            break;
+                          }
                         default:
                           {
                             //Теоретично цього ніколи не мало б бути
@@ -9713,12 +9748,12 @@ void main_manu_function(void)
                       }
 
                       if (sign_before == sign_after)
-                        edition_settings.setpoint_UP[_n_UP][0][group] = sign_after * edit_setpoint(0, abs(edition_settings.setpoint_UP[_n_UP][0][group]), 1, comma, end, min_step);
+                        edition_settings.setpoint_UP[_n_UP][_n_index][group] = sign_after * edit_setpoint(0, abs(edition_settings.setpoint_UP[_n_UP][_n_index][group]), 1, comma, end, min_step);
                       else
-                        edition_settings.setpoint_UP[_n_UP][0][group] = sign_after * abs(edition_settings.setpoint_UP[_n_UP][0][group]);
+                        edition_settings.setpoint_UP[_n_UP][_n_index][group] = sign_after * abs(edition_settings.setpoint_UP[_n_UP][_n_index][group]);
                     }
                     else if (_n_index == INDEX_ML_STP_UP_KP)
-                      edition_settings.setpoint_UP_KP[_n_UP][0][group] = edit_setpoint(0, edition_settings.setpoint_UP_KP[_n_UP][0][group], 1, COL_SETPOINT_UP_KP_COMMA, COL_SETPOINT_UP_KP_END, 1);
+                      edition_settings.setpoint_UP_KP[_n_UP][group] = edit_setpoint(0, edition_settings.setpoint_UP_KP[_n_UP][group], 1, COL_SETPOINT_UP_KP_COMMA, COL_SETPOINT_UP_KP_END, 1);
                   }
                   //Формуємо екран уставок УЗ
                   make_ekran_setpoint_UP(group);
@@ -9742,7 +9777,7 @@ void main_manu_function(void)
                     uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_TIMEOUT_UP;
 
                     if (_n_index == INDEX_ML_TMOUP)
-                      edition_settings.timeout_UP[_n_UP][0][group] = edit_setpoint(0, edition_settings.timeout_UP[_n_UP][0][group], 1, COL_TMO_UP_COMMA, COL_TMO_UP_END, 10);
+                      edition_settings.timeout_UP[_n_UP][group] = edit_setpoint(0, edition_settings.timeout_UP[_n_UP][group], 1, COL_TMO_UP_COMMA, COL_TMO_UP_END, 10);
                   }
                   //Формуємо екран витримок УЗ
                   make_ekran_timeout_UP(group);

@@ -162,11 +162,11 @@ typedef struct
   unsigned int control_Umax; //Поле для управління ЗНмак
 
   //Універсальний захист
-  int32_t setpoint_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];     //Уставка для всіх ступенів
-  uint32_t setpoint_UP_KP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK]; //Уставка для "Коефіцієнта повернення" всіх ступенів
-  int32_t timeout_UP[NUMBER_UP][1][NUMBER_GROUP_USTAVOK];      //Витримка для Універсального захисту
-  uint32_t control_UP;                                         //Поля для управління
-  int32_t ctrl_UP_input[NUMBER_UP];                            //Вибір входу Універсального захисту
+  int32_t setpoint_UP[NUMBER_UP][_N_STP_UP_SHORT][NUMBER_GROUP_USTAVOK]; //Уставка для всіх ступенів
+  uint32_t setpoint_UP_KP[NUMBER_UP][NUMBER_GROUP_USTAVOK];              //Уставка для "Коефіцієнта повернення" всіх ступенів
+  int32_t timeout_UP[NUMBER_UP][NUMBER_GROUP_USTAVOK];                   //Витримка для Універсального захисту
+  uint32_t control_UP;                                                   //Поля для управління
+  int32_t ctrl_UP_input[NUMBER_UP];                                      //Вибір входу Універсального захисту
 
   unsigned int number_steps_rpn;        //Кількість ступенів РПН
   unsigned int number_step_nominal_rpn; //Номер номінального положення РПН
@@ -403,17 +403,6 @@ typedef enum _setting_data
   SET_DATA_INTO_EDIT_TABLE = 0,
   SET_DATA_IMMEDITATE
 } __settings_data;
-
-typedef struct _vd
-{
-  int sign;
-  unsigned int begin;
-  unsigned int comma;
-  unsigned int end;
-  unsigned int u_begin;
-  unsigned int u_end;
-  const unsigned char *p_unit;
-} __vd;
 
 typedef struct _ctrl_info
 {

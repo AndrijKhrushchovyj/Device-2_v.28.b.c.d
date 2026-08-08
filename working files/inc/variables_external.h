@@ -225,6 +225,7 @@ extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;
 
 extern const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA];
+extern unsigned char const Hz[MAX_NAMBER_LANGUAGE][2];
 extern const unsigned char ms[MAX_NAMBER_LANGUAGE][2];
 
 extern unsigned int realDateTime;

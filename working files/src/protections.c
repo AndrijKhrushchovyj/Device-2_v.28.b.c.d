@@ -1671,13 +1671,23 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
                    (_CHECK_SET_BIT(p_active_functions, (RANG_BLOCK_UP1 + 3 * n_UP)) == 0))
                   << 0;
 
-    int32_t pickup = current_settings_prt.setpoint_UP[n_UP][0][number_group_stp];
+    int32_t pickup = current_settings_prt.setpoint_UP[n_UP][INDEX_ML_STP_UP][number_group_stp];
     if (_CHECK_SET_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP)) != 0)
-      pickup = (pickup * (int32_t) current_settings_prt.setpoint_UP_KP[n_UP][0][number_group_stp]) / 100;
+    {
+      if (current_settings_prt.ctrl_UP_input[n_UP] == UP_CTRL_F)
+      {
+        pickup = current_settings_prt.setpoint_UP[n_UP][INDEX_ML_STP_UP_POV][number_group_stp];
+      }
+      else
+      {
+        pickup = (pickup * (int32_t) current_settings_prt.setpoint_UP_KP[n_UP][number_group_stp]) / 100;
+      }
+    }
 
     unsigned int more_less = ((current_settings_prt.control_UP & MASKA_FOR_BIT(n_UP * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_MORE_LESS_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I))) != 0);
 
-    int32_t analog_value = 0;
+    static uint32_t none_int32_t = MASKA_FOR_BIT(8 * sizeof(int32_t) - 1);
+    int32_t analog_value = none_int32_t;
 
     switch (current_settings_prt.ctrl_UP_input[n_UP])
     {
@@ -1705,6 +1715,12 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
 
           break;
         }
+      case UP_CTRL_F:
+        {
+          if (frequency >= 0)
+            analog_value = (int32_t)(frequency * 100.0f);
+          break;
+        }
       default:
         {
           //Теоретично цього ніколи не мало б бути
@@ -1712,13 +1728,16 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
         }
     }
 
-    if (more_less)
+    if ((uint32_t) analog_value != none_int32_t)
     {
-      logic_UP_0 |= (analog_value <= pickup) << 1;
-    }
-    else
-    {
-      logic_UP_0 |= (analog_value >= pickup) << 1;
+      if (more_less)
+      {
+        logic_UP_0 |= (analog_value <= pickup) << 1;
+      }
+      else
+      {
+        logic_UP_0 |= (analog_value >= pickup) << 1;
+      }
     }
 
     _AND2(logic_UP_0, 0, logic_UP_0, 1, logic_UP_0, 2);
@@ -1727,7 +1746,7 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
     else
       _CLEAR_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP));
 
-    _TIMER_T_0(INDEX_TIMER_UP1 + n_UP, current_settings_prt.timeout_UP[n_UP][0][number_group_stp], logic_UP_0, 2, logic_UP_0, 3);
+    _TIMER_T_0(INDEX_TIMER_UP1 + n_UP, current_settings_prt.timeout_UP[n_UP][number_group_stp], logic_UP_0, 2, logic_UP_0, 3);
     if (_GET_STATE(logic_UP_0, 3))
       _SET_BIT(p_active_functions, (RANG_UP1 + 3 * n_UP));
     else

@@ -237,7 +237,6 @@ void convert_and_insert_char_for_frequency(int temp_meas_1000, unsigned char *na
   int index_language = index_language_in_array(current_settings.language);
   if ((temp_value >= (MIN_FREQUENCY * 1000)) && (temp_value <= ((MAX_FREQUENCY + 1) * 1000)))
   {
-    static const unsigned char Hz[MAX_NAMBER_LANGUAGE][2] = {"Ãö", "Ãö", "Hz", "Ãö"};
     for (unsigned int i = 0; i < 2; i++)
     {
       *(name_string + FIRST_POSITION_OF_NUMBER + 7 + i) = Hz[index_language][i];

@@ -14,7 +14,9 @@
 enum _index_ml_stp_UP
 {
   INDEX_ML_STP_UP = 0,
-  INDEX_ML_STP_UP_KP,
+  INDEX_ML_STP_UP_POV,
+  _N_STP_UP_SHORT,
+  INDEX_ML_STP_UP_KP = _N_STP_UP_SHORT,
 
   MAX_ROW_FOR_SETPOINT_UP
 };
@@ -26,6 +28,10 @@ enum _index_ml_stp_UP
 #define COL_SETPOINT_UP_U_BEGIN 4
 #define COL_SETPOINT_UP_U_COMMA 7
 #define COL_SETPOINT_UP_U_END 8
+
+#define COL_STP_UP_F_BEGIN 4
+#define COL_STP_UP_F_COMMA 6
+#define COL_STP_UP_F_END 8
 
 #define COL_SETPOINT_UP_KP_BEGIN 6
 #define COL_SETPOINT_UP_KP_COMMA 7
@@ -50,6 +56,7 @@ enum _control_type_UP
   UP_CTRL_Ia_TN2,
   UP_CTRL_Uab_TN1,
   UP_CTRL_Uab_TN2,
+  UP_CTRL_F,
 
   _UP_CTRL_NUMBER
 };
