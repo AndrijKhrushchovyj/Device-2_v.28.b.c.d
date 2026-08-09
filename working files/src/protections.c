@@ -1686,7 +1686,7 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
 
     unsigned int more_less = ((current_settings_prt.control_UP & MASKA_FOR_BIT(n_UP * (_CTR_UP_NEXT_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I) - _CTR_UP_PART_I) + CTR_UP_MORE_LESS_BIT - (_CTR_UP_PART_II - _CTR_UP_PART_I))) != 0);
 
-    static uint32_t none_int32_t = MASKA_FOR_BIT(8 * sizeof(int32_t) - 1);
+    static uint32_t const none_int32_t = MASKA_FOR_BIT(8 * sizeof(int32_t) - 1);
     int32_t analog_value = none_int32_t;
 
     switch (current_settings_prt.ctrl_UP_input[n_UP])
@@ -1728,7 +1728,7 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
         }
     }
 
-    if ((uint32_t) analog_value != none_int32_t)
+    if ((current_settings_prt.ctrl_UP_input[n_UP] != UP_CTRL_F) || ((uint32_t) analog_value != none_int32_t))
     {
       if (more_less)
       {

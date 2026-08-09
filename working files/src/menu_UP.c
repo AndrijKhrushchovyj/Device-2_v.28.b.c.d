@@ -432,20 +432,24 @@ void make_ekran_control_UP()
       {"     Ia рм1     ",
        "     Ia рм2     ",
        "    Uab рм1     ",
-       "    Uab рм2     "},
+       "    Uab рм2     ",
+       "       f        "},
       {"     Ia рм1     ",
        "     Ia рм2     ",
        "    Uab рм1     ",
-       "    Uab рм2     "},
+       "    Uab рм2     ",
+       "       f        "},
       {"     Ia TN1     ",
        "     Ia TN2     ",
        "    Vab TN1     ",
-       "    Vab TN2     "},
+       "    Vab TN2     ",
+       "       f        "},
       {"     Ia рм1     ",
        "     Ia рм2     ",
        "    Uab рм1     ",
-       "    Uab рм2     "}};
-  static const uint32_t cursor_x_2[_UP_CTRL_NUMBER] = {4, 4, 3, 3};
+       "    Uab рм2     ",
+       "       f        "}};
+  static const uint32_t cursor_x_2[_UP_CTRL_NUMBER] = {4, 4, 3, 3, 6};
 
   static const uint8_t information_4[2][MAX_COL_LCD] =
     {
