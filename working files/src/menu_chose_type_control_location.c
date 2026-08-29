@@ -270,16 +270,16 @@ void make_ekran_type_control_location(void)
         //У парному номері рядку виводимо значення уставки
         const unsigned char information[MAX_NAMBER_LANGUAGE][MAX_TYPE_CONTROL_LOCATION + 1][MAX_COL_LCD] =
           {
-            {"   Логический   ", "    Логометр    ", "    Сельсин     ", "     Ошибка     "},
-            {"    Логічний    ", "    Логометр    ", "    Сельсин     ", "    Помилка     "},
-            {"     Logic      ", "   Logometer    ", "     Selsyn     ", "     Error      "},
-            {"   Логический   ", "    Логометр    ", "    Сельсин     ", "     Ошибка     "}};
+            {"   Логический   ", "    Логометр    ", "    Сельсин     ", "     ДДККП      ", "     Ошибка     "},
+            {"    Логічний    ", "    Логометр    ", "    Сельсин     ", "     ДДККП      ", "    Помилка     "},
+            {"     Logic      ", "   Logometer    ", "     Selsyn     ", "     BCDPC      ", "     Error      "},
+            {"   Логический   ", "    Логометр    ", "    Сельсин     ", "     ДДККП      ", "     Ошибка     "}};
         const unsigned int cursor_x[MAX_NAMBER_LANGUAGE][MAX_TYPE_CONTROL_LOCATION + 1] =
           {
-            {2, 3, 3, 4},
-            {3, 3, 3, 3},
-            {4, 2, 4, 4},
-            {2, 3, 3, 4}};
+            {2, 3, 3, 4, 4},
+            {3, 3, 3, 4, 3},
+            {4, 2, 4, 4, 4},
+            {2, 3, 3, 4, 4}};
 
         unsigned int temp_data;
         if (current_ekran.edition == 0)
