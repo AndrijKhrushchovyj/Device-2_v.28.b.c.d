@@ -1916,6 +1916,17 @@ inline void control_pologennja(unsigned int *p_active_functions)
   measurement_tmp[1] = adc2_channel1_averange_prt;
   //#endif
 
+  //ƒƒ  œ
+
+  uint32_t const low_trtrad =
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_0_BIT) != 0) * 1 +
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_1_BIT) != 0) * 2 +
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_2_BIT) != 0) * 4 +
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_3_BIT) != 0) * 8;
+  uint32_t const high_trtrad =
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_4_BIT) != 0) * 1 +
+    (_CHECK_SET_BIT(p_active_functions, RANG_BCD_5_BIT) != 0) * 2;
+
   if (adc2_read_after_start_tmp != false)
   {
     if ((measurement_tmp[0] - measurement_tmp[1]) == 0)
@@ -1977,6 +1988,13 @@ inline void control_pologennja(unsigned int *p_active_functions)
       current_step_tmp += 1;
 
     current_step = current_step_tmp + 1;
+    current_step_logical = current_step;
+  }
+  else if (
+    (current_settings.type_control_location == 3) &&
+    (low_trtrad <= 9))
+  {
+    current_step = 10 * high_trtrad + low_trtrad;
     current_step_logical = current_step;
   }
   else
