@@ -5216,6 +5216,13 @@ inline void main_protection(void)
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_3_GRUPA_USTAVOK) != 0) << (RANG_SMALL_3_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
     active_inputs_grupa_ustavok |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_4_GRUPA_USTAVOK) != 0) << (RANG_SMALL_4_GRUPA_USTAVOK - RANG_SMALL_1_GRUPA_USTAVOK);
 
+    active_functions[RANG_BCD_0_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_0_BIT) != 0) << (RANG_BCD_0_BIT & 0x1f);
+    active_functions[RANG_BCD_1_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_1_BIT) != 0) << (RANG_BCD_1_BIT & 0x1f);
+    active_functions[RANG_BCD_2_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_2_BIT) != 0) << (RANG_BCD_2_BIT & 0x1f);
+    active_functions[RANG_BCD_3_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_3_BIT) != 0) << (RANG_BCD_3_BIT & 0x1f);
+    active_functions[RANG_BCD_4_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_4_BIT) != 0) << (RANG_BCD_4_BIT & 0x1f);
+    active_functions[RANG_BCD_5_BIT >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_BCD_5_BIT) != 0) << (RANG_BCD_5_BIT & 0x1f);
+
     //пом
     active_functions[RANG_OSNOVNYJ_TN2_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_OSNOVNYJ_TN2_RPN) != 0) << (RANG_OSNOVNYJ_TN2_RPN & 0x1f);
     active_functions[RANG_MRZS_OR_LOCAL_MODE_RPN >> 5] |= (_CHECK_SET_BIT(temp_value_for_activated_function, RANG_SMALL_MRZS_OR_LOCAL_MODE_RPN) != 0) << (RANG_MRZS_OR_LOCAL_MODE_RPN & 0x1f);
