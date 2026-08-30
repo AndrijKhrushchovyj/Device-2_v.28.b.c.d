@@ -1889,6 +1889,31 @@ inline void Reset_Defect_RPN_handler(unsigned int *p_active_functions)
 /*****************************************************/
 
 /*****************************************************/
+//Детектор n=1 n=N
+/*****************************************************/
+inline void detector_position_control(unsigned int *p_active_functions)
+{
+  if (current_step == 1)
+  {
+    _SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_1);
+  }
+  else
+  {
+    _CLEAR_BIT(p_active_functions, RANG_DETECT_n_EQUAL_1);
+  }
+
+  if (current_step == current_settings_prt.number_steps_rpn)
+  {
+    _SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_N);
+  }
+  else
+  {
+    _CLEAR_BIT(p_active_functions, RANG_DETECT_n_EQUAL_N);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
 //Контроль положення (крім логічного контролю)
 /*****************************************************/
 //#pragma optimize=none
@@ -2013,6 +2038,11 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
     need_logic_control = 1;
   }
 
+  if (need_logic_control == 0)
+  {
+    detector_position_control(p_active_functions);
+  }
+
   return need_logic_control;
 }
 /*****************************************************/
@@ -2123,6 +2153,8 @@ inline void control_pologennja_logic(unsigned int *p_active_functions, int const
     }
 
     current_step = current_step_logical;
+
+    detector_position_control(p_active_functions);
   }
 }
 /*****************************************************/

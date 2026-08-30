@@ -189,6 +189,8 @@ enum __rang_output_led_df_reg
   RANG_BCD_3_BIT,
   RANG_BCD_4_BIT,
   RANG_BCD_5_BIT,
+  RANG_DETECT_n_EQUAL_1,
+  RANG_DETECT_n_EQUAL_N,
 
   _RANG_RPN_BEGIN,
   RANG_OSNOVNYJ_TN2_RPN = _RANG_RPN_BEGIN,
@@ -728,11 +730,11 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_DF1_IN - 96))                                  \
   | (1u << (RANG_DF1_R -  96))                                  \
   | (1u << (RANG_DF2_IN -  96))                                 \
-  | (1u << (RANG_DF2_R -  96))                                  \
 )
 
 #define MASKA_FOR_INPUT_SIGNALS_4 (                            \
-    (1u << (RANG_DF3_IN - 128))                                \
+    (1u << (RANG_DF2_R - 128))                                 \
+  | (1u << (RANG_DF3_IN - 128))                                \
   | (1u << (RANG_DF3_R - 128))                                 \
   | (1u << (RANG_DF4_IN - 128))                                \
   | (1u << (RANG_DF4_R - 128))                                 \
@@ -786,12 +788,12 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_TM_MODE_RPN - 0))                              \
   | (1u << (RANG_AUTO_MODE_FROM_DV_RPN - 0))                    \
   | (1u << (RANG_REMOTE_MODE_FROM_UPPER_LEVEL_RPN - 0))         \
-  | (1u << (RANG_REMOTE_MODE_RPN - 0))                          \
-  | (1u << (RANG_AUTO_MODE_FROM_UPPER_LEVEL_RPN - 0))           \
 )
 
 #define MASKA_RPN_SIGNALS_1 (                                   \
-    (1u << (RANG_AUTO_MODE_RPN - 32))                           \
+    (1u << (RANG_REMOTE_MODE_RPN - 32))                         \
+  | (1u << (RANG_AUTO_MODE_FROM_UPPER_LEVEL_RPN - 32))          \
+  | (1u << (RANG_AUTO_MODE_RPN - 32))                           \
   | (1u << (RANG_PEREKLYUCHENNYA_RPN - 32))                     \
   | (1u << (RANG_UBAVYTY_FROM_UPPER_LEVEL_RPN - 32))            \
   | (1u << (RANG_UBAVYTY_FROM_KB_RPN - 32))                     \
@@ -821,12 +823,12 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_RESET_DEFECT_RPN - 32))                        \
   | (1u << (RANG_PO1_U_OSN_RPN - 32))                           \
   | (1u << (RANG_PO1_U_OSN_KOMP_RPN - 32))                      \
-  | (1u << (RANG_VYJCHE_ZONY_RPN - 32))                         \
-  | (1u << (RANG_PO1_U_VSPOM_RPN - 32))                         \
 )
 
 #define MASKA_RPN_SIGNALS_2 (                                   \
-    (1u << (RANG_PO2_U_OSN_RPN - 64))                           \
+    (1u << (RANG_VYJCHE_ZONY_RPN - 64))                         \
+  | (1u << (RANG_PO1_U_VSPOM_RPN - 64))                         \
+  | (1u << (RANG_PO2_U_OSN_RPN - 64))                           \
   | (1u << (RANG_PO2_U_OSN_KOMP_RPN - 64))                      \
   | (1u << (RANG_NYJCHE_ZONY_RPN - 64))                         \
   | (1u << (RANG_PO3_U_OSN_RPN - 64))                           \
@@ -931,12 +933,12 @@ enum __rang_output_led_df_reg
 #define MASKA_UMIN_SIGNALS_2 (                                    \
     (1u << (RANG_BLOCK_UMIN1 - 64))                               \
   | (1u << (RANG_BLOCK_UMIN2 - 64))                               \
-  | (1u << (RANG_PO_UMIN1 - 64))                                  \
-  | (1u << (RANG_UMIN1 - 64))                                     \
 )
 
 #define MASKA_UMIN_SIGNALS_3 (                                    \
-    (1u << (RANG_PO_UMIN2 - 96))                                  \
+    (1u << (RANG_PO_UMIN1 - 96))                                  \
+  | (1u << (RANG_UMIN1 - 96))                                     \
+  | (1u << (RANG_PO_UMIN2 - 96))                                  \
   | (1u << (RANG_UMIN2 - 96))                                     \
 )
 
@@ -996,12 +998,12 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_DF1_R - 96))                                   \
   | (1u << (RANG_DF1_OUT - 96))                                 \
   | (1u << (RANG_DF2_IN - 96))                                  \
-  | (1u << (RANG_DF2_R - 96))                                   \
-  | (1u << (RANG_DF2_OUT - 96))                                 \
 )
 
 #define MASKA_EL_SIGNALS_4 (                                   \
-    (1u << (RANG_DF3_IN - 128))                                \
+    (1u << (RANG_DF2_R - 128))                                 \
+  | (1u << (RANG_DF2_OUT - 128))                               \
+  | (1u << (RANG_DF3_IN - 128))                                \
   | (1u << (RANG_DF3_R - 128))                                 \
   | (1u << (RANG_DF3_OUT - 128))                               \
   | (1u << (RANG_DF4_IN - 128))                                \
@@ -1031,12 +1033,12 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_DT4_SET - 128))                               \
   | (1u << (RANG_DT4_RESET - 128))                             \
   | (1u << (RANG_DT4_OUT - 128))                               \
-  | (1u << (RANG_D_AND1 - 128))                                \
-  | (1u << (RANG_D_AND2 - 128))                                \
 )
 
 #define MASKA_EL_SIGNALS_5 (                                   \
-    (1u << (RANG_D_AND3 - 160))                                \
+    (1u << (RANG_D_AND1 - 160))                                \
+  | (1u << (RANG_D_AND2 - 160))                                \
+  | (1u << (RANG_D_AND3 - 160))                                \
   | (1u << (RANG_D_AND4 - 160))                                \
   | (1u << (RANG_D_AND5 - 160))                                \
   | (1u << (RANG_D_AND6 - 160))                                \
@@ -1053,25 +1055,25 @@ enum __rang_output_led_df_reg
   | (1u << (RANG_D_XOR1 - 160))                                \
   | (1u << (RANG_D_XOR2 - 160))                                \
   | (1u << (RANG_D_XOR3 - 160))                                \
-  | (1u << (RANG_D_XOR4 - 160))                                 \
-  | (1u << (RANG_D_XOR5 - 160))                                 \
-  | (1u << (RANG_D_XOR6 - 160))                                 \
-  | (1u << (RANG_D_XOR7 - 160))                                 \
-  | (1u << (RANG_D_XOR8 - 160))                                 \
-  | (1u << (RANG_D_NOT1 - 160))                                 \
-  | (1u << (RANG_D_NOT2 - 160))                                 \
-  | (1u << (RANG_D_NOT3 - 160))                                 \
-  | (1u << (RANG_D_NOT4 - 160))                                 \
-  | (1u << (RANG_D_NOT5 - 160))                                 \
-  | (1u << (RANG_D_NOT6 - 160))                                 \
-  | (1u << (RANG_D_NOT7 - 160))                                 \
-  | (1u << (RANG_D_NOT8 - 160))                                 \
-  | (1u << (RANG_D_NOT9 - 160))                                 \
-  | (1u << (RANG_D_NOT10 - 160))                                \
+  | (1u << (RANG_D_XOR4 - 160))                                \
+  | (1u << (RANG_D_XOR5 - 160))                                \
+  | (1u << (RANG_D_XOR6 - 160))                                \
+  | (1u << (RANG_D_XOR7 - 160))                                \
+  | (1u << (RANG_D_XOR8 - 160))                                \
+  | (1u << (RANG_D_NOT1 - 160))                                \
+  | (1u << (RANG_D_NOT2 - 160))                                \
+  | (1u << (RANG_D_NOT3 - 160))                                \
+  | (1u << (RANG_D_NOT4 - 160))                                \
+  | (1u << (RANG_D_NOT5 - 160))                                \
+  | (1u << (RANG_D_NOT6 - 160))                                \
+  | (1u << (RANG_D_NOT7 - 160))                                \
+  | (1u << (RANG_D_NOT8 - 160))                                \
 )
 
 #define MASKA_EL_SIGNALS_6 (                                   \
-    (1u << (RANG_D_NOT11 - 192))                               \
+    (1u << (RANG_D_NOT9 - 192))                                \
+  | (1u << (RANG_D_NOT10 - 192))                               \
+  | (1u << (RANG_D_NOT11 - 192))                               \
   | (1u << (RANG_D_NOT12 - 192))                               \
   | (1u << (RANG_D_NOT13 - 192))                               \
   | (1u << (RANG_D_NOT14 - 192))                               \
@@ -1122,25 +1124,23 @@ enum __rang_output_led_df_reg
 //Макска для блокування зміни груп  уставок
 /*****************************************/
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_0  0
-
-#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1 (              \
-     (1u << (RANG_VYJCHE_ZONY_RPN - 32))                      \
-)
+#define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_1  0
 
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_2 (              \
-     (1u << (RANG_NYJCHE_ZONY_RPN - 64))                      \
+     (1u << (RANG_VYJCHE_ZONY_RPN - 64))                      \
+   | (1u << (RANG_NYJCHE_ZONY_RPN - 64))                      \
    | (1u << (RANG_PO_UMAX1 - 64))                             \
    | (1u << (RANG_PRYSK_UBAVYTY_VID_UMAX1 - 64))              \
    | (1u << (RANG_BLOCK_PRYBAVYTY_VID_UMAX1 - 64))            \
    | (1u << (RANG_PO_UMAX2 - 64))                             \
    | (1u << (RANG_UMAX2 - 64))                                \
    | (1u << (RANG_BRP - 64))                                  \
-   | (1u << (RANG_PO_UMIN1 - 64))                             \
-   | (1u << (RANG_UMIN1 - 64))                                \
 )
 
 #define MASKA_SIGNALES_FOR_LOCK_GROUP_PICKUP_3 (              \
-     (1u << (RANG_PO_UMIN2 - 96))                             \
+     (1u << (RANG_PO_UMIN1 - 96))                             \
+   | (1u << (RANG_UMIN1 - 96))                                \
+   | (1u << (RANG_PO_UMIN2 - 96))                             \
    | (1u << (RANG_UMIN2 - 96))                                \
    | (1u << (RANG_PO_UP1 + 3*0 - 96))                         \
    | (1u << (RANG_UP1 + 3*0 - 96))                            \
@@ -1189,13 +1189,11 @@ enum __rang_output_led_df_reg
 //Макска моніторингу максимальної фазної напруги основного каналу
 /*****************************************/
 #define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_0 0
-
-#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1  (               \
-       (1u << (RANG_VYJCHE_ZONY_RPN - 32))                      \
-)     
+#define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_1 0
 
 #define MASKA_MONITOTYNG_MAX_U_BASE_SIGNALES_2  (               \
-       (1u << (RANG_PO3_U_OSN_RPN - 64))                        \
+       (1u << (RANG_VYJCHE_ZONY_RPN - 64))                      \
+     | (1u << (RANG_PO3_U_OSN_RPN - 64))                        \
      | (1u << (RANG_PO_UMAX1 - 64))                             \
      | (1u << (RANG_PRYSK_UBAVYTY_VID_UMAX1 - 64))              \
      | (1u << (RANG_BLOCK_PRYBAVYTY_VID_UMAX1 - 64))            \
@@ -1213,13 +1211,11 @@ enum __rang_output_led_df_reg
 //Макска моніторингу максимальної фазної напруги допоміжного каналу
 /*****************************************/
 #define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_0 0
-
-#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1 (              \
-       (1u << (RANG_PO1_U_VSPOM_RPN - 32))                      \
-)
+#define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_1 0
 
 #define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_2 (              \
-       (1u << (RANG_PO3_U_VSPOM_RPN - 64))                      \
+       (1u << (RANG_PO1_U_VSPOM_RPN - 64))                      \
+     | (1u << (RANG_PO3_U_VSPOM_RPN - 64))                      \
 )
 
 #define MASKA_MONITOTYNG_MAX_U_SECOND_SIGNALES_3 0
@@ -1237,13 +1233,13 @@ enum __rang_output_led_df_reg
 #define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_2 (              \
        (1u << (RANG_NYJCHE_ZONY_RPN - 64))                    \
      | (1u << (RANG_PO4_U_OSN_RPN - 64))                      \
-     | (1u << (RANG_PO_UMIN1 - 64))                           \
-     | (1u << (RANG_UMIN1 - 64))                              \
 )     
 
 #define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_3 (              \
        (1u << (RANG_PO_UMIN2 - 96))                           \
      | (1u << (RANG_UMIN2 - 96))                              \
+     | (1u << (RANG_PO_UMIN1 - 96))                           \
+     | (1u << (RANG_UMIN1 - 96))                              \
 )     
 
 #define MASKA_MONITOTYNG_MIN_U_BASE_SIGNALES_4  0
