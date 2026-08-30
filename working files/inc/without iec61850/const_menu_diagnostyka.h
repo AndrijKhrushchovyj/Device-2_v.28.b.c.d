@@ -89,6 +89,7 @@ enum _error_id
   ERROR_SELECT_GRUPY_USRAVOK,
 
   ERROR_LOGOMETR_VOLTAGE,
+  ERROR_BCDPC,
 
   ERROR_BA_1_FIX,
   ERROR_BA_1_CTLR,
@@ -157,11 +158,11 @@ enum _error_id
   | (1 << (ERROR_BA_1_FIX - 64))                                \
   | (1 << (ERROR_BA_1_CTLR - 64))                               \
   | (1 << (ERROR_BDVV5_1_FIX - 64))                             \
-  | (1 << (ERROR_BDVV5_1_CTLR - 64))                            \
 )
 
 #define MASKA_AVAR_ERROR_3        (unsigned int)(               \
-    (1 << (ERROR_BDVV5_2_FIX - 96))                             \
+    (1 << (ERROR_BDVV5_1_CTLR - 96))                            \
+  | (1 << (ERROR_BDVV5_2_FIX - 96))                             \
   | (1 << (ERROR_BDVV5_2_CTLR - 96))                            \
   | (1 << (ERROR_BDVV6_FIX - 96))                               \
   | (1 << (ERROR_BDVV6_CTLR - 96))                              \
@@ -262,6 +263,7 @@ enum _error_id
     " Îø.âíóòð.FLASH ", \
     " Îø.âûá.ãð.óñò. ", \
     " Îø.íàïð.ëîãîì. ", \
+    " Îø.ÄÄÊÊÏ       ", \
     " ÁÀ1 îò.        ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 îò.    ", \
@@ -366,6 +368,7 @@ enum _error_id
     " Ïîì.âíóòð.FLASH", \
     " Ïîì.âèá.ãð.óñò.", \
     " Ïîì.íàïð.ëîãîì.", \
+    " Ïîì.ÄÄÊÊÏ      ", \
     " ÁÀ1 â³ä.       ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 â³ä.   ", \
@@ -470,6 +473,7 @@ enum _error_id
     " Flash Mem Er   ", \
     " SP Gr Sel Er   ", \
     " Logometer V.Err", \
+    " BCDPC Er       ", \
     " AIU01 abs      ", \
     " AIU01 ver      ", \
     " BIOU05_1 abs   ", \
@@ -574,6 +578,7 @@ enum _error_id
     " Îø.âíóòð.FLASH ", \
     " Îø.âûá.ãð.óñò. ", \
     " Îø.íàïð.ëîãîì. ", \
+    " Îø.ÄÄÊÊÏ       ", \
     " ÁÀ1 îò.        ", \
     " ÁÀ1 ï.         ", \
     " ÁÄÂÂ5_1 îò.    ", \
