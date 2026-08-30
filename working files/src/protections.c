@@ -1889,11 +1889,13 @@ inline void Reset_Defect_RPN_handler(unsigned int *p_active_functions)
 /*****************************************************/
 
 /*****************************************************/
-//Контроль положення
+//Контроль положення (крім логічного контролю)
 /*****************************************************/
 //#pragma optimize=none
-inline void control_pologennja(unsigned int *p_active_functions)
+inline int control_pologennja_part1(unsigned int *p_active_functions)
 {
+  int need_logic_control = 0;
+
   //Мінімальна перевірка можливості роботи контролю положення по сельсинових датчиках
   if ((sum_phi_end - sum_phi_begin) == 0)
     _SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN);
@@ -2006,6 +2008,22 @@ inline void control_pologennja(unsigned int *p_active_functions)
     current_step_logical = current_step;
   }
   else
+  {
+    //Логічний
+    need_logic_control = 1;
+  }
+
+  return need_logic_control;
+}
+/*****************************************************/
+
+/*****************************************************/
+//Контроль положення (логічний контроль)
+/*****************************************************/
+//#pragma optimize=none
+inline void control_pologennja_logic(unsigned int *p_active_functions, int const need_logic_control)
+{
+  if (need_logic_control != 0)
   {
     //Логічний
     unsigned int pologennya_1 = (_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0);
@@ -5679,6 +5697,12 @@ inline void main_protection(void)
     //Аварійна ситуація не зафіксована
 
     /**************************/
+    //Контроль положення (без логічного контролю)
+    /**************************/
+    int const need_logic_control = control_pologennja_part1(active_functions);
+    /**************************/
+
+    /**************************/
     //ТМ (запускається перед формуванням сигналу "Сброс Неисправности РПН" і РПН)
     /**************************/
     TM_handler(active_functions);
@@ -5765,6 +5789,7 @@ inline void main_protection(void)
     {
       BRP_handler(number_main_canal, active_functions, number_group_stp);
     }
+    else
     {
       //Очищуємо сигнали, які не можуть бути у даній конфігурації
       static const unsigned int maska_brp_signals[N_BIG] =
@@ -5991,9 +6016,9 @@ inline void main_protection(void)
     /**************************/
 
     /**************************/
-    //Контроль положення
+    //Контроль положення логічного контролю
     /**************************/
-    control_pologennja(active_functions);
+    control_pologennja_logic(active_functions, need_logic_control);
     /**************************/
 
     /**************************/
