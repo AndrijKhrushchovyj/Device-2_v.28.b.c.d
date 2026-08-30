@@ -1452,9 +1452,9 @@ inline void RPN_handler(unsigned int triple_wound, unsigned int number_main_cana
   //Сраб. БРП
   logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_BRP) != 0) << 0;
   //Пол.1 кон.вих.
-  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0) << 2;
+  logic_RPN_1 |= ((_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0) || (((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_BLCK_DP)) != 0) && (_CHECK_SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_1) != 0))) << 2;
   //Пол.N кон.вих.
-  logic_RPN_1 |= (_CHECK_SET_BIT(p_active_functions, RANG_N_POLOGENNJA_RPN) != 0) << 4;
+  logic_RPN_1 |= ((_CHECK_SET_BIT(p_active_functions, RANG_N_POLOGENNJA_RPN) != 0) || (((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_BLCK_DP)) != 0) && (_CHECK_SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_N) != 0))) << 4;
   //ЗСХ
   logic_RPN_2 |= (_CHECK_SET_BIT(p_active_functions, RANG_ZSKh) != 0) << 2;
   //ЗНХ
