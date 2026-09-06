@@ -1,14 +1,23 @@
 #ifndef __CONST_MESUREMENT__
 #define __CONST_MESUREMENT__
 
+enum _groups_meas
+{
+  INDEX_TN_1_MEAS = 0,
+  INDEX_TN_2_MEAS,
+  INDEX_S_MEAS,
+
+  MAX_GROUPS_MEAS
+};
+
 #define USTUVANNJA_VAGA 12
 #define DEFAULT_USTUVANNJA_VALUE ((1 << USTUVANNJA_VAGA) - 1)
 
 #define MEASUREMENT_TIM_FREQUENCY 60000000 //ÌÃö
 
 #define MAIN_FREQUENCY 50 //Ãö
-#define MIN_FREQUENCY 45  //Ãö
-#define MAX_FREQUENCY 55  //Ãö
+#define MIN_FREQUENCY 45 //Ãö
+#define MAX_FREQUENCY 55 //Ãö
 
 #define MIN_TICK_PERIOD (MEASUREMENT_TIM_FREQUENCY / MAX_FREQUENCY - 1)
 #define MAX_TICK_PERIOD (MEASUREMENT_TIM_FREQUENCY / MIN_FREQUENCY + 1)
@@ -141,18 +150,25 @@ R2-change to 86,6
   (1 << C_UAB_TN2) |   \
   (1 << C_UAB_TN2_16))
 
-#define READ_I (     \
-  (1 << C_IA_1) |    \
-  (1 << C_IA_1_16) | \
-  (1 << C_IA_2) |    \
+#define READ_I_1 ( \
+  (1 << C_IA_1) |  \
+  (1 << C_IA_1_16))
+
+#define READ_I_2 ( \
+  (1 << C_IA_2) |  \
   (1 << C_IA_2_16))
 
-#define READ_DATA_VAL ( \
-  READ_I |              \
-  READ_UAB_TN1 |        \
-  READ_UAB_TN2 |        \
-  READ_UP1P2 |          \
-  READ_UP2P3 |          \
+#define READ_DATA_VAL_1 ( \
+  READ_I_1 |              \
+  READ_UAB_TN1)
+
+#define READ_DATA_VAL_2 ( \
+  READ_I_2 |              \
+  READ_UAB_TN2)
+
+#define READ_DATA_VAL_S ( \
+  READ_UP1P2 |            \
+  READ_UP2P3 |            \
   READ_UC1C2)
 
 #define READ_ADC2_VAL ( \
@@ -163,9 +179,11 @@ R2-change to 86,6
   (1 << C_VREF1) |      \
   (1 << C_V_K_3_3))
 
-#define DATA_VAL_READ_BIT 0
-#define DATA_VAL_READ (1 << DATA_VAL_READ_BIT)
-#define TEST_VAL_READ_BIT 1
+#define DATA_VAL_1_READ_BIT 0
+#define DATA_VAL_1_READ (1 << DATA_VAL_1_READ_BIT)
+#define DATA_VAL_2_READ_BIT 1
+#define DATA_VAL_2_READ (1 << DATA_VAL_2_READ_BIT)
+#define TEST_VAL_READ_BIT 2
 #define TEST_VAL_READ (1 << TEST_VAL_READ_BIT)
 
 #define NUMBER_VREF_ADC 1
@@ -179,17 +197,28 @@ R2-change to 86,6
 enum _index_channel
 {
   I_IA_1 = 0,
-  I_IA_2,
   I_UAB_TN1,
-  I_UAB_TN2,
+  _NUMBER_ANALOG_CANALES_TN_1,
 
-  _NUMBER_ANALOG_CANALES_AR,
+  I_IA_2 = _NUMBER_ANALOG_CANALES_TN_1,
+  I_UAB_TN2,
+  _NUMBER_ANALOG_CANALES_TN_2,
+
+  _NUMBER_ANALOG_CANALES_AR = _NUMBER_ANALOG_CANALES_TN_2,
   I_UC1C2 = _NUMBER_ANALOG_CANALES_AR,
   I_UP1P2,
   I_UP2P3,
-
-  NUMBER_ANALOG_CANALES
+  _NUMBER_ANALOG_CANALES_S
 };
+
+#define NUMBER_ANALOG_CANALES_TN_1 (_NUMBER_ANALOG_CANALES_TN_1)
+#define NUMBER_ANALOG_CANALES_TN_2 (_NUMBER_ANALOG_CANALES_TN_2 - _NUMBER_ANALOG_CANALES_TN_1)
+#define NUMBER_ANALOG_CANALES_S (_NUMBER_ANALOG_CANALES_S - _NUMBER_ANALOG_CANALES_AR)
+
+#define NUMBER_ANALOG_CANALES ( \
+  NUMBER_ANALOG_CANALES_TN_1 +  \
+  NUMBER_ANALOG_CANALES_TN_2 +  \
+  NUMBER_ANALOG_CANALES_S)
 
 enum _index_meas
 {

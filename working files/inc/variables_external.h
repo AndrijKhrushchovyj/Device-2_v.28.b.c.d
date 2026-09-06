@@ -2,7 +2,8 @@
 #define __EXTERNAL_VARIABLES_H
 
 extern unsigned int semaphore_adc_irq;
-extern unsigned int adc_DATA_VAL_read;
+extern unsigned int adc_DATA_VAL_1_read;
+extern unsigned int adc_DATA_VAL_2_read;
 extern unsigned int adc_TEST_VAL_read;
 extern unsigned int status_adc_read_work;
 extern const unsigned int input_adc[NUMBER_INPUTs_ADCs][2];
@@ -13,24 +14,40 @@ extern unsigned int command_word_adc, command_word_adc_work, active_index_comman
 extern unsigned int state_reading_ADCs;
 extern unsigned int channel_request, channel_answer;
 
-extern uint32_t step_timer_adc;
-extern uint32_t penultimate_tick_DATA_VAL, previous_tick_DATA_VAL;
+extern uint32_t step_val_1;
+extern uint32_t step_val_2;
+extern uint32_t penultimate_tick_VAL_1, previous_tick_VAL_1;
+extern uint32_t penultimate_tick_VAL_2, previous_tick_VAL_2;
 
 extern VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 extern unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
+extern unsigned int fix_perechid_cherez_nul_TN1_TN2, fix_perechid_cherez_nul_TN1_TN2_work;
 extern POPEREDNJY_PERECHID poperednij_perechid;
 
-extern unsigned int maska_canaliv_fapch;
-extern float frequency;
-extern float frequency_middle;
-extern unsigned int tick_period, tick_period_work;
-extern unsigned int tick_c, tick_c_work;
+extern int delta_phi_index_1, delta_phi_index_2;
 
-extern float freq_arr[N_F_AVER];
-extern size_t index_freq_arr;
-extern float sum_freq_arr;
+extern unsigned int maska_canaliv_fapch_1;
+extern float frequency_1;
+extern float frequency_1_middle;
+extern unsigned int tick_period_1, tick_period_1_work;
+extern unsigned int tick_c1, tick_c1_work;
 
-extern float frequency_min, frequency_max;
+extern float freq_arr_val_1[N_F_AVER];
+extern size_t index_freq_arr_val_1;
+extern float sum_freq_arr_val_1;
+
+extern unsigned int maska_canaliv_fapch_2;
+extern float frequency_2;
+extern float frequency_2_middle;
+extern unsigned int tick_period_2, tick_period_2_work;
+extern unsigned int tick_c2, tick_c2_work;
+
+extern float freq_arr_val_2[N_F_AVER];
+extern size_t index_freq_arr_val_2;
+extern float sum_freq_arr_val_2;
+
+extern float frequency_val_1_min, frequency_val_1_max;
+extern float frequency_val_2_min, frequency_val_2_max;
 extern unsigned int command_restart_monitoring_frequency;
 
 extern EXTENDED_SAMPLE ADCs_data_raw[NUMBER_ANALOG_CANALES];
@@ -44,11 +61,16 @@ extern unsigned int ustuvannja[NUMBER_ANALOG_CANALES];
 
 extern const float sin_data_f[NUMBER_POINT];
 extern const float cos_data_f[NUMBER_POINT];
-extern unsigned int index_sin_cos_array;
-extern unsigned int index_data_sin_cos_array;
-extern int data_sin[NUMBER_POINT * NUMBER_ANALOG_CANALES];
-extern int data_cos[NUMBER_POINT * NUMBER_ANALOG_CANALES];
-extern unsigned int index_data_sin_and_cos_array;
+
+extern unsigned int index_sin_cos_array[MAX_GROUPS_MEAS];
+extern unsigned int index_data_sin_cos_array[MAX_GROUPS_MEAS];
+extern int data_sin_tn_1[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_1];
+extern int data_cos_tn_1[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_1];
+extern int data_sin_tn_2[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_2];
+extern int data_cos_tn_2[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_2];
+extern int data_sin_s[NUMBER_POINT * NUMBER_ANALOG_CANALES_S];
+extern int data_cos_s[NUMBER_POINT * NUMBER_ANALOG_CANALES_S];
+
 extern int ortogonal_irq[2 * NUMBER_ANALOG_CANALES];
 extern int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
 extern unsigned int semaphore_measure_values_low;

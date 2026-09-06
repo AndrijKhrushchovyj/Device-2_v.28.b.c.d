@@ -1396,19 +1396,25 @@ void start_settings_peripherals(void)
   /* Output Compare Timing Mode настроювання: Канал:1 */
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Timing;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Disable;
-  TIM_OCInitStructure.TIM_Pulse = step_timer_adc;
+  TIM_OCInitStructure.TIM_Pulse = step_val_1;
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
   TIM_OC1Init(TIM5, &TIM_OCInitStructure);
   TIM_OC1PreloadConfig(TIM5, TIM_OCPreload_Disable);
 
-  TIM_OCInitStructure.TIM_Pulse = TIM5_CCR1_2_VAL;
+  TIM_OCInitStructure.TIM_Pulse = step_val_2;
   TIM_OC2Init(TIM5, &TIM_OCInitStructure);
   TIM_OC2PreloadConfig(TIM5, TIM_OCPreload_Disable);
+
+  TIM_OCInitStructure.TIM_Pulse = TIM5_CCR1_2_3_VAL;
+  TIM_OC3Init(TIM5, &TIM_OCInitStructure);
+  TIM_OC3PreloadConfig(TIM5, TIM_OCPreload_Disable);
 
   /* Дозволяємо переривання від каналу 1 таймера 5*/
   TIM_ITConfig(TIM5, TIM_IT_CC1, ENABLE);
   /* Дозволяємо переривання від каналу 2 таймера 5*/
   TIM_ITConfig(TIM5, TIM_IT_CC2, ENABLE);
+  /* Дозволяємо переривання від каналу 3 таймера 3*/
+  TIM_ITConfig(TIM5, TIM_IT_CC3, ENABLE);
   /**********************/
 
   //Робота з watchdogs

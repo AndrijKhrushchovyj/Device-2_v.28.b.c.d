@@ -5,9 +5,12 @@ uint64_t durMeas_L1Cur = 0;
 uint64_t durMeas_L2Cur = 0;
 #endif
 
-float frequency_tmp = NAN;
-float frequency_irq = -1.0f;
-float frequency_high = -1.0f;
+float frequency_tmp_val_1 = NAN;
+float frequency_tmp_val_2 = NAN;
+float frequency_irq_val_1 = -1.0f;
+float frequency_irq_val_2 = -1.0f;
+float frequency_high_val_1 = -1.0f;
+float frequency_high_val_2 = -1.0f;
 unsigned int freq_mutex = false;
 
 /*****************************************************/
@@ -16,17 +19,31 @@ unsigned int freq_mutex = false;
 inline void find_new_ADC_canal_to_read(unsigned int command_word_adc_diff, unsigned int *point_active_index_command_word_adc)
 {
   unsigned int command_word_adc_diff_tmp = command_word_adc_diff;
-  unsigned int command_word_adc_diff_fapch = command_word_adc_diff_tmp & maska_canaliv_fapch;
+
+  unsigned int const command_word_adc_diff_val_1 = command_word_adc_diff_tmp & maska_canaliv_fapch_1;
+  unsigned int const command_word_adc_diff_val_2 = command_word_adc_diff_tmp & maska_canaliv_fapch_2;
 
   if (
-    ((status_adc_read_work & DATA_VAL_READ) != 0) &&
-    (command_word_adc_diff_fapch != 0))
+    ((status_adc_read_work & DATA_VAL_2_READ) != 0) &&
+    (command_word_adc_diff_val_2 != 0) &&
+    (((status_adc_read_work & DATA_VAL_1_READ) == 0) ||
+     (command_word_adc_diff_val_1 == 0) ||
+     (command_word_adc_diff_val_1 == maska_canaliv_fapch_1)))
   {
-    command_word_adc_diff_tmp = command_word_adc_diff_fapch;
+    command_word_adc_diff_tmp = command_word_adc_diff_val_2;
   }
   else
   {
-    command_word_adc_diff_tmp &= (unsigned int) (~maska_canaliv_fapch);
+    if (
+      ((status_adc_read_work & DATA_VAL_1_READ) != 0) &&
+      (command_word_adc_diff_val_1 != 0))
+    {
+      command_word_adc_diff_tmp = command_word_adc_diff_val_1;
+    }
+    else
+    {
+      command_word_adc_diff_tmp &= (unsigned int) (~(maska_canaliv_fapch_1 | maska_canaliv_fapch_2));
+    }
   }
 
   while ((command_word_adc_diff_tmp & (1 << (*point_active_index_command_word_adc))) == 0)
@@ -45,19 +62,34 @@ inline void find_new_ADC_canal_to_read(unsigned int command_word_adc_diff, unsig
 void control_reading_ADCs(void)
 {
   //Обновляємо робоче командне слово і вибираємо які канали треба оцифровувати
-  if (adc_DATA_VAL_read != 0)
+  if (adc_DATA_VAL_1_read != 0)
   {
-    adc_DATA_VAL_read = false;
-    status_adc_read_work |= DATA_VAL_READ;
+    adc_DATA_VAL_1_read = false;
+    status_adc_read_work |= DATA_VAL_1_READ;
 
     /*
     Канали по яких буде розраховуватися частота мають оцифровуватися як 
     омога ближче до спрацювання таймеру подачі команди оцифровки
     */
-    command_word_adc &= (unsigned int) (~maska_canaliv_fapch);
-    command_word_adc_work &= (unsigned int) (~maska_canaliv_fapch);
+    command_word_adc &= (unsigned int) (~maska_canaliv_fapch_1);
+    command_word_adc_work &= (unsigned int) (~maska_canaliv_fapch_1);
 
-    command_word_adc |= READ_DATA_VAL;
+    command_word_adc |= READ_DATA_VAL_1;
+  }
+
+  if (adc_DATA_VAL_2_read != 0)
+  {
+    adc_DATA_VAL_2_read = false;
+    status_adc_read_work |= DATA_VAL_2_READ;
+
+    /*
+    Канали по яких буде розраховуватися частотамають оцифровуватися як 
+    омога ближче до спрацювання таймеру подачі команди оцифровки
+    */
+    command_word_adc &= (unsigned int) (~maska_canaliv_fapch_2);
+    command_word_adc_work &= (unsigned int) (~maska_canaliv_fapch_2);
+
+    command_word_adc |= READ_DATA_VAL_2;
   }
 
   if (adc_TEST_VAL_read != 0)
@@ -65,7 +97,7 @@ void control_reading_ADCs(void)
     adc_TEST_VAL_read = false;
     status_adc_read_work |= TEST_VAL_READ;
 
-    command_word_adc |= (READ_TEST_VAL | READ_ADC2_VAL);
+    command_word_adc |= (READ_DATA_VAL_S | READ_TEST_VAL | READ_ADC2_VAL);
   }
 
   unsigned int command_word_adc_diff = command_word_adc ^ command_word_adc_work;
@@ -322,17 +354,60 @@ void operate_integral_values_ADCs(void)
 /*************************************************************************
 Опрацьовуємо дані для перетворення Фур'є
  *************************************************************************/
-void Fourier(void)
+void Fourier(enum _groups_meas const number_val_group)
 {
-  unsigned int index_data_sin_cos_array_tmp = index_data_sin_cos_array;
-  unsigned int index_sin_cos_array_tmp = index_sin_cos_array;
+  unsigned int index_first_canal = 0, number_canals = 0;
+  int *data_sin = NULL, *data_cos = NULL;
 
-  for (unsigned int i = 0; i < NUMBER_ANALOG_CANALES; i++)
+  switch (number_val_group)
+  {
+    case INDEX_TN_1_MEAS:
+      {
+        number_canals = NUMBER_ANALOG_CANALES_TN_1;
+
+        index_first_canal = I_IA_1;
+        data_sin = data_sin_tn_1;
+        data_cos = data_cos_tn_1;
+
+        break;
+      }
+    case INDEX_TN_2_MEAS:
+      {
+        number_canals = NUMBER_ANALOG_CANALES_TN_2;
+
+        index_first_canal = I_IA_2;
+        data_sin = data_sin_tn_2;
+        data_cos = data_cos_tn_2;
+
+        break;
+      }
+    case INDEX_S_MEAS:
+      {
+        number_canals = NUMBER_ANALOG_CANALES_S;
+
+        index_first_canal = I_UC1C2;
+        data_sin = data_sin_s;
+        data_cos = data_cos_s;
+
+        break;
+      }
+    default:
+      {
+        //Якщо сюди дійшла програма, значить відбулася недопустива помилка, тому треба зациклити програму, щоб вона пішла на перезагрузку
+        total_error_sw_fixed();
+      }
+  }
+
+  unsigned int index_data_sin_cos_array_tmp = index_data_sin_cos_array[number_val_group];
+  unsigned int index_sin_cos_array_tmp = index_sin_cos_array[number_val_group];
+
+  unsigned int const max_size_data_sin_cos = NUMBER_POINT * number_canals;
+  for (unsigned int i = 0; i < number_canals; i++)
   {
     //Зчитуємо миттєве значення яке треба опрацювати
-    int temp_value_1 = ADCs_data[i];
+    int temp_value_1 = ADCs_data[index_first_canal + i];
     int temp_value_2;
-    unsigned int i_ort_tmp = 2 * i;
+    unsigned int i_ort_tmp = 2 * (index_first_canal + i);
 
     //Ортогональні SIN
     ortogonal_irq[i_ort_tmp] -= data_sin[index_data_sin_cos_array_tmp];
@@ -346,19 +421,19 @@ void Fourier(void)
     data_cos[index_data_sin_cos_array_tmp] = temp_value_2;
     ortogonal_irq[i_ort_tmp + 1] += temp_value_2;
 
-    if ((++index_data_sin_cos_array_tmp) >= (NUMBER_POINT * NUMBER_ANALOG_CANALES))
+    if ((++index_data_sin_cos_array_tmp) >= max_size_data_sin_cos)
       index_data_sin_cos_array_tmp = 0;
   }
-  index_data_sin_cos_array = index_data_sin_cos_array_tmp;
+  index_data_sin_cos_array[number_val_group] = index_data_sin_cos_array_tmp;
 
   if ((++index_sin_cos_array_tmp) >= NUMBER_POINT)
     index_sin_cos_array_tmp = 0;
-  index_sin_cos_array = index_sin_cos_array_tmp;
+  index_sin_cos_array[number_val_group] = index_sin_cos_array_tmp;
 
   //Копіювання для інших систем
   unsigned int bank_ortogonal_tmp = bank_ortogonal;
-  for (unsigned int i = 0; i < (2 * NUMBER_ANALOG_CANALES); i++)
-    ortogonal[i][bank_ortogonal_tmp] = ortogonal_irq[i];
+  for (unsigned int i = 0; i < (2 * number_canals); i++)
+    ortogonal[2 * index_first_canal + i][bank_ortogonal_tmp] = ortogonal_irq[2 * index_first_canal + i];
 }
 /*************************************************************************/
 
@@ -366,10 +441,10 @@ void Fourier(void)
 Детектор частоти для каналів групи 1
 *************************************************************************/
 //#pragma optimize=none
-void fapch(void)
+void fapch_val_1(void)
 {
   unsigned int bank_measurement_high_tmp = bank_measurement_high;
-  int index_1 = -1;
+  int index = -1;
   unsigned int maska_canaliv_fapch_tmp = 0;
 
   /*****
@@ -377,30 +452,28 @@ void fapch(void)
   *****/
   if (measurement_high[bank_measurement_high_tmp][IM_UAB_TN1] >= PORIG_FOR_FAPCH)
   {
-    index_1 = INDEX_PhK_UAB_TN1;
+    index = INDEX_PhK_UAB_TN1;
     maska_canaliv_fapch_tmp = READ_UAB_TN1;
   }
-  else if (measurement_high[bank_measurement_high_tmp][IM_UAB_TN2] >= PORIG_FOR_FAPCH)
-  {
-    index_1 = INDEX_PhK_UAB_TN2;
-    maska_canaliv_fapch_tmp = READ_UAB_TN2;
-  }
-  maska_canaliv_fapch = maska_canaliv_fapch_tmp;
+  delta_phi_index_1 = index;
+  maska_canaliv_fapch_1 = maska_canaliv_fapch_tmp;
   /*****/
 
   /*****/
-  //Частота
+  //Частота ТН1
   /*****/
   static uint32_t ind_freq;
   static size_t count;
-  uint32_t step_timer_adc_tmp = step_timer_adc;
+  uint32_t step_timer_adc_tmp = step_val_1;
   if (
-    (index_1 >= 0) &&
-    (fix_perechid_cherez_nul[index_1] != 0))
+    (index >= 0) &&
+    (fix_perechid_cherez_nul[index] != 0))
   {
     count = 0;
 
-    fix_perechid_cherez_nul[index_1] = 0;
+    fix_perechid_cherez_nul[index] = 0;
+
+    fix_perechid_cherez_nul_TN1_TN2 |= (1 << INDEX_TN_1_MEAS);
 
     unsigned int delta_tick;
     long long tick_tmp;
@@ -408,9 +481,9 @@ void fapch(void)
     unsigned int tick_p, x1_tmp, x2_tmp;
 
     /*Знаходимо час переходу через 0 попереднього разу з врахуванням лінійної апроксимації*/
-    delta_value = perechid_cherez_nul[index_1][0].y2 - perechid_cherez_nul[index_1][0].y1;
-    x1_tmp = perechid_cherez_nul[index_1][0].x1;
-    x2_tmp = perechid_cherez_nul[index_1][0].x2;
+    delta_value = perechid_cherez_nul[index][0].y2 - perechid_cherez_nul[index][0].y1;
+    x1_tmp = perechid_cherez_nul[index][0].x1;
+    x2_tmp = perechid_cherez_nul[index][0].x2;
     if (x2_tmp > x1_tmp)
       delta_tick = x2_tmp - x1_tmp;
     else
@@ -418,7 +491,7 @@ void fapch(void)
       long long delta_tick_64 = x2_tmp + 0x100000000 - x1_tmp;
       delta_tick = delta_tick_64;
     }
-    tick_tmp = ((long long) perechid_cherez_nul[index_1][0].x1) - ((long long) perechid_cherez_nul[index_1][0].y1) * ((long long) delta_tick) / ((long long) delta_value);
+    tick_tmp = ((long long) perechid_cherez_nul[index][0].x1) - ((long long) perechid_cherez_nul[index][0].y1) * ((long long) delta_tick) / ((long long) delta_value);
     if (tick_tmp < 0)
     {
       tick_tmp += 0x100000000;
@@ -436,9 +509,9 @@ void fapch(void)
     }
 
     /*Знаходимо час переходу через 0 поточного разу з врахуванням лінійної апроксимації*/
-    delta_value = perechid_cherez_nul[index_1][1].y2 - perechid_cherez_nul[index_1][1].y1;
-    x1_tmp = perechid_cherez_nul[index_1][1].x1;
-    x2_tmp = perechid_cherez_nul[index_1][1].x2;
+    delta_value = perechid_cherez_nul[index][1].y2 - perechid_cherez_nul[index][1].y1;
+    x1_tmp = perechid_cherez_nul[index][1].x1;
+    x2_tmp = perechid_cherez_nul[index][1].x2;
     if (x2_tmp > x1_tmp)
       delta_tick = x2_tmp - x1_tmp;
     else
@@ -446,55 +519,55 @@ void fapch(void)
       long long delta_tick_64 = x2_tmp + 0x100000000 - x1_tmp;
       delta_tick = delta_tick_64;
     }
-    tick_tmp = ((long long) perechid_cherez_nul[index_1][1].x1) - ((long long) perechid_cherez_nul[index_1][1].y1) * ((long long) delta_tick) / ((long long) delta_value);
+    tick_tmp = ((long long) perechid_cherez_nul[index][1].x1) - ((long long) perechid_cherez_nul[index][1].y1) * ((long long) delta_tick) / ((long long) delta_value);
     if (tick_tmp < 0)
     {
       tick_tmp += 0x100000000;
-      tick_c = (unsigned int) tick_tmp;
+      tick_c1 = (unsigned int) tick_tmp;
     }
     else
     {
       if (tick_tmp < 0x100000000)
-        tick_c = (unsigned int) tick_tmp;
+        tick_c1 = (unsigned int) tick_tmp;
       else
       {
         tick_tmp -= 0x100000000;
-        tick_c = (unsigned int) tick_tmp;
+        tick_c1 = (unsigned int) tick_tmp;
       }
     }
     /***/
 
-    if (tick_c > tick_p)
-      delta_tick = tick_c - tick_p;
+    if (tick_c1 > tick_p)
+      delta_tick = tick_c1 - tick_p;
     else
     {
-      long long delta_tick_64 = tick_c + 0x100000000 - tick_p;
+      long long delta_tick_64 = tick_c1 + 0x100000000 - tick_p;
       delta_tick = delta_tick_64;
     }
-    tick_period = delta_tick;
+    tick_period_1 = delta_tick;
 
     /*****
     Розрахунок частоти
     *****/
     if (
-      (tick_period <= MAX_TICK_PERIOD) &&
-      (tick_period >= MIN_TICK_PERIOD))
+      (tick_period_1 <= MAX_TICK_PERIOD) &&
+      (tick_period_1 >= MIN_TICK_PERIOD))
     {
-      frequency_tmp = (float) MEASUREMENT_TIM_FREQUENCY / (float) tick_period;
+      frequency_tmp_val_1 = (float) MEASUREMENT_TIM_FREQUENCY / (float) tick_period_1;
 
-      sum_freq_arr -= freq_arr[index_freq_arr];
-      freq_arr[index_freq_arr] = frequency_tmp;
-      sum_freq_arr += frequency_tmp;
+      sum_freq_arr_val_1 -= freq_arr_val_1[index_freq_arr_val_1];
+      freq_arr_val_1[index_freq_arr_val_1] = frequency_tmp_val_1;
+      sum_freq_arr_val_1 += frequency_tmp_val_1;
 
-      index_freq_arr = (index_freq_arr + 1) % N_F_AVER;
+      index_freq_arr_val_1 = (index_freq_arr_val_1 + 1) % N_F_AVER;
 
-      if (freq_arr[index_freq_arr] > 0)
+      if (freq_arr_val_1[index_freq_arr_val_1] > 0)
       {
         //Це означає, що весь масив для усереднення зкаповнений значеннями (немає випадку від'ємних чисел. щог означає, що частота тільки з'явилася)
-        if (frequency_irq < 0)
+        if (frequency_irq_val_1 < 0)
           ++ind_freq;
-        frequency_irq = sum_freq_arr / (float) N_F_AVER;
-        unsigned int tick_period_tmp = (unsigned int) roundf((float) MEASUREMENT_TIM_FREQUENCY / frequency_irq);
+        frequency_irq_val_1 = sum_freq_arr_val_1 / (float) N_F_AVER;
+        unsigned int tick_period_tmp = (unsigned int) roundf((float) MEASUREMENT_TIM_FREQUENCY / frequency_irq_val_1);
 
         step_timer_adc_tmp = tick_period_tmp >> VAGA_NUMBER_POINT;
         if ((tick_period_tmp - (step_timer_adc_tmp << VAGA_NUMBER_POINT)) >= (1 << (VAGA_NUMBER_POINT - 1)))
@@ -503,31 +576,31 @@ void fapch(void)
     }
     else
     {
-      step_timer_adc_tmp = TIM5_CCR1_2_VAL;
-      if (tick_period > MAX_TICK_PERIOD)
-        frequency_tmp = -2.0f; /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
+      step_timer_adc_tmp = TIM5_CCR1_2_3_VAL;
+      if (tick_period_1 > MAX_TICK_PERIOD)
+        frequency_tmp_val_1 = -2.0f; /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
       else
-        frequency_tmp = -3.0f; /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
+        frequency_tmp_val_1 = -3.0f; /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
 
-      if (frequency_irq != frequency_tmp)
+      if (frequency_irq_val_1 != frequency_tmp_val_1)
         ++ind_freq;
-      frequency_irq = frequency_tmp;
+      frequency_irq_val_1 = frequency_tmp_val_1;
     }
     /****/
   }
   else
   {
-    if (index_1 < 0)
+    if (index < 0)
     {
       if (count == 0)
       {
-        step_timer_adc_tmp = TIM5_CCR1_2_VAL;
-        tick_c = TIM5->CNT;
-        frequency_tmp = -1.0f; /*Частота не визначена*/
+        step_timer_adc_tmp = TIM5_CCR1_2_3_VAL;
+        tick_c1 = TIM5->CNT;
+        frequency_tmp_val_1 = -1.0f; /*Частота не визначена*/
 
-        if (frequency_irq != frequency_tmp)
+        if (frequency_irq_val_1 != frequency_tmp_val_1)
           ++ind_freq;
-        frequency_irq = frequency_tmp;
+        frequency_irq_val_1 = frequency_tmp_val_1;
       }
       if (++count >= NUMBER_POINT)
         count = 0;
@@ -539,48 +612,48 @@ void fapch(void)
     ind_freq = 1; /*нулем ідентифікатор бути не може, бо нуль означає, що частота не визначена*/
                   /*****/
 
-  if (!isnan(frequency_tmp))
+  if (!isnan(frequency_tmp_val_1))
   {
     //Нову вираховану частоту фіксуємо
-    if (frequency_tmp < 0)
+    if (frequency_tmp_val_1 < 0)
     {
-      index_freq_arr = 0;
+      index_freq_arr_val_1 = 0;
       for (size_t i = 0; i < N_F_AVER; ++i)
-        freq_arr[i] = 0.0f;
-      sum_freq_arr = 0;
+        freq_arr_val_1[i] = 0.0f;
+      sum_freq_arr_val_1 = 0;
     }
 
     //		__f_ext const f_ext = {ind_freq*(frequency_irq >= 0), tick_c, frequency_irq};
     //		f_ext_arr[index_f_ext] = f_ext;
     //		if (++index_f_ext >= SIZE_F_EXT_ARR) index_f_ext = 0;
 
-    frequency_tmp = NAN;
+    frequency_tmp_val_1 = NAN;
   }
 
   /*****/
   //ФАПЧ
   /*****/
-  if (step_timer_adc != step_timer_adc_tmp)
+  if (step_val_1 != step_timer_adc_tmp)
   {
     //Треба змінити частоту дискретизації
-    step_timer_adc = step_timer_adc_tmp;
+    step_val_1 = step_timer_adc_tmp;
   }
 
   if ((command_restart_monitoring_frequency & (1 << 0)) != 0)
   {
-    frequency_min = 50;
-    frequency_max = 50;
+    frequency_val_1_min = 50;
+    frequency_val_1_max = 50;
 
     command_restart_monitoring_frequency &= (unsigned int) (~(1 << 0));
   }
   else
   {
-    if (frequency_irq >= 0)
+    if (frequency_irq_val_1 >= 0)
     {
-      if (frequency_irq > frequency_max)
-        frequency_max = frequency_irq;
-      if (frequency_irq < frequency_min)
-        frequency_min = frequency_irq;
+      if (frequency_irq_val_1 > frequency_val_1_max)
+        frequency_val_1_max = frequency_irq_val_1;
+      if (frequency_irq_val_1 < frequency_val_1_min)
+        frequency_val_1_min = frequency_irq_val_1;
     }
   }
   /*****/

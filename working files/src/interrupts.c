@@ -3,6 +3,7 @@
 #ifdef _TEST_DURATION
 uint64_t durTIM5_C1Cur = 0;
 uint64_t durTIM5_C2Cur = 0;
+uint64_t durTIM5_C3Cur = 0;
 #endif
 
 #define BACKLIGHTING_ON 1
@@ -911,8 +912,8 @@ void TIM5_IRQHandler(void)
     //Переривання відбулося вік каналу 1, який генерує переривання для початку зчитування даних з АЦП групи 1
     /***********************************************************************************************/
     TIM5->SR = (uint16_t)((~(uint32_t) TIM_IT_CC1) & 0xffff); //TIM5->SR скидується для виходу з переривання
-    penultimate_tick_DATA_VAL = previous_tick_DATA_VAL;
-    uint32_t current_tick = previous_tick_DATA_VAL = TIM5->CCR1;
+    penultimate_tick_VAL_1 = previous_tick_VAL_1;
+    uint32_t current_tick = previous_tick_VAL_1 = TIM5->CCR1;
 
 #ifdef _TEST_DURATION
     uint32_t const start_tick = TIM2->CNT;
@@ -922,30 +923,14 @@ void TIM5_IRQHandler(void)
     Виставляємо повідослення пор необхідність оцифрувати канали групи 1 
     для розрахунку ортогональних складових
     */
-    adc_DATA_VAL_read = true;
-
-    /***********************************************************************************************/
-    //Для випадку, коли немає оцифровки "контрольних точок", то цей код буде запускатися з цього місця
-    /***********************************************************************************************/
-    //Подальші дії виконуємо тільки тоді, коли зараз не іде обмін
-    if (
-      ((GPIO_SPI_ADC->ODR & GPIO_NSSPin_ADC) != 0) &&
-      (semaphore_adc_irq == false))
-    {
-      /*
-      Це є умовою на цьому місці (переривання від таймеру має вищий пріоритет
-      ніж перериванні від SPI) не ведеться зчитування значень з АЦП або їх обробка
-      */
-      control_reading_ADCs();
-    }
-    /***********************************************************************************************/
+    adc_DATA_VAL_1_read = true;
 
     /***********************************************************/
     //Встановлюємо "значення лічильника для наступного переривання"
     /***********************************************************/
     uint32_t capture_new;
     unsigned int delta, step_timer_adc_tmp;
-    TIM5->CCR1 = (capture_new = (current_tick + (delta = step_timer_adc_tmp = step_timer_adc)));
+    TIM5->CCR1 = (capture_new = (current_tick + (delta = step_timer_adc_tmp = step_val_1)));
 
     unsigned int repeat;
     unsigned int previous_tick = current_tick;
@@ -998,7 +983,7 @@ void TIM5_IRQHandler(void)
     /***********************************************************/
     //Виставляємо повідомлення про те, що почато оцифровку групи віимірювань 1 для перетворення Фур'є
     /***********************************************************/
-    control_word_of_watchdog |= WATCHDOG_MEASURE_START_DATA_VAL;
+    control_word_of_watchdog |= WATCHDOG_MEASURE_START_DATA_VAL_1;
     /***********************************************************/
 
 #ifdef _TEST_DURATION
@@ -1026,32 +1011,28 @@ void TIM5_IRQHandler(void)
   if (TIM_GetITStatus(TIM5, TIM_IT_CC2) != RESET)
   {
     /***********************************************************************************************/
-    //Переривання відбулося вік каналу 2, який генерує переривання для початку зчитування даних з АЦП груп 1 і 2 (осцилограф і тестові значення контрольних точок)
+    //Переривання відбулося вік каналу 2, який генерує переривання для початку зчитування даних з АЦП групи 2
     /***********************************************************************************************/
-    TIM5->SR = (uint16_t)((~(uint32_t) TIM_IT_CC2) & 0xffff); //TIM5->SR скидується для виходу з переривання
-    uint32_t current_tick = TIM5->CCR2;
+    TIM5->SR = (uint16_t)((~(uint32_t) TIM_IT_CC1) & 0xffff); //TIM5->SR скидується для виходу з переривання
+    penultimate_tick_VAL_2 = previous_tick_VAL_2;
+    uint32_t current_tick = previous_tick_VAL_2 = TIM5->CCR2;
 
 #ifdef _TEST_DURATION
     uint32_t const start_tick = TIM2->CNT;
 #endif
 
     /*
-    Виставляємо повідослення пор необхідність оцифрувати каналів тестових значень
+    Виставляємо повідослення пор необхідність оцифрувати канали групи 2 
+    для розрахунку ортогональних складових
     */
-    adc_TEST_VAL_read = true;
-
-    //Опрацьовуємо дискретні входи
-    input_scan();
-
-    //Самодіагностика приєднаних плат
-    diagnostyka_boards();
+    adc_DATA_VAL_2_read = true;
 
     /***********************************************************/
     //Встановлюємо "значення лічильника для наступного переривання"
     /***********************************************************/
     uint32_t capture_new;
-    unsigned int delta;
-    TIM5->CCR2 = (capture_new = (current_tick + (delta = TIM5_CCR1_2_VAL)));
+    unsigned int delta, step_timer_adc_tmp;
+    TIM5->CCR2 = (capture_new = (current_tick + (delta = step_timer_adc_tmp = step_val_2)));
 
     unsigned int repeat;
     unsigned int previous_tick = current_tick;
@@ -1063,7 +1044,7 @@ void TIM5_IRQHandler(void)
       uint32_t delta_time = 0;
       if (capture_new < current_tick)
       {
-        uint64_t delta_time_64 = capture_new + 0x100000000 - current_tick;
+        uint64_t delta_time_64 = (uint64_t) capture_new + 0x100000000ull - (uint64_t) current_tick;
         delta_time = delta_time_64;
       }
       else
@@ -1073,12 +1054,12 @@ void TIM5_IRQHandler(void)
       {
         if (TIM_GetITStatus(TIM5, TIM_IT_CC2) == RESET)
         {
-          if (delta < TIM5_CCR1_2_VAL)
+          if (delta < step_timer_adc_tmp)
           {
             uint32_t delta_tick;
             if (current_tick < previous_tick)
             {
-              uint64_t delta_tick_64 = current_tick + 0x100000000 - previous_tick;
+              uint64_t delta_tick_64 = (uint64_t) current_tick + 0x100000000ull - (uint64_t) previous_tick;
               delta_tick = delta_tick_64;
             }
             else
@@ -1086,7 +1067,7 @@ void TIM5_IRQHandler(void)
 
             delta = delta_tick + 1;
           }
-          else if (delta == TIM5_CCR1_2_VAL)
+          else if (delta == step_timer_adc_tmp)
             delta = 1; /*Намагаємося, щоб нове переивання запустилося як омога скоріше*/
           else
           {
@@ -1102,9 +1083,9 @@ void TIM5_IRQHandler(void)
     /***********************************************************/
 
     /***********************************************************/
-    //Виставляємо повідомлення про те, що почато оцифровку всіх груп
+    //Виставляємо повідомлення про те, що почато оцифровку групи віимірювань 2 для перетворення Фур'є
     /***********************************************************/
-    control_word_of_watchdog |= WATCHDOG_MEASURE_START_TEST_VAL;
+    control_word_of_watchdog |= WATCHDOG_MEASURE_START_DATA_VAL_2;
     /***********************************************************/
 
 #ifdef _TEST_DURATION
@@ -1129,19 +1110,128 @@ void TIM5_IRQHandler(void)
 #endif
     /***********************************************************************************************/
   }
+  if (TIM_GetITStatus(TIM5, TIM_IT_CC3) != RESET)
+  {
+    /***********************************************************************************************/
+    //Переривання відбулося вік каналу 3, який генерує переривання для початку зчитування даних з АЦП  (сельсин, логометр і  тестові значення контрольних точок)
+    /***********************************************************************************************/
+    TIM5->SR = (uint16_t)((~(uint32_t) TIM_IT_CC3) & 0xffff); //TIM5->SR скидується для виходу з переривання
+    uint32_t current_tick = TIM5->CCR3;
 
-  //  //Подальші дії виконуємо тільки тоді, коли зараз не іде обмін
-  //  if (
-  //      ((GPIO_SPI_ADC->ODR & GPIO_NSSPin_ADC) != 0) &&
-  //      (semaphore_adc_irq == false)
-  //     )
-  //  {
-  //    /*
-  //    Це є умовою на цьому місці (переривання від таймеру має вищий пріоритет
-  //    ніж перериванні від SPI) не ведеться зчитування значень з АЦП або їх обробка
-  //    */
-  //    control_reading_ADCs();
-  //  }
+#ifdef _TEST_DURATION
+    uint32_t const start_tick = TIM2->CNT;
+#endif
+
+    /*
+    Виставляємо повідослення пор необхідність оцифрувати каналів тестових значень
+    */
+    adc_TEST_VAL_read = true;
+
+    //Опрацьовуємо дискретні входи
+    input_scan();
+
+    //Самодіагностика приєднаних плат
+    diagnostyka_boards();
+
+    /***********************************************************/
+    //Встановлюємо "значення лічильника для наступного переривання"
+    /***********************************************************/
+    uint32_t capture_new;
+    unsigned int delta;
+    TIM5->CCR3 = (capture_new = (current_tick + (delta = TIM5_CCR1_2_3_VAL)));
+
+    unsigned int repeat;
+    unsigned int previous_tick = current_tick;
+    do
+    {
+      repeat = 0;
+      current_tick = TIM5->CNT;
+
+      uint32_t delta_time = 0;
+      if (capture_new < current_tick)
+      {
+        uint64_t delta_time_64 = capture_new + 0x100000000 - current_tick;
+        delta_time = delta_time_64;
+      }
+      else
+        delta_time = capture_new - current_tick;
+
+      if ((delta_time > delta) || (delta_time == 0))
+      {
+        if (TIM_GetITStatus(TIM5, TIM_IT_CC3) == RESET)
+        {
+          if (delta < TIM5_CCR1_2_3_VAL)
+          {
+            uint32_t delta_tick;
+            if (current_tick < previous_tick)
+            {
+              uint64_t delta_tick_64 = current_tick + 0x100000000 - previous_tick;
+              delta_tick = delta_tick_64;
+            }
+            else
+              delta_tick = current_tick - previous_tick;
+
+            delta = delta_tick + 1;
+          }
+          else if (delta == TIM5_CCR1_2_3_VAL)
+            delta = 1; /*Намагаємося, щоб нове переивання запустилося як омога скоріше*/
+          else
+          {
+            //Теоретично цього ніколи не мало б бути
+            total_error_sw_fixed();
+          }
+          TIM5->CCR3 = (capture_new = (TIM5->CNT + delta));
+          previous_tick = current_tick;
+          repeat = 0xff;
+        }
+      }
+    } while (repeat != 0);
+    /***********************************************************/
+
+    /***********************************************************/
+    //Виставляємо повідомлення про те, що почато оцифровку всіх груп
+    /***********************************************************/
+    control_word_of_watchdog |= WATCHDOG_MEASURE_START_TEST_VAL;
+    /***********************************************************/
+
+#ifdef _TEST_DURATION
+    uint32_t const stop_tick = TIM2->CNT;
+    uint64_t const delta_tick = (stop_tick >= start_tick) ? (stop_tick - start_tick) : (0x100000000ull + stop_tick - start_tick);
+
+    static uint64_t durTIM5_C3Max = 0;
+    static uint64_t durTIM5_C3Min = 0x100000000ull;
+    static uint32_t durTIM5_C3Reset;
+
+    if (durTIM5_C3Reset != 0)
+    {
+      durTIM5_C3Max = 0;
+      durTIM5_C3Min = 0x100000000ull;
+      durTIM5_C3Reset = 0;
+    }
+    durTIM5_C3Cur = delta_tick;
+    if (durTIM5_C3Max < delta_tick)
+      durTIM5_C3Max = delta_tick;
+    if (durTIM5_C3Min > delta_tick)
+      durTIM5_C3Min = delta_tick;
+#endif
+    /***********************************************************************************************/
+  }
+
+  /***********************************************************************************************/
+  //Для випадку, коли немає оцифровки "контрольних точок", то цей код буде запускатися з цього місця
+  /***********************************************************************************************/
+  //Подальші дії виконуємо тільки тоді, коли зараз не іде обмін
+  if (
+    ((GPIO_SPI_ADC->ODR & GPIO_NSSPin_ADC) != 0) &&
+    (semaphore_adc_irq == false))
+  {
+    /*
+      Це є умовою на цьому місці (переривання від таймеру має вищий пріоритет
+      ніж перериванні від SPI) не ведеться зчитування значень з АЦП або їх обробка
+      */
+    control_reading_ADCs();
+  }
+  /***********************************************************************************************/
 
 #ifdef SYSTEM_VIEWER_ENABLE
   SEGGER_SYSVIEW_RecordExitISR();

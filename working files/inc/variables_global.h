@@ -3,7 +3,8 @@
 
 //Вимірювальна система
 unsigned int semaphore_adc_irq;
-unsigned int adc_DATA_VAL_read;
+unsigned int adc_DATA_VAL_1_read;
+unsigned int adc_DATA_VAL_2_read;
 unsigned int adc_TEST_VAL_read;
 unsigned int status_adc_read_work;
 const unsigned int input_adc[NUMBER_INPUTs_ADCs][2] = {
@@ -32,24 +33,40 @@ unsigned int command_word_adc, command_word_adc_work, active_index_command_word_
 unsigned int state_reading_ADCs = STATE_READING_ADCs_NONE;
 unsigned int channel_request, channel_answer;
 
-uint32_t step_timer_adc = TIM5_CCR1_2_VAL;
-uint32_t penultimate_tick_DATA_VAL, previous_tick_DATA_VAL;
+uint32_t step_val_1 = TIM5_CCR1_2_3_VAL;
+uint32_t step_val_2 = TIM5_CCR1_2_3_VAL;
+uint32_t penultimate_tick_VAL_1, previous_tick_VAL_1;
+uint32_t penultimate_tick_VAL_2, previous_tick_VAL_2;
 
 VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
+unsigned int fix_perechid_cherez_nul_TN1_TN2, fix_perechid_cherez_nul_TN1_TN2_work;
 POPEREDNJY_PERECHID poperednij_perechid;
 
-unsigned int maska_canaliv_fapch;
-float frequency = -1;
-float frequency_middle = -1;
-unsigned int tick_period = (TIM5_CCR1_2_VAL * NUMBER_POINT), tick_period_work = (TIM5_CCR1_2_VAL * NUMBER_POINT);
-unsigned int tick_c, tick_c_work;
+int delta_phi_index_1 = -1, delta_phi_index_2 = -1;
 
-float freq_arr[N_F_AVER];
-size_t index_freq_arr;
-float sum_freq_arr;
+unsigned int maska_canaliv_fapch_1;
+float frequency_1 = -1;
+float frequency_1_middle = -1;
+unsigned int tick_period_1 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_1_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
+unsigned int tick_c1, tick_c1_work;
 
-float frequency_min = 50, frequency_max = 50;
+float freq_arr_val_1[N_F_AVER];
+size_t index_freq_arr_val_1;
+float sum_freq_arr_val_1;
+
+unsigned int maska_canaliv_fapch_2;
+float frequency_2 = -1;
+float frequency_2_middle = -1;
+unsigned int tick_period_2 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_2_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
+unsigned int tick_c2, tick_c2_work;
+
+float freq_arr_val_2[N_F_AVER];
+size_t index_freq_arr_val_2;
+float sum_freq_arr_val_2;
+
+float frequency_val_1_min = 50, frequency_val_1_max = 50;
+float frequency_val_2_min = 50, frequency_val_2_max = 50;
 unsigned int command_restart_monitoring_frequency;
 
 EXTENDED_SAMPLE ADCs_data_raw[NUMBER_ANALOG_CANALES];
@@ -143,10 +160,14 @@ const float cos_data_f[NUMBER_POINT] = {
   0.923879532511287000000000000000f,
   0.980785280403230000000000000000f};
 
-unsigned int index_sin_cos_array;
-unsigned int index_data_sin_cos_array;
-int data_sin[NUMBER_POINT * NUMBER_ANALOG_CANALES];
-int data_cos[NUMBER_POINT * NUMBER_ANALOG_CANALES];
+unsigned int index_sin_cos_array[MAX_GROUPS_MEAS];
+unsigned int index_data_sin_cos_array[MAX_GROUPS_MEAS];
+int data_sin_tn_1[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_1];
+int data_cos_tn_1[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_1];
+int data_sin_tn_2[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_2];
+int data_cos_tn_2[NUMBER_POINT * NUMBER_ANALOG_CANALES_TN_2];
+int data_sin_s[NUMBER_POINT * NUMBER_ANALOG_CANALES_S];
+int data_cos_s[NUMBER_POINT * NUMBER_ANALOG_CANALES_S];
 int ortogonal_irq[2 * NUMBER_ANALOG_CANALES];
 int ortogonal[2 * NUMBER_ANALOG_CANALES][2];
 unsigned int bank_ortogonal;
