@@ -56,8 +56,8 @@ int speed_delta_phi[2] = {UNDEF_SPEED_PHI, UNDEF_SPEED_PHI};
 unsigned int tick_0[2];
 
 unsigned int maska_canaliv_fapch_1;
-float frequency_1 = -1, frequency_1_work = -1;
-float frequency_1_middle = -1;
+float frequency_val_1 = -1, frequency_val_1_work = -1;
+float frequency_val_1_middle = -1;
 unsigned int tick_period_1 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_1_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
 unsigned int tick_c1, tick_c1_work;
 
@@ -66,8 +66,8 @@ size_t index_freq_arr_val_1;
 float sum_freq_arr_val_1;
 
 unsigned int maska_canaliv_fapch_2;
-float frequency_2 = -1, frequency_2_work = -1;
-float frequency_2_middle = -1;
+float frequency_val_2 = -1, frequency_val_2_work = -1;
+float frequency_val_2_middle = -1;
 unsigned int tick_period_2 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_2_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
 unsigned int tick_c2, tick_c2_work;
 

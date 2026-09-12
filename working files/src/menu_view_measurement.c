@@ -230,7 +230,7 @@ void convert_and_insert_char_for_measurement(unsigned int start_number_digit_aft
 /*****************************************************/
 void convert_and_insert_char_for_frequency(int temp_meas_1000, unsigned char *name_string)
 {
-#define FIRST_POSITION_OF_NUMBER 5
+#define FIRST_POSITION_OF_NUMBER 6
 
   int temp_value = temp_meas_1000;
 
@@ -306,10 +306,10 @@ void convert_and_insert_char_for_frequency(int temp_meas_1000, unsigned char *na
   {
     static const unsigned char undefined[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - FIRST_POSITION_OF_NUMBER] =
       {
-        "Неопред.   ",
-        "Невизнач.  ",
-        "Undef.     ",
-        "Неопред.   "};
+        "Неопред.  ",
+        "Невизнач. ",
+        "Undef.    ",
+        "Неопред.  "};
 
     for (int i = 0; i < (MAX_COL_LCD - FIRST_POSITION_OF_NUMBER); i++)
       *(name_string + FIRST_POSITION_OF_NUMBER + i) = undefined[index_language][i];
@@ -945,9 +945,13 @@ void make_ekran_frequency(void)
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_FREQUENCY][MAX_COL_LCD] =
     {
-      " f =            "};
+      " f1 =           ",
+      " f2 =           "};
   semaphore_measure_values_low = 1;
-  int measurement_fequency = (int) (frequency_1_middle * 1000);
+  int measurement_fequency[MAX_ROW_FOR_MEASURMENT_FREQUENCY] = {
+    (int) (frequency_val_1_middle * 1000),
+    (int) (frequency_val_2_middle * 1000),
+  };
   semaphore_measure_values_low = 0;
 
   unsigned int position_temp = current_ekran.index_position;
@@ -963,23 +967,23 @@ void make_ekran_frequency(void)
     {
       /********************************/
       //Вводимо вимірювальні значення
-      if (measurement_fequency < 0)
+      if (measurement_fequency[index_of_ekran] < 0)
       {
-        if (measurement_fequency == (-2 * 1000))
+        if (measurement_fequency[index_of_ekran] == (-2 * 1000))
         {
           /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
-          name_string[index_of_ekran][3] = '<';
-          measurement_fequency = MIN_FREQUENCY * 1000;
+          name_string[index_of_ekran][4] = '<';
+          measurement_fequency[index_of_ekran] = MIN_FREQUENCY * 1000;
         }
-        if (measurement_fequency == (-3 * 1000))
+        if (measurement_fequency[index_of_ekran] == (-3 * 1000))
         {
           /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
-          name_string[index_of_ekran][3] = '>';
-          measurement_fequency = MAX_FREQUENCY * 1000;
+          name_string[index_of_ekran][4] = '>';
+          measurement_fequency[index_of_ekran] = MAX_FREQUENCY * 1000;
         }
       }
 
-      convert_and_insert_char_for_frequency(measurement_fequency, name_string[index_of_ekran]);
+      convert_and_insert_char_for_frequency(measurement_fequency[index_of_ekran], name_string[index_of_ekran]);
       /********************************/
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)

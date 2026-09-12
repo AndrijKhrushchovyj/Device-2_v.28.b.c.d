@@ -1425,12 +1425,12 @@ void SPI_ADC_IRQHandler(void)
         fix_perechid_cherez_nul_TN1_TN2_work = fix_perechid_cherez_nul_TN1_TN2;
         fix_perechid_cherez_nul_TN1_TN2 = 0;
 
-        frequency_1_work = frequency_1;
+        frequency_val_1_work = frequency_val_1;
         tick_period_1_work = tick_period_1;
         tick_c1_work = tick_c1;
         delta_phi_index_1_work_middle = delta_phi_index_1;
 
-        frequency_2_work = frequency_2;
+        frequency_val_2_work = frequency_val_2;
         tick_period_2_work = tick_period_2;
         tick_c2_work = tick_c2;
         delta_phi_index_2_work_middle = delta_phi_index_2;
@@ -1587,12 +1587,12 @@ void delta_phi_routine(void)
     unsigned int fix_perechid_cherez_nul_TN1_TN2_work_tmp = fix_perechid_cherez_nul_TN1_TN2_work;
     fix_perechid_cherez_nul_TN1_TN2_work = 0;
 
-    float frequency_1_work_tmp = frequency_1_work;
+    float frequency_1_work_tmp = frequency_val_1_work;
     unsigned int tick_period_1_work_tmp = tick_period_1_work;
     unsigned int tick_c1_work_tmp = tick_c1_work;
     delta_phi_index_1_work_low = delta_phi_index_1_work_middle;
 
-    float frequency_2_work_tmp = frequency_2_work;
+    float frequency_2_work_tmp = frequency_val_2_work;
     unsigned int tick_period_2_work_tmp = tick_period_2_work;
     unsigned int tick_c2_work_tmp = tick_c2_work;
     delta_phi_index_2_work_low = delta_phi_index_2_work_middle;
@@ -2021,8 +2021,8 @@ void calc_measurement(unsigned int number_group_stp)
   adc2_read_after_start = true;
 
   freq_mutex = true;
-  frequency_1 = frequency_high_val_1;
-  frequency_2 = frequency_high_val_2;
+  frequency_val_1 = frequency_high_val_1;
+  frequency_val_2 = frequency_high_val_2;
   freq_mutex = false;
 
   //Знімаємо семафор заборони обновлення значень з вимірювальної системи

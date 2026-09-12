@@ -67,6 +67,7 @@ enum
 enum
 {
   INDEX_ML_F_val_1 = 0,
+  INDEX_ML_F_val_2,
 
   MAX_ROW_FOR_MEASURMENT_FREQUENCY
 

@@ -37,8 +37,8 @@ extern int speed_delta_phi[2];
 extern unsigned int tick_0[2];
 
 extern unsigned int maska_canaliv_fapch_1;
-extern float frequency_1, frequency_1_work;
-extern float frequency_1_middle;
+extern float frequency_val_1, frequency_val_1_work;
+extern float frequency_val_1_middle;
 extern unsigned int tick_period_1, tick_period_1_work;
 extern unsigned int tick_c1, tick_c1_work;
 
@@ -47,8 +47,8 @@ extern size_t index_freq_arr_val_1;
 extern float sum_freq_arr_val_1;
 
 extern unsigned int maska_canaliv_fapch_2;
-extern float frequency_2, frequency_2_work;
-extern float frequency_2_middle;
+extern float frequency_val_2, frequency_val_2_work;
+extern float frequency_val_2_middle;
 extern unsigned int tick_period_2, tick_period_2_work;
 extern unsigned int tick_c2, tick_c2_work;
 
