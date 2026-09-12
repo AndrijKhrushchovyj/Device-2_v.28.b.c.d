@@ -273,6 +273,19 @@ void periodical_operations(unsigned int full_actions)
   // decoderN_BIGACMDArrayLoader();
   // decoderN_SMALLACMDArrayLoader();
 
+  /*******************/
+  //Кут між ТН1 і ТН2
+  /*******************/
+  if (periodical_tasks_CALC_DELTA_PHI != 0)
+  {
+    //Розраховуємо кут між ТН1 і ТН2
+    delta_phi_routine();
+
+    //Скидаємо активну задачу
+    periodical_tasks_CALC_DELTA_PHI = false;
+  }
+  /*******************/
+
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   /*******************/
   //Управління Каналом 2 міжпроцесорного обміну між БАв і комунікаційною платою

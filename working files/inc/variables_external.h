@@ -18,16 +18,26 @@ extern uint32_t step_val_1;
 extern uint32_t step_val_2;
 extern uint32_t penultimate_tick_VAL_1, previous_tick_VAL_1;
 extern uint32_t penultimate_tick_VAL_2, previous_tick_VAL_2;
+extern uint32_t penultimate_tick_VAL_Test, previous_tick_VAL_Test;
 
 extern VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 extern unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
 extern unsigned int fix_perechid_cherez_nul_TN1_TN2, fix_perechid_cherez_nul_TN1_TN2_work;
 extern POPEREDNJY_PERECHID poperednij_perechid;
 
+extern unsigned int semaphore_delta_phi;
+
 extern int delta_phi_index_1, delta_phi_index_2;
+extern int delta_phi_index_1_work_middle, delta_phi_index_2_work_middle;
+extern int delta_phi_index_1_work_low, delta_phi_index_2_work_low;
+extern int delta_phi[2], delta_phi_synchro, delta_phi_min, delta_phi_max;
+extern unsigned int bank_delta_phi;
+extern unsigned int reset_delta_phi;
+extern int speed_delta_phi[2];
+extern unsigned int tick_0[2];
 
 extern unsigned int maska_canaliv_fapch_1;
-extern float frequency_1;
+extern float frequency_1, frequency_1_work;
 extern float frequency_1_middle;
 extern unsigned int tick_period_1, tick_period_1_work;
 extern unsigned int tick_c1, tick_c1_work;
@@ -37,7 +47,7 @@ extern size_t index_freq_arr_val_1;
 extern float sum_freq_arr_val_1;
 
 extern unsigned int maska_canaliv_fapch_2;
-extern float frequency_2;
+extern float frequency_2, frequency_2_work;
 extern float frequency_2_middle;
 extern unsigned int tick_period_2, tick_period_2_work;
 extern unsigned int tick_c2, tick_c2_work;
@@ -245,6 +255,7 @@ extern unsigned int periodical_tasks_TEST_ANGLE;
 extern unsigned int periodical_tasks_TEST_RESURS;
 extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;
+extern unsigned int periodical_tasks_CALC_DELTA_PHI;
 
 extern const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA];
 extern unsigned char const Hz[MAX_NAMBER_LANGUAGE][2];

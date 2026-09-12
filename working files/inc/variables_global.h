@@ -37,16 +37,26 @@ uint32_t step_val_1 = TIM5_CCR1_2_3_VAL;
 uint32_t step_val_2 = TIM5_CCR1_2_3_VAL;
 uint32_t penultimate_tick_VAL_1, previous_tick_VAL_1;
 uint32_t penultimate_tick_VAL_2, previous_tick_VAL_2;
+uint32_t penultimate_tick_VAL_Test, previous_tick_VAL_Test;
 
 VYBORKA_XY perechid_cherez_nul[MAX_INDEX_PhK][2];
 unsigned int fix_perechid_cherez_nul[MAX_INDEX_PhK];
 unsigned int fix_perechid_cherez_nul_TN1_TN2, fix_perechid_cherez_nul_TN1_TN2_work;
 POPEREDNJY_PERECHID poperednij_perechid;
 
+unsigned int semaphore_delta_phi;
+
 int delta_phi_index_1 = -1, delta_phi_index_2 = -1;
+int delta_phi_index_1_work_middle = -1, delta_phi_index_2_work_middle = -1;
+int delta_phi_index_1_work_low = -1, delta_phi_index_2_work_low = -1;
+int delta_phi[2] = {UNDEF_PHI, UNDEF_PHI}, delta_phi_synchro = UNDEF_PHI, delta_phi_min, delta_phi_max;
+unsigned int bank_delta_phi;
+unsigned int reset_delta_phi;
+int speed_delta_phi[2] = {UNDEF_SPEED_PHI, UNDEF_SPEED_PHI};
+unsigned int tick_0[2];
 
 unsigned int maska_canaliv_fapch_1;
-float frequency_1 = -1;
+float frequency_1 = -1, frequency_1_work = -1;
 float frequency_1_middle = -1;
 unsigned int tick_period_1 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_1_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
 unsigned int tick_c1, tick_c1_work;
@@ -56,7 +66,7 @@ size_t index_freq_arr_val_1;
 float sum_freq_arr_val_1;
 
 unsigned int maska_canaliv_fapch_2;
-float frequency_2 = -1;
+float frequency_2 = -1, frequency_2_work = -1;
 float frequency_2_middle = -1;
 unsigned int tick_period_2 = (TIM5_CCR1_2_3_VAL * NUMBER_POINT), tick_period_2_work = (TIM5_CCR1_2_3_VAL * NUMBER_POINT);
 unsigned int tick_c2, tick_c2_work;
@@ -625,6 +635,7 @@ unsigned int periodical_tasks_TEST_ANGLE;
 unsigned int periodical_tasks_TEST_RESURS;
 unsigned int periodical_tasks_TEST_RESURS_LOCK;
 unsigned int periodical_tasks_TEST_FLASH_MEMORY;
+unsigned int periodical_tasks_CALC_DELTA_PHI;
 
 const unsigned char odynyci_vymirjuvannja[MAX_NAMBER_LANGUAGE][NUMBER_ODYNYCI_VYMIRJUVANNJA] =
   {

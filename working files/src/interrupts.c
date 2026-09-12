@@ -1116,7 +1116,8 @@ void TIM5_IRQHandler(void)
     //Переривання відбулося вік каналу 3, який генерує переривання для початку зчитування даних з АЦП  (сельсин, логометр і  тестові значення контрольних точок)
     /***********************************************************************************************/
     TIM5->SR = (uint16_t)((~(uint32_t) TIM_IT_CC3) & 0xffff); //TIM5->SR скидується для виходу з переривання
-    uint32_t current_tick = TIM5->CCR3;
+    penultimate_tick_VAL_Test = previous_tick_VAL_Test;
+    uint32_t current_tick = previous_tick_VAL_Test = TIM5->CCR3;
 
 #ifdef _TEST_DURATION
     uint32_t const start_tick = TIM2->CNT;

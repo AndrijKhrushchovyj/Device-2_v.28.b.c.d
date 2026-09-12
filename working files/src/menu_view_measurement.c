@@ -947,7 +947,7 @@ void make_ekran_frequency(void)
     {
       " f =            "};
   semaphore_measure_values_low = 1;
-  int measurement_fequency = (int) (frequency_middle * 1000);
+  int measurement_fequency = (int) (frequency_1_middle * 1000);
   semaphore_measure_values_low = 0;
 
   unsigned int position_temp = current_ekran.index_position;

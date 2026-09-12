@@ -237,6 +237,8 @@ void control_reading_ADCs(void);
 void operate_integral_values_ADCs(void);
 void Fourier(enum _groups_meas const);
 void fapch_val_1(void);
+void fapch_val_2(void);
+void delta_phi_routine(void);
 void calc_measurement(unsigned int);
 void angle_determination(void);
 unsigned int sqrt_64(unsigned long long);

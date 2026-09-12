@@ -601,6 +601,9 @@ void fapch_val_1(void)
         if (frequency_irq_val_1 != frequency_tmp_val_1)
           ++ind_freq;
         frequency_irq_val_1 = frequency_tmp_val_1;
+
+        reset_delta_phi = true;
+        periodical_tasks_CALC_DELTA_PHI = true;
       }
       if (++count >= NUMBER_POINT)
         count = 0;
@@ -654,6 +657,232 @@ void fapch_val_1(void)
         frequency_val_1_max = frequency_irq_val_1;
       if (frequency_irq_val_1 < frequency_val_1_min)
         frequency_val_1_min = frequency_irq_val_1;
+    }
+  }
+  /*****/
+}
+/*****************************************************/
+
+/*************************************************************************
+Детектор частоти для каналів групи 2
+*************************************************************************/
+//#pragma optimize=none
+void fapch_val_2(void)
+{
+  unsigned int bank_measurement_high_tmp = bank_measurement_high;
+  int index = -1;
+  unsigned int maska_canaliv_fapch_tmp = 0;
+
+  /*****
+  Шучаємо сигнал по якому будемо розраховувати частоту
+  *****/
+  if (measurement_high[bank_measurement_high_tmp][IM_UAB_TN2] >= PORIG_FOR_FAPCH)
+  {
+    index = INDEX_PhK_UAB_TN2;
+    maska_canaliv_fapch_tmp = READ_UAB_TN2;
+  }
+  delta_phi_index_2 = index;
+  maska_canaliv_fapch_2 = maska_canaliv_fapch_tmp;
+  /*****/
+
+  /*****/
+  //Частота ТН2
+  /*****/
+  static uint32_t ind_freq;
+  static size_t count;
+  uint32_t step_timer_adc_tmp = step_val_2;
+  if (
+    (index >= 0) &&
+    (fix_perechid_cherez_nul[index] != 0))
+  {
+    count = 0;
+
+    fix_perechid_cherez_nul[index] = 0;
+
+    fix_perechid_cherez_nul_TN1_TN2 |= (1 << INDEX_TN_2_MEAS);
+
+    unsigned int delta_tick;
+    long long tick_tmp;
+    int delta_value;
+    unsigned int tick_p, x1_tmp, x2_tmp;
+
+    /*Знаходимо час переходу через 0 попереднього разу з врахуванням лінійної апроксимації*/
+    delta_value = perechid_cherez_nul[index][0].y2 - perechid_cherez_nul[index][0].y1;
+    x1_tmp = perechid_cherez_nul[index][0].x1;
+    x2_tmp = perechid_cherez_nul[index][0].x2;
+    if (x2_tmp > x1_tmp)
+      delta_tick = x2_tmp - x1_tmp;
+    else
+    {
+      long long delta_tick_64 = x2_tmp + 0x100000000 - x1_tmp;
+      delta_tick = delta_tick_64;
+    }
+    tick_tmp = ((long long) perechid_cherez_nul[index][0].x1) - ((long long) perechid_cherez_nul[index][0].y1) * ((long long) delta_tick) / ((long long) delta_value);
+    if (tick_tmp < 0)
+    {
+      tick_tmp += 0x100000000;
+      tick_p = (unsigned int) tick_tmp;
+    }
+    else
+    {
+      if (tick_tmp < 0x100000000)
+        tick_p = (unsigned int) tick_tmp;
+      else
+      {
+        tick_tmp -= 0x100000000;
+        tick_p = (unsigned int) tick_tmp;
+      }
+    }
+
+    /*Знаходимо час переходу через 0 поточного разу з врахуванням лінійної апроксимації*/
+    delta_value = perechid_cherez_nul[index][1].y2 - perechid_cherez_nul[index][1].y1;
+    x1_tmp = perechid_cherez_nul[index][1].x1;
+    x2_tmp = perechid_cherez_nul[index][1].x2;
+    if (x2_tmp > x1_tmp)
+      delta_tick = x2_tmp - x1_tmp;
+    else
+    {
+      long long delta_tick_64 = x2_tmp + 0x100000000 - x1_tmp;
+      delta_tick = delta_tick_64;
+    }
+    tick_tmp = ((long long) perechid_cherez_nul[index][1].x1) - ((long long) perechid_cherez_nul[index][1].y1) * ((long long) delta_tick) / ((long long) delta_value);
+    if (tick_tmp < 0)
+    {
+      tick_tmp += 0x100000000;
+      tick_c2 = (unsigned int) tick_tmp;
+    }
+    else
+    {
+      if (tick_tmp < 0x100000000)
+        tick_c2 = (unsigned int) tick_tmp;
+      else
+      {
+        tick_tmp -= 0x100000000;
+        tick_c2 = (unsigned int) tick_tmp;
+      }
+    }
+    /***/
+
+    if (tick_c2 > tick_p)
+      delta_tick = tick_c2 - tick_p;
+    else
+    {
+      long long delta_tick_64 = tick_c2 + 0x100000000 - tick_p;
+      delta_tick = delta_tick_64;
+    }
+    tick_period_2 = delta_tick;
+
+    /*****
+    Розрахунок частоти
+    *****/
+    if (
+      (tick_period_2 <= MAX_TICK_PERIOD) &&
+      (tick_period_2 >= MIN_TICK_PERIOD))
+    {
+      frequency_tmp_val_2 = (float) MEASUREMENT_TIM_FREQUENCY / (float) tick_period_2;
+
+      sum_freq_arr_val_2 -= freq_arr_val_2[index_freq_arr_val_2];
+      freq_arr_val_2[index_freq_arr_val_2] = frequency_tmp_val_2;
+      sum_freq_arr_val_2 += frequency_tmp_val_2;
+
+      index_freq_arr_val_2 = (index_freq_arr_val_2 + 1) % N_F_AVER;
+
+      if (freq_arr_val_2[index_freq_arr_val_2] > 0)
+      {
+        //Це означає, що весь масив для усереднення зкаповнений значеннями (немає випадку від'ємних чисел. щог означає, що частота тільки з'явилася)
+        if (frequency_irq_val_2 < 0)
+          ++ind_freq;
+        frequency_irq_val_2 = sum_freq_arr_val_2 / (float) N_F_AVER;
+        unsigned int tick_period_tmp = (unsigned int) roundf((float) MEASUREMENT_TIM_FREQUENCY / frequency_irq_val_2);
+
+        step_timer_adc_tmp = tick_period_tmp >> VAGA_NUMBER_POINT;
+        if ((tick_period_tmp - (step_timer_adc_tmp << VAGA_NUMBER_POINT)) >= (1 << (VAGA_NUMBER_POINT - 1)))
+          step_timer_adc_tmp++;
+      }
+    }
+    else
+    {
+      step_timer_adc_tmp = TIM5_CCR1_2_3_VAL;
+      if (tick_period_2 > MAX_TICK_PERIOD)
+        frequency_tmp_val_2 = -2.0f; /*Частота нижче порогу визначеного константою MIN_FREQUENCY*/
+      else
+        frequency_tmp_val_2 = -3.0f; /*Частота вище порогу визначеного константою MAX_FREQUENCY*/
+
+      if (frequency_irq_val_2 != frequency_tmp_val_2)
+        ++ind_freq;
+      frequency_irq_val_2 = frequency_tmp_val_2;
+    }
+    /****/
+  }
+  else
+  {
+    if (index < 0)
+    {
+      if (count == 0)
+      {
+        step_timer_adc_tmp = TIM5_CCR1_2_3_VAL;
+        tick_c2 = TIM5->CNT;
+        frequency_tmp_val_2 = -1.0f; /*Частота не визначена*/
+
+        if (frequency_irq_val_2 != frequency_tmp_val_2)
+          ++ind_freq;
+        frequency_irq_val_2 = frequency_tmp_val_2;
+
+        reset_delta_phi = true;
+        periodical_tasks_CALC_DELTA_PHI = true;
+      }
+      if (++count >= NUMBER_POINT)
+        count = 0;
+    }
+    else
+      count = 0;
+  }
+  if (ind_freq == 0)
+    ind_freq = 1; /*нулем ідентифікатор бути не може, бо нуль означає, що частота не визначена*/
+                  /*****/
+
+  if (!isnan(frequency_tmp_val_2))
+  {
+    //Нову вираховану частоту фіксуємо
+    if (frequency_tmp_val_2 < 0)
+    {
+      index_freq_arr_val_2 = 0;
+      for (size_t i = 0; i < N_F_AVER; ++i)
+        freq_arr_val_2[i] = 0.0f;
+      sum_freq_arr_val_2 = 0;
+    }
+
+    //		__f_ext const f_ext = {ind_freq*(frequency_irq >= 0), tick_c, frequency_irq};
+    //		f_ext_arr[index_f_ext] = f_ext;
+    //		if (++index_f_ext >= SIZE_F_EXT_ARR) index_f_ext = 0;
+
+    frequency_tmp_val_2 = NAN;
+  }
+
+  /*****/
+  //ФАПЧ
+  /*****/
+  if (step_val_2 != step_timer_adc_tmp)
+  {
+    //Треба змінити частоту дискретизації
+    step_val_2 = step_timer_adc_tmp;
+  }
+
+  if ((command_restart_monitoring_frequency & (1 << 1)) != 0)
+  {
+    frequency_val_2_min = 50;
+    frequency_val_2_max = 50;
+
+    command_restart_monitoring_frequency &= (unsigned int) (~(1 << 1));
+  }
+  else
+  {
+    if (frequency_irq_val_2 >= 0)
+    {
+      if (frequency_irq_val_2 > frequency_val_2_max)
+        frequency_val_2_max = frequency_irq_val_2;
+      if (frequency_irq_val_2 < frequency_val_2_min)
+        frequency_val_2_min = frequency_irq_val_2;
     }
   }
   /*****/
@@ -766,18 +995,26 @@ void SPI_ADC_IRQHandler(void)
     Формуємо значення оцифровуваних каналів
     */
     unsigned int command_word = 0;
-    if ((status_adc_read_work & DATA_VAL_READ) != 0)
+    if ((status_adc_read_work & DATA_VAL_1_READ) != 0)
     {
-      command_word |= (1 << I_IA_1) | (1 << I_IA_2) |
-                      (1 << I_UAB_TN1) | (1 << I_UAB_TN2) |
-                      (1 << I_UC1C2) | (1 << I_UP1P2) | (1 << I_UP2P3);
+      command_word |= (1 << I_IA_1) | (1 << I_UAB_TN1);
+    }
+
+    if ((status_adc_read_work & DATA_VAL_2_READ) != 0)
+    {
+      command_word |= (1 << I_IA_2) | (1 << I_UAB_TN2);
+    }
+
+    if ((status_adc_read_work & TEST_VAL_READ) != 0)
+    {
+      command_word |= (1 << I_UC1C2) | (1 << I_UP1P2) | (1 << I_UP2P3);
     }
 
     uint32_t _x1, _x2, _DX, _dx;
     int _y1, _y2;
     long long _y;
 
-    uint32_t _x = previous_tick_DATA_VAL;
+    uint32_t _x = previous_tick_VAL_1;
     /*****/
     //Формуємо значення IA_1
     /*****/
@@ -820,51 +1057,6 @@ void SPI_ADC_IRQHandler(void)
 
       ADCs_data_raw[I_IA_1].tick = _x2;
       ADCs_data_raw[I_IA_1].value = _y2;
-    }
-    /*****/
-
-    /*****/
-    //Формуємо значення IA_2
-    /*****/
-    if ((command_word & (1 << I_IA_2)) != 0)
-    {
-      _x1 = ADCs_data_raw[I_IA_2].tick;
-      _y1 = ADCs_data_raw[I_IA_2].value;
-
-      _y2 = output_adc[C_IA_2].value - /*gnd_adc - */ vref_averange;
-      if (abs(_y2) > 87)
-      {
-        _x2 = output_adc[C_IA_2].tick;
-        _y2 = (int) (_y2 * ustuvannja_meas[I_IA_2]) >> (USTUVANNJA_VAGA - 4);
-      }
-      else
-      {
-        _y2 = output_adc[C_IA_2_16].value - /*gnd_adc - */ vref_averange;
-
-        _x2 = output_adc[C_IA_2_16].tick;
-        _y2 = (int) ((-_y2) * ustuvannja_meas[I_IA_2]) >> (USTUVANNJA_VAGA);
-      }
-
-      if (_x2 > _x1)
-        _DX = _x2 - _x1;
-      else
-      {
-        uint64_t _DX_64 = _x2 + 0x100000000 - _x1;
-        _DX = _DX_64;
-      }
-      if (_x >= _x1)
-        _dx = _x - _x1;
-      else
-      {
-        uint64_t _dx_64 = _x + 0x100000000 - _x1;
-        _dx = _dx_64;
-      }
-      _y = ((long long) _y1) + ((long long) (_y2 - _y1)) * ((long long) _dx) / ((long long) _DX);
-
-      ADCs_data[I_IA_2] = _y;
-
-      ADCs_data_raw[I_IA_2].tick = _x2;
-      ADCs_data_raw[I_IA_2].value = _y2;
     }
     /*****/
 
@@ -918,7 +1110,7 @@ void SPI_ADC_IRQHandler(void)
         perechid_cherez_nul[INDEX_PhK_UAB_TN1][0].y2 = poperednij_perechid.Uab_TN1_y2;
 
         //Поточний перехід
-        poperednij_perechid.Uab_TN1_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN1][1].x1 = penultimate_tick_DATA_VAL;
+        poperednij_perechid.Uab_TN1_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN1][1].x1 = penultimate_tick_VAL_1;
         poperednij_perechid.Uab_TN1_y1 = perechid_cherez_nul[INDEX_PhK_UAB_TN1][1].y1 = ADCs_data[I_UAB_TN1];
         poperednij_perechid.Uab_TN1_x2 = perechid_cherez_nul[INDEX_PhK_UAB_TN1][1].x2 = _x;
         poperednij_perechid.Uab_TN1_y2 = perechid_cherez_nul[INDEX_PhK_UAB_TN1][1].y2 = _y;
@@ -931,6 +1123,53 @@ void SPI_ADC_IRQHandler(void)
 
       ADCs_data_raw[I_UAB_TN1].tick = _x2;
       ADCs_data_raw[I_UAB_TN1].value = _y2;
+    }
+    /*****/
+
+    _x = previous_tick_VAL_2;
+
+    /*****/
+    //Формуємо значення IA_2
+    /*****/
+    if ((command_word & (1 << I_IA_2)) != 0)
+    {
+      _x1 = ADCs_data_raw[I_IA_2].tick;
+      _y1 = ADCs_data_raw[I_IA_2].value;
+
+      _y2 = output_adc[C_IA_2].value - /*gnd_adc - */ vref_averange;
+      if (abs(_y2) > 87)
+      {
+        _x2 = output_adc[C_IA_2].tick;
+        _y2 = (int) (_y2 * ustuvannja_meas[I_IA_2]) >> (USTUVANNJA_VAGA - 4);
+      }
+      else
+      {
+        _y2 = output_adc[C_IA_2_16].value - /*gnd_adc - */ vref_averange;
+
+        _x2 = output_adc[C_IA_2_16].tick;
+        _y2 = (int) ((-_y2) * ustuvannja_meas[I_IA_2]) >> (USTUVANNJA_VAGA);
+      }
+
+      if (_x2 > _x1)
+        _DX = _x2 - _x1;
+      else
+      {
+        uint64_t _DX_64 = _x2 + 0x100000000 - _x1;
+        _DX = _DX_64;
+      }
+      if (_x >= _x1)
+        _dx = _x - _x1;
+      else
+      {
+        uint64_t _dx_64 = _x + 0x100000000 - _x1;
+        _dx = _dx_64;
+      }
+      _y = ((long long) _y1) + ((long long) (_y2 - _y1)) * ((long long) _dx) / ((long long) _DX);
+
+      ADCs_data[I_IA_2] = _y;
+
+      ADCs_data_raw[I_IA_2].tick = _x2;
+      ADCs_data_raw[I_IA_2].value = _y2;
     }
     /*****/
 
@@ -984,7 +1223,7 @@ void SPI_ADC_IRQHandler(void)
         perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].y2 = poperednij_perechid.Uab_TN1_y2;
 
         //Поточний перехід
-        poperednij_perechid.Uab_TN1_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x1 = penultimate_tick_DATA_VAL;
+        poperednij_perechid.Uab_TN1_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x1 = penultimate_tick_VAL_2;
         poperednij_perechid.Uab_TN1_y1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y1 = ADCs_data[I_UAB_TN2];
         poperednij_perechid.Uab_TN1_x2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x2 = _x;
         poperednij_perechid.Uab_TN1_y2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y2 = _y;
@@ -998,6 +1237,8 @@ void SPI_ADC_IRQHandler(void)
       ADCs_data_raw[I_UAB_TN2].value = _y2;
     }
     /*****/
+
+    _x = previous_tick_VAL_Test;
 
     /*****/
     //Формуємо значення UC1C2
@@ -1131,31 +1372,80 @@ void SPI_ADC_IRQHandler(void)
     }
     /*****/
 
-    if ((status_adc_read_work & DATA_VAL_READ) != 0)
+    if ((status_adc_read_work & DATA_VAL_1_READ) != 0)
     {
       /*
       Необхідно опрацювати оцифровані дані для перетворення Фур'є
       */
-      Fourier();
+      Fourier(INDEX_TN_1_MEAS);
 
       /*
       Виконуємо операції по визначенню частоти і підстройці частоти
       */
-      fapch();
+      fapch_val_1();
       if (freq_mutex == false)
-        frequency_high = frequency_irq;
+        frequency_high_val_1 = frequency_irq_val_1;
 
-      status_adc_read_work &= (unsigned int) (~DATA_VAL_READ);
+      status_adc_read_work &= (unsigned int) (~DATA_VAL_1_READ);
 
       /**************************************************/
       //Виставляємо повідомлення про завершення оброки першої групи вимірювальних величин
       /**************************************************/
-      control_word_of_watchdog |= WATCHDOG_MEASURE_STOP_DATA_VAL;
+      control_word_of_watchdog |= WATCHDOG_MEASURE_STOP_DATA_VAL_1;
       /**************************************************/
+    }
+
+    if ((status_adc_read_work & DATA_VAL_2_READ) != 0)
+    {
+      /*
+      Необхідно опрацювати оцифровані дані для перетворення Фур'є
+      */
+      Fourier(INDEX_TN_2_MEAS);
+
+      /*
+      Виконуємо операції по визначенню частоти і підстройці частоти
+      */
+      fapch_val_2();
+      if (freq_mutex == false)
+        frequency_high_val_2 = frequency_irq_val_2;
+
+      status_adc_read_work &= (unsigned int) (~DATA_VAL_2_READ);
+
+      /**************************************************/
+      //Виставляємо повідомлення про завершення оброки першої групи вимірювальних величин
+      /**************************************************/
+      control_word_of_watchdog |= WATCHDOG_MEASURE_STOP_DATA_VAL_2;
+      /**************************************************/
+    }
+
+    if ((fix_perechid_cherez_nul_TN1_TN2 & ((1 << INDEX_TN_1_MEAS) | (1 << INDEX_TN_2_MEAS))) == ((1 << INDEX_TN_1_MEAS) | (1 << INDEX_TN_2_MEAS)))
+    {
+      if (semaphore_delta_phi == 0)
+      {
+        fix_perechid_cherez_nul_TN1_TN2_work = fix_perechid_cherez_nul_TN1_TN2;
+        fix_perechid_cherez_nul_TN1_TN2 = 0;
+
+        frequency_1_work = frequency_1;
+        tick_period_1_work = tick_period_1;
+        tick_c1_work = tick_c1;
+        delta_phi_index_1_work_middle = delta_phi_index_1;
+
+        frequency_2_work = frequency_2;
+        tick_period_2_work = tick_period_2;
+        tick_c2_work = tick_c2;
+        delta_phi_index_2_work_middle = delta_phi_index_2;
+
+        periodical_tasks_CALC_DELTA_PHI = true;
+      }
     }
 
     if ((status_adc_read_work & TEST_VAL_READ) != 0)
     {
+      /*
+      Необхідно опрацювати оцифровані дані для перетворення Фур'є
+      */
+      Fourier(INDEX_S_MEAS);
+
       //Треба опрацювати інтегральні величини
       operate_integral_values_ADCs();
 
@@ -1225,9 +1515,9 @@ void SPI_ADC_IRQHandler(void)
     таймеру ( chip select виставлений у 1)
     */
     if (
-      (adc_DATA_VAL_read == false) /*&&
-        (adc_TEST_VAL_read == false)*/
-    )
+      (adc_DATA_VAL_1_read == false) &&
+      (adc_DATA_VAL_2_read == false) &&
+      (adc_TEST_VAL_read == false))
     {
       semaphore_adc_irq = false;
     }
@@ -1270,6 +1560,151 @@ void SPI_ADC_IRQHandler(void)
   //#ifdef SYSTEM_VIEWER_ENABLE
   //  SEGGER_SYSVIEW_RecordExitISR();
   //#endif
+}
+/*****************************************************/
+
+/*****************************************************
+Розрахунко зсуцву фаз між шиною і напругою
+******************************************************/
+void delta_phi_routine(void)
+{
+  if (reset_delta_phi != false)
+  {
+    reset_delta_phi = false;
+    delta_phi[bank_delta_phi] = UNDEF_PHI;
+    speed_delta_phi[bank_delta_phi] = UNDEF_SPEED_PHI;
+
+    bank_delta_phi = (bank_delta_phi ^ 0x1) & 0x1;
+  }
+  else
+  {
+    /*****/
+    //Різниця фаз між ТН1 і ТН2
+    /*****/
+
+    semaphore_delta_phi = 1;
+
+    unsigned int fix_perechid_cherez_nul_TN1_TN2_work_tmp = fix_perechid_cherez_nul_TN1_TN2_work;
+    fix_perechid_cherez_nul_TN1_TN2_work = 0;
+
+    float frequency_1_work_tmp = frequency_1_work;
+    unsigned int tick_period_1_work_tmp = tick_period_1_work;
+    unsigned int tick_c1_work_tmp = tick_c1_work;
+    delta_phi_index_1_work_low = delta_phi_index_1_work_middle;
+
+    float frequency_2_work_tmp = frequency_2_work;
+    unsigned int tick_period_2_work_tmp = tick_period_2_work;
+    unsigned int tick_c2_work_tmp = tick_c2_work;
+    delta_phi_index_2_work_low = delta_phi_index_2_work_middle;
+
+    semaphore_delta_phi = 0;
+
+    if ((fix_perechid_cherez_nul_TN1_TN2_work_tmp & ((1 << INDEX_TN_1_MEAS) | (1 << INDEX_TN_2_MEAS))) == ((1 << INDEX_TN_1_MEAS) | (1 << INDEX_TN_2_MEAS)))
+    {
+      if (
+        (frequency_1_work_tmp > 0) &&
+        (frequency_2_work_tmp > 0))
+      {
+        //Можна розраховувати швидкість зміни зсуву фаз у градусах/c (з точністю до десятих градума - тому беремо число 3600, а не 360)
+        speed_delta_phi[bank_delta_phi] = (int) (3600.0f * (frequency_1_work_tmp - frequency_2_work_tmp));
+
+        unsigned int min_tick_period = tick_period_1_work_tmp, max_tick_period = tick_period_1_work_tmp;
+        if (tick_period_2_work_tmp < min_tick_period)
+          min_tick_period = tick_period_2_work_tmp;
+        if (tick_period_2_work_tmp > max_tick_period)
+          max_tick_period = tick_period_2_work_tmp;
+        if (
+          (max_tick_period <= MAX_TICK_PERIOD) &&
+          (min_tick_period >= MIN_TICK_PERIOD))
+        {
+          //Можна обчислювати ріжницю фаз між ТН1 і ТН2
+          long long delta_phi_tick = ((long long) tick_c1_work_tmp) - ((long long) tick_c2_work_tmp);
+          unsigned long long modul_delta_phi_tick = llabs(delta_phi_tick);
+
+          if (
+            (delta_phi_tick < 0) &&
+            (modul_delta_phi_tick >= max_tick_period))
+          {
+            /*
+            Випадок, коли таймер перейшов своє максимальне значення при фіксації переходу
+            через нуль ТН1, а коли був перехід через нуль ТН2 - то ще таймер не перейшов 
+            своє максимальне значення
+            */
+            delta_phi_tick = delta_phi_tick + 0x100000000;
+            modul_delta_phi_tick = llabs(delta_phi_tick);
+          }
+
+          while (modul_delta_phi_tick > tick_period_2_work_tmp)
+          {
+            if (delta_phi_tick < 0)
+              delta_phi_tick += tick_period_2_work_tmp;
+            else
+              delta_phi_tick -= tick_period_2_work_tmp;
+            modul_delta_phi_tick = llabs(delta_phi_tick);
+          }
+          if (delta_phi_tick < 0)
+            delta_phi_tick += tick_period_2_work_tmp;
+
+          //Можна розраховувати зсув фаз у градусах (з точністю до десятих градума - тому беремо число 3600, а не 360)
+          int delta_phi_tmp = (int) ((3600.0f * ((float) delta_phi_tick) * frequency_2_work_tmp) / ((float) MEASUREMENT_TIM_FREQUENCY));
+          if ((delta_phi_tmp <= -3600) || (delta_phi_tmp >= 3600))
+            delta_phi_tmp %= 3600;
+          while (delta_phi_tmp < 0)
+            delta_phi_tmp += 3600;
+          delta_phi[bank_delta_phi] = delta_phi_tmp;
+
+          if (delta_phi[bank_delta_phi] < delta_phi_min)
+            delta_phi_min = delta_phi[bank_delta_phi];
+          if (delta_phi[bank_delta_phi] > delta_phi_max)
+            delta_phi_max = delta_phi[bank_delta_phi];
+        }
+        else
+          delta_phi[bank_delta_phi] = UNDEF_PHI;
+      }
+      else
+      {
+        delta_phi[bank_delta_phi] = UNDEF_PHI;
+        speed_delta_phi[bank_delta_phi] = UNDEF_SPEED_PHI;
+      }
+
+      tick_0[bank_delta_phi] = tick_c1_work_tmp;
+      //Змінюємо банки
+      bank_delta_phi = (bank_delta_phi ^ 0x1) & 0x1;
+    }
+  }
+}
+/*****************************************************/
+
+/*****************************************************
+Розрахунок різниці фаз між ТН1 і ТН2 у будь-який момент часу
+*****************************************************/
+static void current_delta_phi(void)
+{
+  //Вибираємо банк, у якому є останні підготовлені дані
+  unsigned int bank_delta_phi_tmp = (bank_delta_phi ^ 0x1) & 0x1;
+
+  if (
+    (delta_phi[bank_delta_phi_tmp] != UNDEF_PHI) &&
+    (speed_delta_phi[bank_delta_phi_tmp] != UNDEF_SPEED_PHI))
+  {
+    //Можна розраховувати ммиттєвий кут розузгодження
+    uint32_t current_tick = TIM5->CNT;
+    int deta_tick = current_tick - tick_0[bank_delta_phi_tmp];
+    if (deta_tick < 0)
+    {
+      long long deta_tick_tmp = deta_tick;
+      deta_tick_tmp += 0x100000000;
+      deta_tick = deta_tick_tmp;
+    }
+    int delta_phi_synchro_tmp = delta_phi[bank_delta_phi_tmp] + (int) ((float) speed_delta_phi[bank_delta_phi_tmp] * ((float) deta_tick) / ((float) MEASUREMENT_TIM_FREQUENCY));
+    if ((delta_phi_synchro_tmp <= -3600) || (delta_phi_synchro_tmp >= 3600))
+      delta_phi_synchro_tmp %= 3600;
+    while (delta_phi_synchro_tmp < 0)
+      delta_phi_synchro_tmp += 3600;
+    delta_phi_synchro = delta_phi_synchro_tmp;
+  }
+  else
+    delta_phi_synchro = UNDEF_PHI;
 }
 /*****************************************************/
 
@@ -1586,7 +2021,8 @@ void calc_measurement(unsigned int number_group_stp)
   adc2_read_after_start = true;
 
   freq_mutex = true;
-  frequency = frequency_high;
+  frequency_1 = frequency_high_val_1;
+  frequency_2 = frequency_high_val_2;
   freq_mutex = false;
 
   //Знімаємо семафор заборони обновлення значень з вимірювальної системи
@@ -1613,7 +2049,10 @@ void calc_measurement(unsigned int number_group_stp)
   {
     adc2_channel0_averange_low = adc2_channel0_averange_prt;
     adc2_channel1_averange_low = adc2_channel1_averange_prt;
+
+    current_delta_phi();
   }
+
   /***/
 
   /*

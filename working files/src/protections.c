@@ -1717,8 +1717,8 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
         }
       case UP_CTRL_F:
         {
-          if (frequency >= 0)
-            analog_value = (int32_t)(frequency * 100.0f);
+          if (frequency_1 >= 0)
+            analog_value = (int32_t)(frequency_1 * 100.0f);
           break;
         }
       default:
@@ -2412,9 +2412,9 @@ inline void start_monitoring_max_U_base(unsigned int const time_tmp, unsigned ch
     }
 
     //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    int frequency_int = (int) frequency;
+    int frequency_int = (int) frequency_1;
     if (frequency_int >= 0)
-      frequency_int = (int) (frequency * 1000);
+      frequency_int = (int) (frequency_1 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2485,9 +2485,9 @@ inline void continue_monitoring_max_U_base(unsigned int const time_tmp, unsigned
       }
 
       //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
-      int frequency_int = (int) frequency;
+      int frequency_int = (int) frequency_1;
       if (frequency_int >= 0)
-        frequency_int = (int) (frequency * 1000);
+        frequency_int = (int) (frequency_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
       //Поточне положення
@@ -2534,9 +2534,9 @@ inline void start_monitoring_max_U_second(unsigned int const time_tmp, unsigned 
     }
 
     //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    int frequency_int = (int) frequency;
+    int frequency_int = (int) frequency_1;
     if (frequency_int >= 0)
-      frequency_int = (int) (frequency * 1000);
+      frequency_int = (int) (frequency_1 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2607,9 +2607,9 @@ inline void continue_monitoring_max_U_second(unsigned int const time_tmp, unsign
       }
 
       //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
-      int frequency_int = (int) frequency;
+      int frequency_int = (int) frequency_1;
       if (frequency_int >= 0)
-        frequency_int = (int) (frequency * 1000);
+        frequency_int = (int) (frequency_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
       //Поточне положення
@@ -2656,9 +2656,9 @@ inline void start_monitoring_min_U_base(unsigned int const time_tmp, unsigned ch
     }
 
     //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    int frequency_int = (int) frequency;
+    int frequency_int = (int) frequency_1;
     if (frequency_int >= 0)
-      frequency_int = (int) (frequency * 1000);
+      frequency_int = (int) (frequency_1 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2729,9 +2729,9 @@ inline void continue_monitoring_min_U_base(unsigned int const time_tmp, unsigned
       }
 
       //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
-      int frequency_int = (int) frequency;
+      int frequency_int = (int) frequency_1;
       if (frequency_int >= 0)
-        frequency_int = (int) (frequency * 1000);
+        frequency_int = (int) (frequency_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
       //Поточне положення
@@ -2778,9 +2778,9 @@ inline void start_monitoring_max_I_base(unsigned int const time_tmp, unsigned ch
     }
 
     //Помічаємо, що будем виходити з того, що зараз значення тільки починають моніторитися, тому приймаємо їх за найбільші
-    int frequency_int = (int) frequency;
+    int frequency_int = (int) frequency_1;
     if (frequency_int >= 0)
-      frequency_int = (int) (frequency * 1000);
+      frequency_int = (int) (frequency_1 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2851,9 +2851,9 @@ inline void continue_monitoring_max_I_base(unsigned int const time_tmp, unsigned
       }
 
       //Зафіксовано зріз при найвищому фазовому струмі з моменту початку спостереження за ним
-      int frequency_int = (int) frequency;
+      int frequency_int = (int) frequency_1;
       if (frequency_int >= 0)
-        frequency_int = (int) (frequency * 1000);
+        frequency_int = (int) (frequency_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
       //Поточне положення
@@ -3621,7 +3621,7 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
 #endif
     }
     //Частота
-    int data_tmp = (frequency < 0) ? 0x8000 : (int) (roundf(frequency * 100.0f));
+    int data_tmp = (frequency_1 < 0) ? 0x8000 : (int) (roundf(frequency_1 * 100.0f));
     AR_WRITE(index_array_ar_current, data_tmp);
 
     //Положення
@@ -5708,7 +5708,8 @@ inline void main_protection(void)
     {
       measurement_high[bank_measurement_high_tmp][i] = measurement_middle[i] = measurement[i];
     }
-    frequency_middle = frequency;
+    frequency_1_middle = frequency_1;
+    frequency_2_middle = frequency_2;
   }
   else
   {
