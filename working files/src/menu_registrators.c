@@ -1011,25 +1011,29 @@ void make_ekran_analog_value_records_digital_registrator(void)
         " Ia -1=         ",
         " Uab-2=         ",
         " Ia -2=         ",
-        " f  =           ",
+        " f1 =           ",
+        " f2 =           ",
         " Полож.         "},
        {" Uab-1=         ",
         " Ia -1=         ",
         " Uab-2=         ",
         " Ia -2=         ",
-        " f  =           ",
+        " f1 =           ",
+        " f2 =           ",
         "Позиц.=         "},
        {" Vab-1=         ",
         " Ia -1=         ",
         " Vab-2=         ",
         " Ia -2=         ",
-        " f  =           ",
+        " f1 =           ",
+        " f2 =           ",
         "Полож.=         "},
        {" Uab-1=         ",
         " Ia -1=         ",
         " Uab-2=         ",
         " Ia -2=         ",
-        " f  =           ",
+        " f1 =           ",
+        " f2 =           ",
         "Полож.=         "}};
 
     unsigned char name_string_tmp[MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR][MAX_COL_LCD];
@@ -1130,7 +1134,7 @@ void make_ekran_analog_value_records_digital_registrator(void)
 
     for (int i = 0; i < (MAX_ROW_FOR_EKRAN_ANALOG_VALUES_DR - additional_current); i++)
     {
-      if (i < (IDM_freq - additional_current))
+      if (i < (IDM_freq_1 - additional_current))
       {
         //Струми і напруги
 
@@ -1142,7 +1146,8 @@ void make_ekran_analog_value_records_digital_registrator(void)
         else
           name_string_tmp[i][MAX_COL_LCD - 1] = odynyci_vymirjuvannja[index_language][INDEX_A];
       }
-      else if (i == (IDM_freq - additional_current))
+      else if ((i == (IDM_freq_1 - additional_current)) ||
+               (i == (IDM_freq_2 - additional_current)))
       {
         //Частота
         if ((int) temp_measurement[i] < 0)

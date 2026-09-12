@@ -2417,6 +2417,11 @@ inline void start_monitoring_max_U_base(unsigned int const time_tmp, unsigned ch
       frequency_int = (int) (frequency_val_1 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
+    frequency_int = (int) frequency_val_2;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency_val_2 * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
     //Поточне положення
     buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
 
@@ -2490,6 +2495,11 @@ inline void continue_monitoring_max_U_base(unsigned int const time_tmp, unsigned
         frequency_int = (int) (frequency_val_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
+      frequency_int = (int) frequency_val_2;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency_val_2 * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
       //Поточне положення
       buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
 
@@ -2537,6 +2547,11 @@ inline void start_monitoring_max_U_second(unsigned int const time_tmp, unsigned 
     int frequency_int = (int) frequency_val_1;
     if (frequency_int >= 0)
       frequency_int = (int) (frequency_val_1 * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    frequency_int = (int) frequency_val_2;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency_val_2 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2612,6 +2627,11 @@ inline void continue_monitoring_max_U_second(unsigned int const time_tmp, unsign
         frequency_int = (int) (frequency_val_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
+      frequency_int = (int) frequency_val_2;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency_val_2 * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
       //Поточне положення
       buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
 
@@ -2659,6 +2679,11 @@ inline void start_monitoring_min_U_base(unsigned int const time_tmp, unsigned ch
     int frequency_int = (int) frequency_val_1;
     if (frequency_int >= 0)
       frequency_int = (int) (frequency_val_1 * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    frequency_int = (int) frequency_val_2;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency_val_2 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2734,6 +2759,11 @@ inline void continue_monitoring_min_U_base(unsigned int const time_tmp, unsigned
         frequency_int = (int) (frequency_val_1 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
+      frequency_int = (int) frequency_val_2;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency_val_2 * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
       //Поточне положення
       buffer = serialization_uint_uchar((unsigned int *) &current_step, buffer, 0);
 
@@ -2781,6 +2811,11 @@ inline void start_monitoring_max_I_base(unsigned int const time_tmp, unsigned ch
     int frequency_int = (int) frequency_val_1;
     if (frequency_int >= 0)
       frequency_int = (int) (frequency_val_1 * 1000);
+    buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+    frequency_int = (int) frequency_val_2;
+    if (frequency_int >= 0)
+      frequency_int = (int) (frequency_val_2 * 1000);
     buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
     //Поточне положення
@@ -2854,6 +2889,11 @@ inline void continue_monitoring_max_I_base(unsigned int const time_tmp, unsigned
       int frequency_int = (int) frequency_val_1;
       if (frequency_int >= 0)
         frequency_int = (int) (frequency_val_1 * 1000);
+      buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
+
+      frequency_int = (int) frequency_val_2;
+      if (frequency_int >= 0)
+        frequency_int = (int) (frequency_val_2 * 1000);
       buffer = serialization_uint_uchar((unsigned int *) (&frequency_int), buffer, 0);
 
       //Поточне положення
