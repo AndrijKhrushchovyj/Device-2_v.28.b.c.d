@@ -1674,7 +1674,7 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
     int32_t pickup = current_settings_prt.setpoint_UP[n_UP][INDEX_ML_STP_UP][number_group_stp];
     if (_CHECK_SET_BIT(p_active_functions, (RANG_PO_UP1 + 3 * n_UP)) != 0)
     {
-      if (current_settings_prt.ctrl_UP_input[n_UP] == UP_CTRL_F)
+      if ((current_settings_prt.ctrl_UP_input[n_UP] == UP_CTRL_F_TN1) || (current_settings_prt.ctrl_UP_input[n_UP] == UP_CTRL_F_TN2))
       {
         pickup = current_settings_prt.setpoint_UP[n_UP][INDEX_ML_STP_UP_POV][number_group_stp];
       }
@@ -1715,10 +1715,16 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
 
           break;
         }
-      case UP_CTRL_F:
+      case UP_CTRL_F_TN1:
         {
           if (frequency_val_1 >= 0)
             analog_value = (int32_t)(frequency_val_1 * 100.0f);
+          break;
+        }
+      case UP_CTRL_F_TN2:
+        {
+          if (frequency_val_2 >= 0)
+            analog_value = (int32_t)(frequency_val_2 * 100.0f);
           break;
         }
       default:
@@ -1728,7 +1734,7 @@ inline void up_handler(unsigned int *p_active_functions, unsigned int number_gro
         }
     }
 
-    if ((current_settings_prt.ctrl_UP_input[n_UP] != UP_CTRL_F) || ((uint32_t) analog_value != none_int32_t))
+    if (((current_settings_prt.ctrl_UP_input[n_UP] != UP_CTRL_F_TN1) && (current_settings_prt.ctrl_UP_input[n_UP] != UP_CTRL_F_TN2)) || ((uint32_t) analog_value != none_int32_t))
     {
       if (more_less)
       {

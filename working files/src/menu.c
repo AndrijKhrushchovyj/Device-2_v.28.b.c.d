@@ -6102,7 +6102,8 @@ void main_manu_function(void)
                             current_ekran.position_cursor_x = COL_SETPOINT_UP_U_BEGIN;
                             break;
                           }
-                        case UP_CTRL_F:
+                        case UP_CTRL_F_TN1:
+                        case UP_CTRL_F_TN2:
                           {
                             current_ekran.position_cursor_x = COL_STP_UP_F_BEGIN;
                             break;
@@ -7468,7 +7469,8 @@ void main_manu_function(void)
                             max = SETPOINT_UP_U_MAX;
                             break;
                           }
-                        case UP_CTRL_F:
+                        case UP_CTRL_F_TN1:
+                        case UP_CTRL_F_TN2:
                           {
                             min = STP_UP_F_MIN;
                             max = STP_UP_F_MAX;
@@ -8876,7 +8878,8 @@ void main_manu_function(void)
                             min_step = 100;
                             break;
                           }
-                        case UP_CTRL_F:
+                        case UP_CTRL_F_TN1:
+                        case UP_CTRL_F_TN2:
                           {
                             comma = COL_STP_UP_F_COMMA;
                             end = COL_STP_UP_F_END;
@@ -9733,7 +9736,8 @@ void main_manu_function(void)
                             min_step = 100;
                             break;
                           }
-                        case UP_CTRL_F:
+                        case UP_CTRL_F_TN1:
+                        case UP_CTRL_F_TN2:
                           {
                             comma = COL_STP_UP_F_COMMA;
                             end = COL_STP_UP_F_END;

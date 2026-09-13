@@ -1561,7 +1561,8 @@ void def_pickup_timeout_UP(__SETTINGS *current_label, uint32_t _n_UP, uint32_t g
         min = SETPOINT_UP_U_MIN;
         break;
       }
-    case UP_CTRL_F:
+    case UP_CTRL_F_TN1:
+    case UP_CTRL_F_TN2:
       {
         min = STP_UP_F_MIN;
         break;

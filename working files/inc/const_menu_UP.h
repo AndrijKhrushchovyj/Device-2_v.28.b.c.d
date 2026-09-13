@@ -56,7 +56,8 @@ enum _control_type_UP
   UP_CTRL_Ia_TN2,
   UP_CTRL_Uab_TN1,
   UP_CTRL_Uab_TN2,
-  UP_CTRL_F,
+  UP_CTRL_F_TN1,
+  UP_CTRL_F_TN2,
 
   _UP_CTRL_NUMBER
 };

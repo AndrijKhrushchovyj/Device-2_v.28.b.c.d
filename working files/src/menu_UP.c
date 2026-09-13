@@ -70,8 +70,8 @@ void make_ekran_setpoint_UP(unsigned int group)
     uint32_t in_canal = current_settings.ctrl_UP_input[_n_UP];
 
     if (
-      ((in_canal < UP_CTRL_F) && (index != INDEX_ML_STP_UP_POV)) ||
-      ((in_canal == UP_CTRL_F) && (index != INDEX_ML_STP_UP_KP)))
+      (((in_canal != UP_CTRL_F_TN1) && (in_canal != UP_CTRL_F_TN2)) && (index != INDEX_ML_STP_UP_POV)) ||
+      (((in_canal == UP_CTRL_F_TN1) || (in_canal == UP_CTRL_F_TN2)) && (index != INDEX_ML_STP_UP_KP)))
     {
       vd[pos].n = _n_UP;
       vd[pos].index_arr = index;
@@ -113,7 +113,8 @@ void make_ekran_setpoint_UP(unsigned int group)
 
               break;
             }
-          case UP_CTRL_F:
+          case UP_CTRL_F_TN1:
+          case UP_CTRL_F_TN2:
             {
               vd[pos].begin = COL_STP_UP_F_BEGIN;
               vd[pos].comma = COL_STP_UP_F_COMMA;
@@ -433,23 +434,27 @@ void make_ekran_control_UP()
        "     Ia рм2     ",
        "    Uab рм1     ",
        "    Uab рм2     ",
-       "       f        "},
+       "     f рм1      ",
+       "     f рм2      "},
       {"     Ia рм1     ",
        "     Ia рм2     ",
        "    Uab рм1     ",
        "    Uab рм2     ",
-       "       f        "},
+       "     f рм1      ",
+       "     f рм2      "},
       {"     Ia TN1     ",
        "     Ia TN2     ",
        "    Vab TN1     ",
        "    Vab TN2     ",
-       "       f        "},
+       "     f рN1      ",
+       "     f рN2      "},
       {"     Ia рм1     ",
        "     Ia рм2     ",
        "    Uab рм1     ",
        "    Uab рм2     ",
-       "       f        "}};
-  static const uint32_t cursor_x_2[_UP_CTRL_NUMBER] = {4, 4, 3, 3, 6};
+       "     f рм1      ",
+       "     f рм2      "}};
+  static const uint32_t cursor_x_2[_UP_CTRL_NUMBER] = {4, 4, 3, 3, 4, 4};
 
   static const uint8_t information_4[2][MAX_COL_LCD] =
     {
