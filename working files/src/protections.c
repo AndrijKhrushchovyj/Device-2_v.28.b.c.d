@@ -3660,8 +3660,12 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
       }
 #endif
     }
-    //Частота
+    //Частота ТН1
     int data_tmp = (frequency_val_1 < 0) ? 0x8000 : (int) (roundf(frequency_val_1 * 100.0f));
+    AR_WRITE(index_array_ar_current, data_tmp);
+
+    //Частота ТН2
+    data_tmp = (frequency_val_2 < 0) ? 0x8000 : (int) (roundf(frequency_val_2 * 100.0f));
     AR_WRITE(index_array_ar_current, data_tmp);
 
     //Положення
