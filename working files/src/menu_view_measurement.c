@@ -959,11 +959,16 @@ void make_ekran_frequency(void)
 
   index_of_ekran = (position_temp >> POWER_MAX_ROW_LCD) << POWER_MAX_ROW_LCD;
 
+  unsigned int const max_rows = (((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+                                 ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                                  ? _MAX_ROW_FOR_MEASURMENT_F1
+                                  : MAX_ROW_FOR_MEASURMENT_FREQUENCY;
+
   //Копіюємо  рядки у робочий екран
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
-    //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_FREQUENCY)
+    //Наступні рядки треба перевірити, чи їх требе відображати у поточній кофігурації
+    if (index_of_ekran < max_rows)
     {
       /********************************/
       //Вводимо вимірювальні значення
@@ -1001,7 +1006,7 @@ void make_ekran_frequency(void)
   //Відображення курору по вертикалі
   current_ekran.position_cursor_y = position_temp & (MAX_ROW_LCD - 1);
   //Курсор видимий
-  current_ekran.cursor_on = 1;
+  current_ekran.cursor_on = 0;
   //Курсор не мигає
   current_ekran.cursor_blinking_on = 0;
   //Обновити повністю весь екран

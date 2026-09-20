@@ -1752,8 +1752,18 @@ void main_manu_function(void)
               }
               else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
               {
-                if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY)
-                  current_ekran.index_position = 0;
+                do
+                {
+                  if (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY)
+                    current_ekran.index_position = 0;
+
+                  while (
+                    (current_ekran.index_position == INDEX_ML_F_val_2) &&
+                    ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+                    ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                    current_ekran.index_position++;
+                } while (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY);
+
                 position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                 //Формуємо екран відображення частоти
                 make_ekran_frequency();
@@ -3833,8 +3843,19 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
                 {
-                  if (--current_ekran.index_position < 0)
-                    current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_FREQUENCY - 1;
+
+                  do
+                  {
+                    if (--current_ekran.index_position < 0)
+                      current_ekran.index_position = MAX_ROW_FOR_MEASURMENT_FREQUENCY - 1;
+
+                    while (
+                      (current_ekran.index_position == INDEX_ML_F_val_2) &&
+                      ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+                      ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                      current_ekran.index_position--;
+                  } while (current_ekran.index_position < 0);
+
                   position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                   //Формуємо екран вимірювання частот вікна
                   make_ekran_frequency();
@@ -4615,8 +4636,18 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.current_level == EKRAN_MEASURMENT_FREQUENCY)
                 {
-                  if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY)
-                    current_ekran.index_position = 0;
+                  do
+                  {
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY)
+                      current_ekran.index_position = 0;
+
+                    while (
+                      (current_ekran.index_position == INDEX_ML_F_val_2) &&
+                      ((current_settings.configuration & (1u << RPN_BIT_CONFIGURATION)) != 0) &&
+                      ((current_settings.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_TRANSF)) == 0))
+                      current_ekran.index_position++;
+                  } while (current_ekran.index_position >= MAX_ROW_FOR_MEASURMENT_FREQUENCY);
+
                   position_in_current_level_menu[EKRAN_MEASURMENT_FREQUENCY] = current_ekran.index_position;
                   //Формуємо екран вимірювання частот вікна
                   make_ekran_frequency();
