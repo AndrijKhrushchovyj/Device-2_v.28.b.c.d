@@ -2097,7 +2097,7 @@ void calc_measurement(unsigned int number_group_stp)
   /***/
   for (enum _index_channel i = I_IA_1; i < NUMBER_ANALOG_CANALES; i++)
   {
-    if (i <= I_IA_2)
+    if ((i == I_IA_1) || (i == I_IA_2))
     {
       unsigned int index_m = 0, index_ort = 0;
       switch (i)
