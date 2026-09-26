@@ -2816,7 +2816,7 @@ void main_manu_function(void)
                   {
                     //Запам'ятовуємо поперердній екран
                     //Переходимо на меню усправління сельсиновго положення
-                    current_ekran.current_level = EKRAN_CALIBRATION_SELSYN;
+                    current_ekran.current_level = EKRAN_CALIBRATION;
                   }
                   current_ekran.index_position = position_in_current_level_menu[current_ekran.current_level];
                   current_ekran.edition = 0;
@@ -11975,7 +11975,7 @@ void main_manu_function(void)
         /******************************************************************************************************************************************/
 
         /******************************************************************************************************************************************/
-      case EKRAN_CALIBRATION_SELSYN:
+      case EKRAN_CALIBRATION:
         {
           //Очищаємо всі біти краім упралінських
           unsigned int maska_keyboard_bits = (1 << BIT_KEY_ENTER) | (1 << BIT_KEY_ESC) | (1 << BIT_REWRITE);
@@ -11993,21 +11993,21 @@ void main_manu_function(void)
 
               if (current_ekran.edition == 0)
               {
-                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                if (current_ekran.current_level == EKRAN_CALIBRATION)
                 {
                   if (current_ekran.index_position >= MAX_ROW_FOR_SETPOINT_RPN)
                     current_ekran.index_position = 0;
-                  position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+                  position_in_current_level_menu[EKRAN_CALIBRATION] = current_ekran.index_position;
 
                   //Формуємо екран калібрування сельинового датчика
-                  make_ekran_calibration_selsyn();
+                  make_ekran_calibration();
                 }
               }
               else if (current_ekran.edition == 1)
               {
-                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                if (current_ekran.current_level == EKRAN_CALIBRATION)
                 {
-                  unsigned char information_about_activation[MAX_ROW_FOR_CALIBRATION_SELSYN][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
+                  unsigned char information_about_activation[MAX_ROW_FOR_CALIBRATION][MAX_NAMBER_LANGUAGE][MAX_COL_LCD] =
                     {
                       {" Заф.пол.N 1 РПН",
                        " Заф.пол.N 1 РПН",
@@ -12019,7 +12019,7 @@ void main_manu_function(void)
                        " Заф.пол.N?? РПН"},
                     };
 
-                  if (current_ekran.index_position == INDEX_ML_LAST_LOCATION_SELSYN)
+                  if (current_ekran.index_position == INDEX_ML_LAST_LOCATION)
                   {
                     const unsigned int first_index_number[MAX_NAMBER_LANGUAGE] = {10, 10, 14, 10};
                     unsigned int number_steps_rpn_tmp = current_settings.number_steps_rpn;
@@ -12029,8 +12029,8 @@ void main_manu_function(void)
                       for (unsigned int i = 0; i < MAX_NAMBER_LANGUAGE; i++)
                       {
                         unsigned int first_index_number_1 = first_index_number[i];
-                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1] = ' ';
-                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1 + 1] = number_steps_rpn_tmp + 0x30;
+                        information_about_activation[INDEX_ML_LAST_LOCATION][i][first_index_number_1] = ' ';
+                        information_about_activation[INDEX_ML_LAST_LOCATION][i][first_index_number_1 + 1] = number_steps_rpn_tmp + 0x30;
                       }
                     }
                     else
@@ -12038,8 +12038,8 @@ void main_manu_function(void)
                       for (unsigned int i = 0; i < MAX_NAMBER_LANGUAGE; i++)
                       {
                         unsigned int first_index_number_1 = first_index_number[i];
-                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1] = (number_steps_rpn_tmp / 10) + 0x30;
-                        information_about_activation[INDEX_ML_LAST_LOCATION_SELSYN][i][first_index_number_1 + 1] = (number_steps_rpn_tmp % 10) + 0x30;
+                        information_about_activation[INDEX_ML_LAST_LOCATION][i][first_index_number_1] = (number_steps_rpn_tmp / 10) + 0x30;
+                        information_about_activation[INDEX_ML_LAST_LOCATION][i][first_index_number_1 + 1] = (number_steps_rpn_tmp % 10) + 0x30;
                       }
                     }
                   }
@@ -12072,14 +12072,14 @@ void main_manu_function(void)
                 }
                 else if (current_ekran.edition == 2)
                 {
-                  if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                  if (current_ekran.current_level == EKRAN_CALIBRATION)
                   {
-                    if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION_SELSYN)
+                    if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION)
                     {
                       //Обновлюємо значення fi-початкове
                       sum_phi_begin = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
                     }
-                    else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION_SELSYN)
+                    else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION)
                     {
                       //Обновлюємо значення fi-кінцеве
                       sum_phi_end = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
@@ -12122,16 +12122,16 @@ void main_manu_function(void)
               else if (new_state_keyboard == (1 << BIT_KEY_UP))
               {
                 //Натиснута кнопка UP
-                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                if (current_ekran.current_level == EKRAN_CALIBRATION)
                 {
                   if (current_ekran.edition == 0)
                   {
                     if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = MAX_ROW_FOR_CALIBRATION_SELSYN - 1;
-                    position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+                      current_ekran.index_position = MAX_ROW_FOR_CALIBRATION - 1;
+                    position_in_current_level_menu[EKRAN_CALIBRATION] = current_ekran.index_position;
 
                     //Формуємо екран калібрування сельинового датчика
-                    make_ekran_calibration_selsyn();
+                    make_ekran_calibration();
                   }
                 }
 
@@ -12141,16 +12141,16 @@ void main_manu_function(void)
               else if (new_state_keyboard == (1 << BIT_KEY_DOWN))
               {
                 //Натиснута кнопка DOWN
-                if (current_ekran.current_level == EKRAN_CALIBRATION_SELSYN)
+                if (current_ekran.current_level == EKRAN_CALIBRATION)
                 {
                   if (current_ekran.edition == 0)
                   {
-                    if (++current_ekran.index_position >= MAX_ROW_FOR_CALIBRATION_SELSYN)
+                    if (++current_ekran.index_position >= MAX_ROW_FOR_CALIBRATION)
                       current_ekran.index_position = 0;
-                    position_in_current_level_menu[EKRAN_CALIBRATION_SELSYN] = current_ekran.index_position;
+                    position_in_current_level_menu[EKRAN_CALIBRATION] = current_ekran.index_position;
 
                     //Формуємо екран калібрування сельинового датчика
-                    make_ekran_calibration_selsyn();
+                    make_ekran_calibration();
                   }
                 }
 

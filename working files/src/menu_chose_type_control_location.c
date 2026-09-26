@@ -331,9 +331,9 @@ void make_ekran_type_control_location(void)
 /*****************************************************/
 //Формуємо екран калібрування сельинового датчика
 /*****************************************************/
-void make_ekran_calibration_selsyn(void)
+void make_ekran_calibration(void)
 {
-  unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CALIBRATION_SELSYN][MAX_COL_LCD] =
+  unsigned char name_string[MAX_NAMBER_LANGUAGE][MAX_ROW_FOR_CALIBRATION][MAX_COL_LCD] =
     {
       {" Заф.пол.N 1 РПН",
        " Заф.пол.N?? РПН"},
@@ -355,13 +355,13 @@ void make_ekran_calibration_selsyn(void)
   for (unsigned int i = 0; i < MAX_ROW_LCD; i++)
   {
     //Наступні рядки треба перевірити, чи їх требе відображати у текучій кофігурації
-    if (index_of_ekran < MAX_ROW_FOR_CALIBRATION_SELSYN)
+    if (index_of_ekran < MAX_ROW_FOR_CALIBRATION)
     {
       unsigned int first_index_number_1 = first_index_number[index_language];
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
       {
         if (
-          (index_of_ekran == INDEX_ML_FIRST_LOCATION_SELSYN) ||
+          (index_of_ekran == INDEX_ML_FIRST_LOCATION) ||
           (j < first_index_number_1) ||
           (j > (first_index_number_1 + 1)))
           working_ekran[i][j] = name_string[index_language][index_of_ekran][j];

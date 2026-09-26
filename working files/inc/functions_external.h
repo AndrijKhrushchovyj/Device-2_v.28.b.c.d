@@ -76,7 +76,7 @@ extern void make_ekran_chose_setpoint(void);
 extern void make_ekran_chose_timeout(void);
 extern void make_ekran_chose_control(void);
 extern void make_ekran_chose_settings_type_control_location(void);
-extern void make_ekran_calibration_selsyn(void);
+extern void make_ekran_calibration(void);
 extern void make_ekran_setpoints_control_location(void);
 extern void make_ekran_type_control_location(void);
 extern void make_ekran_chose_settings(void);
