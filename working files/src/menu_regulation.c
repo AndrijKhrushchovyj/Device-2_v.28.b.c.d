@@ -49,32 +49,32 @@ void make_ekran_regulation(void)
   {
     case 1:
       {
-        base_faze_current = measurement[I_IA_1];
-        base_faze_voltage = measurement[I_UAB_TN1];
+        base_faze_current = measurement[IM_IA_1];
+        base_faze_voltage = measurement[IM_UAB_TN1];
 
         TCurrent_base = current_settings.TCurrent1;
         TVoltage_base = current_settings.TVoltage1;
 
         //      if (triple_wound)
         //      {
-        //        second_faze_current = measurement[I_IA_2];
-        //        second_faze_voltage = measurement[I_UAB_TN2];
+        //        second_faze_current = measurement[IM_IA_2];
+        //        second_faze_voltage = measurement[IM_UAB_TN2];
         //      }
 
         break;
       }
     case 2:
       {
-        base_faze_current = measurement[I_IA_2];
-        base_faze_voltage = measurement[I_UAB_TN2];
+        base_faze_current = measurement[IM_IA_2];
+        base_faze_voltage = measurement[IM_UAB_TN2];
 
         TCurrent_base = current_settings.TCurrent2;
         TVoltage_base = current_settings.TVoltage2;
 
         //      if (triple_wound)
         //      {
-        //        second_faze_current = measurement[I_IA_1];
-        //        second_faze_voltage = measurement[I_UAB_TN1];
+        //        second_faze_current = measurement[IM_IA_1];
+        //        second_faze_voltage = measurement[IM_UAB_TN1];
         //      }
 
         break;

@@ -2009,9 +2009,9 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
     ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
     (_CHECK_SET_BIT(diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
     (_CHECK_SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
-    (measurement[I_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-    (measurement[I_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-    (measurement[I_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
+    (measurement[IM_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+    (measurement[IM_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+    (measurement[IM_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
   {
     //Сельсин
     int a, b;
@@ -3254,26 +3254,26 @@ inline void digital_registrator(unsigned int *carrent_active_functions, unsigned
   {
     case 1:
       {
-        //          base_faze_current = measurement[I_IA_1];
-        base_faze_voltage = measurement[I_UAB_TN1];
+        //          base_faze_current = measurement[IM_IA_1];
+        base_faze_voltage = measurement[IM_UAB_TN1];
 
         //          if (triple_wound)
         //          {
-        //            second_faze_current = measurement[I_IA_2];
-        //            second_faze_voltage = measurement[I_UAB_TN2];
+        //            second_faze_current = measurement[IM_IA_2];
+        //            second_faze_voltage = measurement[IM_UAB_TN2];
         //          }
 
         break;
       }
     case 2:
       {
-        //          base_faze_current = measurement[I_IA_2];
-        base_faze_voltage = measurement[I_UAB_TN2];
+        //          base_faze_current = measurement[IM_IA_2];
+        base_faze_voltage = measurement[IM_UAB_TN2];
 
         //          if (triple_wound)
         //          {
-        //            second_faze_current = measurement[I_IA_1];
-        //            second_faze_voltage = measurement[I_UAB_TN1];
+        //            second_faze_current = measurement[IM_IA_1];
+        //            second_faze_voltage = measurement[IM_UAB_TN1];
         //          }
 
         break;
@@ -3651,6 +3651,11 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
     /*****
     Формуємо масив значень і виконуємо операції для аналогового реєстратора
     *****/
+    static enum _index_meas const index_meas_to_index_chan[_NUMBER_ANALOG_CANALES_AR] = {
+      IM_IA_1,
+      IM_UAB_TN1,
+      IM_IA_2,
+      IM_UAB_TN2};
     for (unsigned int i = 0; i < _NUMBER_ANALOG_CANALES_AR; i++)
     {
 #ifdef DEBUG_TEST
@@ -3658,11 +3663,11 @@ inline static void fill_analog_registrator_buffer(unsigned int const *const p_co
 #else
       if ((i == I_UAB_TN1) || (i == I_UAB_TN2))
       {
-        AR_WRITE(index_array_ar_current, (measurement[i] >> 3));
+        AR_WRITE(index_array_ar_current, (measurement[index_meas_to_index_chan[i]] >> 3));
       }
       else
       {
-        AR_WRITE(index_array_ar_current, (measurement[i] >> 2));
+        AR_WRITE(index_array_ar_current, (measurement[index_meas_to_index_chan[i]] >> 2));
       }
 #endif
     }
@@ -3822,26 +3827,26 @@ inline void analog_registrator(unsigned int *carrent_active_functions, unsigned 
   {
     case 1:
       {
-        //      base_faze_current = measurement_prt[I_IA_1];
-        base_faze_voltage = measurement[I_UAB_TN1];
+        //      base_faze_current = measurement_prt[IM_IA_1];
+        base_faze_voltage = measurement[IM_UAB_TN1];
 
         //      if (triple_wound)
         //      {
-        //        second_faze_current = measurement[I_IA_2];
-        //        second_faze_voltage = measurement[I_UAB_TN2];
+        //        second_faze_current = measurement[IM_IA_2];
+        //        second_faze_voltage = measurement[IM_UAB_TN2];
         //      }
 
         break;
       }
     case 2:
       {
-        //      base_faze_current = measurement_prt[I_IA_2];
-        base_faze_voltage = measurement[I_UAB_TN2];
+        //      base_faze_current = measurement_prt[IM_IA_2];
+        base_faze_voltage = measurement[IM_UAB_TN2];
 
         //      if (triple_wound)
         //      {
-        //        second_faze_current = measurement[I_IA_1];
-        //        second_faze_voltage = measurement[I_UAB_TN1];
+        //        second_faze_current = measurement[IM_IA_1];
+        //        second_faze_voltage = measurement[IM_UAB_TN1];
         //      }
 
         break;

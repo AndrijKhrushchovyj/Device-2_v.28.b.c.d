@@ -699,16 +699,16 @@ void make_ekran_angle_for_selsyn(void)
     /********************************/
     if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN)
     {
-      unsigned int meas_tmp_1, meas_tmp_2 = measurement[I_UC1C2], angle;
+      unsigned int meas_tmp_1, meas_tmp_2 = measurement[IM_UC1C2], angle;
 
       if (index_of_ekran == INDEX_ML_ANGLE1)
       {
-        meas_tmp_1 = measurement[I_UP1P2];
+        meas_tmp_1 = measurement[IM_UP1P2];
         angle = angle_UP1P2_UC1C2;
       }
       else
       {
-        meas_tmp_1 = measurement[I_UP2P3];
+        meas_tmp_1 = measurement[IM_UP2P3];
         angle = angle_UP2P3_UC1C2;
       }
 

@@ -5924,9 +5924,9 @@ void main_manu_function(void)
                     ((current_settings.type_control_location == 1) ||
                      ((current_settings.type_control_location == 2) &&
                       ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
-                      (measurement[I_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-                      (measurement[I_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-                      (measurement[I_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))))))
+                      (measurement[IM_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+                      (measurement[IM_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
+                      (measurement[IM_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))))))
                 {
                   int temp_current_level = current_ekran.current_level;
 
