@@ -240,7 +240,7 @@ void fapch_val_1(void);
 void fapch_val_2(void);
 void delta_phi_routine(void);
 void calc_measurement(unsigned int);
-void angle_determination(void);
+uint32_t angle_determination(void);
 unsigned int sqrt_64(unsigned long long);
 
 void main_routines_for_spi1(void);
@@ -263,6 +263,7 @@ void control_trg_func(void);
 unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
 unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
 void control_angle(void);
+void control_logometr(void);
 void control_resurs(void);
 
 void watchdog_routine(unsigned int, unsigned int const);

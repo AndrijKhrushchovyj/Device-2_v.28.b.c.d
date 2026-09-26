@@ -216,11 +216,15 @@ unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high = 0;
 unsigned int measurement_middle[_NUMBER_IM];
 SRAM1 unsigned int measurement_low[_NUMBER_IM];
 
-int angle_UP1P2_UC1C2;
-int angle_UP2P3_UC1C2;
-unsigned int sum_phi_begin = 0;
-unsigned int sum_phi_end = 360;
+uint32_t angle_selsyn;
+uint32_t angle_selsyn_begin = 0;
+uint32_t angle_selsyn_end = 360;
+
 unsigned char crc_angle;
+
+int32_t U_begin_log;
+int32_t U_end_log;
+uint8_t crc_log;
 
 const unsigned int index_converter[NUMBER_ANALOG_CANALES] = {FULL_ORT_UAB_TN1, FULL_ORT_UAB_TN2, FULL_ORT_UP1P2, FULL_ORT_UP2P3, FULL_ORT_UC1C2, FULL_ORT_IA_1, FULL_ORT_IA_2};
 int ortogonal_calc[2 * FULL_ORT_MAX];
@@ -632,6 +636,7 @@ unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
 unsigned int periodical_tasks_CALC_INTEGRAL_MEASUREMENTS;
 unsigned int periodical_tasks_TEST_ANGLE;
+unsigned int periodical_tasks_TEST_LOGOMETR;
 unsigned int periodical_tasks_TEST_RESURS;
 unsigned int periodical_tasks_TEST_RESURS_LOCK;
 unsigned int periodical_tasks_TEST_FLASH_MEMORY;

@@ -118,11 +118,15 @@ extern unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high;
 extern unsigned int measurement_middle[_NUMBER_IM];
 extern unsigned int measurement_low[_NUMBER_IM];
 
-extern int angle_UP1P2_UC1C2;
-extern int angle_UP2P3_UC1C2;
-extern unsigned int sum_phi_begin;
-extern unsigned int sum_phi_end;
+extern uint32_t angle_selsyn;
+extern uint32_t angle_selsyn_begin;
+extern uint32_t angle_selsyn_end;
+
 extern unsigned char crc_angle;
+
+extern int32_t U_begin_log;
+extern int32_t U_end_log;
+extern uint8_t crc_log;
 
 extern const unsigned int index_converter[NUMBER_ANALOG_CANALES];
 extern int ortogonal_calc[2 * FULL_ORT_MAX];
@@ -252,6 +256,7 @@ extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR;
 extern unsigned int periodical_tasks_TEST_INFO_REJESTRATOR_PR_ERR_LOCK;
 extern unsigned int periodical_tasks_CALC_INTEGRAL_MEASUREMENTS;
 extern unsigned int periodical_tasks_TEST_ANGLE;
+extern unsigned int periodical_tasks_TEST_LOGOMETR;
 extern unsigned int periodical_tasks_TEST_RESURS;
 extern unsigned int periodical_tasks_TEST_RESURS_LOCK;
 extern unsigned int periodical_tasks_TEST_FLASH_MEMORY;

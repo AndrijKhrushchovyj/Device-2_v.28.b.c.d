@@ -239,7 +239,7 @@ extern void fapch_val_1(void);
 extern void fapch_val_2(void);
 extern void delta_phi_routine(void);
 extern void calc_measurement(unsigned int);
-extern void angle_determination(void);
+extern uint32_t angle_determination(void);
 extern unsigned int sqrt_64(unsigned long long);
 
 extern void main_routines_for_spi1(void);
@@ -262,6 +262,7 @@ extern void control_trg_func(void);
 extern unsigned int control_info_rejestrator(__INFO_REJESTRATOR *, unsigned char);
 extern unsigned int control_info_ar_rejestrator(__INFO_AR_REJESTRATOR *, unsigned char);
 extern void control_angle(void);
+extern void control_logometr(void);
 extern void control_resurs(void);
 
 extern void watchdog_routine(unsigned int, unsigned int const);

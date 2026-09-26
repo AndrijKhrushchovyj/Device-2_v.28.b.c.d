@@ -43,10 +43,10 @@ enum _error_id
   ERROR_ANGLE_EEPROM_CONTROL_BIT,
   ERROR_CALIBRATION_SELSYN,
   ERROR_LOGOMETR_EEPROM_BIT,
-ERROR_LOGOMETR_EEPROM_EMPTY_BIT,
-ERROR_LOGOMETR_EEPROM_COMPARISON_BIT,
-ERROR_LOGOMETR_EEPROM_CONTROL_BIT,
-ERROR_LOGOMETR_VOLTAGE,
+  ERROR_LOGOMETR_EEPROM_EMPTY_BIT,
+  ERROR_LOGOMETR_EEPROM_COMPARISON_BIT,
+  ERROR_LOGOMETR_EEPROM_CONTROL_BIT,
+  ERROR_LOGOMETR_VOLTAGE,
   ERROR_NUMBER_STEP_NOMINAL,
   ERROR_RESURS_EEPROM_BIT,
   ERROR_RESURS_EEPROM_EMPTY_BIT,
@@ -93,7 +93,6 @@ ERROR_LOGOMETR_VOLTAGE,
 
   ERROR_SELECT_GRUPY_USRAVOK,
 
-  ERROR_LOGOMETR_VOLTAGE,
   ERROR_BCDPC,
 
   ERROR_BA_1_FIX,
@@ -212,6 +211,11 @@ ERROR_LOGOMETR_VOLTAGE,
     " Ош.зап.угл.с.  ", \
     " Ош.контр.угл.с.", \
     "  Ош.калибр.с.  ", \
+    " Ош.инф.напр.л. ", \
+    " Инф.напр.л.нет ", \
+    " Ош.зап.напр.л. ", \
+    "Ош.контр.напр.л.", \
+    " Ош.напр.логом. ", \
     " Ош.номинал.пол.", \
     " Ош.инф.сч.рес. ", \
     " Инф.сч.рес.нет ", \
@@ -267,7 +271,6 @@ ERROR_LOGOMETR_VOLTAGE,
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Ош.напр.логом. ", \
     " Ош.ДДККП       ", \
     " БА1 от.        ", \
     " БА1 п.         ", \
@@ -317,6 +320,11 @@ ERROR_LOGOMETR_VOLTAGE,
     " Пом.зап.кут.с. ", \
     "Пом.контр.кут.с.", \
     " Пом.калібр.с.  ", \
+    " Пом.інф.напр.л.", \
+    " Інф.напр.л.нема", \
+    " Пом.зап.напр.л.", \
+    "Пом.контр.напр.л", \
+    " Пом.напр.логом.", \
     "Пом.номінал.пол.", \
     " Пом.інф.ліч.р. ", \
     " Інф.ліч.р.нема ", \
@@ -372,7 +380,6 @@ ERROR_LOGOMETR_VOLTAGE,
     " Пом.зовн.SRAM  ", \
     " Пом.внутр.FLASH", \
     " Пом.виб.гр.уст.", \
-    " Пом.напр.логом.", \
     " Пом.ДДККП      ", \
     " БА1 від.       ", \
     " БА1 п.         ", \
@@ -422,6 +429,11 @@ ERROR_LOGOMETR_VOLTAGE,
     " S.Angle W.Err. ", \
     "S.Angle Ctrl.Err", \
     " Selsyn Cal.Err.", \
+    "  Log.V.Inf.Err ", \
+    " No Log.V.Inf.  ", \
+    "  Log.V.W.Err.  ", \
+    " Log.V.Ctrl.Err ", \
+    " Logometer V.Err", \
     " Rated Pos.Err. ", \
     " CB Res Coun Er ", \
     "CB Res Ctr No In", \
@@ -477,7 +489,6 @@ ERROR_LOGOMETR_VOLTAGE,
     " Ext SRAM Er    ", \
     " Flash Mem Er   ", \
     " SP Gr Sel Er   ", \
-    " Logometer V.Err", \
     " BCDPC Er       ", \
     " AIU01 abs      ", \
     " AIU01 ver      ", \
@@ -527,6 +538,11 @@ ERROR_LOGOMETR_VOLTAGE,
     " Ош.зап.угл.с.  ", \
     " Ош.контр.угл.с.", \
     "  Ош.калибр.с.  ", \
+    " Ош.инф.напр.л. ", \
+    " Инф.напр.л.нет ", \
+    " Ош.зап.напр.л. ", \
+    "Ош.контр.напр.л.", \
+    " Ош.напр.логом. ", \
     " Ош.номинал.пол.", \
     " Ош.инф.сч.рес. ", \
     " Инф.сч.рес.нет ", \
@@ -582,7 +598,6 @@ ERROR_LOGOMETR_VOLTAGE,
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Ош.напр.логом. ", \
     " Ош.ДДККП       ", \
     " БА1 от.        ", \
     " БА1 п.         ", \
