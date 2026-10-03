@@ -1928,7 +1928,7 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
   int need_logic_control = 0;
 
   //Мінімальна перевірка можливості роботи контролю положення по сельсинових датчиках
-  if ((sum_phi_end - sum_phi_begin) == 0)
+  if ((angle_selsyn_end - angle_selsyn_begin) == 0)
     _SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN);
   else
     _SET_BIT(clear_diagnostyka, ERROR_CALIBRATION_SELSYN);
@@ -1951,7 +1951,7 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
 
   if (adc2_read_after_start_tmp != false)
   {
-    if ((measurement_tmp[0] - measurement_tmp[1]) == 0)
+    if (((measurement_tmp[0] - measurement_tmp[1]) - (U_end_log - U_begin_log)) == 0)
       _SET_BIT(set_diagnostyka, ERROR_LOGOMETR_VOLTAGE);
     else
       _SET_BIT(clear_diagnostyka, ERROR_LOGOMETR_VOLTAGE);
@@ -1989,8 +1989,8 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
   {
     //Логометр
     int a, b;
-    a = measurement_tmp[1] * (current_settings_prt.number_steps_rpn - 1);
-    b = measurement_tmp[0] - measurement_tmp[1];
+    a = (measurement_tmp[1] - U_begin_log) * (current_settings_prt.number_steps_rpn - 1);
+    b = (measurement_tmp[0] - measurement_tmp[1]) - (U_end_log - U_begin_log);
     if (a < 0)
       a *= -1;
     if (b < 0)
@@ -2009,25 +2009,46 @@ inline int control_pologennja_part1(unsigned int *p_active_functions)
     ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
     (_CHECK_SET_BIT(diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
     (_CHECK_SET_BIT(set_diagnostyka, ERROR_CALIBRATION_SELSYN) == 0) &&
-    (measurement[IM_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-    (measurement[IM_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-    (measurement[IM_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
+    (abs(measurement[IM_UC1C2]) > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
   {
     //Сельсин
-    int a, b;
-    a = ((angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2) - sum_phi_begin) * (current_settings_prt.number_steps_rpn - 1);
-    b = sum_phi_end - sum_phi_begin;
-    if (a < 0)
-      a *= -1;
-    if (b < 0)
-      b *= -1;
-    int current_step_tmp = a / b;
+    int full_sector = (angle_selsyn_end - angle_selsyn_begin);
+    if (full_sector < 0)
+      full_sector += 360;
 
-    //Усереднення до найближчого цілого
-    if ((a - current_step_tmp * b) > ((current_step_tmp + 1) * b - a))
-      current_step_tmp += 1;
+    unsigned int n = current_settings_prt.number_steps_rpn;
+    //    int one_sector = full_sector/(n - 1);
+    //    if ((full_sector - one_sector*(n - 1)) >= ((one_sector + 1)*(n - 1) - full_sector)) one_sector += 1;
+    float one_sector = (float) full_sector / (float) (n - 1);
 
-    current_step = current_step_tmp + 1;
+    unsigned int in_sector = true;
+    int sector = (angle_selsyn - angle_selsyn_begin);
+    if (sector < 0)
+      sector += 360;
+    if (sector > full_sector)
+    {
+      //      if (((sector + one_sector) > 360)
+      if (((float) sector + one_sector) > 360.0f)
+      {
+        sector = 360 - sector; /*зміщення відносно першої позиції у сторону зменшення*/
+        in_sector = false;
+      }
+    }
+
+    //    int current_step_tmp = sector/one_sector;
+    float current_step_tmp = truncf((float) sector / one_sector);
+    //    if (((sector - current_step_tmp*one_sector) >= ((current_step_tmp + 1)*one_sector - sector))
+    if (((float) sector - current_step_tmp * one_sector) >= ((current_step_tmp + 1.0f) * one_sector - (float) sector))
+    {
+      //      if (in_sector == true) current_step_tmp += 1;
+      //      else current_step_tmp = -1; /*ця ситуація не мала б ніколи виникати, але якщо виникне, то буде повідомлення що нульова позиція. бо після цих операцій  ми додамо "1", а "-1 + 1 = 0"*/
+      if (in_sector == true)
+        current_step_tmp += 1.0f;
+      else
+        current_step_tmp = -1.0f; /*ця ситуація не мала б ніколи виникати, але якщо виникне, то буде повідомлення що нульова позиція. бо після цих операцій  ми додамо "1", а "-1 + 1 = 0"*/
+    }
+
+    current_step = (int) current_step_tmp + 1;
     current_step_logical = current_step;
   }
   else if (
@@ -5574,6 +5595,10 @@ inline void main_protection(void)
   if (current_settings_prt.type_control_location != 1)
   {
     //Якщо не вибраний логометричний контроль, то всю інформацію по логометричному контролі очищаємо
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_EEPROM_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_EEPROM_EMPTY_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_EEPROM_COMPARISON_BIT);
+    _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_EEPROM_CONTROL_BIT);
     _CLEAR_BIT(diagnostyka_tmp, ERROR_LOGOMETR_VOLTAGE);
   }
   if (current_settings_prt.type_control_location != 2)
