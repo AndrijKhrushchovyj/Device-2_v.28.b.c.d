@@ -2070,7 +2070,8 @@ void changing_diagnostyka_state(void)
   unsigned int maska[N_DIAGN] = {0};
   if (current_settings.type_control_location != 1)
   {
-    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+    for (unsigned int i = ERROR_LOGOMETR_EEPROM_BIT; i <= ERROR_LOGOMETR_VOLTAGE; i++)
+      _SET_BIT(maska, i);
   }
   if (current_settings.type_control_location != 2)
   {
@@ -2619,7 +2620,7 @@ int str_to_int_DATE_Mmm(void)
 void control_angle(void)
 {
   unsigned char crc_angle_tmp = 0, temp_value;
-  unsigned int sum_phi_tmp = sum_phi_begin;
+  uint32_t angle_selsyn_tmp = angle_selsyn_begin;
   unsigned char *point;
 
   for (unsigned int num_phi = 0; num_phi < 2; num_phi++)
@@ -2628,12 +2629,12 @@ void control_angle(void)
     {
       case 0:
         {
-          sum_phi_tmp = sum_phi_begin;
+          angle_selsyn_tmp = angle_selsyn_begin;
           break;
         }
       case 1:
         {
-          sum_phi_tmp = sum_phi_end;
+          angle_selsyn_tmp = angle_selsyn_end;
           break;
         }
       default:
@@ -2644,8 +2645,8 @@ void control_angle(void)
         }
     }
 
-    point = (unsigned char *) (&sum_phi_tmp);
-    for (unsigned int i = 0; i < sizeof(sum_phi_tmp); i++)
+    point = (unsigned char *) (&angle_selsyn_tmp);
+    for (unsigned int i = 0; i < sizeof(angle_selsyn_tmp); i++)
     {
       temp_value = *(point + i);
       crc_angle_tmp += temp_value;
@@ -2665,6 +2666,62 @@ void control_angle(void)
 
     //Виствляємо повідомлення у слові діагностики
     _SET_BIT(set_diagnostyka, ERROR_ANGLE_EEPROM_CONTROL_BIT);
+  }
+}
+/*****************************************************/
+
+/*****************************************************/
+//Контроль достовірності напруг для логометра
+/*****************************************************/
+void control_logometr(void)
+{
+  unsigned char crc_log_tmp = 0, temp_value;
+  int32_t U_log_tmp;
+  unsigned char *point;
+
+  for (unsigned int num_U = 0; num_U < 2; num_U++)
+  {
+    switch (num_U)
+    {
+      case 0:
+        {
+          U_log_tmp = U_begin_log;
+          break;
+        }
+      case 1:
+        {
+          U_log_tmp = U_end_log;
+          break;
+        }
+      default:
+        {
+          //Теоретично цього ніколи не мало б бути
+          total_error_sw_fixed();
+          break;
+        }
+    }
+
+    point = (unsigned char *) (&U_log_tmp);
+    for (unsigned int i = 0; i < sizeof(U_log_tmp); i++)
+    {
+      temp_value = *(point + i);
+      crc_log_tmp += temp_value;
+    }
+  }
+
+  if (crc_log == crc_log_tmp)
+  {
+    //Контроль достовірності пройшов успішно
+
+    //Скидаємо повідомлення у слові діагностики
+    _SET_BIT(clear_diagnostyka, ERROR_LOGOMETR_EEPROM_CONTROL_BIT);
+  }
+  else
+  {
+    //Контроль достовірності не пройшов
+
+    //Виствляємо повідомлення у слові діагностики
+    _SET_BIT(set_diagnostyka, ERROR_LOGOMETR_EEPROM_CONTROL_BIT);
   }
 }
 /*****************************************************/
