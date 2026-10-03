@@ -9,16 +9,16 @@ void make_ekran_chose_settings_type_control_location(void)
     {
       {" Уставки        ",
        " Тип контр.пол. ",
-       " Калибр.СУП РПН "},
+       " Калибр.УП РПН  "},
       {" Уставки        ",
        " Тип контр.пол. ",
-       " Калібр.СВП РПН "},
+       " Калібр.ВП РПН  "},
       {" Pickups        ",
        " Pos.Ctrl.Type  ",
-       "OLTC PSI Calibr."},
+       " OLTC PI Calibr."},
       {" Баскару        ",
        " Тип контр.пол. ",
-       " Калибр.СУП РПН "}};
+       " Калибр.УП РПН  "}};
   unsigned char name_string_tmp[MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION][MAX_COL_LCD];
 
   int const index_language = index_language_in_array(current_settings.language);
@@ -36,7 +36,7 @@ void make_ekran_chose_settings_type_control_location(void)
   //Виключаємо поля, які не треба відображати
   /******************************************/
   //Калібр.СУП РПН
-  if (current_settings.type_control_location != 2)
+  if ((current_settings.type_control_location != 1) && (current_settings.type_control_location != 2))
   {
     unsigned int i = INDEX_ML_CALIBRATION - additional_current;
 
@@ -329,7 +329,7 @@ void make_ekran_type_control_location(void)
 /*****************************************************/
 
 /*****************************************************/
-//Формуємо екран калібрування сельинового датчика
+//Формуємо екран калібрування
 /*****************************************************/
 void make_ekran_calibration(void)
 {
