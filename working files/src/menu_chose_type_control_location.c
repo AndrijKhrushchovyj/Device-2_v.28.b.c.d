@@ -38,7 +38,7 @@ void make_ekran_chose_settings_type_control_location(void)
   // ‡Î≥·.—”œ –œÕ
   if (current_settings.type_control_location != 2)
   {
-    unsigned int i = INDEX_ML_CALIBRATION_SELSYN - additional_current;
+    unsigned int i = INDEX_ML_CALIBRATION - additional_current;
 
     if ((i + 1) <= position_temp)
       position_temp--;

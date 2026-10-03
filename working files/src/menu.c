@@ -1856,8 +1856,8 @@ void main_manu_function(void)
                     current_ekran.index_position = 0;
 
                   if (
-                    (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
-                    ((current_settings.type_control_location != 2)))
+                    (current_ekran.index_position == INDEX_ML_CALIBRATION) &&
+                    (((current_settings.type_control_location != 1) && (current_settings.type_control_location != 2))))
                     current_ekran.index_position++;
                 } while (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION);
 
@@ -2232,7 +2232,8 @@ void main_manu_function(void)
                 unsigned int maska[N_DIAGN] = {0};
                 if (current_settings.type_control_location != 1)
                 {
-                  _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                  for (unsigned int i = ERROR_LOGOMETR_EEPROM_BIT; i <= ERROR_LOGOMETR_VOLTAGE; i++)
+                    _SET_BIT(maska, i);
                 }
                 if (current_settings.type_control_location != 2)
                 {
@@ -2812,7 +2813,7 @@ void main_manu_function(void)
                     //Переходимо на меню відображення типу контролю положення РПН
                     current_ekran.current_level = EKRAN_CHOOSE_TYPE_CONTROL_LOCATION;
                   }
-                  else if (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN)
+                  else if (current_ekran.index_position == INDEX_ML_CALIBRATION)
                   {
                     //Запам'ятовуємо поперердній екран
                     //Переходимо на меню усправління сельсиновго положення
@@ -3934,8 +3935,8 @@ void main_manu_function(void)
                       current_ekran.index_position = MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION - 1;
 
                     if (
-                      (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
-                      ((current_settings.type_control_location != 2)))
+                      (current_ekran.index_position == INDEX_ML_CALIBRATION) &&
+                      (((current_settings.type_control_location != 1) && (current_settings.type_control_location != 2))))
                       current_ekran.index_position--;
                   } while (current_ekran.index_position < 0);
 
@@ -4317,7 +4318,8 @@ void main_manu_function(void)
                   unsigned int maska[N_DIAGN] = {0};
                   if (current_settings.type_control_location != 1)
                   {
-                    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                    for (unsigned int i = ERROR_LOGOMETR_EEPROM_BIT; i <= ERROR_LOGOMETR_VOLTAGE; i++)
+                      _SET_BIT(maska, i);
                   }
                   if (current_settings.type_control_location != 2)
                   {
@@ -4727,8 +4729,8 @@ void main_manu_function(void)
                       current_ekran.index_position = 0;
 
                     if (
-                      (current_ekran.index_position == INDEX_ML_CALIBRATION_SELSYN) &&
-                      ((current_settings.type_control_location != 2)))
+                      (current_ekran.index_position == INDEX_ML_CALIBRATION) &&
+                      (((current_settings.type_control_location != 1) && (current_settings.type_control_location != 2))))
                       current_ekran.index_position++;
                   } while (current_ekran.index_position >= MAX_ROW_FOR_CHOSE_SETTINGS_CONTROL_LOCATION);
 
@@ -5120,7 +5122,8 @@ void main_manu_function(void)
                   unsigned int maska[N_DIAGN] = {0};
                   if (current_settings.type_control_location != 1)
                   {
-                    _SET_BIT(maska, ERROR_LOGOMETR_VOLTAGE);
+                    for (unsigned int i = ERROR_LOGOMETR_EEPROM_BIT; i <= ERROR_LOGOMETR_VOLTAGE; i++)
+                      _SET_BIT(maska, i);
                   }
                   if (current_settings.type_control_location != 2)
                   {
@@ -5921,12 +5924,12 @@ void main_manu_function(void)
                   (!(
                     (current_ekran.current_level == EKRAN_STP_CONTROL_LOCATION) &&
                     (current_ekran.index_position == INDEX_ML_STP_TYPE_CTR_LOC_NUMBER_CURRENT) &&
-                    ((current_settings.type_control_location == 1) ||
+                    ((
+                       (current_settings.type_control_location == 1) &&
+                       ((state_spi1_task & STATE_LOGOMETR_EEPROM_GOOD) != 0)) ||
                      ((current_settings.type_control_location == 2) &&
                       ((state_spi1_task & STATE_ANGLE_EEPROM_GOOD) != 0) &&
-                      (measurement[IM_UP1P2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-                      (measurement[IM_UP2P3] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-                      (measurement[IM_UC1C2] > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))))))
+                      (abs(measurement[IM_UC1C2]) > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))))))
                 {
                   int temp_current_level = current_ekran.current_level;
 
@@ -12074,18 +12077,36 @@ void main_manu_function(void)
                 {
                   if (current_ekran.current_level == EKRAN_CALIBRATION)
                   {
-                    if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION)
+                    if (current_settings.type_control_location == 1)
                     {
-                      //Обновлюємо значення fi-початкове
-                      sum_phi_begin = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
+                      if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION)
+                      {
+                        //Обновлюємо значення початкове
+                        U_begin_log = adc2_channel1_averange_low;
+                      }
+                      else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION)
+                      {
+                        //Обновлюємо значення кінцеве
+                        U_end_log = adc2_channel0_averange_low;
+                      }
+                      //Подаємо команду запису початкового і кінцевого у EEPROM
+                      _SET_BIT(control_spi1_taskes, TASK_START_WRITE_LOGOMETR_EEPROM_BIT);
                     }
-                    else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION)
+                    else if (current_settings.type_control_location == 2)
                     {
-                      //Обновлюємо значення fi-кінцеве
-                      sum_phi_end = angle_UP1P2_UC1C2 + angle_UP2P3_UC1C2;
+                      if (current_ekran.index_position == INDEX_ML_FIRST_LOCATION)
+                      {
+                        //Обновлюємо значення fi-початкове
+                        angle_selsyn_begin = angle_selsyn;
+                      }
+                      else if (current_ekran.index_position == INDEX_ML_LAST_LOCATION)
+                      {
+                        //Обновлюємо значення fi-кінцеве
+                        angle_selsyn_end = angle_selsyn;
+                      }
+                      //Подаємо команду запису fi-початкове і fi-кінцеве у EEPROM
+                      _SET_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT);
                     }
-                    //Подаємо команду запису fi-початкове і fi-кінцеве у EEPROM
-                    _SET_BIT(control_spi1_taskes, TASK_START_WRITE_ANGLE_EEPROM_BIT);
                   }
 
                   //Виходимо з режиму редагування
