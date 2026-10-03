@@ -237,7 +237,7 @@ void periodical_operations(unsigned int full_actions)
   /*****/
   if (periodical_tasks_CALC_INTEGRAL_MEASUREMENTS != 0)
   {
-    angle_determination();
+    angle_selsyn = angle_determination();
 
     periodical_tasks_CALC_INTEGRAL_MEASUREMENTS = false;
   }
@@ -476,6 +476,33 @@ void periodical_operations(unsigned int full_actions)
       {
         //Скидаємо активну задачу самоконтролю
         periodical_tasks_TEST_ANGLE = false;
+      }
+    }
+    else if (periodical_tasks_TEST_LOGOMETR != 0)
+    {
+      //Стоїть у черзі активна задача самоконтролю
+      if (
+        ((state_spi1_task & STATE_LOGOMETR_EEPROM_GOOD) != 0) &&
+        (current_settings_prt.type_control_location == 1))
+      {
+        //Перевірку здійснюємо тільки тоді, коли калібруючі значення були успішно прочитані
+        if (
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_WRITE_LOGOMETR_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_WRITING_LOGOMETR_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_START_READ_LOGOMETR_EEPROM_BIT) == 0) &&
+          (_CHECK_SET_BIT(control_spi1_taskes, TASK_READING_LOGOMETR_EEPROM_BIT) == 0))
+        {
+          //На даний моммент не іде читання-запис, тому можна здійснити контроль достовірності
+          control_logometr();
+
+          //Скидаємо активну задачу самоконтролю
+          periodical_tasks_TEST_LOGOMETR = false;
+        }
+      }
+      else
+      {
+        //Скидаємо активну задачу самоконтролю
+        periodical_tasks_TEST_LOGOMETR = false;
       }
     }
     else if (periodical_tasks_TEST_RESURS_LOCK != 0)
