@@ -839,10 +839,10 @@ unsigned int part_reading_dr_from_dataflash_for_RS485;
 //unsigned int state_current_monitoring;
 const __meas_to_d_meas im_to_idm[_SIZE_ARRAY_FIX_MAX_MEASUREMENTS_TMP] =
   {
-    {measurement, IM_UAB_TN1},
-    {measurement, IM_IA_1},
-    {measurement, IM_UAB_TN2},
-    {measurement, IM_IA_2}};
+    {(unsigned int const *) measurement, IM_UAB_TN1},
+    {(unsigned int const *) measurement, IM_IA_1},
+    {(unsigned int const *) measurement, IM_UAB_TN2},
+    {(unsigned int const *) measurement, IM_IA_2}};
 
 unsigned int max_U_base;
 unsigned int max_U_second;
