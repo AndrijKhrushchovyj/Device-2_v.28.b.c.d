@@ -1622,7 +1622,8 @@ void TIM4_IRQHandler(void)
                   periodical_tasks_CALC_INTEGRAL_MEASUREMENTS =
                     periodical_tasks_TEST_ANGLE =
                       periodical_tasks_TEST_RESURS =
-                        periodical_tasks_TEST_FLASH_MEMORY = true;
+                        periodical_tasks_TEST_LOGOMETR =
+                          periodical_tasks_TEST_FLASH_MEMORY = true;
 
       number_inputs_for_fix_one_second = 0;
 
