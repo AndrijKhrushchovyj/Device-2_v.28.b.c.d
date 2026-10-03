@@ -1827,146 +1827,93 @@ inline unsigned int sqrt_32(unsigned int y)
 /*****************************************************/
 //Детектор кутів
 /*****************************************************/
-void angle_determination(void)
+uint32_t angle_determination(void)
 {
-  int rezult_angle_1 = 0;
-  int rezult_angle_2 = 0;
-  int ortogonal_low_tmp[6];
-
   /***
    Копіювання масивів ортогональних
    ***/
   //Виставляємо семафор заборони обновлення значень з вимірювальної системи
   semaphore_measure_values_low = 1;
-  ortogonal_low_tmp[0] = ortogonal_calc_low[2 * FULL_ORT_UC1C2];     //a1
-  ortogonal_low_tmp[1] = ortogonal_calc_low[2 * FULL_ORT_UC1C2 + 1]; //b1
-  ortogonal_low_tmp[2] = ortogonal_calc_low[2 * FULL_ORT_UP1P2];     //a2
-  ortogonal_low_tmp[3] = ortogonal_calc_low[2 * FULL_ORT_UP1P2 + 1]; //b2
-  ortogonal_low_tmp[4] = ortogonal_calc_low[2 * FULL_ORT_UP2P3];     //a1
-  ortogonal_low_tmp[5] = ortogonal_calc_low[2 * FULL_ORT_UP2P3 + 1]; //b1
+
+  int32_t U12 /*U21*/ = measurement_middle[IM_UP1P2];
+  int32_t U23 /*U32*/ = measurement_middle[IM_UP2P3];
+
   //Знімаємо семафор заборони обновлення значень з вимірювальної системи
   semaphore_measure_values_low = 0;
   /***/
 
-  unsigned int amplituda_UC1C2 = sqrt_32((unsigned int) (ortogonal_low_tmp[0] * ortogonal_low_tmp[0]) + (unsigned int) (ortogonal_low_tmp[1] * ortogonal_low_tmp[1]));
-  unsigned int amplituda_UP1P2 = sqrt_32((unsigned int) (ortogonal_low_tmp[2] * ortogonal_low_tmp[2]) + (unsigned int) (ortogonal_low_tmp[3] * ortogonal_low_tmp[3]));
-  unsigned int amplituda_UP2P3 = sqrt_32((unsigned int) (ortogonal_low_tmp[4] * ortogonal_low_tmp[4]) + (unsigned int) (ortogonal_low_tmp[5] * ortogonal_low_tmp[5]));
+  //Знаходимо кут
+  //   uint32_t angle;
+  //   if (U32 == 0) angle = 60;
+  //   else if (U32 == U21) angle = 90;
+  //   else
+  //   {
+  //     double angle_f = atan((double)(U21+U32)/(double)(U21-U32))*180.0/PI;
+  //     if (angle_f < 0) angle_f += 180.0;
+  //     angle = (int)round(angle_f);
+  //   }
+  //
+  //   //Визначаємо півплощину
+  //   if (angle < 90)
+  //   {
+  //     if (U21 > 0) angle += 180;
+  //   }
+  //   else if (angle < 180)
+  //   {
+  //     if (U32 > 0) angle += 180;
+  //   }
 
-  int cos_fi_1, sin_fi_1, cos_fi_2, sin_fi_2;
-  float sin_fi_f_1, sin_fi_f_2, angle_f_1, angle_f_2;
-  int angle_int_1, angle_int_2;
-  if ((amplituda_UP1P2 != 0) && (amplituda_UC1C2 != 0))
-  {
-    /***
-        //Тригонометричні координати вектора різниці
-        ***/
-    /*
-        За розрахунком описаним при розрахунку діючих значень наші ортогональні є у форматі (15 біт + знак) = 16-розрядне число
-        Тоді максимальний результат може бути 2*(15 біт + знак) = 32-розряжне число зі знаком (31 біт + знак)
-        */
-    cos_fi_1 = (ortogonal_low_tmp[1] * ortogonal_low_tmp[3] + ortogonal_low_tmp[0] * ortogonal_low_tmp[2]);
-    sin_fi_1 = (ortogonal_low_tmp[0] * ortogonal_low_tmp[3] - ortogonal_low_tmp[1] * ortogonal_low_tmp[2]);
-    /***/
+  //   uint32_t angle;
+  //   if (U23 == 0) angle = 90;
+  //   else
+  //   {
+  //     double angle_f = atan((double)(2*U12 - U23)/(double)U23/1.7320508075688772935274463415059)*180.0/PI;
+  //     if (angle_f < 0) angle_f += 180.0;
+  //     angle = (int)round(angle_f);
+  //   }
+  //
+  //   //Визначаємо півплощину
+  //   if (angle < 90)
+  //   {
+  //     if (U23 > 0) angle += 180;
+  //   }
+  //   else if (angle < 180)
+  //   {
+  //     if (U23 < 0) angle += 180;
+  //   }
 
-    sin_fi_f_1 = (((float) sin_fi_1) / ((float) amplituda_UP1P2)) / ((float) amplituda_UC1C2);
-    if (sin_fi_f_1 > 1)
-      sin_fi_f_1 = 1;
-    else if (sin_fi_f_1 < -1)
-      sin_fi_f_1 = -1;
-    angle_f_1 = asinf(sin_fi_f_1) * 180.0f / PI;
-    angle_int_1 = (int) angle_f_1;
-
-    if (angle_int_1 < 0)
-      angle_int_1 = -angle_int_1;
-
-    if ((sin_fi_1 >= 0) && (cos_fi_1 >= 0))
-    {
-      //1-ий квадрант
-      rezult_angle_1 = angle_int_1;
-    }
-    else if ((sin_fi_1 >= 0) && (cos_fi_1 < 0))
-    {
-      //2-ий квадрант
-      rezult_angle_1 = 180 - angle_int_1;
-    }
-    else if ((sin_fi_1 < 0) && (cos_fi_1 < 0))
-    {
-      //3-ий квадрант
-      rezult_angle_1 = 180 + angle_int_1;
-    }
-    else
-    {
-      //4-ий квадрант
-      rezult_angle_1 = 360 - angle_int_1;
-    }
-
-    if (rezult_angle_1 >= 360)
-      rezult_angle_1 -= 360;
-    else if (rezult_angle_1 < 0)
-      rezult_angle_1 += 360;
-  }
+  uint32_t angle;
+  if (U23 == 0)
+    angle = 0;
+  else if ((2 * U12) == (-U23))
+    angle = 90;
   else
   {
-    rezult_angle_1 = 0;
+    double angle_f = atan(1.7320508075688772935274463415059 * (double) U23 / (double) (2 * U12 + U23)) * 180.0 / PI;
+    if (angle_f < 0)
+      angle_f += 180.0;
+    angle = (int) round(angle_f);
   }
 
-  if ((amplituda_UC1C2 != 0) && (amplituda_UP2P3 != 0))
+  //Визначаємо півплощину
+  if (angle < 90)
   {
-
-    /***
-        //Тригонометричні координати вектора різниці
-        ***/
-    /*
-        За розрахунком описаним при розрахунку діючих значень наші ортогональні є у ворматі (15 біт + знак) = 16-розряжне число
-        Тоді максимальний результат може бути 2*(15 біт + знак) = 32-розряжне число зі знаком (31 біт + знак)
-        */
-    cos_fi_2 = (ortogonal_low_tmp[1] * ortogonal_low_tmp[5] + ortogonal_low_tmp[0] * ortogonal_low_tmp[4]);
-    sin_fi_2 = (ortogonal_low_tmp[0] * ortogonal_low_tmp[5] - ortogonal_low_tmp[1] * ortogonal_low_tmp[4]);
-    /***/
-
-    sin_fi_f_2 = (((float) sin_fi_2) / ((float) amplituda_UP2P3)) / ((float) amplituda_UC1C2);
-    if (sin_fi_f_2 > 1)
-      sin_fi_f_2 = 1;
-    else if (sin_fi_f_2 < -1)
-      sin_fi_f_2 = -1;
-    angle_f_2 = asinf(sin_fi_f_2) * 180 / PI;
-    angle_int_2 = (int) angle_f_2;
-
-    if (angle_int_2 < 0)
-      angle_int_2 = -angle_int_2;
-
-    if ((sin_fi_2 >= 0) && (cos_fi_2 >= 0))
-    {
-      //1-ий квадрант
-      rezult_angle_2 = angle_int_2;
-    }
-    else if ((sin_fi_2 >= 0) && (cos_fi_2 < 0))
-    {
-      //2-ий квадрант
-      rezult_angle_2 = 180 - angle_int_2;
-    }
-    else if ((sin_fi_2 < 0) && (cos_fi_2 < 0))
-    {
-      //3-ий квадрант
-      rezult_angle_2 = 180 + angle_int_2;
-    }
-    else
-    {
-      //4-ий квадрант
-      rezult_angle_2 = 360 - angle_int_2;
-    }
-
-    if (rezult_angle_2 >= 360)
-      rezult_angle_2 -= 360;
-    else if (rezult_angle_2 < 0)
-      rezult_angle_2 += 360;
+    if ((U23 < 0) || ((U23 == 0) && (U12 < 0)))
+      angle += 180;
   }
-  else
+  else if (angle <= 180)
   {
-    rezult_angle_2 = 0;
+    if (U23 < 0)
+      angle += 180;
+    if (angle >= 360)
+      angle -= 360;
   }
-  angle_UP1P2_UC1C2 = rezult_angle_1;
-  angle_UP2P3_UC1C2 = rezult_angle_2;
+
+  angle = 360 - angle;
+  if (angle >= 360)
+    angle -= 360;
+
+  return angle;
 }
 /*****************************************************/
 
@@ -2173,6 +2120,15 @@ void calc_measurement(unsigned int number_group_stp)
       }
 
       measurement[index_m] = (MNOGNYK_U_DIJUCHE * (sqrt_32((unsigned int) (ortogonal_calc[2 * index_ort] * ortogonal_calc[2 * index_ort]) + (unsigned int) (ortogonal_calc[2 * index_ort + 1] * ortogonal_calc[2 * index_ort + 1])))) >> (VAGA_DILENNJA_U_DIJUCHE + 3);
+
+      if (
+        (i == I_UP1P2) ||
+        (i == I_UP2P3))
+      {
+        //Скалярний добуток даєм можливість визначити чи вектори мають однаковий напрямок. чи протилежний
+        if ((ortogonal_calc[2 * index_ort] * ortogonal_calc[2 * FULL_ORT_UC1C2] + ortogonal_calc[2 * index_ort + 1] * ortogonal_calc[2 * FULL_ORT_UC1C2 + 1]) < 0)
+          measurement[index_m] = -measurement[index_m];
+      }
     }
   }
 

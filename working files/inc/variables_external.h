@@ -113,10 +113,10 @@ extern unsigned int adc2_read_after_start;
 
 extern unsigned int number_inputs_for_fix_one_second;
 extern unsigned int number_inputs_for_fix_one_period;
-extern unsigned int measurement[_NUMBER_IM];
-extern unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high;
-extern unsigned int measurement_middle[_NUMBER_IM];
-extern unsigned int measurement_low[_NUMBER_IM];
+extern int measurement[_NUMBER_IM];
+extern unsigned int bank_measurement_high;
+extern int measurement_high[2][_NUMBER_IM];
+extern int measurement_middle[_NUMBER_IM];
 
 extern uint32_t angle_selsyn;
 extern uint32_t angle_selsyn_begin;

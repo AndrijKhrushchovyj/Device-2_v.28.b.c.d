@@ -535,22 +535,24 @@ void make_ekran_current_voltage(unsigned int tn1_tn2, unsigned int pervynna_vtor
   //Виврдимо номер ТН і відповідні вимірювання
   name_string[0][4] = (tn1_tn2 + 1) + 0x30;
   name_string[1][5] = (tn1_tn2 + 1) + 0x30;
+  semaphore_measure_values_low = 1;
   if (tn1_tn2 == 0)
   {
-    measurement_tmp[0] = measurement[IM_IA_1];
-    measurement_tmp[1] = measurement[IM_UAB_TN1];
+    measurement_tmp[0] = measurement_middle[IM_IA_1];
+    measurement_tmp[1] = measurement_middle[IM_UAB_TN1];
 
     TCurrent1 = current_settings.TCurrent1;
     TVoltage1 = current_settings.TVoltage1;
   }
   else
   {
-    measurement_tmp[0] = measurement[IM_IA_2];
-    measurement_tmp[1] = measurement[IM_UAB_TN2];
+    measurement_tmp[0] = measurement_middle[IM_IA_2];
+    measurement_tmp[1] = measurement_middle[IM_UAB_TN2];
 
     TCurrent1 = current_settings.TCurrent2;
     TVoltage1 = current_settings.TVoltage2;
   }
+  semaphore_measure_values_low = 0;
 
   int const index_language = index_language_in_array(current_settings.language);
   //Виврдимо одиниці вимірювань
@@ -621,12 +623,14 @@ void make_ekran_voltage_for_selsyn(void)
       " Uc1c2=         ",
       " Up1p2=         ",
       " Up2p3=         "};
-  unsigned int measurement_tmp[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN];
+  int measurement_tmp[MAX_ROW_FOR_MEASURMENT_VOLTAGE_SELSYN];
 
   //Вибираємо відповідні вимірювання
-  measurement_tmp[0] = measurement[IM_UC1C2];
-  measurement_tmp[1] = measurement[IM_UP1P2];
-  measurement_tmp[2] = measurement[IM_UP2P3];
+  semaphore_measure_values_low = 1;
+  measurement_tmp[0] = measurement_middle[IM_UC1C2];
+  measurement_tmp[1] = measurement_middle[IM_UP1P2];
+  measurement_tmp[2] = measurement_middle[IM_UP2P3];
+  semaphore_measure_values_low = 0;
 
   int const index_language = index_language_in_array(current_settings.language);
 
@@ -650,7 +654,14 @@ void make_ekran_voltage_for_selsyn(void)
     {
       unsigned int start_number_digit_after_point = 3;
 
-      convert_and_insert_char_for_measurement(start_number_digit_after_point, measurement_tmp[index_of_ekran], 1, 1, name_string[index_of_ekran], 7);
+      int temp_value = measurement_tmp[index_of_ekran];
+      if (temp_value < 0)
+      {
+        temp_value = -temp_value;
+        name_string[index_of_ekran][7] = '-';
+      }
+
+      convert_and_insert_char_for_measurement(start_number_digit_after_point, temp_value, 1, 1, name_string[index_of_ekran], 8);
 
       for (unsigned int j = 0; j < MAX_COL_LCD; j++)
         working_ekran[i][j] = name_string[index_of_ekran][j];
@@ -683,8 +694,7 @@ void make_ekran_angle_for_selsyn(void)
 {
   unsigned char name_string[MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN][MAX_COL_LCD] =
     {
-      " Phi1 =         ",
-      " Phi2 =         "};
+      " Phi =          "};
 
   unsigned int position_temp = current_ekran.index_position;
   unsigned int index_of_ekran;
@@ -699,27 +709,18 @@ void make_ekran_angle_for_selsyn(void)
     /********************************/
     if (index_of_ekran < MAX_ROW_FOR_MEASURMENT_ANGLE_SELSYN)
     {
-      unsigned int meas_tmp_1, meas_tmp_2 = measurement[IM_UC1C2], angle;
+      semaphore_measure_values_low = 1;
+      int meas_tmp = measurement_middle[IM_UC1C2];
+      semaphore_measure_values_low = 0;
 
-      if (index_of_ekran == INDEX_ML_ANGLE1)
-      {
-        meas_tmp_1 = measurement[IM_UP1P2];
-        angle = angle_UP1P2_UC1C2;
-      }
-      else
-      {
-        meas_tmp_1 = measurement[IM_UP2P3];
-        angle = angle_UP2P3_UC1C2;
-      }
+      unsigned int angle = angle_selsyn;
 
-#define FIRST_POSITION_OF_NUMBER 8
+#define FIRST_POSITION_OF_NUMBER 7
       if (
-        (meas_tmp_1 > PORIG_CHUTLYVOSTI_DETECTORA_KUTA) &&
-        (meas_tmp_2 > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
+        (meas_tmp > PORIG_CHUTLYVOSTI_DETECTORA_KUTA))
       {
         //Розраховуємо кут
         int vaga = 100, first_symbol = 0, position = FIRST_POSITION_OF_NUMBER; /*позиція з якої поинається виведення значення - найзначуще число*/
-        ;
 
         while (vaga > 0)
         {
@@ -753,12 +754,12 @@ void make_ekran_angle_for_selsyn(void)
       }
       else
       {
-        const unsigned char undefined[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - FIRST_POSITION_OF_NUMBER] =
+        const unsigned char undefined[MAX_NAMBER_LANGUAGE][MAX_COL_LCD - (FIRST_POSITION_OF_NUMBER - 1)] =
           {
-            "Неопред.",
-            "Невизнач",
-            "Undef.  ",
-            "Неопред."};
+            "Неопред. ",
+            "Невизнач.",
+            "Undef.   ",
+            "Неопред. "};
         int index_language = index_language_in_array(current_settings.language);
 
         for (int j = 0; j < (MAX_COL_LCD - FIRST_POSITION_OF_NUMBER); j++)

@@ -211,10 +211,10 @@ unsigned int adc2_read_after_start = false;
 
 unsigned int number_inputs_for_fix_one_second;
 unsigned int number_inputs_for_fix_one_period;
-unsigned int measurement[_NUMBER_IM];
-unsigned int measurement_high[2][_NUMBER_IM], bank_measurement_high = 0;
-unsigned int measurement_middle[_NUMBER_IM];
-SRAM1 unsigned int measurement_low[_NUMBER_IM];
+int measurement[_NUMBER_IM];
+unsigned int bank_measurement_high = 0;
+int measurement_high[2][_NUMBER_IM];
+int measurement_middle[_NUMBER_IM];
 
 uint32_t angle_selsyn;
 uint32_t angle_selsyn_begin = 0;
