@@ -42,6 +42,11 @@ enum _error_id
   ERROR_ANGLE_EEPROM_COMPARISON_BIT,
   ERROR_ANGLE_EEPROM_CONTROL_BIT,
   ERROR_CALIBRATION_SELSYN,
+  ERROR_LOGOMETR_EEPROM_BIT,
+  ERROR_LOGOMETR_EEPROM_EMPTY_BIT,
+  ERROR_LOGOMETR_EEPROM_COMPARISON_BIT,
+  ERROR_LOGOMETR_EEPROM_CONTROL_BIT,
+  ERROR_LOGOMETR_VOLTAGE,
   ERROR_NUMBER_STEP_NOMINAL,
   ERROR_RESURS_EEPROM_BIT,
   ERROR_RESURS_EEPROM_EMPTY_BIT,
@@ -88,7 +93,7 @@ enum _error_id
 
   ERROR_SELECT_GRUPY_USRAVOK,
 
-  ERROR_LOGOMETR_VOLTAGE,
+  ERROR_BCDPC,
 
   ERROR_CPU_RECEIVING_CANAL_1,
   ERROR_CPU_RECEIVED_PACKET_CANAL_1,
@@ -130,17 +135,14 @@ MAX_ROW_FOR_DIAGNOSTYKA
 
 #define WORD_0_MASKA_ERRORS_FROM_CANAL_1 0
 #define WORD_1_MASKA_ERRORS_FROM_CANAL_1 0
-
-#define WORD_2_MASKA_ERRORS_FROM_CANAL_1 (unsigned int)       \
-          (                                                   \
-           (1 << (ERROR_CPU_RECEIVING_CANAL_1 - 64))         |\
-           (1 << (ERROR_CPU_RECEIVED_PACKET_CANAL_1 - 64))   |\
-           (1 << (ERROR_CPU_ANSWER_CANAL_1 - 64))            |\
-           (1 << (ERROR_CPU_NO_ANSWER_CANAL_1 - 64))          \
-          )   
+#define WORD_2_MASKA_ERRORS_FROM_CANAL_1 0
 
 #define WORD_3_MASKA_ERRORS_FROM_CANAL_1 (unsigned int)       \
           (                                                   \
+           (1 << (ERROR_CPU_RECEIVING_CANAL_1 - 96))         |\
+           (1 << (ERROR_CPU_RECEIVED_PACKET_CANAL_1 - 96))   |\
+           (1 << (ERROR_CPU_ANSWER_CANAL_1 - 96))            |\
+           (1 << (ERROR_CPU_NO_ANSWER_CANAL_1 - 96))         |\
            (1 << (ERROR_IEC_RECEIVING_CANAL_1 - 96))         |\
            (1 << (ERROR_IEC_RECEIVED_PACKET_CANAL_1 - 96))   |\
            (1 << (ERROR_IEC_REQUEST_CANAL_1 - 96))           |\
@@ -193,15 +195,15 @@ MAX_ROW_FOR_DIAGNOSTYKA
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  4 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  5 - 32))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  6 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  7 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  8 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  9 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 10 - 32))               \
-  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 32))               \
 )
 
 #define MASKA_AVAR_ERROR_2        (unsigned int)(               \
-    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 64))               \
+    (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  7 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  8 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT +  9 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 10 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 11 - 64))               \
+  | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 12 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 13 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 14 - 64))               \
   | (1 << (ERROR_DIGITAL_OUTPUT_1_BIT + 15 - 64))               \
@@ -263,6 +265,11 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Ош.зап.угл.с.  ", \
     " Ош.контр.угл.с.", \
     "  Ош.калибр.с.  ", \
+    " Ош.инф.напр.л. ", \
+    " Инф.напр.л.нет ", \
+    " Ош.зап.напр.л. ", \
+    "Ош.контр.напр.л.", \
+    " Ош.напр.логом. ", \
     " Ош.номинал.пол.", \
     " Ош.инф.сч.рес. ", \
     " Инф.сч.рес.нет ", \
@@ -318,7 +325,7 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Ош.напр.логом. ", \
+    " Ош.ДДККП       ", \
     "ЦП:Ош.приема к.1", \
     "ЦП:Ош.пакета к.1", \
     "ЦП:Ош.ответа к.1", \
@@ -384,6 +391,11 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Пом.зап.кут.с. ", \
     "Пом.контр.кут.с.", \
     " Пом.калібр.с.  ", \
+    " Пом.інф.напр.л.", \
+    " Інф.напр.л.нема", \
+    " Пом.зап.напр.л.", \
+    "Пом.контр.напр.л", \
+    " Пом.напр.логом.", \
     "Пом.номінал.пол.", \
     " Пом.інф.ліч.р. ", \
     " Інф.ліч.р.нема ", \
@@ -439,7 +451,7 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Пом.зовн.SRAM  ", \
     " Пом.внутр.FLASH", \
     " Пом.виб.гр.уст.", \
-    " Пом.напр.логом.", \
+    " Пом.ДДККП      ", \
     "ЦП:Пом.прийм.к.1", \
     " ЦП:Пом.п-ту к.1", \
     " ЦП:Пом.відп.к.1", \
@@ -505,6 +517,11 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " S.Angle W.Err. ", \
     "S.Angle Ctrl.Err", \
     " Selsyn Cal.Err.", \
+    "  Log.V.Inf.Err ", \
+    " No Log.V.Inf.  ", \
+    "  Log.V.W.Err.  ", \
+    " Log.V.Ctrl.Err ", \
+    " Logometer V.Err", \
     " Rated Pos.Err. ", \
     " CB Res Coun Er ", \
     "CB Res Ctr No In", \
@@ -560,7 +577,7 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Ext SRAM Er    ", \
     " Flash Mem Er   ", \
     " SP Gr Sel Er   ", \
-    " Logometer V.Err", \
+    " BCDPC Er       ", \
     " CPU:Rec Ch1 err", \
     "CPU:Pack Ch1 err", \
     "CPU:Send Ch1 err", \
@@ -626,6 +643,11 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Ош.зап.угл.с.  ", \
     " Ош.контр.угл.с.", \
     "  Ош.калибр.с.  ", \
+    " Ош.инф.напр.л. ", \
+    " Инф.напр.л.нет ", \
+    " Ош.зап.напр.л. ", \
+    "Ош.контр.напр.л.", \
+    " Ош.напр.логом. ", \
     " Ош.номинал.пол.", \
     " Ош.инф.сч.рес. ", \
     " Инф.сч.рес.нет ", \
@@ -681,7 +703,7 @@ MAX_ROW_FOR_DIAGNOSTYKA
     " Ош.внешней SRAM", \
     " Ош.внутр.FLASH ", \
     " Ош.выб.гр.уст. ", \
-    " Ош.напр.логом. ", \
+    " Ош.ДДККП       ", \
     "ЦП:Ош.приема к.1", \
     "ЦП:Ош.пакета к.1", \
     "ЦП:Ош.ответа к.1", \

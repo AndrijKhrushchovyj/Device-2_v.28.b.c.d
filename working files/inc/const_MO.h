@@ -19,7 +19,8 @@ enum _start_label
 #define SIZE_SENDING_DATA_TM            \
   (                                     \
     (sizeof(float) * _NUMBER_IM_INFO) + \
-    sizeof(frequency) +                 \
+    sizeof(frequency_val_1) +           \
+    sizeof(frequency_val_2) +           \
     sizeof(current_step) +              \
     (3 * sizeof(unsigned int)) +        \
     sizeof(active_inputs_prt) +         \

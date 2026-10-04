@@ -689,10 +689,16 @@ enum __rang_output_led_df_reg
     (1u << (RANG_RESET_LEDS - 0))                                \
   | (1u << (RANG_RESET_RELES - 0))                               \
   | (1u << (RANG_MISCEVE_DYSTANCIJNE - 0))                       \
+  | (1u << (RANG_BCD_0_BIT - 0))                                 \
+  | (1u << (RANG_BCD_1_BIT - 0))                                 \
+  | (1u << (RANG_BCD_2_BIT - 0))                                 \
+  | (1u << (RANG_BCD_3_BIT - 0))                                 \
+  | (1u << (RANG_BCD_4_BIT - 0))                                 \
+  | (1u << (RANG_BCD_5_BIT - 0))                                 \
   | (1u << (RANG_OSNOVNYJ_TN2_RPN - 0))                          \
-  | (1u << (RANG_MRZS_OR_LOCAL_MODE_RPN - 0))                   \
-  | (1u << (RANG_TM_MODE_VID_DV_RPN - 0))                       \
-  | (1u << (RANG_AUTO_MODE_FROM_DV_RPN - 0))                    \
+  | (1u << (RANG_MRZS_OR_LOCAL_MODE_RPN - 0))                    \
+  | (1u << (RANG_TM_MODE_VID_DV_RPN - 0))                        \
+  | (1u << (RANG_AUTO_MODE_FROM_DV_RPN - 0))                     \
  )
 
 #define MASKA_FOR_INPUT_SIGNALS_1 (                              \

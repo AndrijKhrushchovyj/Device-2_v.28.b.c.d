@@ -487,8 +487,15 @@ void start_transmint_data_via_CANAL1_MO(void)
 
     //Частота
     {
-      uint8_t const *point = (uint8_t const *) (&frequency);
-      for (uint32_t i = 0; i < sizeof(frequency); i++)
+      float frequency_tmp = frequency_val_1;
+      uint8_t *point = (uint8_t *) (&frequency_tmp);
+      for (uint32_t i = 0; i < sizeof(frequency_tmp); i++)
+      {
+        sum += Canal1_MO_Transmit[index++] = *(point++);
+      }
+      frequency_tmp = frequency_val_2;
+      point = (uint8_t *) (&frequency_tmp);
+      for (uint32_t i = 0; i < sizeof(frequency_tmp); i++)
       {
         sum += Canal1_MO_Transmit[index++] = *(point++);
       }
