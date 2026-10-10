@@ -5647,7 +5647,7 @@ inline void main_protection(void)
     if (not_null)
     {
       _SET_BIT(active_functions, RANG_AVAR_DEFECT);
-      //#warning "No Avar Error"
+//      #warning "No Avar Error"
     }
     else
     {

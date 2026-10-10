@@ -520,7 +520,7 @@ void start_transmint_data_via_CANAL1_MO(void)
           &counter_total};
 
       uint8_t const *p = (uint8_t const *) p_count[i];
-      for (uint32_t j = 0; i < sizeof(unsigned int); j++)
+      for (uint32_t j = 0; j < sizeof(unsigned int); j++)
       {
         sum += Canal1_MO_Transmit[index++] = *(p++);
       }
