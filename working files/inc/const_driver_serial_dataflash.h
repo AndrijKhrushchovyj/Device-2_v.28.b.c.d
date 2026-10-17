@@ -267,21 +267,11 @@ enum _command_fatfs
 #ifdef EXT_SRAM_512
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 12) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+  (MODYFIKACIA_VERSII_PZ == 13))
 #define SIZE_BUFFER_FOR_AR ((10780 - 1700) * AR_TOTAL_NUMBER_CANALES)
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 0) || \
-  (MODYFIKACIA_VERSII_PZ == 3) || \
-  (MODYFIKACIA_VERSII_PZ == 4) || \
-  (MODYFIKACIA_VERSII_PZ == 6))
+#elif ( \
+  (MODYFIKACIA_VERSII_PZ == 3))
 #define SIZE_BUFFER_FOR_AR ((10780 - 900) * AR_TOTAL_NUMBER_CANALES)
 #else
 #define SIZE_BUFFER_FOR_AR ((10780 - 500) * AR_TOTAL_NUMBER_CANALES)
@@ -290,21 +280,11 @@ enum _command_fatfs
 #else
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 12) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+  (MODYFIKACIA_VERSII_PZ == 13))
 #define SIZE_BUFFER_FOR_AR ((10780 - 2200) * AR_TOTAL_NUMBER_CANALES)
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 0) || \
-  (MODYFIKACIA_VERSII_PZ == 3) || \
-  (MODYFIKACIA_VERSII_PZ == 4) || \
-  (MODYFIKACIA_VERSII_PZ == 6))
+#elif ( \
+  (MODYFIKACIA_VERSII_PZ == 3))
 #define SIZE_BUFFER_FOR_AR ((10780 - 1600) * AR_TOTAL_NUMBER_CANALES)
 #else
 #define SIZE_BUFFER_FOR_AR ((10780 - 1800) * AR_TOTAL_NUMBER_CANALES)

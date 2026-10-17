@@ -1435,24 +1435,11 @@ void main_routines_for_spi1(void)
                     index = 0; /*Умова мал аб бути ==, але щоб перестахуватися на невизначену помилку я поставив >=*/
                 }
               }
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
+#if (                             \
+  (MODYFIKACIA_VERSII_PZ == 3) || \
+  (MODYFIKACIA_VERSII_PZ == 13))
               zdz_ovd_porig = current_settings.zdz_ovd_porig + 1;
               _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) = ((zdz_ovd_porig & 0xf) << 8) | (test_OVD << 12);
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-              _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) =
-                (state_outputs_raw & ((1u << 9) - 1)) |
-                ((((current_settings.zdz_ovd_porig + 1) & 0xf) << 9) | ((test_OVD != 0) << 13)) |
-                (((state_outputs_raw >> 9) & ((1u << 2) - 1)) << 14);
 #endif
             }
             else

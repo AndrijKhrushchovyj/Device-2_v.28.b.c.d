@@ -360,23 +360,7 @@ inline void diagnostyka_boards(void)
       _SET_BIT(clear_diagnostyka, ERROR_BA_1_CTLR);
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
   }
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) && \
-  (MODYFIKACIA_VERSII_PZ == 18))
-  if ((board_register_diff & 0x02) && ((board_register_tmp & 0x02) != 0x2))
-    _SET_BIT(set_diagnostyka, ERROR_BDV2_FIX);
-  else if ((board_register_diff & 0x02) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDV2_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDV2_FIX);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x2; //ÁÄÂ2_D
 
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0x59)
-      _SET_BIT(set_diagnostyka, ERROR_BDV2_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDVV5_1_CTLR);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0; //Clear BDV2_CTLR
-  }
-#else
   if ((board_register_diff & 0x02) && ((board_register_tmp & 0x02) != 0x2))
     _SET_BIT(set_diagnostyka, ERROR_BDVV5_1_FIX);
   else if ((board_register_diff & 0x02) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDVV5_1_CTLR))
@@ -389,7 +373,6 @@ inline void diagnostyka_boards(void)
       _SET_BIT(clear_diagnostyka, ERROR_BDVV5_1_CTLR);
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
   }
-#endif
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
   if ((board_register_diff & 0x08) && ((board_register_tmp & 0x08) != 0x8))
@@ -401,19 +384,10 @@ inline void diagnostyka_boards(void)
 #endif
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
+  (MODYFIKACIA_VERSII_PZ == 13))
   if ((board_register_diff & 0x04) && ((board_register_tmp & 0x04) != 0x4))
     _SET_BIT(set_diagnostyka, ERROR_BDVV5_2_FIX);
   else if ((board_register_diff & 0x04) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDVV5_2_CTLR))
@@ -426,190 +400,22 @@ inline void diagnostyka_boards(void)
       _SET_BIT(clear_diagnostyka, ERROR_BDVV5_2_CTLR);
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
   }
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-  if ((board_register_diff & 0x04) && ((board_register_tmp & 0x04) != 0x4))
-    _SET_BIT(set_diagnostyka, ERROR_BDV5_FIX);
-  else if ((board_register_diff & 0x04) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDV5_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDVV5_2_FIX);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) & 0xff) != 0x6D)
-      _SET_BIT(set_diagnostyka, ERROR_BDV5_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDVV5_2_CTLR);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0; //CLr
-  }
-//#elif (                                \
-//       (MODYFIKACIA_VERSII_PZ == 6) || \
-//       (MODYFIKACIA_VERSII_PZ == 26)   \
-//      )
-//      if ((board_register_diff & 0x04) && ((board_register_tmp & 0x04) !=  0x4)) _SET_BIT(set_diagnostyka, ERROR_BDVV9_FIX);
-//      else if ((board_register_diff & 0x04) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDVV9_CTLR))
-//      {
-//        _SET_BIT(clear_diagnostyka, ERROR_BDVV9_FIX);
-//        _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-//        if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0x29)  _SET_BIT(set_diagnostyka, ERROR_BDVV9_CTLR);
-//        else _SET_BIT(clear_diagnostyka, ERROR_BDVV9_CTLR);
-//        _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
-//      }
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-  if ((board_register_diff & 0x04) && ((board_register_tmp & 0x04) != 0x4))
-    _SET_BIT(set_diagnostyka, ERROR_BDVV_DZ_FIX);
-  else if ((board_register_diff & 0x04) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDVV_DZ_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDVV_DZ_FIX);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0xA7)
-      _SET_BIT(set_diagnostyka, ERROR_BDVV_DZ_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDVV_DZ_CTLR);
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
-  }
 #endif
 
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+#if (                             \
+  (MODYFIKACIA_VERSII_PZ == 3) || \
+  (MODYFIKACIA_VERSII_PZ == 13))
   if ((board_register_diff & 0x10) && ((board_register_tmp & 0x010) != 0x10))
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 10))
-    _SET_BIT(set_diagnostyka, ERROR_BDV_DZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    _SET_BIT(set_diagnostyka, ERROR_BDVV6_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
     _SET_BIT(set_diagnostyka, ERROR_BDZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-    _SET_BIT(set_diagnostyka, ERROR_BDSH_FIX);
-#else
-#error "UDEFINED MODIFIKACIA"
-#endif
   else if (
-    (board_register_diff & 0x10)
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 10))
-    || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDV_DZ_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDV_DZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDVV6_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDVV6_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
-    || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDZ_CTLR))
+    (board_register_diff & 0x10) || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDZ_CTLR))
   {
     _SET_BIT(clear_diagnostyka, ERROR_BDZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-    || _CHECK_SET_BIT(diagnostyka_tmp, ERROR_BDSH_CTLR))
-  {
-    _SET_BIT(clear_diagnostyka, ERROR_BDSH_FIX);
-#else
-    )
-    {
-#error "UDEFINED MODIFIKACIA"
-#endif
-
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x10;
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 10))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x14)
-      _SET_BIT(set_diagnostyka, ERROR_BDV_DZ_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDV_DZ_CTLR);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x12)
-      _SET_BIT(set_diagnostyka, ERROR_BDVV6_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDVV6_CTLR);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
     if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x18)
       _SET_BIT(set_diagnostyka, ERROR_BDZ_CTLR);
     else
       _SET_BIT(clear_diagnostyka, ERROR_BDZ_CTLR);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x13)
-      _SET_BIT(set_diagnostyka, ERROR_BDSH_CTLR);
-    else
-      _SET_BIT(clear_diagnostyka, ERROR_BDSH_CTLR);
-#else
-#error "UDEFINED MODIFIKACIA"
-#endif
 
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
   }
