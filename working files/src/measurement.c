@@ -1217,16 +1217,16 @@ void SPI_ADC_IRQHandler(void)
         Зафіксований перехід через нуль
         */
         //Попередній перехід
-        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].x1 = poperednij_perechid.Uab_TN1_x1;
-        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].y1 = poperednij_perechid.Uab_TN1_y1;
-        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].x2 = poperednij_perechid.Uab_TN1_x2;
-        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].y2 = poperednij_perechid.Uab_TN1_y2;
+        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].x1 = poperednij_perechid.Uab_TN2_x1;
+        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].y1 = poperednij_perechid.Uab_TN2_y1;
+        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].x2 = poperednij_perechid.Uab_TN2_x2;
+        perechid_cherez_nul[INDEX_PhK_UAB_TN2][0].y2 = poperednij_perechid.Uab_TN2_y2;
 
         //Поточний перехід
-        poperednij_perechid.Uab_TN1_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x1 = penultimate_tick_VAL_2;
-        poperednij_perechid.Uab_TN1_y1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y1 = ADCs_data[I_UAB_TN2];
-        poperednij_perechid.Uab_TN1_x2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x2 = _x;
-        poperednij_perechid.Uab_TN1_y2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y2 = _y;
+        poperednij_perechid.Uab_TN2_x1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x1 = penultimate_tick_VAL_2;
+        poperednij_perechid.Uab_TN2_y1 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y1 = ADCs_data[I_UAB_TN2];
+        poperednij_perechid.Uab_TN2_x2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].x2 = _x;
+        poperednij_perechid.Uab_TN2_y2 = perechid_cherez_nul[INDEX_PhK_UAB_TN2][1].y2 = _y;
 
         //Помічаємо, що перехід зафіксований
         fix_perechid_cherez_nul[INDEX_PhK_UAB_TN2] = 0xff;
@@ -2119,7 +2119,7 @@ void calc_measurement(unsigned int number_group_stp)
           }
       }
 
-      measurement[index_m] = (MNOGNYK_U_DIJUCHE * (sqrt_32((unsigned int) (ortogonal_calc[2 * index_ort] * ortogonal_calc[2 * index_ort]) + (unsigned int) (ortogonal_calc[2 * index_ort + 1] * ortogonal_calc[2 * index_ort + 1])))) >> (VAGA_DILENNJA_U_DIJUCHE + 3);
+      measurement[index_m] = (MNOGNYK_U_DIJUCHE * (sqrt_32((unsigned int) (ortogonal_calc[2 * index_ort] * ortogonal_calc[2 * index_ort]) + (unsigned int) (ortogonal_calc[2 * index_ort + 1] * ortogonal_calc[2 * index_ort + 1])))) >> (VAGA_DILENNJA_U_DIJUCHE + 4);
 
       if (
         (i == I_UP1P2) ||
