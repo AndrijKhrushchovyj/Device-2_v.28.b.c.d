@@ -12544,102 +12544,19 @@ void main_manu_function(void)
       case (EKRAN_RANGUVANNJA_INPUT_1 + 7):
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
+  (MODYFIKACIA_VERSII_PZ == 13))
 
       case (EKRAN_RANGUVANNJA_INPUT_1 + 8):
       case (EKRAN_RANGUVANNJA_INPUT_1 + 9):
       case (EKRAN_RANGUVANNJA_INPUT_1 + 10):
       case (EKRAN_RANGUVANNJA_INPUT_1 + 11):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 1) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
       case (EKRAN_RANGUVANNJA_INPUT_1 + 12):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 1) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
       case (EKRAN_RANGUVANNJA_INPUT_1 + 13):
       case (EKRAN_RANGUVANNJA_INPUT_1 + 14):
       case (EKRAN_RANGUVANNJA_INPUT_1 + 15):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 16):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 17):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 18):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 19):
-
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 20):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 21):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 22):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 23):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 24):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 25):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 26):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 27):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 28):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 29):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 30):
-      case (EKRAN_RANGUVANNJA_INPUT_1 + 31):
-
-#endif
-
-#endif
-
-#endif
-
-#endif
-
 #endif
 
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 0):
@@ -12653,124 +12570,18 @@ void main_manu_function(void)
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 8):
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+  (MODYFIKACIA_VERSII_PZ == 13))
 
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 9):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 1) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 10):
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 11):
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 12):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 1) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 13):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 1) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 14):
       case (EKRAN_RANGUVANNJA_OUTPUT_1 + 15):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 16):
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 17):
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 18):
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 19):
-
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 20):
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 21):
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 22):
-      case (EKRAN_RANGUVANNJA_OUTPUT_1 + 23):
-
-#endif
-
-#endif
-
-#endif
-
-#endif
-
-#endif
-
-#endif
-
 #endif
 
       case (EKRAN_RANGUVANNJA_LED_1 + 0):

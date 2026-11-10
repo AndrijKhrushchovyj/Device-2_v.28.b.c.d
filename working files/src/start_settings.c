@@ -187,25 +187,9 @@ void start_settings_peripherals(void)
   FSMC_SRAM_Init();
 
   _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0;
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+#if (                             \
+  (MODYFIKACIA_VERSII_PZ == 3) || \
+  (MODYFIKACIA_VERSII_PZ == 13))
   _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) = 0;
 #endif
   /**********************/
@@ -284,79 +268,23 @@ void start_settings_peripherals(void)
   GPIO_Init(CON_OUTPUTS, &GPIO_InitStructure);
   /* Виставляємо пін CON-OUTPUTS-3*/
   GPIO_SetBits(CON_OUTPUTS, CON_3_OUTPUTS_PIN);
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-  //`-
-  //..  *	Записати «0» в регістри дискретних виходів
-  //..  REL1-REL8 (DD31), REL9-REL16 (DD35), REL17-REL23
-  //..  (DD25), AOUT1-AOUT8 (DD28), CHDO1-CHDO7 (DD39);
-  //..  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0;Line == 233
-  //.  ._DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD25_DD27_DD28_DD30) = 0;Line == 243
-
-  //..  *	Для дозволу роботи дискретних виходів REL1-REL8
-  //..  (DD31), REL9-REL16 (DD35), REL17-REL23 (DD25),
-  //..  AOUT1-AOUT8 (DD28), CHDO1-CHDO7 (DD39)  блоку
-  //..  БВ3
-  //..  встановити сигнали CON1, CON2, CON3 в стан в
-  //..  відповідності з таблицею 3.28 ТЗ (ст.42), при
-  //..  цьому
-  //..  на виходах регістрів буде «0»;
-  //^-
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0;      //Установити REL4 в «0», REL6 в «0»;
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x14;   //Установити REL3, REL5 в «1»;
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x1c;   //Установити REL4 в «1» (по  перепаду «0» - «1» записується «0» у виходи 1-9);
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x14;   //Установити REL4 в «0»;
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x34;   //Установити  REL6 в «1» (по  перепаду «0» - «1» записується «0» у виходи 10-18);
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x14;   //Установити REL6 в «0»;
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0;      //Установити REL3, REL5 в «0»;
-  _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD31_DD34_DD35_DD37) = 0x8000; //Установити REL16 в «1»
-  chGbl__REL1_REL8__W_VAL = 0;
-  chGbl__CDHO1_CDHO7__W_VAL = 0;
-#endif
   /***
   Виконуємо контроль приєднання плат (CON тут вже встановлений)
   ***/
   _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0;
   uint32_t board_register_tmp = board_register = _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47);
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26))
+#if ( \
+  (MODYFIKACIA_VERSII_PZ == 3))
   if ((board_register_tmp & 0x17) != 0x17)
 #elif ( \
   (MODYFIKACIA_VERSII_PZ == 1))
   if ((board_register_tmp & 0x07) != 0x07)
 #elif ( \
-  (MODYFIKACIA_VERSII_PZ == 2))
-  if ((board_register_tmp & 0x03) != 0x03)
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 4) || \
-  (MODYFIKACIA_VERSII_PZ == 24))
-  if ((board_register_tmp & 0x13) != 0x13)
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
+  (MODYFIKACIA_VERSII_PZ == 13))
   if ((board_register_tmp & 0x1F) != 0x1F)
 #elif ( \
   (MODYFIKACIA_VERSII_PZ == 11))
   if ((board_register_tmp & 0x0F) != 0x0F)
-#elif ( \
-  (MODYFIKACIA_VERSII_PZ == 12))
-  if ((board_register_tmp & 0x0B) != 0x0B)
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-  if ((board_register_tmp & 0x1B) != 0x1B)
 #else
 #error "UDEFINED MODIFIKACIA"
 #endif
@@ -364,14 +292,9 @@ void start_settings_peripherals(void)
 
     if ((board_register_tmp & 0x01) != 0x1)
       _SET_BIT(set_diagnostyka, ERROR_BA_1_FIX);
-#if ( \
-  (MODYFIKACIA_VERSII_PZ == 18) || (MODYFIKACIA_VERSII_PZ == 8))
-    if ((board_register_tmp & 0x02) != 0x2)
-      _SET_BIT(set_diagnostyka, ERROR_BDV2_FIX);
-#else
+
     if ((board_register_tmp & 0x02) != 0x2)
       _SET_BIT(set_diagnostyka, ERROR_BDVV5_1_FIX);
-#endif
 
 #if (((MODYFIKACIA_VERSII_PZ / 10) & 0x1) != 0)
     if ((board_register_tmp & 0x08) != 0x8)
@@ -379,92 +302,20 @@ void start_settings_peripherals(void)
 #endif
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
-
-#if ( \
-  (MODYFIKACIA_VERSII_PZ == 18) || (MODYFIKACIA_VERSII_PZ == 8))
-    if ((board_register_tmp & 0x04) != 0x4)
-      _SET_BIT(set_diagnostyka, ERROR_BDV5_FIX);
-#else
+  (MODYFIKACIA_VERSII_PZ == 13))
 
     if ((board_register_tmp & 0x04) != 0x4)
       _SET_BIT(set_diagnostyka, ERROR_BDVV5_2_FIX);
-#endif
-//#elif
-//#elif (                                \
-//       (MODYFIKACIA_VERSII_PZ == 6) || \
-//       (MODYFIKACIA_VERSII_PZ == 26)   \
-//      )
-//    if ((board_register_tmp &  0x04) !=  0x4) _SET_BIT(set_diagnostyka, ERROR_BDVV9_FIX);
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-    if ((board_register_tmp & 0x04) != 0x4)
-      _SET_BIT(set_diagnostyka, ERROR_BDVV_DZ_FIX);
-#endif
-
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-    if ((board_register_tmp & 0x010) != 0x10)
 
 #if (                             \
-  (MODYFIKACIA_VERSII_PZ == 0) || \
-  (MODYFIKACIA_VERSII_PZ == 10))
-      _SET_BIT(set_diagnostyka, ERROR_BDV_DZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-      _SET_BIT(set_diagnostyka, ERROR_BDVV6_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
+  (MODYFIKACIA_VERSII_PZ == 3) || \
+  (MODYFIKACIA_VERSII_PZ == 13))
+    if ((board_register_tmp & 0x010) != 0x10)
+
       _SET_BIT(set_diagnostyka, ERROR_BDZ_FIX);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-      _SET_BIT(set_diagnostyka, ERROR_BDSH_FIX);
-#else
-#error "UDEFINED MODIFIKACIA"
 #endif
 
 #endif
@@ -476,142 +327,39 @@ void start_settings_peripherals(void)
     if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) >> 8) != 0x14)
       _SET_BIT(set_diagnostyka, ERROR_BA_1_CTLR);
   }
-#if ( \
-  (MODYFIKACIA_VERSII_PZ == 18) || (MODYFIKACIA_VERSII_PZ == 8))
-  if ((board_register_tmp & 0x02) == 0x02)
-  {
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x2; //БДВ2_D
-    unsigned long u32_R = _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36);
-    if (u32_R == 0)
-      u32_R++;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0x59)
-      _SET_BIT(set_diagnostyka, ERROR_BDV2_CTLR);
-  }
-#else
   if ((board_register_tmp & 0x02) == 0x02)
   {
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x2;
     if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) & 0xff) != 0x25)
       _SET_BIT(set_diagnostyka, ERROR_BDVV5_1_CTLR);
   }
-#endif
 
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
+  (MODYFIKACIA_VERSII_PZ == 13))
   if ((board_register_tmp & 0x04) == 0x04)
   {
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
     if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0x37)
       _SET_BIT(set_diagnostyka, ERROR_BDVV5_2_CTLR);
   }
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-  if ((board_register_tmp & 0x04) == 0x04)
-  {
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-    unsigned long u32_R = _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36);
-    if (u32_R == 0)
-      u32_R++;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) & 0xff) != 0x6D)
-      _SET_BIT(set_diagnostyka, ERROR_BDV5_CTLR);
-  }
-//#elif (                                \
-//       (MODYFIKACIA_VERSII_PZ == 6) || \
-//       (MODYFIKACIA_VERSII_PZ == 26)   \
-//      )
-//  if ((board_register_tmp & 0x04) == 0x04)
-//  {
-//    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-//    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0x29)  _SET_BIT(set_diagnostyka, ERROR_BDVV9_CTLR);
-//  }
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-  if ((board_register_tmp & 0x04) == 0x04)
-  {
-    _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x4;
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD33_DD36) >> 8) != 0xA7)
-      _SET_BIT(set_diagnostyka, ERROR_BDVV_DZ_CTLR);
-  }
 #endif
 
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 18) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
+#if (                             \
+  (MODYFIKACIA_VERSII_PZ == 3) || \
+  (MODYFIKACIA_VERSII_PZ == 13))
   if ((board_register_tmp & 0x10) == 0x10)
   {
     _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x10;
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 0) || \
-  (MODYFIKACIA_VERSII_PZ == 10))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x14)
-      _SET_BIT(set_diagnostyka, ERROR_BDV_DZ_CTLR);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 8) ||  \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x12)
-      _SET_BIT(set_diagnostyka, ERROR_BDVV6_CTLR);
-
-    unsigned long u32_R = _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29);
-    if (u32_R == 0)
-      u32_R++;
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 4) ||  \
-  (MODYFIKACIA_VERSII_PZ == 6) ||  \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 14))
     if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x18)
       _SET_BIT(set_diagnostyka, ERROR_BDZ_CTLR);
-#elif (                            \
-  (MODYFIKACIA_VERSII_PZ == 7) ||  \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 24) || \
-  (MODYFIKACIA_VERSII_PZ == 26) || \
-  (MODYFIKACIA_VERSII_PZ == 17) || \
-  (MODYFIKACIA_VERSII_PZ == 33) || \
-  (MODYFIKACIA_VERSII_PZ == 34))
-    if ((_DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD26_DD29) >> 8) != 0x13)
-      _SET_BIT(set_diagnostyka, ERROR_BDSH_CTLR);
-#else
-#error "UDEFINED MODIFIKACIA"
-#endif
   }
 #endif
 
   //Вимикаємо вибір всіх плат для подальшого контролю
   _DEVICE_REGISTER_V2(Bank1_SRAM2_ADDR, OFFSET_DD39_DD40_DD47) = 0x0;
-#if ( \
-  (MODYFIKACIA_VERSII_PZ == 18) || (MODYFIKACIA_VERSII_PZ == 8))
-  chGbl__CDHO1_CDHO7__W_VAL = 0x0;
-#endif
   /***/
 
   /* Конфігурація піну LCD-BL, як Output push-pull */

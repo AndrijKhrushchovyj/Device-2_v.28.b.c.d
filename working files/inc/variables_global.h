@@ -479,103 +479,30 @@ const uint32_t buttons_mode[NUMBER_BUTTON_MODE][N_SMALL] =
 const uint32_t output_boards[N_OUTPUT_BOARDS][2] =
   {
     {2, 1},
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    {20, 5}
-#else
-    {9, 4}
-#endif
+		{9, 4}
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
   (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
   (MODYFIKACIA_VERSII_PZ == 33))
     ,
     {16, 5}
 
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 5) || \
-  (MODYFIKACIA_VERSII_PZ == 15))
-    ,
-    {20, 7}
-#endif
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 6) || \
-  (MODYFIKACIA_VERSII_PZ == 26))
-    ,
-    {13, 5}
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-    ,
-    {12, 5}
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    ,
-    {24, 7}
 #endif
 };
 
 const uint32_t input_boards[N_INPUT_BOARDS][2] =
   {
-#if (                             \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    {28, 4}
-#else
     {8, 4}
-#endif
 #if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
   (MODYFIKACIA_VERSII_PZ == 11) || \
-  (MODYFIKACIA_VERSII_PZ == 13) || \
-  (MODYFIKACIA_VERSII_PZ == 15) || \
-  (MODYFIKACIA_VERSII_PZ == 23) || \
-  (MODYFIKACIA_VERSII_PZ == 33))
+  (MODYFIKACIA_VERSII_PZ == 13))
     ,
     {16, 5}
 
-#if (                              \
-  (MODYFIKACIA_VERSII_PZ == 0) ||  \
-  (MODYFIKACIA_VERSII_PZ == 5) ||  \
-  (MODYFIKACIA_VERSII_PZ == 10) || \
-  (MODYFIKACIA_VERSII_PZ == 15))
-    ,
-    {20, 7}
-#endif
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 6) || \
-  (MODYFIKACIA_VERSII_PZ == 26))
-    ,
-    {12, 5}
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 7) || \
-  (MODYFIKACIA_VERSII_PZ == 17))
-    ,
-    {13, 5}
-
-#elif (                           \
-  (MODYFIKACIA_VERSII_PZ == 8) || \
-  (MODYFIKACIA_VERSII_PZ == 18))
-    ,
-    {32, 7}
 #endif
 };
 
