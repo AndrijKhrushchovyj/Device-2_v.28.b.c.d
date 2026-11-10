@@ -539,7 +539,8 @@ void make_ekran_control_rpn()
        "      РПН       ",
        "  Основной ТН2  ",
        "   Разр.Тест    ",
-       "   Блок.от ОП   "},
+       "   Блок.от ОП   ",
+       "Выбор перемыкача"},
       {" Трансформатор  ",
        "      Режим     ",
        "     Режим ТМ   ",
@@ -548,7 +549,8 @@ void make_ekran_control_rpn()
        "      РПН       ",
        "  Основний ТН2  ",
        "   Дозв.Тест    ",
-       "  Блок.від ВП   "},
+       "  Блок.від ВП   ",
+       "Вибір перемикача"},
       {"  Transformer   ",
        "      Mode      ",
        "    TM Mode     ",
@@ -557,7 +559,8 @@ void make_ekran_control_rpn()
        "      OLTC      ",
        "  VT2 is Main   ",
        "  Permit Test   ",
-       "  Def.Pos.Blc.  "},
+       "  Def.Pos.Blc.  ",
+       "Выбор перемыкача"},
       {" Трансформатор  ",
        "      Режим     ",
        "     Режим ТМ   ",
@@ -566,7 +569,8 @@ void make_ekran_control_rpn()
        "      РПН       ",
        "  Основной ТН2  ",
        "   Разр.Тест    ",
-       "   Блок.от ОП   "}};
+       "   Блок.от ОП   ",
+       "Выбор перемыкача"}};
   const unsigned char information[MAX_ROW_FOR_CONTROL_RPN][MAX_NAMBER_LANGUAGE][2][MAX_COL_LCD] =
     {
       {{"     2 обм.     ", "     3 обм.     "},
@@ -604,7 +608,11 @@ void make_ekran_control_rpn()
       {{"     Откл.      ", "      Вкл.      "},
        {"     Вимк.      ", "     Ввімк.     "},
        {"      Off       ", "       On       "},
-       {"     Косу.      ", "     Сљнд.      "}}};
+       {"     Косу.      ", "     Сљнд.      "}},
+      {{"     Прямой     ", "   Инверсный    "},
+       {"     Прямий     ", "   Інверсний    "},
+       {"     Прямой     ", "   Инверсный    "},
+       {"     Прямой     ", "   Инверсный    "}}};
   const unsigned int cursor_x[MAX_ROW_FOR_CONTROL_RPN][MAX_NAMBER_LANGUAGE][2] =
     {
       {{4, 4},
@@ -642,7 +650,11 @@ void make_ekran_control_rpn()
       {{4, 5},
        {4, 4},
        {5, 6},
-       {4, 4}}};
+       {4, 4}},
+      {{4, 2},
+       {4, 2},
+       {4, 2},
+       {4, 2}}};
 
   unsigned char name_string_tmp[MAX_ROW_FOR_CONTROL_RPN][MAX_COL_LCD];
   unsigned char information_tmp[MAX_ROW_FOR_CONTROL_RPN][2][MAX_COL_LCD];

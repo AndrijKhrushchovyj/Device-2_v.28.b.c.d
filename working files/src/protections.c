@@ -1455,6 +1455,17 @@ inline void RPN_handler(unsigned int triple_wound, unsigned int number_main_cana
   logic_RPN_1 |= ((_CHECK_SET_BIT(p_active_functions, RANG_1_POLOGENNJA_RPN) != 0) || (((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_BLCK_DP)) != 0) && (_CHECK_SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_1) != 0))) << 2;
   //Ïîë.N êîí.âèõ.
   logic_RPN_1 |= ((_CHECK_SET_BIT(p_active_functions, RANG_N_POLOGENNJA_RPN) != 0) || (((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_BLCK_DP)) != 0) && (_CHECK_SET_BIT(p_active_functions, RANG_DETECT_n_EQUAL_N) != 0))) << 4;
+
+  // Requirment from 2026-10
+  if ((current_settings_prt.control_rpn & MASKA_FOR_BIT(INDEX_ML_CTRRPN_SELECT_SWITCH)) != 0)
+  {
+    unsigned int logic_RPN_1_before = logic_RPN_1;
+
+    logic_RPN_1 &= ~((1u << 2) | (1u << 4));
+    logic_RPN_1 |= ((logic_RPN_1_before >> 2) & 0x1) << 4;
+    logic_RPN_1 |= ((logic_RPN_1_before >> 4) & 0x1) << 2;
+  }
+
   //ÇÑÕ
   logic_RPN_2 |= (_CHECK_SET_BIT(p_active_functions, RANG_ZSKh) != 0) << 2;
   //ÇÍÕ
