@@ -2449,6 +2449,213 @@
             </group>
             <group>
                 <name>interfaces</name>
+                <group>
+                    <name>modbusroutne</name>
+                    <group>
+                        <name>component</name>
+                        <group>
+                            <name>filePERIF2021</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ANLCONF1Register20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ANLDATA1_8Register20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_DRCONF1Register20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_DRDATA1Register20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_DRDATA2Register20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_DSREGRegister20.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELANDRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELDTRRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELMFTRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELNOTRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELORRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELPFRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_ELXORRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_IECGOOSERegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_IECLANRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_IECMMSRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV1Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV2Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV3Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV4Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV5Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_PKV6Register2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_REGANLRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_REGDISRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePERIF2021\filePERIF_TRANSRegister2021.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>filePROT2021</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_BRPRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_COMMRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_RPNRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_UPRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_ZNMAXRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_ZNMINRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_ZNXRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\filePROT2021\filePROT_ZSXRegister2021.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>fileUVV2021</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\fileUVV2021\fileUVV_DOUTRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\fileUVV2021\fileUVV_DVRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\fileUVV2021\fileUVV_KEYRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\fileUVV2021\fileUVV_RPRRegister2021.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\fileUVV2021\fileUVV_SDIRegister2021.c</name>
+                            </file>
+                        </group>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\ACMDSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\AISmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\AISmallComponent_guest.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\DOUTSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\DVSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\GCMDSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\IUSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\KEYSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\PERIFComponent2021.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\PKVBigComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\PKVBigComponent_guest.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\PREGBigComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\PROTComponent2021.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\REG1BigComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\REG2BigComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\RPRSmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\SDISmallComponent.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\UVVComponent2021.c</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\component\YustBigComponent.c</name>
+                        </file>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\procedures_guest.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\procedures_m.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\procedures_rdsguest.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\start_settings_m.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\supervisor.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\uprFunc000for2021.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\working files\src\modbusroutine\ustFunc000for2021.c</name>
+                    </file>
+                </group>
                 <file>
                     <name>$PROJ_DIR$\..\..\working files\src\interfaces.c</name>
                 </file>
