@@ -4,6 +4,7 @@
 #include "libraries.h"
 #include "variables_global.h"
 #include "functions_global.h"
+#include "variables_global_m.h"
 
 __test_watchdog testWatchDogTmp =
   {
@@ -917,7 +918,7 @@ int main(void)
   //Ініціалізація компонет Ігоря для Modbus + USB
   /**********************/
   watchdog_l2 = true;
-  // global_component_installation();
+  global_component_installation();
 
   USBD_Init(&USB_OTG_dev,
 #ifdef USE_USB_OTG_HS
