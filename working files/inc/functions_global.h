@@ -280,12 +280,12 @@ void start_transmint_data_via_CANAL1_MO(void);
 void start_receive_data_via_CANAL1_MO(void);
 void CANAL2_MO_routine(void);
 void low_routine_for_KP(void);
-// void inputPacketParserLAN(void);
+void inputPacketParserLAN(void);
 void make_ekran_settings_synchro(void);
 #endif
 
-// extern void inputPacketParserUSB(void);
-// extern void inputPacketParserRS485(void);
+extern void inputPacketParserUSB(void);
+extern void inputPacketParserRS485(void);
 
 #if (__VER__ >= 8000000)
 extern int _ForceReloadDstRules(void);
