@@ -5647,6 +5647,19 @@ void main_manu_function(void)
               {
                 if (current_ekran.index_position >= (NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP))
                   current_ekran.index_position = 0;
+
+                uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+
+                while ((((current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN1) && (current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_POV)) ||
+                       (((current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN1) || (current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_KP)))
+                {
+                  if (++current_ekran.index_position >= (NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP))
+                    current_ekran.index_position = 0;
+                  _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                  _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+                }
+
                 position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
 
                 //Формуємо екран уставок УЗ
@@ -8876,17 +8889,25 @@ void main_manu_function(void)
                 {
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_UP_GROUP1);
 
+                  uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                  uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+
                   if (current_ekran.edition == 0)
                   {
-                    if (--current_ekran.index_position < 0)
-                      current_ekran.index_position = NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP - 1;
+                    do
+                    {
+                      if (--current_ekran.index_position < 0)
+                        current_ekran.index_position = NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP - 1;
+                      _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                      _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+                    } while ((((current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN1) && (current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_POV)) ||
+                             (((current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN1) || (current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_KP)));
+
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
-                    uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
                     if (
                       (_n_index == INDEX_ML_STP_UP) ||
@@ -9734,17 +9755,25 @@ void main_manu_function(void)
                 {
                   int group = (current_ekran.current_level - EKRAN_SETPOINT_UP_GROUP1);
 
+                  uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                  uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+
                   if (current_ekran.edition == 0)
                   {
-                    if (++current_ekran.index_position >= (NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP))
-                      current_ekran.index_position = 0;
+                    do
+                    {
+                      if (++current_ekran.index_position >= (NUMBER_UP * MAX_ROW_FOR_SETPOINT_UP))
+                        current_ekran.index_position = 0;
+                      _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
+                      _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
+                    } while ((((current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN1) && (current_settings.ctrl_UP_input[_n_UP] != UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_POV)) ||
+                             (((current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN1) || (current_settings.ctrl_UP_input[_n_UP] == UP_CTRL_F_TN2)) && (_n_index == INDEX_ML_STP_UP_KP)));
+
                     position_in_current_level_menu[current_ekran.current_level] = current_ekran.index_position;
                   }
                   else
                   {
                     //Редагування числа
-                    uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
-                    uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
                     if (
                       (_n_index == INDEX_ML_STP_UP) ||
@@ -10616,7 +10645,8 @@ void main_manu_function(void)
                 {
                   uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
-                  if (_n_index == INDEX_ML_STP_UP)
+                  if ((_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                   {
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     int32_t begin = 0, comma = 0, end = 0;
@@ -10636,6 +10666,14 @@ void main_manu_function(void)
                           begin = COL_SETPOINT_UP_U_BEGIN;
                           comma = COL_SETPOINT_UP_U_COMMA;
                           end = COL_SETPOINT_UP_U_END;
+                          break;
+                        }
+                      case UP_CTRL_F_TN1:
+                      case UP_CTRL_F_TN2:
+                        {
+                          begin = COL_STP_UP_F_BEGIN;
+                          comma = COL_STP_UP_F_COMMA;
+                          end = COL_STP_UP_F_END;
                           break;
                         }
                       default:
@@ -11435,7 +11473,8 @@ void main_manu_function(void)
                 {
                   uint32_t _n_index = current_ekran.index_position % MAX_ROW_FOR_SETPOINT_UP;
 
-                  if (_n_index == INDEX_ML_STP_UP)
+                  if ((_n_index == INDEX_ML_STP_UP) ||
+                      (_n_index == INDEX_ML_STP_UP_POV))
                   {
                     uint32_t _n_UP = current_ekran.index_position / MAX_ROW_FOR_SETPOINT_UP;
                     int32_t begin = 0, comma = 0, end = 0;
@@ -11455,6 +11494,14 @@ void main_manu_function(void)
                           begin = COL_SETPOINT_UP_U_BEGIN;
                           comma = COL_SETPOINT_UP_U_COMMA;
                           end = COL_SETPOINT_UP_U_END;
+                          break;
+                        }
+                      case UP_CTRL_F_TN1:
+                      case UP_CTRL_F_TN2:
+                        {
+                          begin = COL_STP_UP_F_BEGIN;
+                          comma = COL_STP_UP_F_COMMA;
+                          end = COL_STP_UP_F_END;
                           break;
                         }
                       default:

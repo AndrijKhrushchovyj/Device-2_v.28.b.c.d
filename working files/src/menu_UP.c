@@ -95,7 +95,7 @@ void make_ekran_setpoint_UP(unsigned int group)
               vd[pos].u_end = COL_SETPOINT_UP_I_END + 2 + 1 - 1;
               vd[pos].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_A];
 
-              vaga_arr[i] = 100000;
+              vaga_arr[pos] = 100000;
 
               break;
             }
@@ -109,7 +109,7 @@ void make_ekran_setpoint_UP(unsigned int group)
               vd[pos].u_end = COL_SETPOINT_UP_U_END + 2 + 1 - 1;
               vd[pos].p_unit = &odynyci_vymirjuvannja[index_language][INDEX_V];
 
-              vaga_arr[i] = 100000;
+              vaga_arr[pos] = 100000;
 
               break;
             }
@@ -137,9 +137,9 @@ void make_ekran_setpoint_UP(unsigned int group)
         }
 
         if (view == true)
-          p_value[i] = current_settings.setpoint_UP[_n_UP][index]; //у змінну value поміщаємо значення уставки
+          p_value[pos] = current_settings.setpoint_UP[_n_UP][index]; //у змінну value поміщаємо значення уставки
         else
-          p_value[i] = edition_settings.setpoint_UP[_n_UP][index];
+          p_value[pos] = edition_settings.setpoint_UP[_n_UP][index];
       }
       else if (index == INDEX_ML_STP_UP_KP)
       {
@@ -150,12 +150,12 @@ void make_ekran_setpoint_UP(unsigned int group)
         vd[pos].u_end = COL_SETPOINT_UP_KP_END + 2 + 1 - 1;
         vd[pos].p_unit = NULL;
 
-        vaga_arr[i] = 100;
+        vaga_arr[pos] = 100;
 
         if (view == true)
-          p_value[i] = (int32_t *) current_settings.setpoint_UP_KP[_n_UP]; //у змінну value поміщаємо значення уставки
+          p_value[pos] = (int32_t *) current_settings.setpoint_UP_KP[_n_UP]; //у змінну value поміщаємо значення уставки
         else
-          p_value[i] = (int32_t *) edition_settings.setpoint_UP_KP[_n_UP];
+          p_value[pos] = (int32_t *) edition_settings.setpoint_UP_KP[_n_UP];
       }
 
       ++pos;
@@ -249,11 +249,11 @@ void make_ekran_setpoint_UP(unsigned int group)
   if (current_ekran.edition == 0)
   {
     int last_position_cursor_x = MAX_COL_LCD;
-    if (vd[current_ekran.index_position].sign < 0)
-      current_ekran.position_cursor_x = vd[current_ekran.index_position].begin;
+    if (vd[position_temp].sign < 0)
+      current_ekran.position_cursor_x = vd[position_temp].begin;
     else
-      current_ekran.position_cursor_x = vd[current_ekran.index_position].sign;
-    last_position_cursor_x = vd[current_ekran.index_position].end;
+      current_ekran.position_cursor_x = vd[position_temp].sign;
+    last_position_cursor_x = vd[position_temp].end;
 
     //Підтягуємо курсор до першого символу
     while (((working_ekran[current_ekran.position_cursor_y][current_ekran.position_cursor_x + 1]) == ' ') &&
