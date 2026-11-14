@@ -1712,7 +1712,7 @@ enum __odynyci_vymirjuvannja
 /*****************************************/
 //Версія універсальної карти памяті
 /*****************************************/
-#define VERSIA_GMM 8
-#define MODYFIKACIA_VERSII_GMM 4
+#define VERSIA_GMM 10
+#define MODYFIKACIA_VERSII_GMM 0
 /*****************************************/
 #endif
