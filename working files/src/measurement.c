@@ -13,6 +13,129 @@ float frequency_high_val_1 = -1.0f;
 float frequency_high_val_2 = -1.0f;
 unsigned int freq_mutex = false;
 
+// typedef struct
+// {
+//   uint16_t amplitude[NUMBER_ANALOG_CANALES];
+//   size_t index[NUMBER_CANALs_ADC1];
+// } debug_adc1_t;
+
+// static debug_adc1_t debug_adc1 =
+//   {
+//     .amplitude = {0, 0, 0, 0, 0, 0, 0},
+//     .index = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+// //#pragma optimize = none
+// static int16_t adc1_data(debug_adc1_t *const p_debug_adc1, size_t const channel)
+// {
+//   size_t index = p_debug_adc1->index[channel];
+//   p_debug_adc1->index[channel] = (index + 1) % NUMBER_POINT;
+
+//   size_t analog_channel = 0;
+//   float multifiler = 1.0f;
+//   switch (channel)
+//   {
+//     case C_IA_1_16:
+//       {
+//         analog_channel = I_IA_1;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_IA_1:
+//       {
+//         analog_channel = I_IA_1;
+//         break;
+//       }
+//     case C_IA_2_16:
+//       {
+//         analog_channel = I_IA_2;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_IA_2:
+//       {
+//         analog_channel = I_IA_2;
+//         break;
+//       }
+//     case C_UAB_TN2_16:
+//       {
+//         analog_channel = I_UAB_TN2;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_UAB_TN2:
+//       {
+//         analog_channel = I_UAB_TN2;
+//         break;
+//       }
+//     case C_UAB_TN1:
+//       {
+//         analog_channel = I_UAB_TN1;
+//         break;
+//       }
+//     case C_UAB_TN1_16:
+//       {
+//         analog_channel = I_UAB_TN1;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_UC1C2_1:
+//       {
+//         analog_channel = I_UC1C2;
+//         break;
+//       }
+//     case C_UC1C2_16:
+//       {
+//         analog_channel = I_UC1C2;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_UP2P3_1:
+//       {
+//         analog_channel = I_UP2P3;
+//         break;
+//       }
+//     case C_UP2P3_16:
+//       {
+//         analog_channel = I_UP2P3;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_UP1P2_16:
+//       {
+//         analog_channel = I_UP1P2;
+//         multifiler = -16.0f;
+//         break;
+//       }
+//     case C_UP1P2_1:
+//       {
+//         analog_channel = I_UP1P2;
+//         break;
+//       }
+//     case C_VREF1:
+//       {
+
+//         return VREF_NORMAL_VALUE;
+//       }
+//     case C_V_K_3_3:
+//       {
+//         return V_K_3_3_NORMAL_VALUE;
+//       }
+//     default:
+//       {
+//         while (1)
+//           ;
+//       }
+//   }
+//   int const data_raw = (int) (((float) p_debug_adc1->amplitude[analog_channel]) * sin_data_f[index] * multifiler) + VREF_NORMAL_VALUE;
+
+//   if (data_raw < 0)
+//     return 0;
+//   else if (data_raw > 0xfff)
+//     return 0xfff;
+//   else
+//     return data_raw;
+// }
+
 /*****************************************************/
 //Пошук нового каналу для оцифровки
 /*****************************************************/
@@ -354,6 +477,7 @@ void operate_integral_values_ADCs(void)
 /*************************************************************************
 Опрацьовуємо дані для перетворення Фур'є
  *************************************************************************/
+//#pragma optimize = none
 void Fourier(enum _groups_meas const number_val_group)
 {
   unsigned int index_first_canal = 0, number_canals = 0;
@@ -932,7 +1056,7 @@ void SPI_ADC_IRQHandler(void)
       _SET_BIT(clear_diagnostyka, ((adc_number == 0) ? ERROR_SPI_ADC1_BIT : ERROR_SPI_ADC2_BIT));
       if (adc_number == 0)
       {
-        output_adc[number_canal].value = read_value & 0xfff;
+        output_adc[number_canal].value = /* adc1_data(&debug_adc1, number_canal) */ read_value & 0xfff;
       }
       else
       {
