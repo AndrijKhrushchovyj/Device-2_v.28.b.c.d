@@ -135,7 +135,7 @@ void make_ekran_transformator()
           working_ekran[i][j] = name_string_tmp[index_of_ekran_tmp][j];
         if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT1)
         {
-          vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC1
+          vaga = 1000; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC1
           if (view == true)
             value = current_settings.TCurrent1; //у змінну value поміщаємо значення коефіцієнта трансформації TC1
           else
@@ -144,7 +144,7 @@ void make_ekran_transformator()
         }
         else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TT2)
         {
-          vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC2
+          vaga = 1000; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TC2
           if (view == true)
             value = current_settings.TCurrent2; //у змінну value поміщаємо значення коефіцієнта трансформації TC2
           else
@@ -153,7 +153,7 @@ void make_ekran_transformator()
         }
         else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TN1)
         {
-          vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН1
+          vaga = 1000; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН1
           if (view == true)
             value = current_settings.TVoltage1; //у змінну value поміщаємо значення коефіцієнта трансформації TН1
           else
@@ -162,7 +162,7 @@ void make_ekran_transformator()
         }
         else if ((index_of_ekran_tmp + shift[index_of_ekran_tmp]) == INDEX_ML_TN2)
         {
-          vaga = 100; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН2
+          vaga = 1000; //максимальний ваговий коефіцієнт для коефіцієнта трансформації TН2
           if (view == true)
             value = current_settings.TVoltage2; //у змінну value поміщаємо значення коефіцієнта трансформації TН2
           else
