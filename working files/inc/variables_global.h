@@ -226,7 +226,7 @@ int32_t U_begin_log;
 int32_t U_end_log;
 uint8_t crc_log;
 
-const unsigned int index_converter[NUMBER_ANALOG_CANALES] = {FULL_ORT_UAB_TN1, FULL_ORT_UAB_TN2, FULL_ORT_UP1P2, FULL_ORT_UP2P3, FULL_ORT_UC1C2, FULL_ORT_IA_1, FULL_ORT_IA_2};
+const unsigned int index_converter[NUMBER_ANALOG_CANALES] = {FULL_ORT_IA_1, FULL_ORT_UAB_TN1, FULL_ORT_IA_2, FULL_ORT_UAB_TN2, FULL_ORT_UC1C2, FULL_ORT_UP1P2, FULL_ORT_UP2P3};
 int ortogonal_calc[2 * FULL_ORT_MAX];
 int ortogonal_calc_low[2 * FULL_ORT_MAX];
 int phi_angle[2][FULL_ORT_MAX];
@@ -479,7 +479,7 @@ const uint32_t buttons_mode[NUMBER_BUTTON_MODE][N_SMALL] =
 const uint32_t output_boards[N_OUTPUT_BOARDS][2] =
   {
     {2, 1},
-		{9, 4}
+    {9, 4}
 #if (                              \
   (MODYFIKACIA_VERSII_PZ == 1) ||  \
   (MODYFIKACIA_VERSII_PZ == 3) ||  \
